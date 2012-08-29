@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>nl.t42.openstack</groupId>
+    <artifactId>java-openstack</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Java OpenStack</name>
+    <description>Java library for OpenStack</description>
+    <inceptionYear>2012</inceptionYear>
+
+    <organization>
+        <name>42 BV</name>
+        <url>http://www.42.nl/</url>
+    </organization>
+
+    <properties>
+        <jackson.version>1.9.7</jackson.version>
+        <junit.version>4.10</junit.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>

@@ -1,0 +1,12 @@
+Design goals for JOS:
+* Java-based wrapper library for OpenStack, so REST calls do not have to be made directly
+* option to switch between real (ie, HTTPS target) and mock mode
+* in-memory storage of objects for unit testing purposes
+* on-file storage of objects for visual screening purposes
+
+Components of OpenStack and their current level of support in this component:
+* Keystone (Authentication and authorization) - not supported
+* Nova (Computing) - not supported
+* Swift (ObjectStore) - not supported
+* Glance (ImageStore) - not supported
+* Horizon (Dashboard) - not supported
