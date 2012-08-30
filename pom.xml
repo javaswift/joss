@@ -17,6 +17,7 @@
     <properties>
         <jackson.version>1.9.7</jackson.version>
         <junit.version>4.10</junit.version>
+        <httpcomponents.version>4.2.1</httpcomponents.version>
     </properties>
 
     <dependencies>
@@ -32,6 +33,12 @@
             <artifactId>junit-dep</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpcomponents.version}</version>
         </dependency>
 
     </dependencies>
