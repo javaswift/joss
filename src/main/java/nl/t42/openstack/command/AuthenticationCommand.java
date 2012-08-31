@@ -3,6 +3,7 @@ package nl.t42.openstack.command;
 import nl.t42.openstack.model.access.Access;
 import nl.t42.openstack.model.authentication.Authentication;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -40,6 +41,17 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
     @Override
     protected boolean isSecureCall() {
         return false;
+    }
+
+    @Override
+    protected void checkHttStatusCode(int httpStatusCode) {
+        if (httpStatusCode == HttpStatus.SC_UNAUTHORIZED) {
+            throw new CommandException(httpStatusCode, CommandExceptionError.UNAUTHORIZED);
+        }
+        if (httpStatusCode >= HttpStatus.SC_OK && httpStatusCode < 300) {
+            return;
+        }
+        throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
     }
 
 }

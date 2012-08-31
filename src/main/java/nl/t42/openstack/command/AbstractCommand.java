@@ -43,9 +43,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     public N execute() throws IOException {
         response = httpClient.execute(request);
-        if (response.getStatusLine().getStatusCode() != successCode()) {
-            throw new RuntimeException("Failed to setAuthenticationHeader: "+response.getStatusLine().getStatusCode());
-        }
+        checkHttStatusCode(response.getStatusLine().getStatusCode());
         return getReturnObject(convertResponseToString(response));
     }
 
@@ -53,11 +51,13 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     protected abstract M createRequest(String url);
 
-    protected N getReturnObject(List<String> responseBody) throws IOException {
-        return null; // returns null by default
+    protected void checkHttStatusCode(int httpStatusCode) {
+        if (httpStatusCode != HttpStatus.SC_OK) {
+            throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+        }
     }
 
-    protected int successCode() {
-        return HttpStatus.SC_OK;
+    protected N getReturnObject(List<String> responseBody) throws IOException {
+        return null; // returns null by default
     }
 }

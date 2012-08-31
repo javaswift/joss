@@ -24,9 +24,4 @@ public class CreateContainerCommand extends AbstractCommand<HttpPut, String[]> {
     protected HttpPut createRequest(String url) {
         return new HttpPut(url);
     }
-
-    @Override
-    protected int successCode() {
-        return HttpStatus.SC_CREATED;
-    }
 }
