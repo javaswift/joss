@@ -1,8 +1,8 @@
-package nl.t42.openstack.model;
+package nl.t42.openstack.model.access;
 
+import nl.t42.openstack.model.access.Access;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -1,5 +1,6 @@
-package nl.t42.openstack.model;
+package nl.t42.openstack.model.authentication;
 
+import nl.t42.openstack.model.authentication.Authentication;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.junit.Test;

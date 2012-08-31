@@ -1,4 +1,4 @@
-package nl.t42.openstack.model;
+package nl.t42.openstack.model.access;
 
 import org.codehaus.jackson.map.annotate.JsonRootName;
 

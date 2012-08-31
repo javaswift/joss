@@ -1,4 +1,4 @@
-package nl.t42.openstack.model;
+package nl.t42.openstack.model.authentication;
 
 public class PasswordCredentials {
 
