@@ -60,8 +60,7 @@ public class OpenStackClient {
         while ((output = br.readLine()) != null) {
             responseString.append(output);
         }
-        Access access = getObjectMapper().readValue(responseString.toString(), Access.class);
-        return access;
+        return getObjectMapper().readValue(responseString.toString(), Access.class);
     }
 
     public boolean isAuthenticated() { return this.authenticated; }
