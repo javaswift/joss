@@ -24,28 +24,31 @@ public class Main {
         String url = args[2];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(url);
+        OpenStackClient client = new OpenStackClient();
+        client.authenticate(username, password, url);
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-        Authentication auth = new Authentication(username, password);
-        String jsonString = mapper.writeValueAsString(auth);
-        System.out.println("JSON: "+jsonString);
-        StringEntity input = new StringEntity(jsonString);
-        input.setContentType("application/json");
-        httpPost.setEntity(input);
-
-        HttpResponse response = httpClient.execute(httpPost);
-
-        BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
-        StringBuilder responseString = new StringBuilder();
-        System.out.println("Output from Server .... \n");
-        String output;
-        while ((output = br.readLine()) != null) {
-            responseString.append(output);
-        }
-        System.out.println(responseString.toString());
+//        DefaultHttpClient httpClient = new DefaultHttpClient();
+//        HttpPost httpPost = new HttpPost(url);
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
+//        Authentication auth = new Authentication(username, password);
+//        String jsonString = mapper.writeValueAsString(auth);
+//        System.out.println("JSON: "+jsonString);
+//        StringEntity input = new StringEntity(jsonString);
+//        input.setContentType("application/json");
+//        httpPost.setEntity(input);
+//
+//        HttpResponse response = httpClient.execute(httpPost);
+//
+//        BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
+//        StringBuilder responseString = new StringBuilder();
+//        System.out.println("Output from Server .... \n");
+//        String output;
+//        while ((output = br.readLine()) != null) {
+//            responseString.append(output);
+//        }
+//        System.out.println(responseString.toString());
 
     }
 

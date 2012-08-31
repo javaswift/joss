@@ -18,16 +18,27 @@
         <jackson.version>1.9.7</jackson.version>
         <junit.version>4.10</junit.version>
         <httpcomponents.version>4.2.1</httpcomponents.version>
+        <mockito.version>1.9.0</mockito.version>
+        <commons.io.version>2.3</commons.io.version>
     </properties>
 
     <dependencies>
 
+        <!-- Used for marshalling to / unmarshalling from JSON -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 
+        <!-- HttpComponents is used to contact the OpenStack server and interact with it through its REST interface -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpcomponents.version}</version>
+        </dependency>
+
+        <!-- Used for unit testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
@@ -35,10 +46,20 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Used for mocking dependencies -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpcomponents.version}</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Used for loading test resources -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons.io.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

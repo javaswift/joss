@@ -14,4 +14,11 @@ public class Access {
 
     public User user;
 
+    public String getToken() {
+        return token == null ? null : token.id;
+    }
+
+    public String getInternalURL() {
+        return serviceCatalog.size() > 0 ? (serviceCatalog.get(0).endpoints.size() > 0 ? serviceCatalog.get(0).endpoints.get(0).internalURL : null ) : null;
+    }
 }
