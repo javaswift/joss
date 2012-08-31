@@ -14,8 +14,6 @@ import static nl.t42.openstack.command.CommandUtil.createObjectMapper;
 
 public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
 
-    private Access access;
-
     public AuthenticationCommand(HttpClient httpClient, String url, String username, String password) throws IOException {
         super(httpClient, url);
         setAuthenticationHeader(username, password);
@@ -30,13 +28,8 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
     }
 
     @Override
-    public Access getReturnObject() {
-        return this.access;
-    }
-
-    @Override
-    protected void convertResponseBody(List<String> responseBody) throws IOException {
-        this.access = createObjectMapper().readValue(StringUtils.join(responseBody, ""), Access.class);
+    public Access getReturnObject(List<String> responseBody) throws IOException {
+        return createObjectMapper().readValue(StringUtils.join(responseBody, ""), Access.class);
     }
 
     @Override

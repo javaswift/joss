@@ -2,6 +2,7 @@ package nl.t42.openstack.command;
 
 import nl.t42.openstack.model.access.Access;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 
@@ -20,7 +21,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     protected HttpResponse response;
 
-    private AbstractCommand(HttpClient httpClient, String url, String token) {
+    public AbstractCommand(HttpClient httpClient, String url, String token) {
         this.httpClient = httpClient;
         this.request = createRequest(url);
         if (isSecureCall()) {
@@ -42,23 +43,21 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     public N execute() throws IOException {
         response = httpClient.execute(request);
-        if (response.getStatusLine().getStatusCode() != 200) {
+        if (response.getStatusLine().getStatusCode() != successCode()) {
             throw new RuntimeException("Failed to setAuthenticationHeader: "+response.getStatusLine().getStatusCode());
         }
-        convertResponseBody(convertResponseToString(response));
-        return getReturnObject();
+        return getReturnObject(convertResponseToString(response));
     }
 
     protected abstract boolean isSecureCall();
 
     protected abstract M createRequest(String url);
 
-    protected N getReturnObject() {
+    protected N getReturnObject(List<String> responseBody) throws IOException {
         return null; // returns null by default
     }
 
-    protected void convertResponseBody(List<String> responseBody) throws IOException {
-        // empty by default
+    protected int successCode() {
+        return HttpStatus.SC_OK;
     }
-
 }

@@ -9,20 +9,13 @@ import java.util.List;
 
 public class ListContainerCommand extends AbstractCommand<HttpGet, String[]> {
 
-    private List<String> containers;
-
     public ListContainerCommand(HttpClient httpClient, Access access) {
         super(httpClient, access);
     }
 
     @Override
-    protected String[] getReturnObject() {
-        return this.containers.toArray(new String[this.containers.size()]);
-    }
-
-    @Override
-    protected void convertResponseBody(List<String> responseBody) throws IOException {
-        this.containers = responseBody;
+    protected String[] getReturnObject(List<String> responseBody) throws IOException {
+        return responseBody.toArray(new String[responseBody.size()]);
     }
 
     @Override
