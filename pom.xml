@@ -15,11 +15,12 @@
     </organization>
 
     <properties>
+        <commons.lang.version>2.6</commons.lang.version>
+        <commons.io.version>2.3</commons.io.version>
+        <httpcomponents.version>4.2.1</httpcomponents.version>
         <jackson.version>1.9.7</jackson.version>
         <junit.version>4.10</junit.version>
-        <httpcomponents.version>4.2.1</httpcomponents.version>
         <mockito.version>1.9.0</mockito.version>
-        <commons.io.version>2.3</commons.io.version>
     </properties>
 
     <dependencies>
@@ -36,6 +37,13 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpcomponents.version}</version>
+        </dependency>
+
+        <!-- Used for join functionality -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons.lang.version}</version>
         </dependency>
 
         <!-- Used for unit testing -->

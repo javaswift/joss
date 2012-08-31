@@ -16,6 +16,12 @@ public class Main {
 
         OpenStackClient client = new OpenStackClient();
         client.authenticate(username, password, url);
+
+        String[] containers = client.listContainers();
+        for (String container : containers) {
+            System.out.println(container);
+        }
+
     }
 
 }
