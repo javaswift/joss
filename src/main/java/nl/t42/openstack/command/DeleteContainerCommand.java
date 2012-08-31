@@ -22,10 +22,16 @@ public class DeleteContainerCommand extends AbstractCommand<HttpDelete, String[]
         return new HttpDelete(url);
     }
 
+    @Override
     protected void checkHttStatusCode(int httpStatusCode) {
-        if (httpStatusCode >= HttpStatus.SC_OK && httpStatusCode < 300) {
-            throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+        if (httpStatusCode == HttpStatus.SC_NO_CONTENT) {
+            return;
+        } else if (httpStatusCode == HttpStatus.SC_NOT_FOUND) {
+            throw new CommandException(httpStatusCode, CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        } else if (httpStatusCode == HttpStatus.SC_CONFLICT) {
+            throw new CommandException(httpStatusCode, CommandExceptionError.CONTAINER_NOT_EMPTY);
         }
+        throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
     }
 
 }

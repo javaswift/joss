@@ -24,4 +24,14 @@ public class CreateContainerCommand extends AbstractCommand<HttpPut, String[]> {
     protected HttpPut createRequest(String url) {
         return new HttpPut(url);
     }
+
+    @Override
+    protected void checkHttStatusCode(int httpStatusCode) {
+        if (httpStatusCode == HttpStatus.SC_CREATED) {
+            return;
+        } else if (httpStatusCode == HttpStatus.SC_ACCEPTED) {
+            throw new CommandException(httpStatusCode, CommandExceptionError.CONTAINER_ALREADY_EXISTS);
+        }
+        throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+    }
 }

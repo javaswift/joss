@@ -1,7 +1,6 @@
 package nl.t42.openstack.command;
 
 import nl.t42.openstack.BaseCommandTest;
-import nl.t42.openstack.OpenStackClient;
 import nl.t42.openstack.model.access.Access;
 import nl.t42.openstack.util.ClasspathTemplateResource;
 import org.junit.Before;
@@ -32,23 +31,11 @@ public class AuthenticationCommandTest extends BaseCommandTest {
 
     @Test
     public void authenticateFail() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(401);
-        try {
-            new AuthenticationCommand(httpClient, "someurl", "user", "pwd").execute();
-            fail("Should have thrown an exception");
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.UNAUTHORIZED, err.getError());
-        }
+        checkForError(401, new AuthenticationCommand(httpClient, "someurl", "user", "pwd"), CommandExceptionError.UNAUTHORIZED);
     }
 
     @Test
     public void unknownError() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(500);
-        try {
-            new AuthenticationCommand(httpClient, "someurl", "user", "pwd").execute();
-            fail("Should have thrown an exception");
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.UNKNOWN, err.getError());
-        }
+        checkForError(500, new AuthenticationCommand(httpClient, "someurl", "user", "pwd"), CommandExceptionError.UNKNOWN);
     }
 }

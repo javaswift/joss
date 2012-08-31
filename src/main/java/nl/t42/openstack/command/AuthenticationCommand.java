@@ -47,8 +47,7 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
     protected void checkHttStatusCode(int httpStatusCode) {
         if (httpStatusCode == HttpStatus.SC_UNAUTHORIZED) {
             throw new CommandException(httpStatusCode, CommandExceptionError.UNAUTHORIZED);
-        }
-        if (httpStatusCode >= HttpStatus.SC_OK && httpStatusCode < 300) {
+        } else if (httpStatusCode >= HttpStatus.SC_OK && httpStatusCode < 300) {
             return;
         }
         throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
