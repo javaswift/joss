@@ -21,8 +21,11 @@ public class CommandUtil {
     }
 
     protected static List<String> convertResponseToString(HttpResponse response) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
         List<String> responseString = new ArrayList<String>();
+        if (response.getEntity() == null) {
+            return responseString;
+        }
+        BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
         String output;
         while ((output = br.readLine()) != null) {
             responseString.add(output);

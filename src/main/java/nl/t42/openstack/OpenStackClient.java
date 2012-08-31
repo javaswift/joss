@@ -2,6 +2,7 @@ package nl.t42.openstack;
 
 import nl.t42.openstack.command.AuthenticationCommand;
 import nl.t42.openstack.command.CreateContainerCommand;
+import nl.t42.openstack.command.DeleteContainerCommand;
 import nl.t42.openstack.command.ListContainerCommand;
 import nl.t42.openstack.model.access.Access;
 import org.apache.http.client.HttpClient;
@@ -32,6 +33,10 @@ public class OpenStackClient {
 
     public void createContainer(String containerName) throws IOException {
         new CreateContainerCommand(httpClient, access, containerName).execute();
+    }
+
+    public void deleteContainer(String containerName) throws IOException {
+        new DeleteContainerCommand(httpClient, access, containerName).execute();
     }
 
     public boolean isAuthenticated() { return this.authenticated; }

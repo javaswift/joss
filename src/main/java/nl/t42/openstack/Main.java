@@ -18,6 +18,7 @@ public class Main {
         client.authenticate(username, password, url);
 
         client.createContainer("Leiden");
+        client.deleteContainer("Leiden");
 
         String[] containers = client.listContainers();
         for (String container : containers) {
