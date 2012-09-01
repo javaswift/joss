@@ -10,3 +10,7 @@ Components of OpenStack and their current level of support in this component:
 * Swift (ObjectStore) - not supported
 * Glance (ImageStore) - not supported
 * Horizon (Dashboard) - not supported
+
+Based on the OpenStack documentation:
+* http://api.openstack.org/
+* http://docs.openstack.org/api/openstack-object-storage/1.0/content/

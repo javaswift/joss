@@ -1,10 +1,10 @@
 package nl.t42.openstack;
 
-import nl.t42.openstack.command.AuthenticationCommand;
-import nl.t42.openstack.command.CreateContainerCommand;
-import nl.t42.openstack.command.DeleteContainerCommand;
-import nl.t42.openstack.command.ListContainersCommand;
-import nl.t42.openstack.model.access.Access;
+import nl.t42.openstack.command.identity.AuthenticationCommand;
+import nl.t42.openstack.command.objectstorage.CreateContainerCommand;
+import nl.t42.openstack.command.objectstorage.DeleteContainerCommand;
+import nl.t42.openstack.command.objectstorage.ListContainersCommand;
+import nl.t42.openstack.command.identity.access.Access;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 

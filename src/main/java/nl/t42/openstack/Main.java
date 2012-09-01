@@ -9,7 +9,7 @@ public class Main {
             System.out.println("Use syntax: <USERNAME> <PASSWORD> <URL>");
             return;
         }
-        String username = args[0] + "X";
+        String username = args[0];
         String password = args[1];
         String url = args[2];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
