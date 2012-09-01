@@ -1,6 +1,7 @@
 package nl.t42.openstack.command.core;
 
 import nl.t42.openstack.command.identity.access.Access;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -8,6 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ import java.io.StringBufferInputStream;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
+import static nl.t42.openstack.command.objectstorage.ContainerInformationCommand.X_CONTAINER_META_DESCRIPTION;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -55,6 +58,12 @@ public abstract class BaseCommandTest {
         } catch (CommandException err) {
             assertEquals(expectedError, err.getError());
         }
+    }
+
+    protected void prepareHeader(HttpResponse response, String name, String value) {
+        Header header = Mockito.mock(Header.class);
+        when(header.getValue()).thenReturn(value);
+        when(response.getHeaders(name)).thenReturn(new Header[] { header } );
     }
 
 }

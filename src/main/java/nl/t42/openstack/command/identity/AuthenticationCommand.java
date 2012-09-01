@@ -6,14 +6,15 @@ import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.command.identity.authentication.Authentication;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 
 import java.io.IOException;
-import java.util.List;
 
+import static nl.t42.openstack.command.core.CommandUtil.convertResponseToString;
 import static nl.t42.openstack.command.core.CommandUtil.createObjectMapper;
 
 public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
@@ -32,18 +33,13 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
     }
 
     @Override
-    public Access getReturnObject(List<String> responseBody) throws IOException {
-        return createObjectMapper().readValue(StringUtils.join(responseBody, ""), Access.class);
+    public Access getReturnObject(HttpResponse response) throws IOException {
+        return createObjectMapper().readValue(StringUtils.join(convertResponseToString(response), ""), Access.class);
     }
 
     @Override
     protected HttpPost createRequest(String url) {
         return new HttpPost(url);
-    }
-
-    @Override
-    protected boolean isSecureCall() {
-        return false;
     }
 
     @Override

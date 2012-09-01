@@ -5,15 +5,11 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.List;
-
-import static nl.t42.openstack.command.core.CommandUtil.convertResponseToString;
 
 public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> {
-
-    public static String X_AUTH_TOKEN = "X-Auth-Token";
 
     private HttpClient httpClient;
 
@@ -24,9 +20,6 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
     public AbstractCommand(HttpClient httpClient, String url, String token) {
         this.httpClient = httpClient;
         this.request = createRequest(url);
-        if (isSecureCall()) {
-            addToken(token);
-        }
     }
 
     public AbstractCommand(HttpClient httpClient, String url) {
@@ -37,17 +30,13 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
         this(httpClient, access.getInternalURL(), access.getToken());
     }
 
-    private void addToken(String token) {
-        request.addHeader(X_AUTH_TOKEN, token);
-    }
-
     public N execute() throws IOException {
         response = httpClient.execute(request);
         checkHttStatusCode(response.getStatusLine().getStatusCode());
-        return getReturnObject(convertResponseToString(response));
+        N object = getReturnObject(response);
+        EntityUtils.consume(response.getEntity());
+        return object;
     }
-
-    protected abstract boolean isSecureCall();
 
     protected abstract M createRequest(String url);
 
@@ -57,7 +46,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
         }
     }
 
-    protected N getReturnObject(List<String> responseBody) throws IOException {
+    protected N getReturnObject(HttpResponse response) throws IOException {
         return null; // returns null by default
     }
 }
