@@ -1,7 +1,8 @@
 package nl.t42.openstack.command.container;
 
-import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
+import nl.t42.openstack.command.core.HttpStatusChecker;
+import nl.t42.openstack.command.core.HttpStatusMatch;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.Container;
 import org.apache.http.HttpStatus;
@@ -20,15 +21,12 @@ public class DeleteContainerCommand extends AbstractContainerCommand<HttpDelete,
     }
 
     @Override
-    protected void checkHttStatusCode(int httpStatusCode) {
-        if (httpStatusCode == HttpStatus.SC_NO_CONTENT) {
-            return;
-        } else if (httpStatusCode == HttpStatus.SC_NOT_FOUND) {
-            throw new CommandException(httpStatusCode, CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
-        } else if (httpStatusCode == HttpStatus.SC_CONFLICT) {
-            throw new CommandException(httpStatusCode, CommandExceptionError.CONTAINER_NOT_EMPTY);
-        }
-        throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+    protected HttpStatusChecker[] getStatusCheckers() {
+        return new HttpStatusChecker[] {
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT), null),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.CONTAINER_DOES_NOT_EXIST),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_CONFLICT), CommandExceptionError.CONTAINER_NOT_EMPTY)
+        };
     }
 
 }

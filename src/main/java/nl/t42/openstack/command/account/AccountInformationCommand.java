@@ -1,8 +1,6 @@
 package nl.t42.openstack.command.account;
 
-import nl.t42.openstack.command.core.AbstractSecureCommand;
-import nl.t42.openstack.command.core.CommandException;
-import nl.t42.openstack.command.core.CommandExceptionError;
+import nl.t42.openstack.command.core.*;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
@@ -45,10 +43,10 @@ public class AccountInformationCommand extends AbstractSecureCommand<HttpHead, A
     }
 
     @Override
-    protected void checkHttStatusCode(int httpStatusCode) {
-        if (httpStatusCode == HttpStatus.SC_NO_CONTENT) {
-            return;
-        }
-        throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+    protected HttpStatusChecker[] getStatusCheckers() {
+        return new HttpStatusChecker[] {
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT), null)
+        };
     }
+
 }

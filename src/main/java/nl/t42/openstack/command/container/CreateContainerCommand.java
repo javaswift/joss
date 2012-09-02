@@ -1,7 +1,8 @@
 package nl.t42.openstack.command.container;
 
-import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
+import nl.t42.openstack.command.core.HttpStatusChecker;
+import nl.t42.openstack.command.core.HttpStatusMatch;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.Container;
 import org.apache.http.HttpStatus;
@@ -20,12 +21,11 @@ public class CreateContainerCommand extends AbstractContainerCommand<HttpPut, Ob
     }
 
     @Override
-    protected void checkHttStatusCode(int httpStatusCode) {
-        if (httpStatusCode == HttpStatus.SC_CREATED) {
-            return;
-        } else if (httpStatusCode == HttpStatus.SC_ACCEPTED) {
-            throw new CommandException(httpStatusCode, CommandExceptionError.CONTAINER_ALREADY_EXISTS);
-        }
-        throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+    protected HttpStatusChecker[] getStatusCheckers() {
+        return new HttpStatusChecker[] {
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_CREATED), null),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_ACCEPTED), CommandExceptionError.CONTAINER_ALREADY_EXISTS)
+        };
     }
+
 }

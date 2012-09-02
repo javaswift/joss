@@ -1,7 +1,8 @@
 package nl.t42.openstack.command.container;
 
-import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
+import nl.t42.openstack.command.core.HttpStatusChecker;
+import nl.t42.openstack.command.core.HttpStatusMatch;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.StoreObject;
@@ -38,12 +39,11 @@ public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, StoreO
     }
 
     @Override
-    protected void checkHttStatusCode(int httpStatusCode) {
-        if (httpStatusCode == HttpStatus.SC_OK || httpStatusCode == HttpStatus.SC_NO_CONTENT) {
-            return;
-        } else if (httpStatusCode == HttpStatus.SC_NOT_FOUND) {
-            throw new CommandException(httpStatusCode, CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
-        }
-        throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+    protected HttpStatusChecker[] getStatusCheckers() {
+        return new HttpStatusChecker[] {
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_OK), null),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT), null),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.CONTAINER_DOES_NOT_EXIST)
+        };
     }
 }

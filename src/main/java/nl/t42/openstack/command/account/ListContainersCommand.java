@@ -1,8 +1,6 @@
 package nl.t42.openstack.command.account;
 
-import nl.t42.openstack.command.core.AbstractSecureCommand;
-import nl.t42.openstack.command.core.CommandException;
-import nl.t42.openstack.command.core.CommandExceptionError;
+import nl.t42.openstack.command.core.*;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.Container;
 import org.apache.http.HttpResponse;
@@ -38,10 +36,11 @@ public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Contai
     }
 
     @Override
-    protected void checkHttStatusCode(int httpStatusCode) {
-        if (httpStatusCode == HttpStatus.SC_OK || httpStatusCode == HttpStatus.SC_NO_CONTENT) {
-            return;
-        }
-        throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+    protected HttpStatusChecker[] getStatusCheckers() {
+        return new HttpStatusChecker[] {
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_OK), null),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT), null)
+        };
     }
+
 }

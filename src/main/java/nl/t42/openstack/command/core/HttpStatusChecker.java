@@ -1,12 +1,15 @@
 package nl.t42.openstack.command.core;
 
-import java.util.List;
+import org.apache.http.HttpStatus;
 
 public class HttpStatusChecker {
 
     private HttpStatusMatcher matcher;
 
     private CommandExceptionError error;
+
+    private static final HttpStatusChecker authorizationMatcher =
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_UNAUTHORIZED), CommandExceptionError.UNAUTHORIZED);
 
     public HttpStatusChecker(final HttpStatusMatcher matcher, final CommandExceptionError error) {
         this.matcher = matcher;
@@ -24,7 +27,8 @@ public class HttpStatusChecker {
         return false;
     }
 
-    public static void verifyCode(List<HttpStatusChecker> checkers, int httpStatusCode) {
+    public static void verifyCode(HttpStatusChecker[] checkers, int httpStatusCode) {
+        authorizationMatcher.isOk(httpStatusCode);
         for (HttpStatusChecker checker : checkers) {
             if (checker.isOk(httpStatusCode)) {
                 return;

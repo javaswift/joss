@@ -10,13 +10,14 @@ import static junit.framework.Assert.assertEquals;
 
 public class HttpStatusCheckerTest {
 
-    private List<HttpStatusChecker> checkers;
+    private HttpStatusChecker[] checkers;
 
     @Before
     public void setUpCheckers() {
-        this.checkers = new ArrayList<HttpStatusChecker>();
-        this.checkers.add(new HttpStatusChecker(new HttpStatusRange(200, 299), null));
-        this.checkers.add(new HttpStatusChecker(new HttpStatusMatch(404), CommandExceptionError.CONTAINER_DOES_NOT_EXIST));
+        List<HttpStatusChecker> tempCheckers = new ArrayList<HttpStatusChecker>();
+        tempCheckers.add(new HttpStatusChecker(new HttpStatusRange(200, 299), null));
+        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(404), CommandExceptionError.CONTAINER_DOES_NOT_EXIST));
+        this.checkers = tempCheckers.toArray(new HttpStatusChecker[tempCheckers.size()]);
     }
 
     @Test

@@ -1,8 +1,6 @@
 package nl.t42.openstack.command.identity;
 
-import nl.t42.openstack.command.core.AbstractCommand;
-import nl.t42.openstack.command.core.CommandException;
-import nl.t42.openstack.command.core.CommandExceptionError;
+import nl.t42.openstack.command.core.*;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.command.identity.authentication.Authentication;
 import org.apache.commons.lang.StringUtils;
@@ -43,13 +41,9 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
     }
 
     @Override
-    protected void checkHttStatusCode(int httpStatusCode) {
-        if (httpStatusCode == HttpStatus.SC_UNAUTHORIZED) {
-            throw new CommandException(httpStatusCode, CommandExceptionError.UNAUTHORIZED);
-        } else if (httpStatusCode >= HttpStatus.SC_OK && httpStatusCode < 300) {
-            return;
-        }
-        throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+    protected HttpStatusChecker[] getStatusCheckers() {
+        return new HttpStatusChecker[] {
+            new HttpStatusChecker(new HttpStatusRange(200, 299), null)
+        };
     }
-
 }

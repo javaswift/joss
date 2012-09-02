@@ -27,7 +27,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     public N execute() throws IOException {
         response = httpClient.execute(request);
-        checkHttStatusCode(response.getStatusLine().getStatusCode());
+        HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
         N object = getReturnObject(response);
         EntityUtils.consume(response.getEntity());
         return object;
@@ -35,11 +35,13 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     protected abstract M createRequest(String url);
 
-    protected void checkHttStatusCode(int httpStatusCode) {
-        if (httpStatusCode != HttpStatus.SC_OK) {
-            throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
-        }
-    }
+    protected abstract HttpStatusChecker[] getStatusCheckers();
+
+//    protected void checkHttStatusCode(int httpStatusCode) {
+//        if (httpStatusCode != HttpStatus.SC_OK) {
+//            throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
+//        }
+//    }
 
     protected N getReturnObject(HttpResponse response) throws IOException {
         return null; // returns null by default
