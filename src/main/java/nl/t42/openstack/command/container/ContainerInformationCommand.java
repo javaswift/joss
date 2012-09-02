@@ -26,7 +26,9 @@ public class ContainerInformationCommand extends AbstractContainerCommand<HttpHe
     @Override
     protected ContainerInformation getReturnObject(HttpResponse response) throws IOException {
         ContainerInformation info = new ContainerInformation();
-        info.setDescription(response.getHeaders(X_CONTAINER_META_DESCRIPTION)[0].getValue());
+        if (response.getHeaders(X_CONTAINER_META_DESCRIPTION).length > 0) {
+            info.setDescription(response.getHeaders(X_CONTAINER_META_DESCRIPTION)[0].getValue());
+        }
         info.setObjectCount(Integer.parseInt(response.getHeaders(X_CONTAINER_OBJECT_COUNT)[0].getValue()));
         info.setBytesUsed(Long.parseLong(response.getHeaders(X_CONTAINER_BYTES_USED)[0].getValue()));
         return info;

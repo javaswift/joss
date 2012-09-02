@@ -35,6 +35,15 @@ public class HttpStatusCheckerTest {
     }
 
     @Test
+    public void unauthorizedError() {
+        try {
+            HttpStatusChecker.verifyCode(checkers, 401);
+        } catch (CommandException err) {
+            assertEquals(CommandExceptionError.UNAUTHORIZED, err.getError());
+        }
+    }
+
+    @Test
     public void unknownError() {
         try {
             HttpStatusChecker.verifyCode(checkers, 500);

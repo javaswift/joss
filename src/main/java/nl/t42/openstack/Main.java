@@ -27,18 +27,18 @@ public class Main {
 //        System.out.println("Objects in use: "+accountInformation.getObjectCount());
 //        System.out.println("Bytes used: "+accountInformation.getBytesUsed());
 
-        StoreObject objects[] = client.listObjects(new Container("Tilburg"));
-        for (StoreObject object : objects) {
-            System.out.println("* object -> "+object);
-        }
+//        StoreObject objects[] = client.listObjects(new Container("Tilburg"));
+//        for (StoreObject object : objects) {
+//            System.out.println("* object -> "+object);
+//        }
 
 //        client.createContainer(new Container("Leiden"));
 //        client.deleteContainer(new Container("Leiden"));
 
-//        ContainerInformation info = client.getContainerInformation(new Container("Tilburg"));
-//        System.out.println("Object count: "+info.getObjectCount());
-//        System.out.println("Bytes used: "+info.getBytesUsed());
-//        System.out.println("Description: "+info.getDescription());
+        ContainerInformation info = client.getContainerInformation(new Container("Breda"));
+        System.out.println("Object count: "+info.getObjectCount());
+        System.out.println("Bytes used: "+info.getBytesUsed());
+        System.out.println("Description: "+info.getDescription());
 //
 //        Container[] containers = client.listContainers();
 //        for (Container container : containers) {

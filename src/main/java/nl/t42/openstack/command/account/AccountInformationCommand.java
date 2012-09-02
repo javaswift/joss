@@ -3,19 +3,12 @@ package nl.t42.openstack.command.account;
 import nl.t42.openstack.command.core.*;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.AccountInformation;
-import nl.t42.openstack.model.Container;
-import nl.t42.openstack.model.ContainerInformation;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static nl.t42.openstack.command.core.CommandUtil.convertResponseToString;
 
 public class AccountInformationCommand extends AbstractSecureCommand<HttpHead, AccountInformation> {
 
