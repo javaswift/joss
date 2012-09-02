@@ -1,6 +1,5 @@
 package nl.t42.openstack.command.core;
 
-import nl.t42.openstack.command.identity.access.Access;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -8,9 +7,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> {
 
@@ -27,10 +23,6 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     public AbstractCommand(HttpClient httpClient, String url) {
         this(httpClient, url, null);
-    }
-
-    public AbstractCommand(HttpClient httpClient, Access access) {
-        this(httpClient, access.getInternalURL(), access.getToken());
     }
 
     public N execute() throws IOException {

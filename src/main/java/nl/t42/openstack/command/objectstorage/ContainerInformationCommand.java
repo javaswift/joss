@@ -13,14 +13,14 @@ import org.apache.http.client.methods.HttpHead;
 
 import java.io.IOException;
 
-public class ContainerInformationCommand extends AbstractSecureCommand<HttpHead, ContainerInformation> {
+public class ContainerInformationCommand extends ContainerCommand<HttpHead, ContainerInformation> {
 
     public static final String X_CONTAINER_META_DESCRIPTION = "X-Container-Meta-Description";
     public static final String X_CONTAINER_OBJECT_COUNT     = "X-Container-Object-Count";
     public static final String X_CONTAINER_BYTES_USED       = "X-Container-Bytes-Used";
 
     public ContainerInformationCommand(HttpClient httpClient, Access access, Container container) {
-        super(httpClient, access.getInternalURL() + "/" + container.getName(), access.getToken());
+        super(httpClient, access, container);
     }
 
     @Override
