@@ -1,7 +1,7 @@
 package nl.t42.openstack;
 
-import nl.t42.openstack.command.objectstorage.model.Container;
-import nl.t42.openstack.command.objectstorage.model.ContainerInformation;
+import nl.t42.openstack.model.Container;
+import nl.t42.openstack.model.ContainerInformation;
 
 import java.io.IOException;
 

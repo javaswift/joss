@@ -3,8 +3,8 @@ package nl.t42.openstack;
 import nl.t42.openstack.command.identity.AuthenticationCommand;
 import nl.t42.openstack.command.objectstorage.*;
 import nl.t42.openstack.command.identity.access.Access;
-import nl.t42.openstack.command.objectstorage.model.Container;
-import nl.t42.openstack.command.objectstorage.model.ContainerInformation;
+import nl.t42.openstack.model.Container;
+import nl.t42.openstack.model.ContainerInformation;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 

@@ -2,8 +2,8 @@ package nl.t42.openstack.command.objectstorage;
 
 import nl.t42.openstack.command.core.BaseCommandTest;
 import nl.t42.openstack.command.core.CommandExceptionError;
-import nl.t42.openstack.command.objectstorage.model.Container;
-import nl.t42.openstack.command.objectstorage.model.ContainerInformation;
+import nl.t42.openstack.model.Container;
+import nl.t42.openstack.model.ContainerInformation;
 import org.junit.Before;
 import org.junit.Test;
 

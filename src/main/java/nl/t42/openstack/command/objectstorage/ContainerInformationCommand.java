@@ -1,11 +1,10 @@
 package nl.t42.openstack.command.objectstorage;
 
-import nl.t42.openstack.command.core.AbstractSecureCommand;
 import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.command.identity.access.Access;
-import nl.t42.openstack.command.objectstorage.model.Container;
-import nl.t42.openstack.command.objectstorage.model.ContainerInformation;
+import nl.t42.openstack.model.Container;
+import nl.t42.openstack.model.ContainerInformation;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
