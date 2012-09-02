@@ -1,5 +1,6 @@
-package nl.t42.openstack;
+package nl.t42.openstack.client;
 
+import nl.t42.openstack.client.OpenStackClient;
 import nl.t42.openstack.command.core.BaseCommandTest;
 import nl.t42.openstack.util.ClasspathTemplateResource;
 import org.junit.Before;

@@ -1,5 +1,6 @@
 package nl.t42.openstack;
 
+import nl.t42.openstack.client.OpenStackClient;
 import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.ContainerInformation;

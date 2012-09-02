@@ -1,4 +1,4 @@
-package nl.t42.openstack;
+package nl.t42.openstack.client;
 
 import nl.t42.openstack.command.account.AccountInformationCommand;
 import nl.t42.openstack.command.account.AccountMetadataCommand;
