@@ -1,4 +1,4 @@
-package nl.t42.openstack.command.objectstorage;
+package nl.t42.openstack.command.container;
 
 import nl.t42.openstack.command.core.AbstractSecureCommand;
 import nl.t42.openstack.command.identity.access.Access;

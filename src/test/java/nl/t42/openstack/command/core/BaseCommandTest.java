@@ -18,7 +18,6 @@ import java.io.StringBufferInputStream;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
-import static nl.t42.openstack.command.objectstorage.ContainerInformationCommand.X_CONTAINER_META_DESCRIPTION;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 

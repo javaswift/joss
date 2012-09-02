@@ -1,4 +1,4 @@
-package nl.t42.openstack.command.objectstorage;
+package nl.t42.openstack.command.container;
 
 import nl.t42.openstack.command.core.BaseCommandTest;
 import nl.t42.openstack.command.core.CommandExceptionError;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-import static nl.t42.openstack.command.objectstorage.ContainerInformationCommand.*;
+import static nl.t42.openstack.command.container.ContainerInformationCommand.*;
 
 public class ContainerInformationCommandTest extends BaseCommandTest {
 
