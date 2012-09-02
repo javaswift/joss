@@ -3,6 +3,7 @@ package nl.t42.openstack;
 import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.ContainerInformation;
+import nl.t42.openstack.model.StoreObject;
 
 import java.io.IOException;
 
@@ -21,10 +22,15 @@ public class Main {
         OpenStackClient client = new OpenStackClient();
         client.authenticate(username, password, url);
 
-        AccountInformation accountInformation = client.getAccountInformation();
-        System.out.println("Containers in use: "+accountInformation.getContainerCount());
-        System.out.println("Objects in use: "+accountInformation.getObjectCount());
-        System.out.println("Bytes used: "+accountInformation.getBytesUsed());
+//        AccountInformation accountInformation = client.getAccountInformation();
+//        System.out.println("Containers in use: "+accountInformation.getContainerCount());
+//        System.out.println("Objects in use: "+accountInformation.getObjectCount());
+//        System.out.println("Bytes used: "+accountInformation.getBytesUsed());
+
+        StoreObject objects[] = client.listObjects(new Container("Tilburg"));
+        for (StoreObject object : objects) {
+            System.out.println("* object -> "+object);
+        }
 
 //        client.createContainer(new Container("Leiden"));
 //        client.deleteContainer(new Container("Leiden"));

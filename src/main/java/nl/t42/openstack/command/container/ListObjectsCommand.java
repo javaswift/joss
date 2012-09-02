@@ -1,10 +1,10 @@
-package nl.t42.openstack.command.account;
+package nl.t42.openstack.command.container;
 
-import nl.t42.openstack.command.core.AbstractSecureCommand;
 import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.Container;
+import nl.t42.openstack.model.StoreObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -16,20 +16,20 @@ import java.util.List;
 
 import static nl.t42.openstack.command.core.CommandUtil.convertResponseToString;
 
-public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Container[]> {
+public class ListObjectsCommand extends ContainerCommand<HttpGet, StoreObject[]> {
 
-    public ListContainersCommand(HttpClient httpClient, Access access) {
-        super(httpClient, access);
+    public ListObjectsCommand(HttpClient httpClient, Access access, Container container) {
+        super(httpClient, access, container);
     }
 
     @Override
-    protected Container[] getReturnObject(HttpResponse response) throws IOException {
+    protected StoreObject[] getReturnObject(HttpResponse response) throws IOException {
         List<String> responseBody = convertResponseToString(response);
-        List<Container> containers = new ArrayList<Container>();
-        for (String containerName : responseBody) {
-            containers.add(new Container(containerName));
+        List<StoreObject> storeObjects = new ArrayList<StoreObject>();
+        for (String storeObjectName : responseBody) {
+            storeObjects.add(new StoreObject(storeObjectName));
         }
-        return containers.toArray(new Container[containers.size()]);
+        return storeObjects.toArray(new StoreObject[storeObjects.size()]);
     }
 
     @Override

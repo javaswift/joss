@@ -22,7 +22,7 @@ public class ContainerInformationCommandTest extends BaseCommandTest {
     }
 
     @Test
-    public void createContainerSuccess() throws IOException {
+    public void getInfoSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
         prepareHeader(response, X_CONTAINER_META_DESCRIPTION, "Photo album");
         prepareHeader(response, X_CONTAINER_OBJECT_COUNT, "123");

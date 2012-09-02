@@ -8,6 +8,7 @@ import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.ContainerInformation;
+import nl.t42.openstack.model.StoreObject;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -48,6 +49,10 @@ public class OpenStackClient {
 
     public ContainerInformation getContainerInformation(Container container) throws IOException {
         return new ContainerInformationCommand(httpClient, access, container).execute();
+    }
+
+    public StoreObject[] listObjects(Container container) throws IOException {
+        return new ListObjectsCommand(httpClient, access, container).execute();
     }
 
     public boolean isAuthenticated() { return this.authenticated; }

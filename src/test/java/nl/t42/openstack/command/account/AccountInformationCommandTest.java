@@ -22,7 +22,7 @@ public class AccountInformationCommandTest extends BaseCommandTest {
     }
 
     @Test
-    public void createContainerSuccess() throws IOException {
+    public void getInfoSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
         prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "7");
         prepareHeader(response, X_ACCOUNT_OBJECT_COUNT, "123");
