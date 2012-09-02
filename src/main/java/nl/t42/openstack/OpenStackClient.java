@@ -1,6 +1,7 @@
 package nl.t42.openstack;
 
 import nl.t42.openstack.command.account.AccountInformationCommand;
+import nl.t42.openstack.command.account.AccountMetadataCommand;
 import nl.t42.openstack.command.account.ListContainersCommand;
 import nl.t42.openstack.command.identity.AuthenticationCommand;
 import nl.t42.openstack.command.container.*;
@@ -36,6 +37,10 @@ public class OpenStackClient {
         return new AccountInformationCommand(httpClient, access).execute();
     }
 
+    public void setAccountInformation(Map<String, Object> metadata) throws IOException {
+        new AccountMetadataCommand(httpClient, access, metadata).execute();
+    }
+
     public Container[] listContainers() throws IOException {
         return new ListContainersCommand(httpClient, access).execute();
     }
@@ -52,7 +57,7 @@ public class OpenStackClient {
         return new ContainerInformationCommand(httpClient, access, container).execute();
     }
 
-    public void setContainerMetadata(Container container, Map<String, Object> metadata) throws IOException {
+    public void setContainerInformation(Container container, Map<String, Object> metadata) throws IOException {
         new ContainerMetadataCommand(httpClient, access, container, metadata).execute();
     }
 

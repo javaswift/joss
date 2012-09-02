@@ -24,10 +24,17 @@ public class Main {
         OpenStackClient client = new OpenStackClient();
         client.authenticate(username, password, url);
 
-//        AccountInformation accountInformation = client.getAccountInformation();
-//        System.out.println("Containers in use: "+accountInformation.getContainerCount());
-//        System.out.println("Objects in use: "+accountInformation.getObjectCount());
-//        System.out.println("Bytes used: "+accountInformation.getBytesUsed());
+//        Map<String, Object> metadata = new TreeMap<String, Object>();
+//        metadata.put("Year", "1989");
+//        metadata.put("Owner", "42 BV");
+//        client.setAccountInformation(metadata);
+
+        AccountInformation accountInformation = client.getAccountInformation();
+        System.out.println("Containers in use: "+accountInformation.getContainerCount());
+        System.out.println("Objects in use: "+accountInformation.getObjectCount());
+        System.out.println("Bytes used: "+accountInformation.getBytesUsed());
+        System.out.println("Year: "+accountInformation.getMetadata().get("Year"));
+        System.out.println("Owner: "+accountInformation.getMetadata().get("Owner"));
 
 //        StoreObject objects[] = client.listObjects(new Container("Tilburg"));
 //        for (StoreObject object : objects) {
@@ -41,15 +48,14 @@ public class Main {
 //        metadata.put("Description", "Kantoor Eindhoven, inclusief randgemeenten");
 //        metadata.put("Province", "Noord Brabant");
 //        metadata.put("Country", "Nederland");
-//        client.setContainerMetadata(new Container("Eindhoven"), metadata);
+//        client.setContainerInformation(new Container("Eindhoven"), metadata);
 
-        ContainerInformation info = client.getContainerInformation(new Container("Eindhoven"));
-
-        System.out.println("Object count: "+info.getObjectCount());
-        System.out.println("Bytes used: "+info.getBytesUsed());
-        System.out.println("Description: "+info.getMetadata().get("Description"));
-        System.out.println("Province: "+info.getMetadata().get("Province"));
-        System.out.println("Country: "+info.getMetadata().get("Country"));
+//        ContainerInformation info = client.getContainerInformation(new Container("Eindhoven"));
+//        System.out.println("Object count: "+info.getObjectCount());
+//        System.out.println("Bytes used: "+info.getBytesUsed());
+//        System.out.println("Description: "+info.getMetadata().get("Description"));
+//        System.out.println("Province: "+info.getMetadata().get("Province"));
+//        System.out.println("Country: "+info.getMetadata().get("Country"));
 
 //
 //        Container[] containers = client.listContainers();
