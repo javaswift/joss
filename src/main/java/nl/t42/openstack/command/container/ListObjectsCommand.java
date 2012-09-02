@@ -41,6 +41,8 @@ public class ListObjectsCommand extends ContainerCommand<HttpGet, StoreObject[]>
     protected void checkHttStatusCode(int httpStatusCode) {
         if (httpStatusCode == HttpStatus.SC_OK || httpStatusCode == HttpStatus.SC_NO_CONTENT) {
             return;
+        } else if (httpStatusCode == HttpStatus.SC_NOT_FOUND) {
+            throw new CommandException(httpStatusCode, CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
         }
         throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
     }

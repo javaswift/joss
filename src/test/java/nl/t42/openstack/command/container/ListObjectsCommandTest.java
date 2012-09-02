@@ -29,6 +29,11 @@ public class ListObjectsCommandTest extends BaseCommandTest {
     }
 
     @Test
+    public void containerDoesNotExist() throws IOException {
+        checkForError(404, new ListObjectsCommand(httpClient, defaultAccess, new Container("containername")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+    }
+
+    @Test
     public void unknownError() throws IOException {
         checkForError(500, new ListObjectsCommand(httpClient, defaultAccess, new Container("containername")), CommandExceptionError.UNKNOWN);
     }
