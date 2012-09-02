@@ -20,6 +20,7 @@ public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Contai
 
     public ListContainersCommand(HttpClient httpClient, Access access) {
         super(httpClient, access);
+        request.addHeader("Content-type", "application/json");
     }
 
     @Override

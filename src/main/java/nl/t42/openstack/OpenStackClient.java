@@ -1,9 +1,11 @@
 package nl.t42.openstack;
 
+import nl.t42.openstack.command.account.AccountInformationCommand;
 import nl.t42.openstack.command.account.ListContainersCommand;
 import nl.t42.openstack.command.identity.AuthenticationCommand;
 import nl.t42.openstack.command.container.*;
 import nl.t42.openstack.command.identity.access.Access;
+import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.ContainerInformation;
 import org.apache.http.client.HttpClient;
@@ -28,6 +30,10 @@ public class OpenStackClient {
         this.authenticated = true;
     }
 
+    public AccountInformation getAccountInformation() throws IOException {
+        return new AccountInformationCommand(httpClient, access).execute();
+    }
+
     public Container[] listContainers() throws IOException {
         return new ListContainersCommand(httpClient, access).execute();
     }
@@ -40,7 +46,7 @@ public class OpenStackClient {
         new DeleteContainerCommand(httpClient, access, container).execute();
     }
 
-    public ContainerInformation containerInformation(Container container) throws IOException {
+    public ContainerInformation getContainerInformation(Container container) throws IOException {
         return new ContainerInformationCommand(httpClient, access, container).execute();
     }
 

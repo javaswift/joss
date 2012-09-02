@@ -1,5 +1,6 @@
 package nl.t42.openstack;
 
+import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.ContainerInformation;
 
@@ -20,18 +21,23 @@ public class Main {
         OpenStackClient client = new OpenStackClient();
         client.authenticate(username, password, url);
 
+        AccountInformation accountInformation = client.getAccountInformation();
+        System.out.println("Containers in use: "+accountInformation.getContainerCount());
+        System.out.println("Objects in use: "+accountInformation.getObjectCount());
+        System.out.println("Bytes used: "+accountInformation.getBytesUsed());
+
 //        client.createContainer(new Container("Leiden"));
 //        client.deleteContainer(new Container("Leiden"));
 
-        ContainerInformation info = client.containerInformation(new Container("Tilburg"));
-        System.out.println("Object count: "+info.getObjectCount());
-        System.out.println("Bytes used: "+info.getBytesUsed());
-        System.out.println("Description: "+info.getDescription());
-
-        Container[] containers = client.listContainers();
-        for (Container container : containers) {
-            System.out.println(container);
-        }
+//        ContainerInformation info = client.getContainerInformation(new Container("Tilburg"));
+//        System.out.println("Object count: "+info.getObjectCount());
+//        System.out.println("Bytes used: "+info.getBytesUsed());
+//        System.out.println("Description: "+info.getDescription());
+//
+//        Container[] containers = client.listContainers();
+//        for (Container container : containers) {
+//            System.out.println(container);
+//        }
 
     }
 
