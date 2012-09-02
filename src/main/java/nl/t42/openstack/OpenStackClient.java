@@ -13,6 +13,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class OpenStackClient {
 
@@ -49,6 +50,10 @@ public class OpenStackClient {
 
     public ContainerInformation getContainerInformation(Container container) throws IOException {
         return new ContainerInformationCommand(httpClient, access, container).execute();
+    }
+
+    public void setContainerMetadata(Container container, Map<String, Object> metadata) throws IOException {
+        new ContainerMetadataCommand(httpClient, access, container, metadata).execute();
     }
 
     public StoreObject[] listObjects(Container container) throws IOException {

@@ -1,19 +1,22 @@
 package nl.t42.openstack.model;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public class ContainerInformation {
 
-    private String description;
+    private Map<String, String> metadata = new TreeMap<String, String>();
 
     private int objectCount;
 
     private long bytesUsed;
 
-    public String getDescription() {
-        return description;
+    public void addMetadata(String name, String value) {
+        metadata.put(name, value);
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public Map<String, String> getMetadata() {
+        return this.metadata;
     }
 
     public int getObjectCount() {
@@ -31,4 +34,5 @@ public class ContainerInformation {
     public void setBytesUsed(long bytesUsed) {
         this.bytesUsed = bytesUsed;
     }
+
 }

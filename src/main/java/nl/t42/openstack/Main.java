@@ -6,6 +6,8 @@ import nl.t42.openstack.model.ContainerInformation;
 import nl.t42.openstack.model.StoreObject;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String args[]) throws IOException {
@@ -35,10 +37,20 @@ public class Main {
 //        client.createContainer(new Container("Leiden"));
 //        client.deleteContainer(new Container("Leiden"));
 
-        ContainerInformation info = client.getContainerInformation(new Container("Breda"));
+//        Map<String, Object> metadata = new TreeMap<String, Object>();
+//        metadata.put("Description", "Kantoor Eindhoven, inclusief randgemeenten");
+//        metadata.put("Province", "Noord Brabant");
+//        metadata.put("Country", "Nederland");
+//        client.setContainerMetadata(new Container("Eindhoven"), metadata);
+
+        ContainerInformation info = client.getContainerInformation(new Container("Eindhoven"));
+
         System.out.println("Object count: "+info.getObjectCount());
         System.out.println("Bytes used: "+info.getBytesUsed());
-        System.out.println("Description: "+info.getDescription());
+        System.out.println("Description: "+info.getMetadata().get("Description"));
+        System.out.println("Province: "+info.getMetadata().get("Province"));
+        System.out.println("Country: "+info.getMetadata().get("Country"));
+
 //
 //        Container[] containers = client.listContainers();
 //        for (Container container : containers) {

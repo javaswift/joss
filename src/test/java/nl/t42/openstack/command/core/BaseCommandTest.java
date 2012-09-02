@@ -15,6 +15,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringBufferInputStream;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
@@ -59,10 +60,18 @@ public abstract class BaseCommandTest {
         }
     }
 
-    protected void prepareHeader(HttpResponse response, String name, String value) {
+    protected void prepareHeader(HttpResponse response, String name, String value, List<Header> headers) {
         Header header = Mockito.mock(Header.class);
+        when(header.getName()).thenReturn(name);
         when(header.getValue()).thenReturn(value);
         when(response.getHeaders(name)).thenReturn(new Header[] { header } );
+        if (headers != null) {
+            headers.add(header);
+        }
+    }
+
+    protected void prepareHeader(HttpResponse response, String name, String value) {
+        prepareHeader(response, name, value, null);
     }
 
 }
