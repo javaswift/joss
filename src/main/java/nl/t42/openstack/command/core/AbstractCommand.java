@@ -8,6 +8,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> {
 

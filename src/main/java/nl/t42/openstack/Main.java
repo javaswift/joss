@@ -1,6 +1,7 @@
 package nl.t42.openstack;
 
-import nl.t42.openstack.command.objectstorage.ContainerInformation;
+import nl.t42.openstack.command.objectstorage.model.Container;
+import nl.t42.openstack.command.objectstorage.model.ContainerInformation;
 
 import java.io.IOException;
 
@@ -19,16 +20,16 @@ public class Main {
         OpenStackClient client = new OpenStackClient();
         client.authenticate(username, password, url);
 
-//        client.createContainer("Leiden");
-//        client.deleteContainer("Leiden");
+//        client.createContainer(new Container("Leiden"));
+//        client.deleteContainer(new Container("Leiden"));
 
-        ContainerInformation info = client.containerInformation("Tilburg");
+        ContainerInformation info = client.containerInformation(new Container("Tilburg"));
         System.out.println("Object count: "+info.getObjectCount());
         System.out.println("Bytes used: "+info.getBytesUsed());
         System.out.println("Description: "+info.getDescription());
 
-        String[] containers = client.listContainers();
-        for (String container : containers) {
+        Container[] containers = client.listContainers();
+        for (Container container : containers) {
             System.out.println(container);
         }
 

@@ -3,6 +3,8 @@ package nl.t42.openstack;
 import nl.t42.openstack.command.identity.AuthenticationCommand;
 import nl.t42.openstack.command.objectstorage.*;
 import nl.t42.openstack.command.identity.access.Access;
+import nl.t42.openstack.command.objectstorage.model.Container;
+import nl.t42.openstack.command.objectstorage.model.ContainerInformation;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -25,20 +27,20 @@ public class OpenStackClient {
         this.authenticated = true;
     }
 
-    public String[] listContainers() throws IOException {
+    public Container[] listContainers() throws IOException {
         return new ListContainersCommand(httpClient, access).execute();
     }
 
-    public void createContainer(String containerName) throws IOException {
-        new CreateContainerCommand(httpClient, access, containerName).execute();
+    public void createContainer(Container container) throws IOException {
+        new CreateContainerCommand(httpClient, access, container).execute();
     }
 
-    public void deleteContainer(String containerName) throws IOException {
-        new DeleteContainerCommand(httpClient, access, containerName).execute();
+    public void deleteContainer(Container container) throws IOException {
+        new DeleteContainerCommand(httpClient, access, container).execute();
     }
 
-    public ContainerInformation containerInformation(String containerName) throws IOException {
-        return new ContainerInformationCommand(httpClient, access, containerName).execute();
+    public ContainerInformation containerInformation(Container container) throws IOException {
+        return new ContainerInformationCommand(httpClient, access, container).execute();
     }
 
     public boolean isAuthenticated() { return this.authenticated; }

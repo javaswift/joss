@@ -2,6 +2,7 @@ package nl.t42.openstack.command.objectstorage;
 
 import nl.t42.openstack.command.core.BaseCommandTest;
 import nl.t42.openstack.command.core.CommandExceptionError;
+import nl.t42.openstack.command.objectstorage.model.Container;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,21 +22,21 @@ public class DeleteContainerCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        new DeleteContainerCommand(httpClient, defaultAccess, "containerName").execute();
+        new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")).execute();
     }
 
     @Test
     public void deleteContainerDoesNotExist() throws IOException {
-        checkForError(404, new DeleteContainerCommand(httpClient, defaultAccess, "containerName"), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
     }
 
     @Test
     public void deleteContainerNotEmpty() throws IOException {
-        checkForError(409, new DeleteContainerCommand(httpClient, defaultAccess, "containerName"), CommandExceptionError.CONTAINER_NOT_EMPTY);
+        checkForError(409, new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.CONTAINER_NOT_EMPTY);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new DeleteContainerCommand(httpClient, defaultAccess, "containerName"), CommandExceptionError.UNKNOWN);
+        checkForError(500, new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.UNKNOWN);
     }
 }

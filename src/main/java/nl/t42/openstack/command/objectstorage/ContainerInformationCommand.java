@@ -4,7 +4,8 @@ import nl.t42.openstack.command.core.AbstractSecureCommand;
 import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.command.identity.access.Access;
-import org.apache.http.Header;
+import nl.t42.openstack.command.objectstorage.model.Container;
+import nl.t42.openstack.command.objectstorage.model.ContainerInformation;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -18,8 +19,8 @@ public class ContainerInformationCommand extends AbstractSecureCommand<HttpHead,
     public static final String X_CONTAINER_OBJECT_COUNT     = "X-Container-Object-Count";
     public static final String X_CONTAINER_BYTES_USED       = "X-Container-Bytes-Used";
 
-    public ContainerInformationCommand(HttpClient httpClient, Access access, String containerName) {
-        super(httpClient, access.getInternalURL() + "/" + containerName, access.getToken());
+    public ContainerInformationCommand(HttpClient httpClient, Access access, Container container) {
+        super(httpClient, access.getInternalURL() + "/" + container.getName(), access.getToken());
     }
 
     @Override

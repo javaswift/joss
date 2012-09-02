@@ -1,4 +1,4 @@
-package nl.t42.openstack.command.objectstorage;
+package nl.t42.openstack.command.objectstorage.model;
 
 public class ContainerInformation {
 
