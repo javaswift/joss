@@ -1,7 +1,6 @@
 package nl.t42.openstack.command.core;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
@@ -36,12 +35,6 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
     protected abstract M createRequest(String url);
 
     protected abstract HttpStatusChecker[] getStatusCheckers();
-
-//    protected void checkHttStatusCode(int httpStatusCode) {
-//        if (httpStatusCode != HttpStatus.SC_OK) {
-//            throw new CommandException(httpStatusCode, CommandExceptionError.UNKNOWN);
-//        }
-//    }
 
     protected N getReturnObject(HttpResponse response) throws IOException {
         return null; // returns null by default
