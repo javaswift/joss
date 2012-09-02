@@ -16,7 +16,7 @@ import java.util.List;
 
 import static nl.t42.openstack.command.core.CommandUtil.convertResponseToString;
 
-public class ListObjectsCommand extends ContainerCommand<HttpGet, StoreObject[]> {
+public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, StoreObject[]> {
 
     public ListObjectsCommand(HttpClient httpClient, Access access, Container container) {
         super(httpClient, access, container);

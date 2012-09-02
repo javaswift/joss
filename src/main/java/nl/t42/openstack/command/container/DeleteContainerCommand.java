@@ -8,7 +8,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 
-public class DeleteContainerCommand extends ContainerCommand<HttpDelete, String[]> {
+public class DeleteContainerCommand extends AbstractContainerCommand<HttpDelete, String[]> {
 
     public DeleteContainerCommand(HttpClient httpClient, Access access, Container container) {
         super(httpClient, access, container);

@@ -12,7 +12,7 @@ import org.apache.http.client.methods.HttpHead;
 
 import java.io.IOException;
 
-public class ContainerInformationCommand extends ContainerCommand<HttpHead, ContainerInformation> {
+public class ContainerInformationCommand extends AbstractContainerCommand<HttpHead, ContainerInformation> {
 
     public static final String X_CONTAINER_META_DESCRIPTION = "X-Container-Meta-Description";
     public static final String X_CONTAINER_OBJECT_COUNT     = "X-Container-Object-Count";

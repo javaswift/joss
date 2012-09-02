@@ -8,7 +8,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
 
-public class CreateContainerCommand extends ContainerCommand<HttpPut, Object> {
+public class CreateContainerCommand extends AbstractContainerCommand<HttpPut, Object> {
 
     public CreateContainerCommand(HttpClient httpClient, Access access, Container container) {
         super(httpClient, access, container);

@@ -6,9 +6,9 @@ import nl.t42.openstack.model.Container;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 
-public abstract class ContainerCommand<M extends HttpRequestBase, N extends Object> extends AbstractSecureCommand<M, N> {
+public abstract class AbstractContainerCommand<M extends HttpRequestBase, N extends Object> extends AbstractSecureCommand<M, N> {
 
-    public ContainerCommand(HttpClient httpClient, Access access, Container container) {
+    public AbstractContainerCommand(HttpClient httpClient, Access access, Container container) {
         super(httpClient, access.getInternalURL() + "/" + container.getName(), access.getToken());
     }
 }
