@@ -8,9 +8,7 @@ import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.StoreObject;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
@@ -40,20 +38,6 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         request.addHeader(ETAG, hexString);
         System.out.println("MD5: "+hexString);
         request.setEntity(entity);
-
-        System.out.println("\nREQUEST HEADERS");
-        for (Header header : request.getAllHeaders()) {
-            System.out.println(header.getName() + ": " + header.getValue());
-        }
-    }
-
-    @Override
-    protected Object getReturnObject(HttpResponse response) throws IOException {
-        System.out.println("\nRESPONSE HEADERS");
-        for (Header header : response.getAllHeaders()) {
-            System.out.println(header.getName() + ": " + header.getValue());
-        }
-        return null;
     }
 
     @Override
@@ -65,7 +49,9 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_CREATED), null),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_UNPROCESSABLE_ENTITY), CommandExceptionError.MD5_MISMATCH)
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_LENGTH_REQUIRED), CommandExceptionError.MISSING_CONTENT_LENGTH_OR_TYPE),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.CONTAINER_DOES_NOT_EXIST),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_UNPROCESSABLE_ENTITY), CommandExceptionError.MD5_CHECKSUM)
         };
     }
 
