@@ -15,7 +15,6 @@ import java.io.IOException;
 public class CopyObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
 
     public static final String X_COPY_FROM      = "X-Copy-From";
-    public static final String CONTENT_LENGTH   = "Content-Length";
 
     public CopyObjectCommand(HttpClient httpClient, Access access, Container sourceContainer, StoreObject sourceObject,
                              Container targetContainer, StoreObject targetObject) throws IOException {
