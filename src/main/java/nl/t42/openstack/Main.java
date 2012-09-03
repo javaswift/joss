@@ -5,8 +5,9 @@ import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.ContainerInformation;
 import nl.t42.openstack.model.StoreObject;
+import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -30,12 +31,29 @@ public class Main {
 //        metadata.put("Owner", "42 BV");
 //        client.setAccountInformation(metadata);
 
-        AccountInformation accountInformation = client.getAccountInformation();
-        System.out.println("Containers in use: "+accountInformation.getContainerCount());
-        System.out.println("Objects in use: "+accountInformation.getObjectCount());
-        System.out.println("Bytes used: "+accountInformation.getBytesUsed());
-        System.out.println("Year: "+accountInformation.getMetadata().get("Year"));
-        System.out.println("Owner: "+accountInformation.getMetadata().get("Owner"));
+//        AccountInformation accountInformation = client.getAccountInformation();
+//        System.out.println("Containers in use: "+accountInformation.getContainerCount());
+//        System.out.println("Objects in use: "+accountInformation.getObjectCount());
+//        System.out.println("Bytes used: "+accountInformation.getBytesUsed());
+//        System.out.println("Year: "+accountInformation.getMetadata().get("Year"));
+//        System.out.println("Owner: "+accountInformation.getMetadata().get("Owner"));
+
+        ContainerInformation info = client.getContainerInformation(new Container("Tilburg"));
+        System.out.println("\nBEFORE");
+        System.out.println("Object count: "+info.getObjectCount());
+        System.out.println("Bytes used: "+info.getBytesUsed());
+
+//        InputStream inputStream = new FileInputStream(new File("/Users/robertbor/Downloads/dog.png"));
+//        byte[] fileToUpload = IOUtils.toByteArray(inputStream);
+//        inputStream.close();
+//        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog3.png"), fileToUpload);
+        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog2.png"), new File("/Users/robertbor/Downloads/dog.png"));
+
+        ContainerInformation info2 = client.getContainerInformation(new Container("Tilburg"));
+        System.out.println("\nAFTER");
+        System.out.println("Object count: "+info2.getObjectCount());
+        System.out.println("Bytes used: "+info2.getBytesUsed());
+
 
 //        StoreObject objects[] = client.listObjects(new Container("Tilburg"));
 //        for (StoreObject object : objects) {

@@ -6,6 +6,7 @@ import nl.t42.openstack.command.account.ListContainersCommand;
 import nl.t42.openstack.command.identity.AuthenticationCommand;
 import nl.t42.openstack.command.container.*;
 import nl.t42.openstack.command.identity.access.Access;
+import nl.t42.openstack.command.object.UploadObjectCommand;
 import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.ContainerInformation;
@@ -13,7 +14,9 @@ import nl.t42.openstack.model.StoreObject;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 public class OpenStackClient {
@@ -63,6 +66,14 @@ public class OpenStackClient {
 
     public StoreObject[] listObjects(Container container) throws IOException {
         return new ListObjectsCommand(httpClient, access, container).execute();
+    }
+
+    public void uploadObject(Container container, StoreObject target, byte[] fileToUpload) throws IOException {
+        new UploadObjectCommand(httpClient, access, container, target, fileToUpload).execute();
+    }
+
+    public void uploadObject(Container container, StoreObject target, File fileToUpload) throws IOException {
+        new UploadObjectCommand(httpClient, access, container, target, fileToUpload).execute();
     }
 
     public boolean isAuthenticated() { return this.authenticated; }

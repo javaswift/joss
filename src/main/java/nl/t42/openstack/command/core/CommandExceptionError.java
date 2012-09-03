@@ -5,5 +5,6 @@ public enum CommandExceptionError {
     CONTAINER_ALREADY_EXISTS,
     CONTAINER_DOES_NOT_EXIST,
     CONTAINER_NOT_EMPTY,
+    MD5_MISMATCH,
     UNAUTHORIZED
 }
