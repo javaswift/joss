@@ -36,7 +36,6 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         byte[] md5 = DigestUtils.md5(entity.getContent());
         String hexString = new String(Hex.encodeHex(md5));
         request.addHeader(ETAG, hexString);
-        System.out.println("MD5: "+hexString);
         request.setEntity(entity);
     }
 

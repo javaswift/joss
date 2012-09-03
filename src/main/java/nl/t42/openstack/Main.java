@@ -44,12 +44,19 @@ public class Main {
 //        byte[] fileToUpload = IOUtils.toByteArray(inputStream);
 //        inputStream.close();
 //        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog3.png"), fileToUpload);
-//        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog4.png"), new File("/Users/robertbor/Downloads/dog.png"));
+//        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog.png"), new File("/Users/robertbor/Downloads/dog.png"));
 
 //        ContainerInformation info2 = client.getContainerInformation(new Container("Tilburg"));
 //        System.out.println("\nAFTER");
 //        System.out.println("Object count: "+info2.getObjectCount());
 //        System.out.println("Bytes used: "+info2.getBytesUsed());
+
+        Map<String, Object> metadata = new TreeMap<String, Object>();
+        metadata.put("Description", "Kantoor Eindhoven, inclusief randgemeenten");
+        metadata.put("Province", "Noord Brabant");
+        metadata.put("Country", "Nederland");
+        client.setContainerInformation(new Container("Eindhoven"), metadata);
+        client.setObjectInformation(new Container("Tilburg"), new StoreObject("somedog.png"), metadata);
 
         ObjectInformation info = client.getObjectInformation(new Container("Tilburg"), new StoreObject("somedog.png"));
         System.out.println("Last modified:  "+info.getLastModified());

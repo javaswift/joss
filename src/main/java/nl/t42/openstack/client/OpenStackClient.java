@@ -7,6 +7,7 @@ import nl.t42.openstack.command.identity.AuthenticationCommand;
 import nl.t42.openstack.command.container.*;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.command.object.ObjectInformationCommand;
+import nl.t42.openstack.command.object.ObjectMetadataCommand;
 import nl.t42.openstack.command.object.UploadObjectCommand;
 import nl.t42.openstack.model.*;
 import org.apache.http.client.HttpClient;
@@ -76,6 +77,10 @@ public class OpenStackClient {
 
     public ObjectInformation getObjectInformation(Container container, StoreObject object) throws IOException {
         return new ObjectInformationCommand(httpClient, access, container, object).execute();
+    }
+
+    public void setObjectInformation(Container container, StoreObject object, Map<String, Object> metadata) throws IOException {
+        new ObjectMetadataCommand(httpClient, access, container, object, metadata).execute();
     }
 
     public boolean isAuthenticated() { return this.authenticated; }

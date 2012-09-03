@@ -3,6 +3,7 @@ package nl.t42.openstack.command.object;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.command.core.HttpStatusChecker;
 import nl.t42.openstack.command.core.HttpStatusMatch;
+import nl.t42.openstack.command.core.HttpStatusRange;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.ObjectInformation;
@@ -50,8 +51,7 @@ public class ObjectInformationCommand extends AbstractObjectCommand<HttpHead, Ob
     @Override
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_OK), null),
-//            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT), null),
+            new HttpStatusChecker(new HttpStatusRange(200, 299), null),
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST)
         };
     }
