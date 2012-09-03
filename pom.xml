@@ -39,12 +39,6 @@
             <version>${httpcomponents.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-            <version>${httpcomponents.version}</version>
-        </dependency>
-
         <!-- Used for join functionality -->
         <dependency>
             <groupId>commons-lang</groupId>
@@ -68,12 +62,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Used for loading test resources -->
+        <!-- Used for loading test resources and converting a File to byte[] -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons.io.version}</version>
-            <!--<scope>test</scope>-->
         </dependency>
 
     </dependencies>

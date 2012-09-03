@@ -1,10 +1,7 @@
 package nl.t42.openstack;
 
 import nl.t42.openstack.client.OpenStackClient;
-import nl.t42.openstack.model.AccountInformation;
-import nl.t42.openstack.model.Container;
-import nl.t42.openstack.model.ContainerInformation;
-import nl.t42.openstack.model.StoreObject;
+import nl.t42.openstack.model.*;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
@@ -38,22 +35,30 @@ public class Main {
 //        System.out.println("Year: "+accountInformation.getMetadata().get("Year"));
 //        System.out.println("Owner: "+accountInformation.getMetadata().get("Owner"));
 
-        ContainerInformation info = client.getContainerInformation(new Container("Tilburg"));
-        System.out.println("\nBEFORE");
-        System.out.println("Object count: "+info.getObjectCount());
-        System.out.println("Bytes used: "+info.getBytesUsed());
+//        ContainerInformation info = client.getContainerInformation(new Container("Tilburg"));
+//        System.out.println("\nBEFORE");
+//        System.out.println("Object count: "+info.getObjectCount());
+//        System.out.println("Bytes used: "+info.getBytesUsed());
 
 //        InputStream inputStream = new FileInputStream(new File("/Users/robertbor/Downloads/dog.png"));
 //        byte[] fileToUpload = IOUtils.toByteArray(inputStream);
 //        inputStream.close();
 //        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog3.png"), fileToUpload);
-        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog2.png"), new File("/Users/robertbor/Downloads/dog.png"));
+//        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog4.png"), new File("/Users/robertbor/Downloads/dog.png"));
 
-        ContainerInformation info2 = client.getContainerInformation(new Container("Tilburg"));
-        System.out.println("\nAFTER");
-        System.out.println("Object count: "+info2.getObjectCount());
-        System.out.println("Bytes used: "+info2.getBytesUsed());
+//        ContainerInformation info2 = client.getContainerInformation(new Container("Tilburg"));
+//        System.out.println("\nAFTER");
+//        System.out.println("Object count: "+info2.getObjectCount());
+//        System.out.println("Bytes used: "+info2.getBytesUsed());
 
+        ObjectInformation info = client.getObjectInformation(new Container("Tilburg"), new StoreObject("somedog.png"));
+        System.out.println("Last modified:  "+info.getLastModified());
+        System.out.println("ETag:           "+info.getEtag());
+        System.out.println("Content type:   "+info.getContentType());
+        System.out.println("Content length: "+info.getContentLength());
+        for (String key : info.getMetadata().keySet()) {
+            System.out.println("META / "+key+": "+info.getMetadata().get(key));
+        }
 
 //        StoreObject objects[] = client.listObjects(new Container("Tilburg"));
 //        for (StoreObject object : objects) {
