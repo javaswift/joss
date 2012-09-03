@@ -10,7 +10,10 @@ import org.apache.http.client.methods.HttpRequestBase;
 public abstract class AbstractObjectCommand<M extends HttpRequestBase, N extends Object> extends AbstractSecureCommand<M, N> {
 
     public AbstractObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject object) {
-        super(httpClient, access.getInternalURL() + "/" + container.getName() + "/" + object.getName(), access.getToken());
+        super(httpClient, access.getInternalURL() + getObjectPath(container, object), access.getToken());
     }
 
+    protected static String getObjectPath(Container container, StoreObject object) {
+        return "/" + container.getName() + "/" + object.getName();
+    }
 }

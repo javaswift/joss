@@ -45,6 +45,12 @@ public class Main {
 //        inputStream.close();
 //        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog3.png"), fileToUpload);
 
+        Container container = new Container("Tilburg");
+        StoreObject sourceObject = new StoreObject("somedog5.png");
+        StoreObject targetObject = new StoreObject("newdog.png");
+//        client.uploadObject(container, sourceObject, new File("/Users/robertbor/Downloads/dog.png"));
+        client.copyObject(container, sourceObject, container, targetObject);
+
 //        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog5.png"), new File("/Users/robertbor/Downloads/dog.png"));
 //        client.deleteObject(new Container("Tilburg"), new StoreObject("somedog5.png"));
 
