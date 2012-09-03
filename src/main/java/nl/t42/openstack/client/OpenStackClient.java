@@ -6,6 +6,7 @@ import nl.t42.openstack.command.account.ListContainersCommand;
 import nl.t42.openstack.command.identity.AuthenticationCommand;
 import nl.t42.openstack.command.container.*;
 import nl.t42.openstack.command.identity.access.Access;
+import nl.t42.openstack.command.object.DeleteObjectCommand;
 import nl.t42.openstack.command.object.ObjectInformationCommand;
 import nl.t42.openstack.command.object.ObjectMetadataCommand;
 import nl.t42.openstack.command.object.UploadObjectCommand;
@@ -81,6 +82,10 @@ public class OpenStackClient {
 
     public void setObjectInformation(Container container, StoreObject object, Map<String, Object> metadata) throws IOException {
         new ObjectMetadataCommand(httpClient, access, container, object, metadata).execute();
+    }
+
+    public void deleteObject(Container container, StoreObject object) throws IOException {
+        new DeleteObjectCommand(httpClient, access, container, object).execute();
     }
 
     public boolean isAuthenticated() { return this.authenticated; }
