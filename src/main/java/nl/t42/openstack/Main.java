@@ -23,6 +23,9 @@ public class Main {
         OpenStackClient client = new OpenStackClient();
         client.authenticate(username, password, url);
 
+//        client.makeContainerPublic(new Container("Eindhoven"));
+//        client.makeContainerPrivate(new Container("Eindhoven"));
+
 //        Map<String, Object> metadata = new TreeMap<String, Object>();
 //        metadata.put("Year", "1989");
 //        metadata.put("Owner", "42 BV");

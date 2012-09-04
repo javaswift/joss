@@ -13,7 +13,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 
 public class OpenStackClient {
@@ -51,6 +50,14 @@ public class OpenStackClient {
 
     public void deleteContainer(Container container) throws IOException {
         new DeleteContainerCommand(httpClient, access, container).execute();
+    }
+
+    public void makeContainerPublic(Container container) throws IOException {
+        new ContainerRightsCommand(httpClient, access, container, true).execute();
+    }
+
+    public void makeContainerPrivate(Container container) throws IOException {
+        new ContainerRightsCommand(httpClient, access, container, false).execute();
     }
 
     public ContainerInformation getContainerInformation(Container container) throws IOException {

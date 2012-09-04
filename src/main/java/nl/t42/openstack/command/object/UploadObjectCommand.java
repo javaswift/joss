@@ -6,7 +6,6 @@ import nl.t42.openstack.command.core.HttpStatusMatch;
 import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.StoreObject;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;

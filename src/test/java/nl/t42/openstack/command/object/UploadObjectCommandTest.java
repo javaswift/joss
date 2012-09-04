@@ -1,6 +1,5 @@
 package nl.t42.openstack.command.object;
 
-import nl.t42.openstack.command.object.UploadObjectCommand;
 import nl.t42.openstack.command.core.BaseCommandTest;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.model.Container;
