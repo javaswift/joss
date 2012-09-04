@@ -45,11 +45,17 @@ public class Main {
 //        inputStream.close();
 //        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog3.png"), fileToUpload);
 
-        Container container = new Container("Tilburg");
-        StoreObject sourceObject = new StoreObject("somedog5.png");
-        StoreObject targetObject = new StoreObject("newdog.png");
+//        Container container = new Container("Tilburg");
+//        StoreObject sourceObject = new StoreObject("somedog5.png");
+//        StoreObject targetObject = new StoreObject("newdog.png");
 //        client.uploadObject(container, sourceObject, new File("/Users/robertbor/Downloads/dog.png"));
-        client.copyObject(container, sourceObject, container, targetObject);
+//        client.copyObject(container, sourceObject, container, targetObject);
+
+        byte[] plaatje = client.downloadObject(new Container("Tilburg"), new StoreObject("newdog.png"));
+        System.out.println("Grootte plaatje: " + plaatje.length);
+        FileOutputStream fos = new FileOutputStream(new File("plaatje.png"));
+        fos.write(plaatje);
+        fos.close();
 
 //        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog5.png"), new File("/Users/robertbor/Downloads/dog.png"));
 //        client.deleteObject(new Container("Tilburg"), new StoreObject("somedog5.png"));

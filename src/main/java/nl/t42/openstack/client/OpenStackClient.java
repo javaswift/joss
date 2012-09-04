@@ -65,6 +65,10 @@ public class OpenStackClient {
         return new ListObjectsCommand(httpClient, access, container).execute();
     }
 
+    public byte[] downloadObject(Container container, StoreObject object) throws IOException {
+        return new DownloadObjectCommand(httpClient, access, container, object).execute();
+    }
+
     public void uploadObject(Container container, StoreObject target, byte[] fileToUpload) throws IOException {
         new UploadObjectCommand(httpClient, access, container, target, fileToUpload).execute();
     }

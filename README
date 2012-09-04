@@ -5,9 +5,9 @@ Design goals for JOS:
 * on-file storage of objects for visual screening purposes
 
 Components of OpenStack and their current level of support in this component:
-* Keystone (Authentication and authorization) - not supported
+* Keystone (Authentication and authorization) - partially supported
 * Nova (Computing) - not supported
-* Swift (ObjectStore) - not supported
+* Swift (ObjectStore) - SUPPORTED
 * Glance (ImageStore) - not supported
 * Horizon (Dashboard) - not supported
 
