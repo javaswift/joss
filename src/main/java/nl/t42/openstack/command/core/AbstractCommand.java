@@ -24,12 +24,16 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
         this(httpClient, url, null);
     }
 
-    public N execute() throws IOException {
-        response = httpClient.execute(request);
-        HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
-        N object = getReturnObject(response);
-        EntityUtils.consume(response.getEntity());
-        return object;
+    public N execute() {
+        try {
+            response = httpClient.execute(request);
+            HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
+            N object = getReturnObject(response);
+            EntityUtils.consume(response.getEntity());
+            return object;
+        } catch (IOException err) {
+            throw new CommandException(500, CommandExceptionError.UNKNOWN, err);
+        }
     }
 
     protected abstract M createRequest(String url);

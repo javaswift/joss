@@ -17,7 +17,7 @@ public class CopyObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
     public static final String X_COPY_FROM      = "X-Copy-From";
 
     public CopyObjectCommand(HttpClient httpClient, Access access, Container sourceContainer, StoreObject sourceObject,
-                             Container targetContainer, StoreObject targetObject) throws IOException {
+                             Container targetContainer, StoreObject targetObject) {
         super(httpClient, access, targetContainer, targetObject);
         request.addHeader(X_COPY_FROM, getObjectPath(sourceContainer, sourceObject));
     }

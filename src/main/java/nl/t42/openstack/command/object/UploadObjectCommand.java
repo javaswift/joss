@@ -1,5 +1,6 @@
 package nl.t42.openstack.command.object;
 
+import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.command.core.HttpStatusChecker;
 import nl.t42.openstack.command.core.HttpStatusMatch;
@@ -21,14 +22,22 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
 
     public static final String ETAG = "ETag";
 
-    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target, File fileToUpload) throws IOException {
+    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target, File fileToUpload) {
         super(httpClient, access, container, target);
-        prepareUpload(new FileEntity(fileToUpload));
+        try {
+            prepareUpload(new FileEntity(fileToUpload));
+        } catch (IOException err) {
+            throw new CommandException(HttpStatus.SC_INTERNAL_SERVER_ERROR, CommandExceptionError.UNKNOWN, err);
+        }
     }
 
-    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target, byte[] fileToUpload) throws IOException {
+    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target, byte[] fileToUpload) {
         super(httpClient, access, container, target);
-        prepareUpload(new ByteArrayEntity(fileToUpload));
+        try {
+            prepareUpload(new ByteArrayEntity(fileToUpload));
+        } catch (IOException err) {
+            throw new CommandException(HttpStatus.SC_INTERNAL_SERVER_ERROR, CommandExceptionError.UNKNOWN, err);
+        }
     }
 
     protected void prepareUpload(HttpEntity entity) throws IOException {

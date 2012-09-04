@@ -6,6 +6,11 @@ public class CommandException extends RuntimeException {
     private CommandExceptionError error;
 
     public CommandException(int httpStatusCode, CommandExceptionError error) {
+        this(httpStatusCode, error, null);
+    }
+
+    public CommandException(int httpStatusCode, CommandExceptionError error, Throwable rootCause) {
+        super(rootCause);
         this.httpStatusCode = httpStatusCode;
         this.error = error;
     }

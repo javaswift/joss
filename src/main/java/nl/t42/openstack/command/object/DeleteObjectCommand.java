@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class DeleteObjectCommand extends AbstractObjectCommand<HttpDelete, Object> {
 
-    public DeleteObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target) throws IOException {
+    public DeleteObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target) {
         super(httpClient, access, container, target);
     }
 

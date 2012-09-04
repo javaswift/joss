@@ -12,7 +12,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 public class OpenStackClientImpl implements OpenStackClient {
@@ -23,7 +22,7 @@ public class OpenStackClientImpl implements OpenStackClient {
 
     private boolean authenticated = false;
 
-    public void authenticate(String username, String password, String authUrl) throws IOException {
+    public void authenticate(String username, String password, String authUrl) {
 
         this.access = null;
         this.authenticated = false;
@@ -32,75 +31,75 @@ public class OpenStackClientImpl implements OpenStackClient {
         this.authenticated = true;
     }
 
-    public AccountInformation getAccountInformation() throws IOException {
+    public AccountInformation getAccountInformation() {
         return new AccountInformationCommand(httpClient, access).execute();
     }
 
-    public void setAccountInformation(Map<String, Object> metadata) throws IOException {
+    public void setAccountInformation(Map<String, Object> metadata) {
         new AccountMetadataCommand(httpClient, access, metadata).execute();
     }
 
-    public Container[] listContainers() throws IOException {
+    public Container[] listContainers() {
         return new ListContainersCommand(httpClient, access).execute();
     }
 
-    public void createContainer(Container container) throws IOException {
+    public void createContainer(Container container) {
         new CreateContainerCommand(httpClient, access, container).execute();
     }
 
-    public void deleteContainer(Container container) throws IOException {
+    public void deleteContainer(Container container) {
         new DeleteContainerCommand(httpClient, access, container).execute();
     }
 
-    public void makeContainerPublic(Container container) throws IOException {
+    public void makeContainerPublic(Container container) {
         new ContainerRightsCommand(httpClient, access, container, true).execute();
     }
 
-    public void makeContainerPrivate(Container container) throws IOException {
+    public void makeContainerPrivate(Container container) {
         new ContainerRightsCommand(httpClient, access, container, false).execute();
     }
 
-    public ContainerInformation getContainerInformation(Container container) throws IOException {
+    public ContainerInformation getContainerInformation(Container container) {
         return new ContainerInformationCommand(httpClient, access, container).execute();
     }
 
-    public void setContainerInformation(Container container, Map<String, Object> metadata) throws IOException {
+    public void setContainerInformation(Container container, Map<String, Object> metadata) {
         new ContainerMetadataCommand(httpClient, access, container, metadata).execute();
     }
 
-    public StoreObject[] listObjects(Container container) throws IOException {
+    public StoreObject[] listObjects(Container container) {
         return new ListObjectsCommand(httpClient, access, container).execute();
     }
 
-    public byte[] downloadObject(Container container, StoreObject object) throws IOException {
+    public byte[] downloadObject(Container container, StoreObject object) {
         return new DownloadObjectCommand(httpClient, access, container, object).execute();
     }
 
-    public void downloadObject(Container container, StoreObject object, File targetFile) throws IOException {
+    public void downloadObject(Container container, StoreObject object, File targetFile) {
         new DownloadObjectCommand(httpClient, access, container, object, targetFile).execute();
     }
 
-    public void uploadObject(Container container, StoreObject target, byte[] fileToUpload) throws IOException {
+    public void uploadObject(Container container, StoreObject target, byte[] fileToUpload) {
         new UploadObjectCommand(httpClient, access, container, target, fileToUpload).execute();
     }
 
-    public void uploadObject(Container container, StoreObject target, File fileToUpload) throws IOException {
+    public void uploadObject(Container container, StoreObject target, File fileToUpload) {
         new UploadObjectCommand(httpClient, access, container, target, fileToUpload).execute();
     }
 
-    public ObjectInformation getObjectInformation(Container container, StoreObject object) throws IOException {
+    public ObjectInformation getObjectInformation(Container container, StoreObject object) {
         return new ObjectInformationCommand(httpClient, access, container, object).execute();
     }
 
-    public void setObjectInformation(Container container, StoreObject object, Map<String, Object> metadata) throws IOException {
+    public void setObjectInformation(Container container, StoreObject object, Map<String, Object> metadata) {
         new ObjectMetadataCommand(httpClient, access, container, object, metadata).execute();
     }
 
-    public void deleteObject(Container container, StoreObject object) throws IOException {
+    public void deleteObject(Container container, StoreObject object) {
         new DeleteObjectCommand(httpClient, access, container, object).execute();
     }
 
-    public void copyObject(Container sourceContainer, StoreObject sourceObject, Container targetContainer, StoreObject targetObject) throws IOException {
+    public void copyObject(Container sourceContainer, StoreObject sourceObject, Container targetContainer, StoreObject targetObject) {
         new CopyObjectCommand(httpClient, access, sourceContainer, sourceObject, targetContainer, targetObject).execute();
     }
 

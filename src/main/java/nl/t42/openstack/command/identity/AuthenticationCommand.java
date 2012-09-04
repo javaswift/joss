@@ -17,17 +17,21 @@ import static nl.t42.openstack.command.core.CommandUtil.createObjectMapper;
 
 public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
 
-    public AuthenticationCommand(HttpClient httpClient, String url, String username, String password) throws IOException {
+    public AuthenticationCommand(HttpClient httpClient, String url, String username, String password) {
         super(httpClient, url);
         setAuthenticationHeader(username, password);
     }
 
-    private void setAuthenticationHeader(String username, String password) throws IOException {
-        Authentication auth = new Authentication(username, password);
-        String jsonString = createObjectMapper().writeValueAsString(auth);
-        StringEntity input = new StringEntity(jsonString);
-        input.setContentType("application/json");
-        request.setEntity(input);
+    private void setAuthenticationHeader(String username, String password) {
+        try {
+            Authentication auth = new Authentication(username, password);
+            String jsonString = createObjectMapper().writeValueAsString(auth);
+            StringEntity input = new StringEntity(jsonString);
+            input.setContentType("application/json");
+            request.setEntity(input);
+        } catch (IOException err) {
+            throw new CommandException(HttpStatus.SC_INTERNAL_SERVER_ERROR, CommandExceptionError.UNKNOWN, err);
+        }
     }
 
     @Override

@@ -22,11 +22,11 @@ public class DownloadObjectCommand extends AbstractObjectCommand<HttpGet, byte[]
 
     private File targetFile;
 
-    public DownloadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject object) throws IOException {
+    public DownloadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject object) {
         super(httpClient, access, container, object);
     }
 
-    public DownloadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject object, File targetFile) throws IOException {
+    public DownloadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject object, File targetFile) {
         this(httpClient, access, container, object);
         this.targetFile = targetFile;
     }
