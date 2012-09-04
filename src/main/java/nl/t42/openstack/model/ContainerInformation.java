@@ -11,6 +11,8 @@ public class ContainerInformation {
 
     private long bytesUsed;
 
+    private boolean publicContainer;
+
     public void addMetadata(String name, String value) {
         metadata.put(name, value);
     }
@@ -35,4 +37,11 @@ public class ContainerInformation {
         this.bytesUsed = bytesUsed;
     }
 
+    public boolean isPublicContainer() {
+        return publicContainer;
+    }
+
+    public void setPublicContainer(boolean publicContainer) {
+        this.publicContainer = publicContainer;
+    }
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import static nl.t42.openstack.command.container.ContainerInformationCommand.*;
@@ -32,12 +33,14 @@ public class ContainerInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, X_CONTAINER_META_PREFIX + "Year", "1984", headers);
         prepareHeader(response, X_CONTAINER_OBJECT_COUNT, "123", headers);
         prepareHeader(response, X_CONTAINER_BYTES_USED, "654321", headers);
+        prepareHeader(response, X_CONTAINER_READ, ".r:*", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
         ContainerInformation info = new ContainerInformationCommand(httpClient, defaultAccess, new Container("containerName")).execute();
         assertEquals("Photo album", info.getMetadata().get("Description"));
         assertEquals("1984", info.getMetadata().get("Year"));
         assertEquals(123, info.getObjectCount());
         assertEquals(654321, info.getBytesUsed());
+        assertTrue(info.isPublicContainer());
     }
 
     @Test

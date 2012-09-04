@@ -19,6 +19,7 @@ public class ContainerInformationCommand extends AbstractContainerCommand<HttpHe
     public static final String X_CONTAINER_META_PREFIX      = "X-Container-Meta-";
     public static final String X_CONTAINER_OBJECT_COUNT     = "X-Container-Object-Count";
     public static final String X_CONTAINER_BYTES_USED       = "X-Container-Bytes-Used";
+    public static final String X_CONTAINER_READ             = "X-Container-Read";
 
     public ContainerInformationCommand(HttpClient httpClient, Access access, Container container) {
         super(httpClient, access, container);
@@ -32,6 +33,7 @@ public class ContainerInformationCommand extends AbstractContainerCommand<HttpHe
                 info.addMetadata(header.getName().substring(X_CONTAINER_META_PREFIX.length()), header.getValue());
             }
         }
+        info.setPublicContainer(response.getHeaders(X_CONTAINER_READ) != null);
         info.setObjectCount(Integer.parseInt(response.getHeaders(X_CONTAINER_OBJECT_COUNT)[0].getValue()));
         info.setBytesUsed(Long.parseLong(response.getHeaders(X_CONTAINER_BYTES_USED)[0].getValue()));
         return info;
