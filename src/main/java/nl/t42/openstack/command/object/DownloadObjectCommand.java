@@ -21,8 +21,15 @@ public class DownloadObjectCommand extends AbstractObjectCommand<HttpGet, byte[]
     public static final String ETAG             = "ETag";
     public static final String CONTENT_LENGTH   = "Content-Length";
 
+    private File targetFile;
+
     public DownloadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject object) throws IOException {
         super(httpClient, access, container, object);
+    }
+
+    public DownloadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject object, File targetFile) throws IOException {
+        this(httpClient, access, container, object);
+        this.targetFile = targetFile;
     }
 
     @Override
@@ -31,22 +38,32 @@ public class DownloadObjectCommand extends AbstractObjectCommand<HttpGet, byte[]
         int contentLength = Integer.parseInt(response.getHeaders(CONTENT_LENGTH)[0].getValue());
 
         InputStream input = null;
-        ByteArrayOutputStream output = null;
+        OutputStream output = null;
         try {
             input = response.getEntity().getContent();
-            output = new ByteArrayOutputStream(contentLength);
-            byte[] buffer = new byte[1024];
+            output = targetFile == null ? new ByteArrayOutputStream(contentLength) : new FileOutputStream(targetFile);
+            byte[] buffer = new byte[65536];
             for (int length; (length = input.read(buffer)) > 0;) {
                 output.write(buffer, 0, length);
             }
-            byte[] result = output.toByteArray();
-            String realMd5 = new String(Hex.encodeHex(DigestUtils.md5(result)));
+            byte[] result = targetFile == null ? ((ByteArrayOutputStream)output).toByteArray() : new byte[] {};
+            String realMd5 = targetFile == null ? DigestUtils.md5Hex(result) : getMd5OfFile();
             if (!expectedMd5.equals(realMd5)) {
                 throw new CommandException(HttpStatus.SC_UNPROCESSABLE_ENTITY, CommandExceptionError.MD5_CHECKSUM);
             }
             return result;
         } finally {
             if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
+            if (input != null) try { input.close(); } catch (IOException logOrIgnore) {}
+        }
+    }
+
+    protected String getMd5OfFile() throws IOException {
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream(targetFile);
+            return DigestUtils.md5Hex(input);
+        } finally {
             if (input != null) try { input.close(); } catch (IOException logOrIgnore) {}
         }
     }

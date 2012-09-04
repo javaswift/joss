@@ -27,7 +27,7 @@ public class DownloadObjectCommandTest extends BaseCommandTest {
 
     protected void prepareBytes(byte[] bytes, String md5) {
         when(statusLine.getStatusCode()).thenReturn(200);
-        prepareHeader(response, ETAG, md5 == null ? new String(Hex.encodeHex(DigestUtils.md5(bytes))) : md5);
+        prepareHeader(response, ETAG, md5 == null ? DigestUtils.md5Hex(bytes) : md5);
         prepareHeader(response, CONTENT_LENGTH, "3");
         httpEntity = new ByteArrayEntity(bytes);
         when(response.getEntity()).thenReturn(httpEntity);
@@ -44,7 +44,6 @@ public class DownloadObjectCommandTest extends BaseCommandTest {
     @Test
     public void md5Mismatch() throws IOException {
         prepareBytes(new byte[] { 0x01}, "cafebabe"); // non-matching MD5
-
         checkForError(422, new DownloadObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname")), CommandExceptionError.MD5_CHECKSUM);
     }
 

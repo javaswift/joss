@@ -33,9 +33,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
     }
 
     protected void prepareUpload(HttpEntity entity) throws IOException {
-        byte[] md5 = DigestUtils.md5(entity.getContent());
-        String hexString = new String(Hex.encodeHex(md5));
-        request.addHeader(ETAG, hexString);
+        request.addHeader(ETAG, DigestUtils.md5Hex(entity.getContent()));
         request.setEntity(entity);
     }
 
