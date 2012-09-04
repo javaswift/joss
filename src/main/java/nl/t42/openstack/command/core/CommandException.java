@@ -6,13 +6,12 @@ public class CommandException extends RuntimeException {
     private CommandExceptionError error;
 
     public CommandException(int httpStatusCode, CommandExceptionError error) {
-        this(httpStatusCode, error, null);
-    }
-
-    public CommandException(int httpStatusCode, CommandExceptionError error, Throwable rootCause) {
-        super(rootCause);
         this.httpStatusCode = httpStatusCode;
         this.error = error;
+    }
+
+    public CommandException(String message, Throwable rootCause) {
+        super(message, rootCause);
     }
 
     public int getHttpStatusCode() {
@@ -24,6 +23,8 @@ public class CommandException extends RuntimeException {
     }
 
     public String toString() {
-        return "Command exception, HTTP Status code: "+httpStatusCode+" => " + error;
+        return httpStatusCode != 0 && error != null ?
+            "Command exception, HTTP Status code: "+httpStatusCode+" => " + error :
+            super.toString();
     }
 }

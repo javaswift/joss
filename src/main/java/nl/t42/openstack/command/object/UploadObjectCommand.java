@@ -27,7 +27,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         try {
             prepareUpload(new FileEntity(fileToUpload));
         } catch (IOException err) {
-            throw new CommandException(HttpStatus.SC_INTERNAL_SERVER_ERROR, CommandExceptionError.UNKNOWN, err);
+            throw new CommandException("Unable to open the file for uploading: "+fileToUpload.getAbsolutePath(), err);
         }
     }
 
@@ -36,7 +36,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         try {
             prepareUpload(new ByteArrayEntity(fileToUpload));
         } catch (IOException err) {
-            throw new CommandException(HttpStatus.SC_INTERNAL_SERVER_ERROR, CommandExceptionError.UNKNOWN, err);
+            throw new CommandException("Unable to open the byte[] for uploading", err);
         }
     }
 

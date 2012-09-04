@@ -30,7 +30,7 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
             input.setContentType("application/json");
             request.setEntity(input);
         } catch (IOException err) {
-            throw new CommandException(HttpStatus.SC_INTERNAL_SERVER_ERROR, CommandExceptionError.UNKNOWN, err);
+            throw new CommandException("Unable to set the JSON body for the authentication header", err);
         }
     }
 

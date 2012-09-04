@@ -32,7 +32,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
             EntityUtils.consume(response.getEntity());
             return object;
         } catch (IOException err) {
-            throw new CommandException(500, CommandExceptionError.UNKNOWN, err);
+            throw new CommandException("Unable to execute the HTTP call or to convert the HTTP Response", err);
         }
     }
 
