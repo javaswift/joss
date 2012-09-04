@@ -38,10 +38,14 @@ public class Main {
 //        System.out.println("Year: "+accountInformation.getMetadata().get("Year"));
 //        System.out.println("Owner: "+accountInformation.getMetadata().get("Owner"));
 
+        System.out.println("Tilburg: "+client.getContainerInformation(new Container("Tilburg")).isPublicContainer());
+        System.out.println("Breda: "+client.getContainerInformation(new Container("Breda")).isPublicContainer());
+        System.out.println("Eindhoven: "+client.getContainerInformation(new Container("Eindhoven")).isPublicContainer());
+
 //        ContainerInformation info = client.getContainerInformation(new Container("Tilburg"));
-//        System.out.println("\nBEFORE");
 //        System.out.println("Object count: "+info.getObjectCount());
 //        System.out.println("Bytes used: "+info.getBytesUsed());
+//        System.out.println("Public?: "+info.isPublicContainer());
 
 //        InputStream inputStream = new FileInputStream(new File("/Users/robertbor/Downloads/dog.png"));
 //        byte[] fileToUpload = IOUtils.toByteArray(inputStream);

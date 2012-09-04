@@ -33,7 +33,7 @@ public class ContainerInformationCommand extends AbstractContainerCommand<HttpHe
                 info.addMetadata(header.getName().substring(X_CONTAINER_META_PREFIX.length()), header.getValue());
             }
         }
-        info.setPublicContainer(response.getHeaders(X_CONTAINER_READ) != null);
+        info.setPublicContainer(response.getHeaders(X_CONTAINER_READ).length > 0);
         info.setObjectCount(Integer.parseInt(response.getHeaders(X_CONTAINER_OBJECT_COUNT)[0].getValue()));
         info.setBytesUsed(Long.parseLong(response.getHeaders(X_CONTAINER_BYTES_USED)[0].getValue()));
         return info;
