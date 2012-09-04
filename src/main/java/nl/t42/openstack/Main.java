@@ -1,6 +1,7 @@
 package nl.t42.openstack;
 
 import nl.t42.openstack.client.OpenStackClient;
+import nl.t42.openstack.client.OpenStackClientImpl;
 import nl.t42.openstack.model.*;
 import org.apache.commons.io.IOUtils;
 
@@ -20,7 +21,7 @@ public class Main {
         String url = args[2];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        OpenStackClient client = new OpenStackClient();
+        OpenStackClient client = new OpenStackClientImpl();
         client.authenticate(username, password, url);
 
 //        client.makeContainerPublic(new Container("Eindhoven"));
@@ -40,7 +41,7 @@ public class Main {
 
         System.out.println("Tilburg: "+client.getContainerInformation(new Container("Tilburg")).isPublicContainer());
         System.out.println("Breda: "+client.getContainerInformation(new Container("Breda")).isPublicContainer());
-        System.out.println("Eindhoven: "+client.getContainerInformation(new Container("Eindhoven")).isPublicContainer());
+        System.out.println("Eindhoven: " + client.getContainerInformation(new Container("Eindhoven")).isPublicContainer());
 
 //        ContainerInformation info = client.getContainerInformation(new Container("Tilburg"));
 //        System.out.println("Object count: "+info.getObjectCount());

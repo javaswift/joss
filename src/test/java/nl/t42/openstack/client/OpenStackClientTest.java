@@ -25,7 +25,7 @@ public class OpenStackClientTest extends BaseCommandTest {
 
     @Test
     public void authenticateSuccessful() throws IOException {
-        OpenStackClient openStackClient = new OpenStackClient();
+        OpenStackClientImpl openStackClient = new OpenStackClientImpl();
         openStackClient.setHttpClient(httpClient);
         openStackClient.authenticate("user", "pwd", "someurl");
         assertTrue("OpenStack client should have been authenticated", openStackClient.isAuthenticated());
