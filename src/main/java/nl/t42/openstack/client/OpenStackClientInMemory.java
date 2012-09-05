@@ -26,52 +26,52 @@ public class OpenStackClientInMemory implements OpenStackClient {
 
     public AccountInformation getAccountInformation() {
         checkAuthentication();
-        return null;  
+        return account.getInfo();
     }
 
     public void setAccountInformation(Map<String, Object> metadata) {
         checkAuthentication();
-
+        account.setInfo(metadata);
     }
 
     public Container[] listContainers() {
         checkAuthentication();
-        return new Container[0];
+        return account.listContainers();
     }
 
     public void createContainer(Container container) {
         checkAuthentication();
-
+        account.createContainer(container);
     }
 
     public void deleteContainer(Container container) {
         checkAuthentication();
-
+        account.deleteContainer(container);
     }
 
     public void makeContainerPublic(Container container) {
         checkAuthentication();
-
+        account.getContainer(container).makeContainerPublic();
     }
 
     public void makeContainerPrivate(Container container) {
         checkAuthentication();
-
+        account.getContainer(container).makeContainerPrivate();
     }
 
     public ContainerInformation getContainerInformation(Container container) {
         checkAuthentication();
-        return null;
+        return account.getContainer(container).getInfo();
     }
 
     public void setContainerInformation(Container container, Map<String, Object> metadata) {
         checkAuthentication();
-
+        account.getContainer(container).setInfo(metadata);
     }
 
     public StoreObject[] listObjects(Container container) {
         checkAuthentication();
-        return new StoreObject[0];
+        return account.getContainer(container).listObjects();
     }
 
     public byte[] downloadObject(Container container, StoreObject object) {
