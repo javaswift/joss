@@ -1,24 +1,11 @@
 package nl.t42.openstack.model;
 
-import java.util.Map;
-import java.util.TreeMap;
-
-public class ObjectInformation {
-
-    private Map<String, String> metadata = new TreeMap<String, String>();
+public class ObjectInformation extends AbstractInformation {
 
     private String lastModified;
     private String etag;
-    private int contentLength;
+    private long contentLength;
     private String contentType;
-
-    public void addMetadata(String name, String value) {
-        metadata.put(name, value);
-    }
-
-    public Map<String, String> getMetadata() {
-        return this.metadata;
-    }
 
     public String getLastModified() {
         return lastModified;
@@ -36,11 +23,11 @@ public class ObjectInformation {
         this.etag = etag;
     }
 
-    public int getContentLength() {
+    public long getContentLength() {
         return contentLength;
     }
 
-    public void setContentLength(int contentLength) {
+    public void setContentLength(long contentLength) {
         this.contentLength = contentLength;
     }
 

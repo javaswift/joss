@@ -1,25 +1,12 @@
 package nl.t42.openstack.model;
 
-import java.util.Map;
-import java.util.TreeMap;
-
-public class AccountInformation {
-
-    private Map<String, String> metadata = new TreeMap<String, String>();
+public class AccountInformation extends AbstractInformation {
 
     private int containerCount;
 
     private int objectCount;
 
     private long bytesUsed;
-
-    public void addMetadata(String name, String value) {
-        metadata.put(name, value);
-    }
-
-    public Map<String, String> getMetadata() {
-        return this.metadata;
-    }
 
     public int getContainerCount() {
         return containerCount;

@@ -7,7 +7,7 @@ import nl.t42.openstack.mock.MockUserStore;
 import nl.t42.openstack.model.*;
 import org.apache.http.HttpStatus;
 
-import java.io.File;
+import java.io.*;
 import java.util.Map;
 
 public class OpenStackClientInMemory implements OpenStackClient {
@@ -76,37 +76,67 @@ public class OpenStackClientInMemory implements OpenStackClient {
 
     public byte[] downloadObject(Container container, StoreObject object) {
         checkAuthentication();
-        return new byte[0];
+        return account.getContainer(container).getObject(object).getObject();
     }
 
     public void downloadObject(Container container, StoreObject object, File targetFile) {
         checkAuthentication();
-
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new ByteArrayInputStream(downloadObject(container, object));
+            os = new FileOutputStream(targetFile);
+            byte[] buffer = new byte[65536];
+            for (int length; (length = is.read(buffer)) > 0;) {
+                os.write(buffer, 0, length);
+            }
+        } catch (IOException err) {
+            throw new CommandException("IO Failure", err);
+        } finally {
+            if (os != null) try { os.close(); } catch (IOException logOrIgnore) {}
+            if (is != null) try { is.close(); } catch (IOException logOrIgnore) {}
+        }
     }
 
     public void uploadObject(Container container, StoreObject target, byte[] fileToUpload) {
         checkAuthentication();
-
+        account.getContainer(container).getObject(target).saveObject(fileToUpload);
     }
 
     public void uploadObject(Container container, StoreObject target, File fileToUpload) {
         checkAuthentication();
-
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            // When doing a mime type check, this would be the right place to do it
+            is = new FileInputStream(fileToUpload);
+            os = new ByteArrayOutputStream();
+            byte[] buffer = new byte[65536];
+            for (int length; (length = is.read(buffer)) > 0;) {
+                os.write(buffer, 0, length);
+            }
+            uploadObject(container, target, ((ByteArrayOutputStream)os).toByteArray());
+        } catch (IOException err) {
+            throw new CommandException("IO Failure", err);
+        } finally {
+            if (os != null) try { os.close(); } catch (IOException logOrIgnore) {}
+            if (is != null) try { is.close(); } catch (IOException logOrIgnore) {}
+        }
     }
 
     public ObjectInformation getObjectInformation(Container container, StoreObject object) {
         checkAuthentication();
-        return null;
+        return account.getContainer(container).getObject(object).getInfo();
     }
 
     public void setObjectInformation(Container container, StoreObject object, Map<String, Object> metadata) {
         checkAuthentication();
-
+        account.getContainer(container).getObject(object).setInfo(metadata);
     }
 
     public void deleteObject(Container container, StoreObject object) {
         checkAuthentication();
-
+        account.getContainer(container).deleteObject(object);
     }
 
     public void copyObject(Container sourceContainer, StoreObject sourceObject, Container targetContainer, StoreObject targetObject) {

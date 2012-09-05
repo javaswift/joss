@@ -4,13 +4,13 @@ import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
-import nl.t42.openstack.model.StoreObject;
+import nl.t42.openstack.model.ContainerInformation;
 import org.apache.http.HttpStatus;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-public class MockAccount {
+public class MockAccount extends AbstractMock<AccountInformation> {
 
     private Map<Container, MockContainer> containers = new TreeMap<Container, MockContainer>();
 
@@ -22,18 +22,6 @@ public class MockAccount {
             throw new CommandException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
         }
         return foundContainer;
-    }
-
-    public MockObject getObject(Container container, StoreObject object) {
-        MockContainer foundContainer = containers.get(container);
-        if (foundContainer == null) {
-            throw new CommandException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
-        }
-        MockObject foundObject = foundContainer.getObject(object);
-        if (foundObject == null) {
-            throw new CommandException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
-        }
-        return foundObject;
     }
 
     public void createContainer(Container container) {
@@ -62,6 +50,25 @@ public class MockAccount {
             info.addMetadata(metadataKey, metadata.get(metadataKey).toString());
         }
         return info;
+    }
+
+    @Override
+    protected void appendInformation(AccountInformation info) {
+        info.setContainerCount(containers.size());
+        int numberOfObjects = 0;
+        long numberOfBytes = 0;
+        for (MockContainer container : containers.values()) {
+            ContainerInformation containerInformation = container.getInfo();
+            numberOfObjects += containerInformation.getObjectCount();
+            numberOfBytes += containerInformation.getBytesUsed();
+        }
+        info.setObjectCount(numberOfObjects);
+        info.setBytesUsed(numberOfBytes);
+    }
+
+    @Override
+    protected AccountInformation createInformationContainer() {
+        return new AccountInformation();
     }
 
     public void setInfo(Map<String, Object> metadata) {
