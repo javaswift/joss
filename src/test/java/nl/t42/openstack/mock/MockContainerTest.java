@@ -70,6 +70,20 @@ public class MockContainerTest {
         assertEquals(0, container.getNumberOfObjects());
     }
 
+    @Test
+    public void getInfo() {
+        addObject("object1", new byte[] { 0x01, 0x02, 0x03 } );
+        addObject("object2", new byte[] { 0x01, 0x02 } );
+        addObject("object3", new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 } );
+        assertEquals(10, container.getInfo().getBytesUsed());
+        assertEquals(3, container.getInfo().getObjectCount());
+    }
+
+    protected void addObject(String name, byte[] bytes) {
+        MockObject object = container.getOrCreateObject(new StoreObject(name));
+        object.saveObject(bytes);
+    }
+
     protected void addObjects(int times) {
         for (int i = 0; i < times; i++) {
             container.getOrCreateObject(new StoreObject("someobject"+i));
