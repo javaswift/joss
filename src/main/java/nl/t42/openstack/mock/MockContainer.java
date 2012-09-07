@@ -3,7 +3,6 @@ package nl.t42.openstack.mock;
 import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.model.ContainerInformation;
-import nl.t42.openstack.model.ObjectInformation;
 import nl.t42.openstack.model.StoreObject;
 import org.apache.http.HttpStatus;
 
@@ -15,6 +14,15 @@ public class MockContainer extends AbstractMock<ContainerInformation>{
     private Map<StoreObject, MockObject> objects = new TreeMap<StoreObject, MockObject>();
 
     private boolean publicContainer = false;
+
+    public MockObject getOrCreateObject(StoreObject object) {
+        MockObject foundObject = objects.get(object);
+        if (foundObject == null) {
+            foundObject = new MockObject();
+            objects.put(object, foundObject);
+        }
+        return foundObject;
+    }
 
     public MockObject getObject(StoreObject object) {
         MockObject foundObject = objects.get(object);

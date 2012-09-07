@@ -24,12 +24,12 @@ public class MockAccount extends AbstractMock<AccountInformation> {
         return foundContainer;
     }
 
-    public void createContainer(Container container) {
+    public MockContainer createContainer(Container container) {
         MockContainer foundContainer = containers.get(container);
         if (foundContainer != null) {
             throw new CommandException(HttpStatus.SC_ACCEPTED, CommandExceptionError.CONTAINER_ALREADY_EXISTS);
         }
-        containers.put(container, new MockContainer());
+        return containers.put(container, new MockContainer());
     }
 
     public void deleteContainer(Container container) {

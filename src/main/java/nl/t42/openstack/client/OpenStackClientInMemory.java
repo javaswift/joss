@@ -100,7 +100,7 @@ public class OpenStackClientInMemory implements OpenStackClient {
 
     public void uploadObject(Container container, StoreObject target, byte[] fileToUpload) {
         checkAuthentication();
-        account.getContainer(container).getObject(target).saveObject(fileToUpload);
+        account.getContainer(container).getOrCreateObject(target).saveObject(fileToUpload);
     }
 
     public void uploadObject(Container container, StoreObject target, File fileToUpload) {
