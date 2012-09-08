@@ -16,11 +16,17 @@ public class StoreObject implements Comparable {
         return getName();
     }
 
+    public int hashcode() {
+        return getName().hashCode();
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public boolean equals(Object o) {
+        return o instanceof StoreObject && getName().equals(((Container) o).getName());
+    }
+
+    @SuppressWarnings("ConstantConditions")
     public int compareTo(Object o) {
-        if (!(o instanceof StoreObject)) {
-            return 0;
-        }
-        StoreObject compareObject = (StoreObject)o;
-        return getName().compareTo(compareObject.getName());
+        return o instanceof StoreObject ? getName().compareTo(((Container) o).getName()) : -1;
     }
 }
