@@ -1,10 +1,22 @@
-Design goals for JOS:
-* Java-based wrapper library for OpenStack, so REST calls do not have to be made directly
-* option to switch between real (ie, HTTPS target) and mock mode
-* in-memory storage of objects for unit testing purposes
-* on-file storage of objects for visual screening purposes
+JOS provides access to the Container part of the OpenStack API. It is a specialized utility for this purpose.
+You will be able to:
+* access your account
+* handle containers
+* handle objects, including upload and download
 
-Components of OpenStack and their current level of support in this component:
+Generally, Java developers want to be able to isolate their applications from the target servers during
+development, which is why JOS support an in-memory mode. Simply have your application instantiate
+OpenStackClientInMemory (instead of OpenStackClientImpl) and you have a fully fledged in-memory Storage
+container, useful for testing your application on your own development system and isolating your application
+during various test stages.
+
+Design goals for JOS:
++ Java-based wrapper library for OpenStack, so REST calls do not have to be made directly
++ option to switch between real (ie, HTTPS target) and mock mode
++ in-memory storage of objects for unit testing purposes
+/ on-file storage of objects for visual screening purposes
+
+Components of OpenStack and their level of support in this component:
 * Keystone (Authentication and authorization) - partially supported
 * Nova (Computing) - not supported
 * Swift (ObjectStore) - SUPPORTED
