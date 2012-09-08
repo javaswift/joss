@@ -1,6 +1,6 @@
 package nl.t42.openstack.model;
 
-public class Container {
+public class Container implements Comparable {
 
     private String name;
 
@@ -22,12 +22,12 @@ public class Container {
 
     @SuppressWarnings("ConstantConditions")
     public boolean equals(Object o) {
-        return o instanceof StoreObject && getName().equals(((StoreObject) o).getName());
+        return o instanceof Container && getName().equals(((Container) o).getName());
     }
 
     @SuppressWarnings("ConstantConditions")
     public int compareTo(Object o) {
-        return o instanceof StoreObject ? getName().compareTo(((StoreObject) o).getName()) : -1;
+        return o instanceof Container ? getName().compareTo(((Container) o).getName()) : -1;
     }
 
 }

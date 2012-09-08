@@ -29,7 +29,9 @@ public class MockAccount extends AbstractMock<AccountInformation> {
         if (foundContainer != null) {
             throw new CommandException(HttpStatus.SC_ACCEPTED, CommandExceptionError.CONTAINER_ALREADY_EXISTS);
         }
-        return containers.put(container, new MockContainer());
+        foundContainer = new MockContainer();
+        containers.put(container, foundContainer);
+        return foundContainer;
     }
 
     public void deleteContainer(Container container) {

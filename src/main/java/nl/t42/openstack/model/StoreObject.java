@@ -22,11 +22,11 @@ public class StoreObject implements Comparable {
 
     @SuppressWarnings("ConstantConditions")
     public boolean equals(Object o) {
-        return o instanceof StoreObject && getName().equals(((Container) o).getName());
+        return o instanceof StoreObject && getName().equals(((StoreObject) o).getName());
     }
 
     @SuppressWarnings("ConstantConditions")
     public int compareTo(Object o) {
-        return o instanceof StoreObject ? getName().compareTo(((Container) o).getName()) : -1;
+        return o instanceof StoreObject ? getName().compareTo(((StoreObject) o).getName()) : -1;
     }
 }
