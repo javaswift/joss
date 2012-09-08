@@ -4,11 +4,7 @@ You will be able to:
 * handle containers
 * handle objects, including upload and download
 
-Generally, Java developers want to be able to isolate their applications from the target servers during
-development, which is why JOS support an in-memory mode. Simply have your application instantiate
-OpenStackClientInMemory (instead of OpenStackClientImpl) and you have a fully fledged in-memory Storage
-container, useful for testing your application on your own development system and isolating your application
-during various test stages.
+Generally, Java developers want to be able to isolate their applications from the target servers during development, which is why JOS support an in-memory mode. Simply have your application instantiate OpenStackClientInMemory (instead of OpenStackClientImpl) and you have a fully fledged in-memory Storage container, useful for testing your application on your own development system and isolating your application during various test stages.
 
 Design goals for JOS:
 + Java-based wrapper library for OpenStack, so REST calls do not have to be made directly
