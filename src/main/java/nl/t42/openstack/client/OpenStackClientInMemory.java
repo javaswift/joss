@@ -3,6 +3,8 @@ package nl.t42.openstack.client;
 import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.mock.MockAccount;
+import nl.t42.openstack.mock.MockContainer;
+import nl.t42.openstack.mock.MockObject;
 import nl.t42.openstack.mock.MockUserStore;
 import nl.t42.openstack.model.*;
 import org.apache.http.HttpStatus;
@@ -141,7 +143,7 @@ public class OpenStackClientInMemory implements OpenStackClient {
 
     public void copyObject(Container sourceContainer, StoreObject sourceObject, Container targetContainer, StoreObject targetObject) {
         checkAuthentication();
-
+        account.copyObject(sourceContainer, sourceObject, targetContainer, targetObject);
     }
 
     public boolean isAuthenticated() {

@@ -5,6 +5,7 @@ import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.model.AccountInformation;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.ContainerInformation;
+import nl.t42.openstack.model.StoreObject;
 import org.apache.http.HttpStatus;
 
 import java.util.Map;
@@ -52,6 +53,13 @@ public class MockAccount extends AbstractMock<AccountInformation> {
             info.addMetadata(metadataKey, metadata.get(metadataKey).toString());
         }
         return info;
+    }
+
+    public void copyObject(Container sourceContainer, StoreObject sourceObject, Container targetContainer, StoreObject targetObject) {
+        MockObject source = getContainer(sourceContainer).getObject(sourceObject);
+        MockObject target = getContainer(targetContainer).getOrCreateObject(targetObject);
+        byte[] targetContent = source.getObject().clone();
+        target.saveObject(targetContent);
     }
 
     @Override

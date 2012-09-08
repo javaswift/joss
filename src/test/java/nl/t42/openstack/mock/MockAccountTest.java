@@ -98,6 +98,22 @@ public class MockAccountTest {
     }
 
     @Test
+    public void copyObject() {
+        Container containerName = new Container("town1");
+        StoreObject sourceObjectName = new StoreObject("source-object");
+        StoreObject targetObjectName = new StoreObject("target-object");
+        MockAccount account = new MockAccount();
+        MockObject sourceObject = account.createContainer(containerName).getOrCreateObject(sourceObjectName);
+        byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
+        sourceObject.saveObject(bytes);
+        account.copyObject(containerName, sourceObjectName, containerName, targetObjectName);
+        MockObject targetObject = account.getContainer(containerName).getObject(targetObjectName);
+        assertEquals(sourceObject.getObject().length, targetObject.getObject().length);
+        assertEquals(sourceObject.getInfo().getContentLength(), targetObject.getInfo().getContentLength());
+        assertEquals(sourceObject.getInfo().getEtag(), targetObject.getInfo().getEtag());
+    }
+
+    @Test
     public void getInfo() {
         // TO DO
     }
