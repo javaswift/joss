@@ -2,11 +2,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>nl.t42.openstack</groupId>
-    <artifactId>java-openstack</artifactId>
+    <artifactId>joss</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>Java OpenStack</name>
-    <description>Java library for OpenStack</description>
+    <packaging>jar</packaging>
+    <name>Java OpenStack Storage</name>
+    <description>Java Client library for OpenStack Storage (Swift)</description>
     <inceptionYear>2012</inceptionYear>
 
     <organization>
