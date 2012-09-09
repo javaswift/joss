@@ -4,15 +4,14 @@ import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.StoreObject;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.http.HttpResponse;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 
 public class DownloadObjectAsByteArrayCommand extends AbstractDownloadObjectCommand<HttpGet, byte[]> {
-
-    private int contentLength;
 
     private byte[] result;
 
@@ -21,24 +20,17 @@ public class DownloadObjectAsByteArrayCommand extends AbstractDownloadObjectComm
     }
 
     @Override
-    protected byte[] getReturnObject(HttpResponse response) throws IOException {
-        contentLength = Integer.parseInt(response.getHeaders(CONTENT_LENGTH)[0].getValue());
-        return super.getReturnObject(response);
+    protected void handleEntity(HttpEntity entity) throws IOException {
+        result = EntityUtils.toByteArray(entity);
     }
 
     @Override
-    protected OutputStream openOutputStream() throws FileNotFoundException {
-        return new ByteArrayOutputStream(contentLength);
-    }
-
-    @Override
-    protected String getMd5(OutputStream output) throws IOException {
-        result = ((ByteArrayOutputStream)output).toByteArray();
+    protected String getMd5() throws IOException {
         return DigestUtils.md5Hex(result);
     }
 
     @Override
-    protected byte[] getObjectAsReturnObject(OutputStream output) {
+    protected byte[] getObjectAsReturnObject() {
         return result;
     }
 }
