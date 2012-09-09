@@ -3,8 +3,6 @@ package nl.t42.openstack.client;
 import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.mock.MockAccount;
-import nl.t42.openstack.mock.MockContainer;
-import nl.t42.openstack.mock.MockObject;
 import nl.t42.openstack.mock.MockUserStore;
 import nl.t42.openstack.model.*;
 import org.apache.http.HttpStatus;
