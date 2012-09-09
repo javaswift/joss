@@ -73,11 +73,11 @@ public class OpenStackClientImpl implements OpenStackClient {
     }
 
     public byte[] downloadObject(Container container, StoreObject object) {
-        return new DownloadObjectCommand(httpClient, access, container, object).execute();
+        return new DownloadObjectAsByteArrayCommand(httpClient, access, container, object).execute();
     }
 
     public void downloadObject(Container container, StoreObject object, File targetFile) {
-        new DownloadObjectCommand(httpClient, access, container, object, targetFile).execute();
+        new DownloadObjectToFileCommand(httpClient, access, container, object, targetFile).execute();
     }
 
     public void uploadObject(Container container, StoreObject target, InputStream inputStream) {

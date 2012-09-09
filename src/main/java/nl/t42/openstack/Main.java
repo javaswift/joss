@@ -60,15 +60,15 @@ public class Main {
 //        client.uploadObject(container, sourceObject, new File("/Users/robertbor/Downloads/dog.png"));
 //        client.copyObject(container, sourceObject, container, targetObject);
 
-//        byte[] plaatje = client.downloadObject(new Container("Tilburg"), new StoreObject("newdog.png"));
+//        byte[] plaatje = client.downloadObject(new Container("Tilburg"), new StoreObject("doggie.png"));
 //        System.out.println("Grootte plaatje: " + plaatje.length);
 //        FileOutputStream fos = new FileOutputStream(new File("plaatje.png"));
 //        fos.write(plaatje);
 //        fos.close();
 
-//        client.downloadObject(new Container("Tilburg"), new StoreObject("newdog.png"), new File("plaatje2.png"));
+        client.downloadObject(new Container("Tilburg"), new StoreObject("doggie.png"), new File("plaatje2.png"));
 
-        uploadFile(client, "Tilburg", "doggie.png", new File("/Users/robertbor/Downloads/dog.png"));
+//        uploadFile(client, "Tilburg", "doggie.png", new File("/Users/robertbor/Downloads/dog.png"));
 //        client.uploadObject(new Container("Tilburg"), new StoreObject("doggie.png"), new File("/Users/robertbor/Downloads/dog.png"));
 //        client.deleteObject(new Container("Tilburg"), new StoreObject("somedog5.png"));
 
