@@ -4,6 +4,7 @@ import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.model.Container;
 import nl.t42.openstack.model.StoreObject;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -21,18 +22,12 @@ public class DownloadObjectToFileCommand extends AbstractDownloadObjectCommand<H
 
     @Override
     protected void handleEntity(HttpEntity entity) throws IOException {
-        InputStream input = null;
         OutputStream output = null;
         try {
-            input = entity.getContent();
             output = new FileOutputStream(targetFile);
-            byte[] buffer = new byte[65536];
-            for (int length; (length = input.read(buffer)) > 0;) {
-                output.write(buffer, 0, length);
-            }
+            IOUtils.copy(entity.getContent(), new FileOutputStream(targetFile));
         } finally {
             if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
-            if (input != null) try { input.close(); } catch (IOException logOrIgnore) {}
         }
     }
 
