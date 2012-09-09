@@ -81,7 +81,7 @@ public class MockContainerTest {
 
     protected void addObject(String name, byte[] bytes) {
         MockObject object = container.getOrCreateObject(new StoreObject(name));
-        object.saveObject(bytes);
+        object.saveObject(new StoreObject("file.txt"), bytes);
     }
 
     protected void addObjects(int times) {

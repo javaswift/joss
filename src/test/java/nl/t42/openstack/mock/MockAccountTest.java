@@ -79,7 +79,7 @@ public class MockAccountTest {
         MockContainer container = account.createContainer(containerName);
         StoreObject objectName = new StoreObject("somefile");
         MockObject object = container.getOrCreateObject(objectName);
-        object.saveObject(new byte[] { 0x01, 0x02, 0x03 });
+        object.saveObject(new StoreObject("file.txt"), new byte[] { 0x01, 0x02, 0x03 });
         try {
             account.deleteContainer(containerName);
             fail("Should have thrown an exception");
@@ -105,7 +105,7 @@ public class MockAccountTest {
         MockAccount account = new MockAccount();
         MockObject sourceObject = account.createContainer(containerName).getOrCreateObject(sourceObjectName);
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
-        sourceObject.saveObject(bytes);
+        sourceObject.saveObject(new StoreObject("file.txt"), bytes);
         account.copyObject(containerName, sourceObjectName, containerName, targetObjectName);
         MockObject targetObject = account.getContainer(containerName).getObject(targetObjectName);
         assertEquals(sourceObject.getObject().length, targetObject.getObject().length);

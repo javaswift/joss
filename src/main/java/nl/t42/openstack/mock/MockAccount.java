@@ -59,7 +59,7 @@ public class MockAccount extends AbstractMock<AccountInformation> {
         MockObject source = getContainer(sourceContainer).getObject(sourceObject);
         MockObject target = getContainer(targetContainer).getOrCreateObject(targetObject);
         byte[] targetContent = source.getObject().clone();
-        target.saveObject(targetContent);
+        target.saveObject(targetObject, targetContent);
     }
 
     @Override
