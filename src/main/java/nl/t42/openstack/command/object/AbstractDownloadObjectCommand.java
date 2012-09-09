@@ -14,7 +14,7 @@ import org.apache.http.client.methods.HttpGet;
 
 import java.io.*;
 
-public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends Object> extends AbstractObjectCommand<HttpGet, N> {
+public abstract class AbstractDownloadObjectCommand<M, N> extends AbstractObjectCommand<HttpGet, Object> {
 
     public static final String ETAG             = "ETag";
     public static final String CONTENT_LENGTH   = "Content-Length";
