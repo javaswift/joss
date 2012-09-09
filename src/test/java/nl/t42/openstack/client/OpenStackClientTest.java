@@ -3,12 +3,12 @@ package nl.t42.openstack.client;
 import nl.t42.openstack.client.OpenStackClient;
 import nl.t42.openstack.command.core.BaseCommandTest;
 import nl.t42.openstack.util.ClasspathTemplateResource;
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringBufferInputStream;
 
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.when;
@@ -19,7 +19,7 @@ public class OpenStackClientTest extends BaseCommandTest {
     public void setup() throws IOException {
         super.setup();
         String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
-        InputStream inputStream = new StringBufferInputStream(jsonString);
+        InputStream inputStream = IOUtils.toInputStream(jsonString);
         when(httpEntity.getContent()).thenReturn(inputStream);
     }
 

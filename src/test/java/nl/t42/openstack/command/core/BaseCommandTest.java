@@ -1,6 +1,7 @@
 package nl.t42.openstack.command.core;
 
 import nl.t42.openstack.command.identity.access.Access;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,7 +15,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringBufferInputStream;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -41,7 +41,7 @@ public abstract class BaseCommandTest {
     protected StatusLine statusLine;
 
     public void setup() throws IOException {
-        InputStream inputStream = new StringBufferInputStream("");
+        InputStream inputStream = IOUtils.toInputStream("");
         when(defaultAccess.getInternalURL()).thenReturn("http://someurl.nowhere");
         when(httpEntity.getContent()).thenReturn(inputStream);
         when(response.getEntity()).thenReturn(httpEntity);
