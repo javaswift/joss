@@ -3,16 +3,37 @@
 
     <groupId>nl.t42.openstack</groupId>
     <artifactId>joss</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
     <name>Java OpenStack Storage</name>
     <description>Java Client library for OpenStack Storage (Swift)</description>
     <inceptionYear>2012</inceptionYear>
+    <url>https://github.com/java-openstack/joss</url>
 
     <organization>
         <name>42 BV</name>
         <url>http://www.42.nl/</url>
     </organization>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/java-openstack/joss.git</url>
+        <connection>https://github.com/java-openstack/joss.git</connection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Robert Bor</name>
+            <organization>42</organization>
+        </developer>
+    </developers>
 
     <properties>
         <commons.lang.version>2.6</commons.lang.version>
