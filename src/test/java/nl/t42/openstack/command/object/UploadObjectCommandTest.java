@@ -7,7 +7,9 @@ import nl.t42.openstack.model.StoreObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static org.mockito.Mockito.when;
 
@@ -19,9 +21,17 @@ public class UploadObjectCommandTest extends BaseCommandTest {
     }
 
     @Test
-    public void createContainerSuccess() throws IOException {
+    public void uploadByteArray() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
         new UploadObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname"), new byte[] {}).execute();
+    }
+
+    @Test
+    public void uploadInputStream() throws IOException {
+        when(statusLine.getStatusCode()).thenReturn(201);
+        InputStream inputStream = new ByteArrayInputStream(new byte[] { 0x01, 0x02, 0x03 });
+        new UploadObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname"), inputStream).execute();
+        inputStream.close();
     }
 
     @Test

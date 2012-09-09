@@ -3,6 +3,7 @@ package nl.t42.openstack;
 import nl.t42.openstack.client.OpenStackClient;
 import nl.t42.openstack.client.OpenStackClientImpl;
 import nl.t42.openstack.model.*;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
@@ -39,9 +40,9 @@ public class Main {
 //        System.out.println("Year: "+accountInformation.getMetadata().get("Year"));
 //        System.out.println("Owner: "+accountInformation.getMetadata().get("Owner"));
 
-        System.out.println("Tilburg: "+client.getContainerInformation(new Container("Tilburg")).isPublicContainer());
-        System.out.println("Breda: "+client.getContainerInformation(new Container("Breda")).isPublicContainer());
-        System.out.println("Eindhoven: " + client.getContainerInformation(new Container("Eindhoven")).isPublicContainer());
+//        System.out.println("Tilburg: "+client.getContainerInformation(new Container("Tilburg")).isPublicContainer());
+//        System.out.println("Breda: "+client.getContainerInformation(new Container("Breda")).isPublicContainer());
+//        System.out.println("Eindhoven: " + client.getContainerInformation(new Container("Eindhoven")).isPublicContainer());
 
 //        ContainerInformation info = client.getContainerInformation(new Container("Tilburg"));
 //        System.out.println("Object count: "+info.getObjectCount());
@@ -67,7 +68,8 @@ public class Main {
 
 //        client.downloadObject(new Container("Tilburg"), new StoreObject("newdog.png"), new File("plaatje2.png"));
 
-//        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog5.png"), new File("/Users/robertbor/Downloads/dog.png"));
+        uploadFile(client, "Tilburg", "doggie.png", new File("/Users/robertbor/Downloads/dog.png"));
+//        client.uploadObject(new Container("Tilburg"), new StoreObject("doggie.png"), new File("/Users/robertbor/Downloads/dog.png"));
 //        client.deleteObject(new Container("Tilburg"), new StoreObject("somedog5.png"));
 
 //        ContainerInformation info2 = client.getContainerInformation(new Container("Tilburg"));
@@ -118,6 +120,25 @@ public class Main {
 //            System.out.println(container);
 //        }
 
+    }
+
+    public static void uploadFile(OpenStackClient client, String containerName, String objectName, File file) throws IOException {
+        Container container = new Container(containerName);
+        StoreObject object = new StoreObject(objectName);
+
+        // TEST WITH PURE STREAM
+        InputStream inputStream = new FileInputStream(file);
+        client.uploadObject(container, object, inputStream);
+        inputStream.close();
+
+        ObjectInformation info = client.getObjectInformation(container, object);
+        System.out.println("Last modified:  "+info.getLastModified());
+        System.out.println("ETag:           "+info.getEtag());
+        System.out.println("Content type:   "+info.getContentType());
+        System.out.println("Content length: "+info.getContentLength());
+        for (String key : info.getMetadata().keySet()) {
+            System.out.println("META / "+key+": "+info.getMetadata().get(key));
+        }
     }
 
 }

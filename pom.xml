@@ -46,6 +46,13 @@
             <version>${commons.lang.version}</version>
         </dependency>
 
+        <!-- Used for loading test resources and converting a File to byte[] -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons.io.version}</version>
+        </dependency>
+
         <!-- Used for unit testing -->
         <dependency>
             <groupId>junit</groupId>
@@ -60,13 +67,6 @@
             <artifactId>mockito-core</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Used for loading test resources and converting a File to byte[] -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons.io.version}</version>
         </dependency>
 
     </dependencies>

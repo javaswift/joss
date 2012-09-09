@@ -12,6 +12,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Map;
 
 public class OpenStackClientImpl implements OpenStackClient {
@@ -77,6 +78,10 @@ public class OpenStackClientImpl implements OpenStackClient {
 
     public void downloadObject(Container container, StoreObject object, File targetFile) {
         new DownloadObjectCommand(httpClient, access, container, object, targetFile).execute();
+    }
+
+    public void uploadObject(Container container, StoreObject target, InputStream inputStream) {
+        new UploadObjectCommand(httpClient, access, container, target, inputStream).execute();
     }
 
     public void uploadObject(Container container, StoreObject target, byte[] fileToUpload) {

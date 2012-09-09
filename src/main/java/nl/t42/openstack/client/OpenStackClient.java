@@ -3,6 +3,7 @@ package nl.t42.openstack.client;
 import nl.t42.openstack.model.*;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -108,6 +109,14 @@ public interface OpenStackClient {
     * @param targetFile the file to write the object to
     */
     public void downloadObject(Container container, StoreObject object, File targetFile);
+
+    /**
+    * Uploads a byte array object to a location designated by the Container and the object.
+    * @param container the owning Container of the object
+    * @param target the object's name
+    * @param inputStream the actual content that must be uploaded to the object, in InputStream format
+    */
+    public void uploadObject(Container container, StoreObject target, InputStream inputStream);
 
     /**
     * Uploads a byte array object to a location designated by the Container and the object.

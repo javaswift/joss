@@ -14,13 +14,25 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.params.CoreProtocolPNames;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
 
     public static final String ETAG = "ETag";
+
+    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target, InputStream inputStream) {
+        super(httpClient, access, container, target);
+        try {
+            prepareUpload(new InputStreamEntity(inputStream, -1));
+        } catch (IOException err) {
+            throw new CommandException("Unable to open input stream for uploading", err);
+        }
+    }
 
     public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target, File fileToUpload) {
         super(httpClient, access, container, target);
@@ -41,13 +53,17 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
     }
 
     protected void prepareUpload(HttpEntity entity) throws IOException {
-        request.addHeader(ETAG, DigestUtils.md5Hex(entity.getContent()));
+        if (!(entity instanceof InputStreamEntity)) { // reading an InputStream is not a smart idea
+            request.addHeader(ETAG, DigestUtils.md5Hex(entity.getContent()));
+        }
         request.setEntity(entity);
     }
 
     @Override
     protected HttpPut createRequest(String url) {
-        return new HttpPut(url);
+        HttpPut putMethod = new HttpPut(url);
+        putMethod.getParams().setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, true);
+        return putMethod;
     }
 
     @Override

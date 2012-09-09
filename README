@@ -1,5 +1,4 @@
-JOS provides access to the Container part of the OpenStack API. It is a specialized utility for this purpose.
-You will be able to:
+JOS provides access to the Container part of the OpenStack API. It is a specialized utility for this purpose. You will be able to:
 * access your account
 * handle containers
 * handle objects, including upload and download
@@ -11,6 +10,7 @@ Design goals for JOS:
 + option to switch between real (ie, HTTPS target) and mock mode
 + in-memory storage of objects for unit testing purposes
 / on-file storage of objects for visual screening purposes
+/ conversion of on-file objects to OpenStack Storage structure for isolation purposes
 
 Components of OpenStack and their level of support in this component:
 * Keystone (Authentication and authorization) - partially supported
