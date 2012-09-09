@@ -4,8 +4,10 @@ import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
 import nl.t42.openstack.command.object.InputStreamWrapper;
 import nl.t42.openstack.mock.MockAccount;
+import nl.t42.openstack.mock.MockInputStreamWrapper;
 import nl.t42.openstack.mock.MockUserStore;
 import nl.t42.openstack.model.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 
 import java.io.*;
@@ -76,8 +78,7 @@ public class OpenStackClientInMemory implements OpenStackClient {
     }
 
     public InputStreamWrapper downloadObjectAsInputStream(Container container, StoreObject object) {
-        // TODO implement method for downloading to inputstream
-        return null;
+        return new MockInputStreamWrapper(new ByteArrayInputStream(downloadObject(container, object)));
     }
 
     public byte[] downloadObject(Container container, StoreObject object) {
@@ -92,10 +93,7 @@ public class OpenStackClientInMemory implements OpenStackClient {
         try {
             is = new ByteArrayInputStream(downloadObject(container, object));
             os = new FileOutputStream(targetFile);
-            byte[] buffer = new byte[65536];
-            for (int length; (length = is.read(buffer)) > 0;) {
-                os.write(buffer, 0, length);
-            }
+            IOUtils.copy(is, os);
         } catch (IOException err) {
             throw new CommandException("IO Failure", err);
         } finally {
@@ -105,8 +103,11 @@ public class OpenStackClientInMemory implements OpenStackClient {
     }
 
     public void uploadObject(Container container, StoreObject target, InputStream inputStream) {
-        checkAuthentication();
-        // TODO method for uploading inputstream content
+        try {
+            this.uploadObject(container, target, IOUtils.toByteArray(inputStream));
+        } catch (IOException err) {
+            throw new CommandException("Unable to convert inputstream to byte[]", err);
+        }
     }
 
     public void uploadObject(Container container, StoreObject target, byte[] fileToUpload) {

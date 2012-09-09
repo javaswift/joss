@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 public class InputStreamWrapper {
 
-    private InputStream inputStream;
+    protected InputStream inputStream;
 
     private AbstractCommand command;
 
