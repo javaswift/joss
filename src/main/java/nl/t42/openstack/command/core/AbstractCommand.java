@@ -29,11 +29,21 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
             response = httpClient.execute(request);
             HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
             N object = getReturnObject(response);
-            EntityUtils.consume(response.getEntity());
+            if (closeStreamAutomatically()) {
+                closeStream();
+            }
             return object;
         } catch (IOException err) {
             throw new CommandException("Unable to execute the HTTP call or to convert the HTTP Response", err);
         }
+    }
+
+    public void closeStream() throws IOException {
+        EntityUtils.consume(response.getEntity());
+    }
+
+    protected boolean closeStreamAutomatically() {
+        return true;
     }
 
     protected abstract M createRequest(String url);

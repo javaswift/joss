@@ -2,6 +2,7 @@ package nl.t42.openstack;
 
 import nl.t42.openstack.client.OpenStackClient;
 import nl.t42.openstack.client.OpenStackClientImpl;
+import nl.t42.openstack.command.object.InputStreamWrapper;
 import nl.t42.openstack.model.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
@@ -60,13 +61,22 @@ public class Main {
 //        client.uploadObject(container, sourceObject, new File("/Users/robertbor/Downloads/dog.png"));
 //        client.copyObject(container, sourceObject, container, targetObject);
 
-        byte[] plaatje = client.downloadObject(new Container("Tilburg"), new StoreObject("doggie.png"));
-        System.out.println("Grootte plaatje: " + plaatje.length);
-        FileOutputStream fos = new FileOutputStream(new File("plaatje.png"));
-        fos.write(plaatje);
-        fos.close();
+        // DOWNLOAD AN IMAGE TO A BYTE ARRAY AND THEN SAVE IT TO FILE
+//        byte[] plaatje = client.downloadObject(new Container("Tilburg"), new StoreObject("doggie.png"));
+//        System.out.println("Grootte plaatje: " + plaatje.length);
+//        FileOutputStream fos = new FileOutputStream(new File("plaatje.png"));
+//        fos.write(plaatje);
+//        fos.close();
 
-        client.downloadObject(new Container("Tilburg"), new StoreObject("doggie.png"), new File("plaatje2.png"));
+        // DOWNLOAD AN IMAGE TO FILE
+//        client.downloadObject(new Container("Tilburg"), new StoreObject("doggie.png"), new File("plaatje2.png"));
+
+        // DOWNLOAD AN IMAGE TO AN INPUTSTREAM AND SAVE IT TO FILE
+//        InputStreamWrapper wrapper = client.downloadObjectAsInputStream(new Container("Tilburg"), new StoreObject("doggie.png"));
+//        FileOutputStream fos = new FileOutputStream(new File("plaatje.png"));
+//        IOUtils.copy(wrapper.getInputStream(), fos);
+//        fos.close();
+//        wrapper.closeStream(); // Important to clean up the original response object
 
 //        uploadFile(client, "Tilburg", "doggie.png", new File("/Users/robertbor/Downloads/dog.png"));
 //        client.uploadObject(new Container("Tilburg"), new StoreObject("doggie.png"), new File("/Users/robertbor/Downloads/dog.png"));

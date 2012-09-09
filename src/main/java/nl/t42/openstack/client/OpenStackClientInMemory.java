@@ -2,6 +2,7 @@ package nl.t42.openstack.client;
 
 import nl.t42.openstack.command.core.CommandException;
 import nl.t42.openstack.command.core.CommandExceptionError;
+import nl.t42.openstack.command.object.InputStreamWrapper;
 import nl.t42.openstack.mock.MockAccount;
 import nl.t42.openstack.mock.MockUserStore;
 import nl.t42.openstack.model.*;
@@ -72,6 +73,11 @@ public class OpenStackClientInMemory implements OpenStackClient {
     public StoreObject[] listObjects(Container container) {
         checkAuthentication();
         return account.getContainer(container).listObjects();
+    }
+
+    public InputStreamWrapper downloadObjectAsInputStream(Container container, StoreObject object) {
+        // TODO implement method for downloading to inputstream
+        return null;
     }
 
     public byte[] downloadObject(Container container, StoreObject object) {

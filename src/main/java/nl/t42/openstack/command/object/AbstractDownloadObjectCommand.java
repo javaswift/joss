@@ -29,7 +29,8 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
         String expectedMd5 = response.getHeaders(ETAG)[0].getValue();
 
         handleEntity(response.getEntity());
-        if (!expectedMd5.equals(getMd5())) {
+        String realMd5 = getMd5();
+        if (realMd5 != null && !expectedMd5.equals(realMd5)) { // Native Inputstreams are not checked for their MD5
             throw new CommandException(HttpStatus.SC_UNPROCESSABLE_ENTITY, CommandExceptionError.MD5_CHECKSUM);
         }
         return getObjectAsReturnObject();

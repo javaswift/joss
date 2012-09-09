@@ -1,5 +1,6 @@
 package nl.t42.openstack.client;
 
+import nl.t42.openstack.command.object.InputStreamWrapper;
 import nl.t42.openstack.model.*;
 
 import java.io.File;
@@ -92,6 +93,17 @@ public interface OpenStackClient {
     * @return the objects in the Container
     */
     public StoreObject[] listObjects(Container container);
+
+    /**
+    * Fetches the object in a Container in an InputStream. Note that for passing the information on, the
+    * content-type is useful. This information can be found by fetching the object information. <b>BE AWARE</b>
+    * that the original InputStream must be closed after usage, which can be accomplished by calling the
+    * closeStream() method on InputStreamWrapper (which consumes the entire original response).
+    * @param container the owning Container of the object
+    * @param object the object's name
+    * @return the object in an InputStreamWrapper (containing the input stream)
+    */
+    public InputStreamWrapper downloadObjectAsInputStream(Container container, StoreObject object);
 
     /**
     * Fetches the object in a Container in a byte array. Note that for passing the information on, the
