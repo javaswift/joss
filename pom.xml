@@ -12,7 +12,7 @@
 
     <organization>
         <name>42 BV</name>
-        <url>http://www.42.nl/</url>
+        <url>http://blog.42.nl/</url>
     </organization>
 
     <licenses>
@@ -92,4 +92,36 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+
+            <!-- for creating the -source.jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- for creating the -javadoc.jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>
