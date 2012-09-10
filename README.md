@@ -1,6 +1,6 @@
 Java OpenStack Storage (JOSS)
 =============================
-JOSS is a Java client for the [OpenStack Storage component](http://docs.openstack.org/essex/openstack-object-storage/admin/content/ch_introduction-to-openstack-object-storage.html) REST interface. In order to use it you, must have an account with an OpenStack Storage provider, such as the [CloudVPS Object Store](https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/).
+JOSS is a Java client for the [OpenStack Storage component](http://docs.openstack.org/essex/openstack-object-storage/admin/content/ch_introduction-to-openstack-object-storage.html) REST interface. In order to use it you must have an account with an OpenStack Storage provider, such as the [CloudVPS Object Store](https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/).
 
 In order to use JOSS in your project, simply add the following dependency:
 
@@ -153,9 +153,22 @@ Things JOSS can do for you:
 Things to do for JOSS:
 * reading of a single directory structure and based on that, building up an in-memory Object Store
 * on-file storage of objects for visual screening purposes
-* conversion of on-file objects to OpenStack Storage structure for isolation purposes
 * fine-grained control of container authentication settings
 * introduction of Tenants
+
+License
+-------
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
 
 More information
 ----------------
@@ -163,3 +176,11 @@ More information
 * http://docs.openstack.org/api/openstack-object-storage/1.0/content/
 * http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/
 * https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/
+
+Keep up to date on the library development by joining the Java OpenStack Storage discussion group [Google Group](https://groups.google.com/forum/?fromgroups#!forum/java-openstack-storage---joss)
+
+or follow us on [Twitter](http://twitter.com/robert_bor)
+
+Sponsor
+-------
+This component was graciously donated by [42 BV](http://www.42.nl) [42 logo](http://www.42.nl/images/42-54x59.png "42")
