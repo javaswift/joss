@@ -81,7 +81,7 @@ It is time to download what you just uploaded. Here we go.
    client.downloadObject(container, object, new File("/dog2.png"));
 ```
 
-Open the file "/dog2.png" on the file system to verify that the operation worked.
+Open the file "/dog2.png" on the file system to verify that the operation worked. Again, also File and InputStream are at your disposal. *On using InputStream be aware that you are responsible for closing the stream here, by calling close() on the wrapper*.
 
 Now, if you want the object to be retrievable through another URL, you will have to move the object. This is accomplished by executing first a copy, then a delete action.
 
@@ -114,9 +114,28 @@ Likewise, this information can be retrieved, as seen above.
     }
 ```
 
+There are many situations in which it is not necessary, not possible, or even plain clumsy, to be connected to external dependencies. For those situations, JOSS offers the InMemory implementation of the OpenStackClient.
 
-Introduction
-------------
+```java
+    OpenStackClient client = new OpenStackClientInMemory();
+```
+
+All the operations work basically in the same way. It is possible to run the in-memory client and have it hold the resources for a local run of your application. *Note that there is no such thing as a public URL for the in-memory run*.
+
+Note that you will have to add some users to authenticate against.
+
+```java
+    MockUserStore users = new MockUserStore();
+    users.addUser("testuser", "testpassword");
+    client.setUsers(users);
+```
+
+Presumably, you are using Spring or something similar, in which case it will be easy to configure your profiles to either use the real client or the mock client.
+
+This wraps up the tutorial. Good luck using JOSS.
+
+Background
+----------
 JOSS provides access to the Container part of the OpenStack API. It is a specialized utility for this purpose. You will be able to:
 * access your account
 * handle containers
