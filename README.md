@@ -6,7 +6,7 @@ In order to use JOSS in your project, simply add the following dependency:
 
 ```xml
         <dependency>
-            <groupId>nl.t42.openstack</groupId>
+            <groupId>nl.tweeenveertig.openstack</groupId>
             <artifactId>joss</artifactId>
             <version>0.1.0</version>
         </dependency>
@@ -59,7 +59,9 @@ Now it is time to upload a file to the Object Store. In this example, we take an
 
 Note that *object* denotes the target of the file within the Object Store, whereas the file signifies the actual content that needs to be uploaded.
 
-If you fire up your browser, you can navigate to the public URL to see your resource for real. You can also check whether the upload succeeded by listing the objects in a container or by fetching the object information.
+If you fire up your browser, you can navigate to the public URL to see your resource for real. This is only possible because the container has been set to public. If it was private, you would not be able to do this.
+
+You can also check whether the upload succeeded by listing the objects in a container or by fetching the object information.
 
 ```java
     StoreObject[] objects = client.listObjects(container);
@@ -81,7 +83,7 @@ It is time to download what you just uploaded. Here we go.
    client.downloadObject(container, object, new File("/dog2.png"));
 ```
 
-Open the file "/dog2.png" on the file system to verify that the operation worked. Again, also File and InputStream are at your disposal. *On using InputStream be aware that you are responsible for closing the stream here, by calling close() on the wrapper*.
+Open the file "/dog2.png" on the file system to verify that the operation worked. Again, also byte[] and InputStream are at your disposal. *On using InputStream be aware that you are responsible for closing the stream by calling close() on the wrapper*.
 
 Now, if you want the object to be retrievable through another URL, you will have to move the object. This is accomplished by executing first a copy, then a delete action.
 
