@@ -183,4 +183,4 @@ or follow us on [Twitter](http://twitter.com/robert_bor)
 
 Sponsor
 -------
-This component was graciously donated by [42 BV](http://www.42.nl) [42 logo](http://www.42.nl/images/42-54x59.png "42")
+This component was graciously donated by [42 BV](http://www.42.nl) ![42 logo](http://www.42.nl/images/42-54x59.png "42")
