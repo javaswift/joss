@@ -1,10 +1,6 @@
 Java OpenStack Storage (JOSS)
------------------------------
-
-
-Getting Started
-===============
-In order to use JOSS in your project, simply add the following dependency:
+=============================
+JOSS is a Java client for the [OpenStack Storage component](http://docs.openstack.org/essex/openstack-object-storage/admin/content/ch_introduction-to-openstack-object-storage.html). In order to use it you, must have an OpenStack Storage provider, such as the [CloudVPS Object Store](https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/). In order to use JOSS in your project, simply add the following dependency:
 
 ```xml
         <dependency>
@@ -14,12 +10,26 @@ In order to use JOSS in your project, simply add the following dependency:
         </dependency>
 ```
 
-You can also download the artifact
+You can also download the artifact [Maven Search](http://search.maven.org)
 
-[Maven Search](http://search.maven.org)
+Getting Started
+---------------
+Your Object Store provider will have provided you with the following information in order to authenticate yourself:
+* username
+* password
+* authentication URL
+
+We start by opening up a stateful client and authenticating ourselves:
+
+```java
+        OpenStackClient client = new OpenStackClientImpl();
+        client.authenticate(username, password, url);
+```
+
+On failure, the client will throw an exception. On success, the client can now be used to execute actions on the Object Store.
 
 Introduction
-============
+------------
 JOSS provides access to the Container part of the OpenStack API. It is a specialized utility for this purpose. You will be able to:
 * access your account
 * handle containers
