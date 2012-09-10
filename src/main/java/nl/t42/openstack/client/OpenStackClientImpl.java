@@ -112,6 +112,10 @@ public class OpenStackClientImpl implements OpenStackClient {
         new CopyObjectCommand(httpClient, access, sourceContainer, sourceObject, targetContainer, targetObject).execute();
     }
 
+    public String getPublicURL(Container container, StoreObject object) {
+        return access.getPublicURL() + "/" + container.getName() + "/" + object.getName();
+    }
+
     public boolean isAuthenticated() { return this.authenticated; }
     public void setHttpClient(HttpClient httpClient) { this.httpClient = httpClient; }
 }

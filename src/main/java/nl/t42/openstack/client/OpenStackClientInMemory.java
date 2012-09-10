@@ -166,6 +166,10 @@ public class OpenStackClientInMemory implements OpenStackClient {
         }
     }
 
+    public String getPublicURL(Container container, StoreObject object) {
+        return "";
+    }
+
     public MockUserStore getUsers() { return this.users; }
     public void setUsers(MockUserStore users) { this.users = users; }
     public void setAccount(MockAccount account) { this.account = account; }

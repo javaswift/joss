@@ -1,6 +1,8 @@
 Java OpenStack Storage (JOSS)
 =============================
-JOSS is a Java client for the [OpenStack Storage component](http://docs.openstack.org/essex/openstack-object-storage/admin/content/ch_introduction-to-openstack-object-storage.html). In order to use it you, must have an OpenStack Storage provider, such as the [CloudVPS Object Store](https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/). In order to use JOSS in your project, simply add the following dependency:
+JOSS is a Java client for the [OpenStack Storage component](http://docs.openstack.org/essex/openstack-object-storage/admin/content/ch_introduction-to-openstack-object-storage.html) REST interface. In order to use it you, must have an account with an OpenStack Storage provider, such as the [CloudVPS Object Store](https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/).
+
+In order to use JOSS in your project, simply add the following dependency:
 
 ```xml
         <dependency>
@@ -19,14 +21,99 @@ Your Object Store provider will have provided you with the following information
 * password
 * authentication URL
 
-We start by opening up a stateful client and authenticating ourselves:
+We start by opening up a stateful client and **authenticating** ourselves:
 
 ```java
-        OpenStackClient client = new OpenStackClientImpl();
-        client.authenticate(username, password, url);
+    OpenStackClient client = new OpenStackClientImpl();
+    client.authenticate(username, password, url);
 ```
 
-On failure, the client will throw an exception. On success, the client can now be used to execute actions on the Object Store.
+On failure, the client will throw an exception. On success, the client can now be used to execute actions on the Object Store. The client takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire, probably after 24 hours or so. You can control this by reauthenticating. You will have to take care of this logic on your side of the application.
+
+Next, we want to create a public container, where we can store our images:
+
+```java
+    Container container = new Container("images")
+    client.createContainer(container);
+    client.makeContainerPublic(container);
+```
+
+A container is private by default, so you will have to explicitly set it to public to be able to access it through its public URL.
+
+To check whether the creation succeeded, list the containers.
+
+```java
+    Container[] containers = client.listContainers();
+    for (Container foundContainer : containers) {
+        System.out.println(foundContainer);
+    }
+```
+
+Now it is time to upload a file to the Object Store. In this example, we take an image located in the root directory of the file system.
+
+```java
+    StoreObject object = new StoreObject("dog.png");
+    client.uploadObject(container, object, new File("/dog.png"));
+    System.out.println("Public URL: "+client.getPublicURL(container, object));
+```
+
+Note that *object* denotes the target of the file within the Object Store, whereas the file signifies the actual content that needs to be uploaded.
+
+If you fire up your browser, you can navigate to the public URL to see your resource for real. You can also check whether the upload succeeded by listing the objects in a container or by fetching the object information.
+
+```java
+    StoreObject[] objects = client.listObjects(container);
+    for (StoreObject foundObject : objects) {
+        System.out.println(foundObject);
+    }
+    ObjectInformation info = client.getObjectInformation(container, object);
+    System.out.println("Last modified:  "+info.getLastModified());
+    System.out.println("ETag:           "+info.getEtag());
+    System.out.println("Content type:   "+info.getContentType());
+    System.out.println("Content length: "+info.getContentLength());
+```
+
+Alternatively, besides [File](http://docs.oracle.com/javase/6/docs/api/java/io/File.html), you could also use a *byte[]* or an [InputStream](http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html) to upload a file.
+
+It is time to download what you just uploaded. Here we go.
+
+```java
+   client.downloadObject(container, object, new File("/dog2.png"));
+```
+
+Open the file "/dog2.png" on the file system to verify that the operation worked.
+
+Now, if you want the object to be retrievable through another URL, you will have to move the object. This is accomplished by executing first a copy, then a delete action.
+
+```java
+    StoreObject targetObject = new StoreObject("new-dog.png");
+    client.copyObject(container, object, container, targetObject);
+    client.deleteObject(container, object);
+    System.out.println("Public URL: "+client.getPublicURL(container, object)); // no longer retrievable
+    System.out.println("Public URL: "+client.getPublicURL(container, targetObject)); // the new URL
+```
+
+You can once more use the browser to access both resources. You will see that the first URL gives you a 404, while the second one now gives you the original resource.
+
+It is possible to add metadata to both containers and objects.
+
+```java
+    Map<String, Object> metadata = new TreeMap<String, Object>();
+    metadata.put("title", "Some Title");
+    metadata.put("department", "Some Department");
+    client.setContainerInformation(container, metadata);
+    client.setObjectInformation(container, object, metadata);
+```
+
+Likewise, this information can be retrieved, as seen above.
+
+```java
+    ObjectInformation info = client.getObjectInformation(container, object);
+    for (String key : info.getMetadata().keySet()) {
+        System.out.println("META / "+key+": "+info.getMetadata().get(key));
+    }
+```
+
 
 Introduction
 ------------

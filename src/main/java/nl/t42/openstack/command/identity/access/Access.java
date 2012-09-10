@@ -21,4 +21,8 @@ public class Access {
     public String getInternalURL() {
         return serviceCatalog.size() > 0 ? (serviceCatalog.get(0).endpoints.size() > 0 ? serviceCatalog.get(0).endpoints.get(0).internalURL : null ) : null;
     }
+
+    public String getPublicURL() {
+        return serviceCatalog.size() > 0 ? (serviceCatalog.get(0).endpoints.size() > 0 ? serviceCatalog.get(0).endpoints.get(0).publicURL : null ) : null;
+    }
 }

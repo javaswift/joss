@@ -1,6 +1,5 @@
 package nl.t42.openstack.command.identity.access;
 
-import nl.t42.openstack.command.identity.access.Access;
 import nl.t42.openstack.util.ClasspathTemplateResource;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -20,5 +19,6 @@ public class AccessTest {
         Access access = mapper.readValue(jsonString, Access.class);
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
         assertEquals("https://og.cloudvps.com:443/v1/AUTH_bfo000024", access.getInternalURL());
+        assertEquals("http://bfo000024.og.cloudvps.com:80", access.getPublicURL());
     }
 }

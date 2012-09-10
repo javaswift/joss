@@ -188,4 +188,12 @@ public interface OpenStackClient {
     * @return true if the client is authenticated; false if not
     */
     public boolean isAuthenticated();
+
+    /**
+    * Returns the public URL through which the resource can be viewed
+    * @param container name of the container
+    * @param object name of the object
+    * @return the public URL of the resource
+    */
+    public String getPublicURL(Container container, StoreObject object);
 }
