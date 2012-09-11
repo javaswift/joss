@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.model;
 
-public class StoreObject implements Comparable {
+public class StoreObject implements Comparable<StoreObject> {
 
     private String name;
 
@@ -26,7 +26,7 @@ public class StoreObject implements Comparable {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public int compareTo(Object o) {
-        return o instanceof StoreObject ? getName().compareTo(((StoreObject) o).getName()) : -1;
+    public int compareTo(StoreObject o) {
+        return getName().compareTo(o.getName());
     }
 }
