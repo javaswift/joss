@@ -183,6 +183,8 @@ Keep up to date on the library development by joining the Java OpenStack Storage
 
 or follow us on [Twitter](http://twitter.com/robert_bor)
 
+Special thanks to Oscar Westra van Holthe - Kind for premium advice and support.
+
 Sponsor
 -------
 This component was graciously donated by [42 BV](http://www.42.nl) ![42 logo](http://www.42.nl/images/42-54x59.png "42")

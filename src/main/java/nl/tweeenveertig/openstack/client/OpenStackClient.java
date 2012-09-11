@@ -5,6 +5,7 @@ import nl.tweeenveertig.openstack.model.*;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -44,7 +45,7 @@ public interface OpenStackClient {
     * Returns all the containers in an Account.
     * @return the containers in an Account
     */
-    public Container[] listContainers();
+    public Collection<Container> listContainers();
 
     /**
     * Creates a Container in the Account.
@@ -92,7 +93,7 @@ public interface OpenStackClient {
     * @param container the owning Container of the objects
     * @return the objects in the Container
     */
-    public StoreObject[] listObjects(Container container);
+    public Collection<StoreObject> listObjects(Container container);
 
     /**
     * Fetches the object in a Container in an InputStream. Note that for passing the information on, the

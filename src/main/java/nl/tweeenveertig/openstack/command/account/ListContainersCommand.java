@@ -10,24 +10,25 @@ import org.apache.http.client.methods.HttpGet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertResponseToString;
 
-public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Container[]> {
+public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Collection<Container>> {
 
     public ListContainersCommand(HttpClient httpClient, Access access) {
         super(httpClient, access);
     }
 
     @Override
-    protected Container[] getReturnObject(HttpResponse response) throws IOException {
+    protected Collection<Container> getReturnObject(HttpResponse response) throws IOException {
         List<String> responseBody = convertResponseToString(response);
         List<Container> containers = new ArrayList<Container>();
         for (String containerName : responseBody) {
             containers.add(new Container(containerName));
         }
-        return containers.toArray(new Container[containers.size()]);
+        return containers;
     }
 
     @Override

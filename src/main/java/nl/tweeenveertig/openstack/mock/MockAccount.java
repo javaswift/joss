@@ -8,6 +8,8 @@ import nl.tweeenveertig.openstack.model.ContainerInformation;
 import nl.tweeenveertig.openstack.model.StoreObject;
 import org.apache.http.HttpStatus;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -43,8 +45,8 @@ public class MockAccount extends AbstractMock<AccountInformation> {
         containers.remove(container);
     }
 
-    public Container[] listContainers() {
-        return containers.keySet().toArray(new Container[containers.size()]);
+    public Collection<Container> listContainers() {
+        return containers.keySet();
     }
 
     public AccountInformation getInfo() {

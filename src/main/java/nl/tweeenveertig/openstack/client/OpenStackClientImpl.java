@@ -13,6 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.Map;
 
 public class OpenStackClientImpl implements OpenStackClient {
@@ -40,7 +41,7 @@ public class OpenStackClientImpl implements OpenStackClient {
         new AccountMetadataCommand(httpClient, access, metadata).execute();
     }
 
-    public Container[] listContainers() {
+    public Collection<Container> listContainers() {
         return new ListContainersCommand(httpClient, access).execute();
     }
 
@@ -68,7 +69,7 @@ public class OpenStackClientImpl implements OpenStackClient {
         new ContainerMetadataCommand(httpClient, access, container, metadata).execute();
     }
 
-    public StoreObject[] listObjects(Container container) {
+    public Collection<StoreObject> listObjects(Container container) {
         return new ListObjectsCommand(httpClient, access, container).execute();
     }
 

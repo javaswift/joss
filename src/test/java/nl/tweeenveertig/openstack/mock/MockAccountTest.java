@@ -94,7 +94,7 @@ public class MockAccountTest {
         account.createContainer(new Container("town1"));
         account.createContainer(new Container("town2"));
         account.createContainer(new Container("town3"));
-        assertEquals(3, account.listContainers().length);
+        assertEquals(3, account.listContainers().size());
     }
 
     @Test

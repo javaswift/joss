@@ -13,24 +13,25 @@ import org.apache.http.client.methods.HttpGet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertResponseToString;
 
-public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, StoreObject[]> {
+public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collection<StoreObject>> {
 
     public ListObjectsCommand(HttpClient httpClient, Access access, Container container) {
         super(httpClient, access, container);
     }
 
     @Override
-    protected StoreObject[] getReturnObject(HttpResponse response) throws IOException {
+    protected Collection<StoreObject> getReturnObject(HttpResponse response) throws IOException {
         List<String> responseBody = convertResponseToString(response);
         List<StoreObject> storeObjects = new ArrayList<StoreObject>();
         for (String storeObjectName : responseBody) {
             storeObjects.add(new StoreObject(storeObjectName));
         }
-        return storeObjects.toArray(new StoreObject[storeObjects.size()]);
+        return storeObjects;
     }
 
     @Override

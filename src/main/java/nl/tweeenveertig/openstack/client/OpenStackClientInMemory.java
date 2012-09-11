@@ -11,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 
 import java.io.*;
+import java.util.Collection;
 import java.util.Map;
 
 public class OpenStackClientInMemory implements OpenStackClient {
@@ -37,7 +38,7 @@ public class OpenStackClientInMemory implements OpenStackClient {
         account.setInfo(metadata);
     }
 
-    public Container[] listContainers() {
+    public Collection<Container> listContainers() {
         checkAuthentication();
         return account.listContainers();
     }
@@ -72,7 +73,7 @@ public class OpenStackClientInMemory implements OpenStackClient {
         account.getContainer(container).setInfo(metadata);
     }
 
-    public StoreObject[] listObjects(Container container) {
+    public Collection<StoreObject> listObjects(Container container) {
         checkAuthentication();
         return account.getContainer(container).listObjects();
     }

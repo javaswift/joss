@@ -59,7 +59,7 @@ public class MockContainerTest {
     @Test
     public void listObjects() {
         addObjects(3);
-        assertEquals(3, container.listObjects().length);
+        assertEquals(3, container.listObjects().size());
     }
 
     @Test
