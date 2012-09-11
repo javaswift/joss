@@ -21,6 +21,10 @@ public class Main {
         OpenStackClient client = new OpenStackClientImpl();
         client.authenticate(username, password, url);
 
+//        Container container = new Container("Tilburg");
+//        StoreObject object = new StoreObject("doggie.png");
+//        System.out.println("Public URL: "+client.getPublicURL(container, object));
+
 //        client.makeContainerPublic(new Container("Eindhoven"));
 //        client.makeContainerPrivate(new Container("Eindhoven"));
 

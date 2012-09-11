@@ -33,7 +33,7 @@ On failure, the client will throw an exception. On success, the client can now b
 Next, we want to create a public container, where we can store our images:
 
 ```java
-    Container container = new Container("images")
+    Container container = new Container("images");
     client.createContainer(container);
     client.makeContainerPublic(container);
 ```
