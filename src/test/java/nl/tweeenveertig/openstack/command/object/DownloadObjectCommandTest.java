@@ -35,7 +35,7 @@ public class DownloadObjectCommandTest extends BaseCommandTest {
     public void downloadSuccess() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
-        byte[] result = new DownloadObjectAsByteArrayCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname")).execute();
+        byte[] result = new DownloadObjectAsByteArrayCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname")).call();
         assertEquals(bytes.length, result.length);
     }
 

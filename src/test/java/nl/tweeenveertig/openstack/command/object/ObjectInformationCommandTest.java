@@ -35,7 +35,7 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, CONTENT_LENGTH, "654321", headers);
         prepareHeader(response, CONTENT_TYPE, "image/png", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
-        ObjectInformation info = new ObjectInformationCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName")).execute();
+        ObjectInformation info = new ObjectInformationCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName")).call();
         assertEquals("Photo album", info.getMetadata().get("Description"));
         assertEquals("1984", info.getMetadata().get("Year"));
         assertEquals("Mon, 03 Sep 2012 05:40:33 GMT", info.getLastModified());

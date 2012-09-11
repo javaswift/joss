@@ -23,14 +23,14 @@ public class UploadObjectCommandTest extends BaseCommandTest {
     @Test
     public void uploadByteArray() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
-        new UploadObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname"), new byte[] {}).execute();
+        new UploadObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname"), new byte[] {}).call();
     }
 
     @Test
     public void uploadInputStream() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[] { 0x01, 0x02, 0x03 });
-        new UploadObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname"), inputStream).execute();
+        new UploadObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname"), inputStream).call();
         inputStream.close();
     }
 

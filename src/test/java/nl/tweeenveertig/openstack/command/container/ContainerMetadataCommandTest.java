@@ -26,7 +26,7 @@ public class ContainerMetadataCommandTest extends BaseCommandTest {
         metadata.put("Year", 123);
         metadata.put("Title", "Roses are Red");
         metadata.put("ISBN", 123456789);
-        new ContainerMetadataCommand(httpClient, defaultAccess, new Container("containerName"), metadata).execute();
+        new ContainerMetadataCommand(httpClient, defaultAccess, new Container("containerName"), metadata).call();
     }
 
     @Test

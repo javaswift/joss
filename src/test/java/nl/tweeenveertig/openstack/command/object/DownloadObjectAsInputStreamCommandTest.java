@@ -37,7 +37,7 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     public void downloadSuccess() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
-        InputStreamWrapper result = new DownloadObjectAsInputStreamCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname")).execute();
+        InputStreamWrapper result = new DownloadObjectAsInputStreamCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname")).call();
         byte[] downloaded = IOUtils.toByteArray(result);
         result.close();
         assertEquals(bytes.length, downloaded.length);

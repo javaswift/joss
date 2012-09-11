@@ -22,7 +22,7 @@ public class CreateContainerCommandTest extends BaseCommandTest {
     @Test
     public void createContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
-        new CreateContainerCommand(httpClient, defaultAccess, new Container("containerName")).execute();
+        new CreateContainerCommand(httpClient, defaultAccess, new Container("containerName")).call();
     }
 
     @Test

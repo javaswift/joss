@@ -6,8 +6,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.concurrent.Callable;
 
-public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> {
+public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> implements Callable<N> {
 
     private HttpClient httpClient;
 
@@ -24,7 +25,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
         this(httpClient, url, null);
     }
 
-    public N execute() {
+    public N call() {
         try {
             response = httpClient.execute(request);
             HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());

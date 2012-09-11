@@ -29,88 +29,88 @@ public class OpenStackClientImpl implements OpenStackClient {
         this.access = null;
         this.authenticated = false;
 
-        this.access = new AuthenticationCommand(httpClient, authUrl, username, password).execute();
+        this.access = new AuthenticationCommand(httpClient, authUrl, username, password).call();
         this.authenticated = true;
     }
 
     public AccountInformation getAccountInformation() {
-        return new AccountInformationCommand(httpClient, access).execute();
+        return new AccountInformationCommand(httpClient, access).call();
     }
 
     public void setAccountInformation(Map<String, Object> metadata) {
-        new AccountMetadataCommand(httpClient, access, metadata).execute();
+        new AccountMetadataCommand(httpClient, access, metadata).call();
     }
 
     public Collection<Container> listContainers() {
-        return new ListContainersCommand(httpClient, access).execute();
+        return new ListContainersCommand(httpClient, access).call();
     }
 
     public void createContainer(Container container) {
-        new CreateContainerCommand(httpClient, access, container).execute();
+        new CreateContainerCommand(httpClient, access, container).call();
     }
 
     public void deleteContainer(Container container) {
-        new DeleteContainerCommand(httpClient, access, container).execute();
+        new DeleteContainerCommand(httpClient, access, container).call();
     }
 
     public void makeContainerPublic(Container container) {
-        new ContainerRightsCommand(httpClient, access, container, true).execute();
+        new ContainerRightsCommand(httpClient, access, container, true).call();
     }
 
     public void makeContainerPrivate(Container container) {
-        new ContainerRightsCommand(httpClient, access, container, false).execute();
+        new ContainerRightsCommand(httpClient, access, container, false).call();
     }
 
     public ContainerInformation getContainerInformation(Container container) {
-        return new ContainerInformationCommand(httpClient, access, container).execute();
+        return new ContainerInformationCommand(httpClient, access, container).call();
     }
 
     public void setContainerInformation(Container container, Map<String, Object> metadata) {
-        new ContainerMetadataCommand(httpClient, access, container, metadata).execute();
+        new ContainerMetadataCommand(httpClient, access, container, metadata).call();
     }
 
     public Collection<StoreObject> listObjects(Container container) {
-        return new ListObjectsCommand(httpClient, access, container).execute();
+        return new ListObjectsCommand(httpClient, access, container).call();
     }
 
     public InputStreamWrapper downloadObjectAsInputStream(Container container, StoreObject object) {
-        return new DownloadObjectAsInputStreamCommand(httpClient, access, container, object).execute();
+        return new DownloadObjectAsInputStreamCommand(httpClient, access, container, object).call();
     }
 
     public byte[] downloadObject(Container container, StoreObject object) {
-        return new DownloadObjectAsByteArrayCommand(httpClient, access, container, object).execute();
+        return new DownloadObjectAsByteArrayCommand(httpClient, access, container, object).call();
     }
 
     public void downloadObject(Container container, StoreObject object, File targetFile) {
-        new DownloadObjectToFileCommand(httpClient, access, container, object, targetFile).execute();
+        new DownloadObjectToFileCommand(httpClient, access, container, object, targetFile).call();
     }
 
     public void uploadObject(Container container, StoreObject target, InputStream inputStream) {
-        new UploadObjectCommand(httpClient, access, container, target, inputStream).execute();
+        new UploadObjectCommand(httpClient, access, container, target, inputStream).call();
     }
 
     public void uploadObject(Container container, StoreObject target, byte[] fileToUpload) {
-        new UploadObjectCommand(httpClient, access, container, target, fileToUpload).execute();
+        new UploadObjectCommand(httpClient, access, container, target, fileToUpload).call();
     }
 
     public void uploadObject(Container container, StoreObject target, File fileToUpload) {
-        new UploadObjectCommand(httpClient, access, container, target, fileToUpload).execute();
+        new UploadObjectCommand(httpClient, access, container, target, fileToUpload).call();
     }
 
     public ObjectInformation getObjectInformation(Container container, StoreObject object) {
-        return new ObjectInformationCommand(httpClient, access, container, object).execute();
+        return new ObjectInformationCommand(httpClient, access, container, object).call();
     }
 
     public void setObjectInformation(Container container, StoreObject object, Map<String, Object> metadata) {
-        new ObjectMetadataCommand(httpClient, access, container, object, metadata).execute();
+        new ObjectMetadataCommand(httpClient, access, container, object, metadata).call();
     }
 
     public void deleteObject(Container container, StoreObject object) {
-        new DeleteObjectCommand(httpClient, access, container, object).execute();
+        new DeleteObjectCommand(httpClient, access, container, object).call();
     }
 
     public void copyObject(Container sourceContainer, StoreObject sourceObject, Container targetContainer, StoreObject targetObject) {
-        new CopyObjectCommand(httpClient, access, sourceContainer, sourceObject, targetContainer, targetObject).execute();
+        new CopyObjectCommand(httpClient, access, sourceContainer, sourceObject, targetContainer, targetObject).call();
     }
 
     public String getPublicURL(Container container, StoreObject object) {

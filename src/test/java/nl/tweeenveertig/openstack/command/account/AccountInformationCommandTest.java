@@ -34,7 +34,7 @@ public class AccountInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, X_ACCOUNT_OBJECT_COUNT, "123", headers);
         prepareHeader(response, X_ACCOUNT_BYTES_USED, "654321", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
-        AccountInformation info = new AccountInformationCommand(httpClient, defaultAccess).execute();
+        AccountInformation info = new AccountInformationCommand(httpClient, defaultAccess).call();
         assertEquals(7, info.getContainerCount());
         assertEquals(123, info.getObjectCount());
         assertEquals(654321, info.getBytesUsed());

@@ -21,7 +21,7 @@ public class DeleteObjectCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        new DeleteObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName")).execute();
+        new DeleteObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName")).call();
     }
 
     @Test

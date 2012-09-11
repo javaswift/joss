@@ -53,7 +53,7 @@ public abstract class BaseCommandTest {
     protected void checkForError(int httpStatusCode, AbstractCommand command, CommandExceptionError expectedError) throws IOException {
         when(statusLine.getStatusCode()).thenReturn(httpStatusCode);
         try {
-            command.execute();
+            command.call();
             fail("Should have thrown an exception");
         } catch (CommandException err) {
             assertEquals(expectedError, err.getError());

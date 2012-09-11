@@ -22,7 +22,7 @@ public class DeleteContainerCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")).execute();
+        new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")).call();
     }
 
     @Test

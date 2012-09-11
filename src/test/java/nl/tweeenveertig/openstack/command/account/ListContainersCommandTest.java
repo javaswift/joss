@@ -18,13 +18,13 @@ public class ListContainersCommandTest extends BaseCommandTest {
 
     @Test
     public void listContainers() throws IOException {
-        new ListContainersCommand(httpClient, defaultAccess).execute();
+        new ListContainersCommand(httpClient, defaultAccess).call();
     }
 
     @Test
     public void listContainersWithNoneThere() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        new ListContainersCommand(httpClient, defaultAccess).execute();
+        new ListContainersCommand(httpClient, defaultAccess).call();
     }
 
     @Test

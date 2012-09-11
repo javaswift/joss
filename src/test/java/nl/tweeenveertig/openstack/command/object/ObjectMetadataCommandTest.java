@@ -26,7 +26,7 @@ public class ObjectMetadataCommandTest extends BaseCommandTest {
         Map<String, Object> metadata = new TreeMap<String, Object>();
         metadata.put("Year", 1989);
         metadata.put("Company", "42 BV");
-        new ObjectMetadataCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName"), metadata).execute();
+        new ObjectMetadataCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName"), metadata).call();
     }
 
     @Test

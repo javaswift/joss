@@ -35,7 +35,7 @@ public class ContainerInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, X_CONTAINER_BYTES_USED, "654321", headers);
         prepareHeader(response, X_CONTAINER_READ, ".r:*", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
-        ContainerInformation info = new ContainerInformationCommand(httpClient, defaultAccess, new Container("containerName")).execute();
+        ContainerInformation info = new ContainerInformationCommand(httpClient, defaultAccess, new Container("containerName")).call();
         assertEquals("Photo album", info.getMetadata().get("Description"));
         assertEquals("1984", info.getMetadata().get("Year"));
         assertEquals(123, info.getObjectCount());

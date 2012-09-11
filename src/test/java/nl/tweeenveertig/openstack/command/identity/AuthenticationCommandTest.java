@@ -26,7 +26,7 @@ public class AuthenticationCommandTest extends BaseCommandTest {
 
     @Test
     public void authenticateSuccessful() throws IOException {
-        Access access = new AuthenticationCommand(httpClient, "someurl", "user", "pwd").execute();
+        Access access = new AuthenticationCommand(httpClient, "someurl", "user", "pwd").call();
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
     }
 

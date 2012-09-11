@@ -22,7 +22,7 @@ public class CopyObjectCommandTest extends BaseCommandTest {
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
         new CopyObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName"),
-                new Container("containerName"), new StoreObject("objectName")).execute();
+                new Container("containerName"), new StoreObject("objectName")).call();
     }
 
     @Test
