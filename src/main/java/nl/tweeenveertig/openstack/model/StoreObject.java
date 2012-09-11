@@ -16,7 +16,7 @@ public class StoreObject implements Comparable<StoreObject> {
         return getName();
     }
 
-    public int hashcode() {
+    public int hashCode() {
         return getName().hashCode();
     }
 

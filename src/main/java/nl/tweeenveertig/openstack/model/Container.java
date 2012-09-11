@@ -16,7 +16,7 @@ public class Container implements Comparable<Container> {
         return getName();
     }
 
-    public int hashcode() {
+    public int hashCode() {
         return getName().hashCode();
     }
 
