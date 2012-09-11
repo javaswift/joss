@@ -5,7 +5,7 @@ import nl.tweeenveertig.openstack.command.core.AbstractCommand;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class InputStreamWrapper {
+public class InputStreamWrapper extends InputStream {
 
     protected InputStream inputStream;
 
@@ -16,11 +16,18 @@ public class InputStreamWrapper {
         this.inputStream = inputStream;
     }
 
-    public void closeStream() throws IOException {
-        command.closeStream();
+    @Override
+    public int read() throws IOException {
+        return inputStream.read();
     }
 
-    public InputStream getInputStream() {
-        return this.inputStream;
+    @Override
+    public int read(byte[] buffer) throws IOException {
+        return inputStream.read(buffer);
+    }
+
+    @Override
+    public void close() throws IOException {
+        command.closeStream();
     }
 }

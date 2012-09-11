@@ -12,7 +12,7 @@ public class MockInputStreamWrapper extends InputStreamWrapper {
     }
 
     @Override
-    public void closeStream() throws IOException {
+    public void close() throws IOException {
         inputStream.close();
     }
 }
