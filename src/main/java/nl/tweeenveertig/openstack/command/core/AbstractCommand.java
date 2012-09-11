@@ -5,10 +5,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> implements Callable<N> {
+public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> implements Callable<N>, Closeable {
 
     private HttpClient httpClient;
 
@@ -31,7 +32,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
             HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
             N object = getReturnObject(response);
             if (closeStreamAutomatically()) {
-                closeStream();
+                close();
             }
             return object;
         } catch (IOException err) {
@@ -39,7 +40,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
         }
     }
 
-    public void closeStream() throws IOException {
+    public void close() throws IOException {
         EntityUtils.consume(response.getEntity());
     }
 

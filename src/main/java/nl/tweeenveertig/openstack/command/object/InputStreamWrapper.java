@@ -28,6 +28,6 @@ public class InputStreamWrapper extends InputStream {
 
     @Override
     public void close() throws IOException {
-        command.closeStream();
+        command.close();
     }
 }
