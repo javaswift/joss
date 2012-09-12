@@ -8,7 +8,7 @@ In order to use JOSS in your project, simply add the following dependency:
         <dependency>
             <groupId>nl.tweeenveertig.openstack</groupId>
             <artifactId>joss</artifactId>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
         </dependency>
 ```
 
