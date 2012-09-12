@@ -5,9 +5,8 @@ import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.HttpStatusRange;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.model.Container;
-import nl.tweeenveertig.openstack.model.ObjectInformation;
-import nl.tweeenveertig.openstack.model.StoreObject;
+import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.StoredObject;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -24,7 +23,7 @@ public class ObjectInformationCommand extends AbstractObjectCommand<HttpHead, Ob
     public static final String CONTENT_LENGTH            = "Content-Length";
     public static final String CONTENT_TYPE              = "Content-Type";
 
-    public ObjectInformationCommand(HttpClient httpClient, Access access, Container container, StoreObject object) {
+    public ObjectInformationCommand(HttpClient httpClient, Access access, Container container, StoredObject object) {
         super(httpClient, access, container, object);
     }
 

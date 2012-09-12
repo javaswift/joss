@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.mock;
 
-import nl.tweeenveertig.openstack.model.ObjectInformation;
-import nl.tweeenveertig.openstack.model.StoreObject;
+import nl.tweeenveertig.openstack.command.object.ObjectInformation;
+import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.util.MimeTypeMap;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -13,7 +13,7 @@ public class MockObject extends AbstractMock<ObjectInformation> {
 
     private String contentType;
 
-    public void saveObject(StoreObject name, byte[] object) {
+    public void saveObject(StoredObject name, byte[] object) {
         this.object = object;
         this.md5 = DigestUtils.md5Hex(object);
         this.contentType = MimeTypeMap.getContentType(name.getName());

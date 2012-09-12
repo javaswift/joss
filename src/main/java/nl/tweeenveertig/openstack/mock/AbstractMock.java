@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.mock;
 
-import nl.tweeenveertig.openstack.model.AbstractInformation;
+import nl.tweeenveertig.openstack.command.core.AbstractInformation;
 
 import java.util.Map;
 import java.util.TreeMap;

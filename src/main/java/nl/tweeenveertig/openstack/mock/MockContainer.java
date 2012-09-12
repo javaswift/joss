@@ -2,8 +2,8 @@ package nl.tweeenveertig.openstack.mock;
 
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.model.ContainerInformation;
-import nl.tweeenveertig.openstack.model.StoreObject;
+import nl.tweeenveertig.openstack.command.container.ContainerInformation;
+import nl.tweeenveertig.openstack.client.StoredObject;
 import org.apache.http.HttpStatus;
 
 import java.util.Collection;
@@ -12,11 +12,11 @@ import java.util.TreeMap;
 
 public class MockContainer extends AbstractMock<ContainerInformation>{
 
-    private Map<StoreObject, MockObject> objects = new TreeMap<StoreObject, MockObject>();
+    private Map<StoredObject, MockObject> objects = new TreeMap<StoredObject, MockObject>();
 
     private boolean publicContainer = false;
 
-    public MockObject getOrCreateObject(StoreObject object) {
+    public MockObject getOrCreateObject(StoredObject object) {
         MockObject foundObject = objects.get(object);
         if (foundObject == null) {
             foundObject = new MockObject();
@@ -25,7 +25,7 @@ public class MockContainer extends AbstractMock<ContainerInformation>{
         return foundObject;
     }
 
-    public MockObject getObject(StoreObject object) {
+    public MockObject getObject(StoredObject object) {
         MockObject foundObject = objects.get(object);
         if (foundObject == null) {
             throw new CommandException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
@@ -63,11 +63,11 @@ public class MockContainer extends AbstractMock<ContainerInformation>{
         return new ContainerInformation();
     }
 
-    public Collection<StoreObject> listObjects() {
+    public Collection<StoredObject> listObjects() {
         return objects.keySet();
     }
 
-    public void deleteObject(StoreObject object) {
+    public void deleteObject(StoredObject object) {
         getObject(object); // check for existence
         objects.remove(object);
     }

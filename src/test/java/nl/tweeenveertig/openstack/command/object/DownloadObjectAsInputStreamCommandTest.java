@@ -1,9 +1,8 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.client.impl.InputStreamWrapper;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandException;
-import nl.tweeenveertig.openstack.model.Container;
-import nl.tweeenveertig.openstack.model.StoreObject;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.entity.ByteArrayEntity;
@@ -37,7 +36,7 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     public void downloadSuccess() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
-        InputStreamWrapper result = new DownloadObjectAsInputStreamCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname")).call();
+        InputStreamWrapper result = new DownloadObjectAsInputStreamCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname")).call();
         byte[] downloaded = IOUtils.toByteArray(result);
         result.close();
         assertEquals(bytes.length, downloaded.length);
@@ -47,7 +46,7 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     public void md5Mismatch() throws IOException {
         prepareBytes(new byte[] { 0x01}, "cafebabe"); // non-matching MD5
         try {
-            new DownloadObjectAsInputStreamCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectname"));
+            new DownloadObjectAsInputStreamCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"));
         } catch (CommandException err) {
             fail("Downloading as an inputstream does not check for the MD5 checksum, so therefore should not throw an error");
         }

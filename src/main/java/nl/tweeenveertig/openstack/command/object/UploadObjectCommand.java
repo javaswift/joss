@@ -5,8 +5,8 @@ import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.model.Container;
-import nl.tweeenveertig.openstack.model.StoreObject;
+import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.StoredObject;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -25,7 +25,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
 
     public static final String ETAG = "ETag";
 
-    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target, InputStream inputStream) {
+    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoredObject target, InputStream inputStream) {
         super(httpClient, access, container, target);
         try {
             prepareUpload(new InputStreamEntity(inputStream, -1));
@@ -34,7 +34,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         }
     }
 
-    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target, File fileToUpload) {
+    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoredObject target, File fileToUpload) {
         super(httpClient, access, container, target);
         try {
             prepareUpload(new FileEntity(fileToUpload));
@@ -43,7 +43,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         }
     }
 
-    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target, byte[] fileToUpload) {
+    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoredObject target, byte[] fileToUpload) {
         super(httpClient, access, container, target);
         try {
             prepareUpload(new ByteArrayEntity(fileToUpload));

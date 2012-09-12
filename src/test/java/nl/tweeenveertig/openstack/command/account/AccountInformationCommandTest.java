@@ -3,8 +3,6 @@ package nl.tweeenveertig.openstack.command.account;
 import nl.tweeenveertig.openstack.command.container.ContainerInformationCommand;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.model.AccountInformation;
-import nl.tweeenveertig.openstack.model.Container;
 import org.apache.http.Header;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,6 +40,6 @@ public class AccountInformationCommandTest extends BaseCommandTest {
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerInformationCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ContainerInformationCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
     }
 }

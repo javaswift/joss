@@ -1,4 +1,6 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.command.container;
+
+import nl.tweeenveertig.openstack.command.core.AbstractInformation;
 
 public class ContainerInformation extends AbstractInformation {
 

@@ -4,15 +4,15 @@ import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.model.Container;
-import nl.tweeenveertig.openstack.model.StoreObject;
+import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.StoredObject;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 
 public class DeleteObjectCommand extends AbstractObjectCommand<HttpDelete, Object> {
 
-    public DeleteObjectCommand(HttpClient httpClient, Access access, Container container, StoreObject target) {
+    public DeleteObjectCommand(HttpClient httpClient, Access access, Container container, StoredObject target) {
         super(httpClient, access, container, target);
     }
 

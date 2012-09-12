@@ -52,7 +52,7 @@ To check whether the creation succeeded, list the containers.
 Now it is time to upload a file to the Object Store. In this example, we take an image located in the root directory of the file system.
 
 ```java
-    StoreObject object = new StoreObject("dog.png");
+    StoredObject object = new StoredObject("dog.png");
     client.uploadObject(container, object, new File("/dog.png"));
     System.out.println("Public URL: "+client.getPublicURL(container, object));
 ```
@@ -64,8 +64,8 @@ If you fire up your browser, you can navigate to the public URL to see your reso
 You can also check whether the upload succeeded by listing the objects in a container or by fetching the object information.
 
 ```java
-    StoreObject[] objects = client.listObjects(container);
-    for (StoreObject foundObject : objects) {
+    StoredObject[] objects = client.listObjects(container);
+    for (StoredObject foundObject : objects) {
         System.out.println(foundObject);
     }
     ObjectInformation info = client.getObjectInformation(container, object);
@@ -88,7 +88,7 @@ Open the file "/dog2.png" on the file system to verify that the operation worked
 Now, if you want the object to be retrievable through another URL, you will have to move the object. This is accomplished by executing first a copy, then a delete action.
 
 ```java
-    StoreObject targetObject = new StoreObject("new-dog.png");
+    StoredObject targetObject = new StoredObject("new-dog.png");
     client.copyObject(container, object, container, targetObject);
     client.deleteObject(container, object);
     System.out.println("Public URL: "+client.getPublicURL(container, object)); // no longer retrievable

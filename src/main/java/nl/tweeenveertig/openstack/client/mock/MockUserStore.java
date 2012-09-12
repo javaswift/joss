@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.mock;
+package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;

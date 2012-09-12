@@ -2,7 +2,6 @@ package nl.tweeenveertig.openstack.command.container;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.model.Container;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,16 +21,16 @@ public class CreateContainerCommandTest extends BaseCommandTest {
     @Test
     public void createContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
-        new CreateContainerCommand(httpClient, defaultAccess, new Container("containerName")).call();
+        new CreateContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 
     @Test
     public void createContainerFail() throws IOException {
-        checkForError(202, new CreateContainerCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.CONTAINER_ALREADY_EXISTS);
+        checkForError(202, new CreateContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.CONTAINER_ALREADY_EXISTS);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new CreateContainerCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new CreateContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
     }
 }

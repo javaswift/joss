@@ -2,14 +2,13 @@ package nl.tweeenveertig.openstack.mock;
 
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.model.AccountInformation;
-import nl.tweeenveertig.openstack.model.Container;
-import nl.tweeenveertig.openstack.model.ContainerInformation;
-import nl.tweeenveertig.openstack.model.StoreObject;
+import nl.tweeenveertig.openstack.command.account.AccountInformation;
+import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.command.container.ContainerInformation;
+import nl.tweeenveertig.openstack.client.StoredObject;
 import org.apache.http.HttpStatus;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -57,7 +56,7 @@ public class MockAccount extends AbstractMock<AccountInformation> {
         return info;
     }
 
-    public void copyObject(Container sourceContainer, StoreObject sourceObject, Container targetContainer, StoreObject targetObject) {
+    public void copyObject(Container sourceContainer, StoredObject sourceObject, Container targetContainer, StoredObject targetObject) {
         MockObject source = getContainer(sourceContainer).getObject(sourceObject);
         MockObject target = getContainer(targetContainer).getOrCreateObject(targetObject);
         byte[] targetContent = source.getObject().clone();

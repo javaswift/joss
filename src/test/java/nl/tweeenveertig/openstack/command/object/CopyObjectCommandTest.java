@@ -2,8 +2,6 @@ package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.model.Container;
-import nl.tweeenveertig.openstack.model.StoreObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,19 +19,19 @@ public class CopyObjectCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
-        new CopyObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName"),
-                new Container("containerName"), new StoreObject("objectName")).call();
+        new CopyObjectCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
+                account.getContainer("containerName"), getObject("objectName")).call();
     }
 
     @Test
     public void deleteContainerDoesNotExist() throws IOException {
-        checkForError(404, new CopyObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName"),
-                new Container("containerName"), new StoreObject("objectName")), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+        checkForError(404, new CopyObjectCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
+                account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new CopyObjectCommand(httpClient, defaultAccess, new Container("containerName"), new StoreObject("objectName"),
-                new Container("containerName"), new StoreObject("objectName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new CopyObjectCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
+                account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.UNKNOWN);
     }
 }

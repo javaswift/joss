@@ -1,9 +1,5 @@
 package nl.tweeenveertig.openstack;
 
-import nl.tweeenveertig.openstack.client.OpenStackClient;
-import nl.tweeenveertig.openstack.client.OpenStackClientImpl;
-import nl.tweeenveertig.openstack.model.*;
-
 import java.io.*;
 
 public class Main {
@@ -18,11 +14,11 @@ public class Main {
         String url = args[2];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        OpenStackClient client = new OpenStackClientImpl();
-        client.authenticate(username, password, url);
+//        OpenStackClient client = new OpenStackClientImpl();
+//        client.authenticate(username, password, url);
 
 //        Container container = new Container("Tilburg");
-//        StoreObject object = new StoreObject("doggie.png");
+//        StoredObject object = new StoredObject("doggie.png");
 //        System.out.println("Public URL: "+client.getPublicURL(container, object));
 
 //        client.makeContainerPublic(new Container("Eindhoven"));
@@ -52,34 +48,34 @@ public class Main {
 //        InputStream inputStream = new FileInputStream(new File("/Users/robertbor/Downloads/dog.png"));
 //        byte[] fileToUpload = IOUtils.toByteArray(inputStream);
 //        inputStream.close();
-//        client.uploadObject(new Container("Tilburg"), new StoreObject("somedog3.png"), fileToUpload);
+//        client.uploadObject(new Container("Tilburg"), new StoredObject("somedog3.png"), fileToUpload);
 
 //        Container container = new Container("Tilburg");
-//        StoreObject sourceObject = new StoreObject("somedog5.png");
-//        StoreObject targetObject = new StoreObject("newdog.png");
+//        StoredObject sourceObject = new StoredObject("somedog5.png");
+//        StoredObject targetObject = new StoredObject("newdog.png");
 //        client.uploadObject(container, sourceObject, new File("/Users/robertbor/Downloads/dog.png"));
 //        client.copyObject(container, sourceObject, container, targetObject);
 
         // DOWNLOAD AN IMAGE TO A BYTE ARRAY AND THEN SAVE IT TO FILE
-//        byte[] plaatje = client.downloadObject(new Container("Tilburg"), new StoreObject("doggie.png"));
+//        byte[] plaatje = client.downloadObject(new Container("Tilburg"), new StoredObject("doggie.png"));
 //        System.out.println("Grootte plaatje: " + plaatje.length);
 //        FileOutputStream fos = new FileOutputStream(new File("plaatje.png"));
 //        fos.write(plaatje);
 //        fos.close();
 
         // DOWNLOAD AN IMAGE TO FILE
-//        client.downloadObject(new Container("Tilburg"), new StoreObject("doggie.png"), new File("plaatje2.png"));
+//        client.downloadObject(new Container("Tilburg"), new StoredObject("doggie.png"), new File("plaatje2.png"));
 
         // DOWNLOAD AN IMAGE TO AN INPUTSTREAM AND SAVE IT TO FILE
-//        InputStreamWrapper wrapper = client.downloadObjectAsInputStream(new Container("Tilburg"), new StoreObject("doggie.png"));
+//        InputStreamWrapper wrapper = client.downloadObjectAsInputStream(new Container("Tilburg"), new StoredObject("doggie.png"));
 //        FileOutputStream fos = new FileOutputStream(new File("plaatje.png"));
 //        IOUtils.copy(wrapper.getInputStream(), fos);
 //        fos.close();
 //        wrapper.closeStream(); // Important to clean up the original response object
 
 //        uploadFile(client, "Tilburg", "doggie.png", new File("/Users/robertbor/Downloads/dog.png"));
-//        client.uploadObject(new Container("Tilburg"), new StoreObject("doggie.png"), new File("/Users/robertbor/Downloads/dog.png"));
-//        client.deleteObject(new Container("Tilburg"), new StoreObject("somedog5.png"));
+//        client.uploadObject(new Container("Tilburg"), new StoredObject("doggie.png"), new File("/Users/robertbor/Downloads/dog.png"));
+//        client.deleteObject(new Container("Tilburg"), new StoredObject("somedog5.png"));
 
 //        ContainerInformation info2 = client.getContainerInformation(new Container("Tilburg"));
 //        System.out.println("\nAFTER");
@@ -91,9 +87,9 @@ public class Main {
 //        metadata.put("Province", "Noord Brabant");
 //        metadata.put("Country", "Nederland");
 //        client.setContainerInformation(new Container("Eindhoven"), metadata);
-//        client.setObjectInformation(new Container("Tilburg"), new StoreObject("somedog.png"), metadata);
+//        client.setObjectInformation(new Container("Tilburg"), new StoredObject("somedog.png"), metadata);
 //
-//        ObjectInformation info = client.getObjectInformation(new Container("Tilburg"), new StoreObject("somedog.png"));
+//        ObjectInformation info = client.getObjectInformation(new Container("Tilburg"), new StoredObject("somedog.png"));
 //        System.out.println("Last modified:  "+info.getLastModified());
 //        System.out.println("ETag:           "+info.getEtag());
 //        System.out.println("Content type:   "+info.getContentType());
@@ -102,8 +98,8 @@ public class Main {
 //            System.out.println("META / "+key+": "+info.getMetadata().get(key));
 //        }
 
-//        StoreObject objects[] = client.listObjects(new Container("Tilburg"));
-//        for (StoreObject object : objects) {
+//        StoredObject objects[] = client.listObjects(new Container("Tilburg"));
+//        for (StoredObject object : objects) {
 //            System.out.println("* object -> "+object);
 //        }
 
@@ -131,23 +127,23 @@ public class Main {
 
     }
 
-    public static void uploadFile(OpenStackClient client, String containerName, String objectName, File file) throws IOException {
-        Container container = new Container(containerName);
-        StoreObject object = new StoreObject(objectName);
-
-        // TEST WITH PURE STREAM
-        InputStream inputStream = new FileInputStream(file);
-        client.uploadObject(container, object, inputStream);
-        inputStream.close();
-
-        ObjectInformation info = client.getObjectInformation(container, object);
-        System.out.println("Last modified:  "+info.getLastModified());
-        System.out.println("ETag:           "+info.getEtag());
-        System.out.println("Content type:   "+info.getContentType());
-        System.out.println("Content length: "+info.getContentLength());
-        for (String key : info.getMetadata().keySet()) {
-            System.out.println("META / "+key+": "+info.getMetadata().get(key));
-        }
-    }
+//    public static void uploadFile(OpenStackClient client, String containerName, String objectName, File file) throws IOException {
+//        Container container = new Container(containerName);
+//        StoredObject object = new StoredObject(objectName);
+//
+//        // TEST WITH PURE STREAM
+//        InputStream inputStream = new FileInputStream(file);
+//        client.uploadObject(container, object, inputStream);
+//        inputStream.close();
+//
+//        ObjectInformation info = client.getObjectInformation(container, object);
+//        System.out.println("Last modified:  "+info.getLastModified());
+//        System.out.println("ETag:           "+info.getEtag());
+//        System.out.println("Content type:   "+info.getContentType());
+//        System.out.println("Content length: "+info.getContentLength());
+//        for (String key : info.getMetadata().keySet()) {
+//            System.out.println("META / "+key+": "+info.getMetadata().get(key));
+//        }
+//    }
 
 }

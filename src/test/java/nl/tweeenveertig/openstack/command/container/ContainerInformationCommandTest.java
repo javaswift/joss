@@ -2,8 +2,6 @@ package nl.tweeenveertig.openstack.command.container;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.model.Container;
-import nl.tweeenveertig.openstack.model.ContainerInformation;
 import org.apache.http.Header;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +33,7 @@ public class ContainerInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, X_CONTAINER_BYTES_USED, "654321", headers);
         prepareHeader(response, X_CONTAINER_READ, ".r:*", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
-        ContainerInformation info = new ContainerInformationCommand(httpClient, defaultAccess, new Container("containerName")).call();
+        ContainerInformation info = new ContainerInformationCommand(httpClient, defaultAccess, account.getContainer("containerName")).call();
         assertEquals("Photo album", info.getMetadata().get("Description"));
         assertEquals("1984", info.getMetadata().get("Year"));
         assertEquals(123, info.getObjectCount());
@@ -45,11 +43,11 @@ public class ContainerInformationCommandTest extends BaseCommandTest {
 
     @Test
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerInformationCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new ContainerInformationCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerInformationCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ContainerInformationCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
     }
 }

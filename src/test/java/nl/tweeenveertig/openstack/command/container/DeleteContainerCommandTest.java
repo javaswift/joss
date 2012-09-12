@@ -2,7 +2,6 @@ package nl.tweeenveertig.openstack.command.container;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.model.Container;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,21 +21,21 @@ public class DeleteContainerCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")).call();
+        new DeleteContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 
     @Test
     public void deleteContainerDoesNotExist() throws IOException {
-        checkForError(404, new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new DeleteContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
     }
 
     @Test
     public void deleteContainerNotEmpty() throws IOException {
-        checkForError(409, new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.CONTAINER_NOT_EMPTY);
+        checkForError(409, new DeleteContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.CONTAINER_NOT_EMPTY);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new DeleteContainerCommand(httpClient, defaultAccess, new Container("containerName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new DeleteContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
     }
 }

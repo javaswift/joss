@@ -4,8 +4,8 @@ import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.model.Container;
-import nl.tweeenveertig.openstack.model.StoreObject;
+import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.StoredObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -18,20 +18,15 @@ import java.util.List;
 
 import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertResponseToString;
 
-public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collection<StoreObject>> {
+public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collection<String>> {
 
     public ListObjectsCommand(HttpClient httpClient, Access access, Container container) {
         super(httpClient, access, container);
     }
 
     @Override
-    protected Collection<StoreObject> getReturnObject(HttpResponse response) throws IOException {
-        List<String> responseBody = convertResponseToString(response);
-        List<StoreObject> storeObjects = new ArrayList<StoreObject>();
-        for (String storeObjectName : responseBody) {
-            storeObjects.add(new StoreObject(storeObjectName));
-        }
-        return storeObjects;
+    protected Collection<String> getReturnObject(HttpResponse response) throws IOException {
+        return convertResponseToString(response);
     }
 
     @Override
