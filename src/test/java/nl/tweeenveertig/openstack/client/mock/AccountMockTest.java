@@ -111,7 +111,7 @@ public class AccountMockTest {
 
     @Test
     public void getInfo() {
-        // TO DO
+        // TODO
     }
 
 }

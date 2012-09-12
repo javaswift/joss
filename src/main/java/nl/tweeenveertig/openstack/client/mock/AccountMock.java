@@ -10,6 +10,9 @@ public class AccountMock extends AbstractAccount {
     private Map<String, Container> containers = new TreeMap<String, Container>();
 
     @Override
+    protected void saveMetadata() {} // no action necessary
+
+    @Override
     protected void getInfo() {
 
         this.containerCount= 0;

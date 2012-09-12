@@ -14,6 +14,6 @@ public interface ObjectStoreEntity {
     * Gets the metadata headers
     * @return the metadata on the entity
     */
-    public Map<String, String> getMetadata();
+    public Map<String, Object> getMetadata();
 
 }

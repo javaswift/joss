@@ -4,13 +4,13 @@ import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
 import nl.tweeenveertig.openstack.command.account.AccountInformation;
 import nl.tweeenveertig.openstack.command.account.AccountInformationCommand;
+import nl.tweeenveertig.openstack.command.account.AccountMetadataCommand;
 import nl.tweeenveertig.openstack.command.account.ListContainersCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import org.apache.http.client.HttpClient;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 public class AccountImpl extends AbstractAccount {
 
@@ -33,6 +33,11 @@ public class AccountImpl extends AbstractAccount {
 
     public Container getContainer(String containerName) {
         return new ContainerImpl(this, containerName);
+    }
+
+    @Override
+    protected void saveMetadata() {
+        new AccountMetadataCommand(getClient(), getAccess(), getMetadataWithoutTriggeringCheck()).call();
     }
 
     protected void getInfo() {

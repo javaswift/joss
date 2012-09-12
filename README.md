@@ -24,18 +24,17 @@ Your Object Store provider will have provided you with the following information
 We start by opening up a stateful client and **authenticating** ourselves:
 
 ```java
-    OpenStackClient client = new OpenStackClientImpl();
-    client.authenticate(username, password, url);
+    Account account = new ClientImpl().authenticate(username, password, url);
 ```
 
-On failure, the client will throw an exception. On success, the client can now be used to execute actions on the Object Store. The client takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire, probably after 24 hours or so. You can control this by reauthenticating. You will have to take care of this logic on your side of the application.
+On failure, the client will throw an exception. On success, the account can now be used to execute actions on the Object Store. The account takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire, probably after 24 hours or so. You can control this by reauthenticating. You will have to take care of this logic on your side of the application.
 
 Next, we want to create a public container, where we can store our images:
 
 ```java
-    Container container = new Container("images");
-    client.createContainer(container);
-    client.makeContainerPublic(container);
+    Container container = account.getContainer("images");
+    container.create();
+    container.makePublic();
 ```
 
 A container is private by default, so you will have to explicitly set it to public to be able to access it through its public URL.
@@ -43,36 +42,34 @@ A container is private by default, so you will have to explicitly set it to publ
 To check whether the creation succeeded, list the containers.
 
 ```java
-    Container[] containers = client.listContainers();
-    for (Container foundContainer : containers) {
-        System.out.println(foundContainer);
+    Collection<Container> containers = account.listContainers();
+    for (Container currentContainer : containers) {
+        System.out.println(currentContainer.getName());
     }
 ```
 
 Now it is time to upload a file to the Object Store. In this example, we take an image located in the root directory of the file system.
 
 ```java
-    StoredObject object = new StoredObject("dog.png");
-    client.uploadObject(container, object, new File("/dog.png"));
-    System.out.println("Public URL: "+client.getPublicURL(container, object));
+    StoredObject object = container.getObject("dog.png");
+    object.uploadObject(new File("/dog.png"));
+    System.out.println("Public URL: "+object.getPublicURL());
 ```
-
-Note that *object* denotes the target of the file within the Object Store, whereas the file signifies the actual content that needs to be uploaded.
 
 If you fire up your browser, you can navigate to the public URL to see your resource for real. This is only possible because the container has been set to public. If it was private, you would not be able to do this.
 
 You can also check whether the upload succeeded by listing the objects in a container or by fetching the object information.
 
 ```java
-    StoredObject[] objects = client.listObjects(container);
-    for (StoredObject foundObject : objects) {
-        System.out.println(foundObject);
+    System.out.println("Last modified:  "+object.getLastModified());
+    System.out.println("ETag:           "+object.getEtag());
+    System.out.println("Content type:   "+object.getContentType());
+    System.out.println("Content length: "+object.getContentLength());
+
+    Collection<StoredObject> objects = container.listObjects();
+    for (StoredObject currentObject : objects) {
+        System.out.println(currentObject.getName());
     }
-    ObjectInformation info = client.getObjectInformation(container, object);
-    System.out.println("Last modified:  "+info.getLastModified());
-    System.out.println("ETag:           "+info.getEtag());
-    System.out.println("Content type:   "+info.getContentType());
-    System.out.println("Content length: "+info.getContentLength());
 ```
 
 Alternatively, besides [File](http://docs.oracle.com/javase/6/docs/api/java/io/File.html), you could also use a *byte[]* or an [InputStream](http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html) to upload a file.
@@ -80,7 +77,7 @@ Alternatively, besides [File](http://docs.oracle.com/javase/6/docs/api/java/io/F
 It is time to download what you just uploaded. Here we go.
 
 ```java
-   client.downloadObject(container, object, new File("/dog2.png"));
+    object.downloadObject(new File("/dog2.png"));
 ```
 
 Open the file "/dog2.png" on the file system to verify that the operation worked. Again, also byte[] and InputStream are at your disposal. *On using InputStream be aware that you are responsible for closing the stream by calling close() on the wrapper*.
@@ -88,11 +85,11 @@ Open the file "/dog2.png" on the file system to verify that the operation worked
 Now, if you want the object to be retrievable through another URL, you will have to move the object. This is accomplished by executing first a copy, then a delete action.
 
 ```java
-    StoredObject targetObject = new StoredObject("new-dog.png");
-    client.copyObject(container, object, container, targetObject);
-    client.deleteObject(container, object);
-    System.out.println("Public URL: "+client.getPublicURL(container, object)); // no longer retrievable
-    System.out.println("Public URL: "+client.getPublicURL(container, targetObject)); // the new URL
+    StoredObject newObject = container.getObject("new-dog.png");
+    object.copyObject(container, newObject);
+    object.delete();
+    System.out.println("Public URL: "+object.getPublicURL()); // no longer retrievable
+    System.out.println("Public URL: "+newObject.getPublicURL()); // the new URL
 ```
 
 You can once more use the browser to access both resources. You will see that the first URL gives you a 404, while the second one now gives you the original resource.
@@ -103,23 +100,22 @@ It is possible to add metadata to both containers and objects.
     Map<String, Object> metadata = new TreeMap<String, Object>();
     metadata.put("title", "Some Title");
     metadata.put("department", "Some Department");
-    client.setContainerInformation(container, metadata);
-    client.setObjectInformation(container, object, metadata);
+    container.setMetadata(metadata);
 ```
 
 Likewise, this information can be retrieved, as seen above.
 
 ```java
-    ObjectInformation info = client.getObjectInformation(container, object);
-    for (String key : info.getMetadata().keySet()) {
-        System.out.println("META / "+key+": "+info.getMetadata().get(key));
+    Map<String, String> returnedMetadata = container.getMetadata();
+    for (String name : returnedMetadata.keySet()) {
+        System.out.println("META / "+name+": "+returnedMetadata.get(name));
     }
 ```
 
 There are many situations in which it is not necessary, not possible, or even plain clumsy, to be connected to external dependencies. For those situations, JOSS offers the InMemory implementation of the OpenStackClient.
 
 ```java
-    OpenStackClient client = new OpenStackClientInMemory();
+    ClientMock client = new ClientMock();
 ```
 
 All the operations work basically in the same way. It is possible to run the in-memory client and have it hold the resources for a local run of your application. *Note that there is no such thing as a public URL for the in-memory run*.

@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.client.impl;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
+import nl.tweeenveertig.openstack.command.container.ContainerMetadataCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.command.object.*;
 import org.apache.http.client.HttpClient;
@@ -58,6 +59,11 @@ public class StoredObjectImpl extends AbstractStoredObject {
 
     protected Access getAccess() {
         return ((ContainerImpl)getContainer()).getAccess();
+    }
+
+    @Override
+    protected void saveMetadata() {
+        new ObjectMetadataCommand(getClient(), getAccess(), getContainer(), this, getMetadataWithoutTriggeringCheck()).call();
     }
 
     protected void getInfo() {

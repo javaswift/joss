@@ -8,19 +8,26 @@ import java.util.TreeMap;
 
 public abstract class AbstractObjectStoreEntity implements ObjectStoreEntity {
 
-    private Map<String, String> metadata = new TreeMap<String, String>();
+    private Map<String, Object> metadata = new TreeMap<String, Object>();
 
     private boolean infoRetrieved = false;
 
     public void setMetadata(Map<String, Object> metadata) {
-        this.metadata = new TreeMap<String, String>();
+        this.metadata = new TreeMap<String, Object>();
         for (String key : metadata.keySet()) {
             this.metadata.put(key, metadata.get(key).toString());
         }
+        saveMetadata();
     }
 
-    public Map<String, String> getMetadata() {
+    protected abstract void saveMetadata();
+
+    public Map<String, Object> getMetadata() {
         checkForInfo();
+        return this.metadata;
+    }
+
+    public Map<String, Object> getMetadataWithoutTriggeringCheck() {
         return this.metadata;
     }
 

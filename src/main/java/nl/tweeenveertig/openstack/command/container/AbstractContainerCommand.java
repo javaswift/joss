@@ -9,6 +9,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 public abstract class AbstractContainerCommand<M extends HttpRequestBase, N extends Object> extends AbstractSecureCommand<M, N> {
 
     public AbstractContainerCommand(HttpClient httpClient, Access access, Container container) {
-        super(httpClient, access.getInternalURL() + "/" + container, access.getToken());
+        super(httpClient, access.getInternalURL() + "/" + container.getName(), access.getToken());
     }
 }

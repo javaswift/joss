@@ -4,9 +4,11 @@ import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
 import nl.tweeenveertig.openstack.command.core.CommandException;
+import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.util.MimeTypeMap;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
 
 import java.io.*;
 
@@ -84,6 +86,10 @@ public class StoredObjectMock extends AbstractStoredObject {
     }
 
     public void delete() {
+
+        if (!this.created) {
+            throw new CommandException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+        }
         ((ContainerMock)getContainer()).deleteObject(this);
         invalidate();
     }
@@ -110,4 +116,11 @@ public class StoredObjectMock extends AbstractStoredObject {
         super.invalidate();
     }
 
+    @Override
+    protected void saveMetadata() {} // no action necessary
+
+    @Override
+    public boolean exists() {
+        return super.exists() && created;
+    }
 }

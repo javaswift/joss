@@ -82,4 +82,13 @@ public class ContainerMock extends AbstractContainer {
         ((AccountMock)getAccount()).invalidate();
         super.invalidate();
     }
+
+    @Override
+    protected void saveMetadata() {} // no action necessary
+
+    @Override
+    public boolean exists() {
+        return super.exists() && created;
+    }
 }
+

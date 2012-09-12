@@ -1,6 +1,8 @@
 package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.command.core.CommandException;
+import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,26 +21,20 @@ public class ContainerMockTest {
     }
 
     // TODO implement exists() method before reactivating these chaps
-//    @Test
-//    public void getOrCreateDoesNotExist() {
-//        container.getOrCreateObject(this.object);
-//    }
-//
-//    @Test
-//    public void getOrCreateExists() {
-//        container.getOrCreateObject(this.object);
-//        container.getOrCreateObject(this.object);
-//    }
+    @Test
+    public void getOrCreateDoesNotExist() {
+        assertFalse(container.getObject("somevalue").exists());
+    }
 
-//    @Test
-//    public void getDoesNotExist() {
-//        try {
-//            container.getObject(this.object);
-//            fail("Should have thrown an exception");
-//        } catch (CommandException err) {
-//            assertEquals(CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST, err.getError());
-//        }
-//    }
+    @Test
+    public void getDoesNotExist() {
+        try {
+            container.getObject("somevalue").delete();
+            fail("Should have thrown an exception");
+        } catch (CommandException err) {
+            assertEquals(CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST, err.getError());
+        }
+    }
 
     @Test
     public void publicPrivate() {
