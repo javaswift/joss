@@ -4,6 +4,17 @@ import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
 
 import java.util.Collection;
 
+/**
+ * A Container is the entity that holds StoredObjects. This handle allows you to access those objects and set/get
+ * information on the container itself. To make sure a Container exists, you can call {@link #exists() exists} which
+ * places a call to the Object Store for its information. To ascertain the creation of a Container, call its
+ * {@link #create() create} method. By calling {@link #delete() delete}, the Container is removed from the Object
+ * Store. Containers start out as private, which means that the StoredObjects in the Container can not be accessed
+ * through the public URL. Set the Container to public to be able to do this. It is also important to understand
+ * that {@link #getObject(String) getObject} does not create an StoredObject, or otherwise place a call to the Object
+ * Store. It just returns a handle for a StoredObject.
+ * @author Robert Bor
+ */
 public interface Container extends ObjectStoreEntity {
 
     /**

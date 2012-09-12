@@ -5,13 +5,25 @@ import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
 import java.io.File;
 import java.io.InputStream;
 
+/**
+ * StoredObject is a handler for the actual content in the Object Store. The method used most on this handler are
+ * {@link #uploadObject(java.io.File)}, {@link #uploadObject(java.io.File)} and {@link #uploadObject(byte[])} which
+ * all make sure you can upload your content to the Object Store. Downloading is done by calling
+ * {@link #downloadObject()}, {@link #downloadObject(java.io.File)} and {@link #downloadObjectAsInputStream()}. To
+ * make sure the object really exists, you can call {@link #exists()} which places a call to the Object Store. Deleting
+ * is done by calling {@link #delete()}. Creation is done implicitly by uploading content. Two other methods deserve
+ * mention here. {@link #copyObject(Container, StoredObject)} copies a StoredObject in a Container to another Container/
+ * StoredObject combination. {@link #getPublicURL()} gives you the public URL where the content can be viewed -- this
+ * does not work on a private Container.
+ * @author Robert Bor
+ */
 public interface StoredObject extends ObjectStoreEntity {
 
     /**
     * Fetches the object in a Container in an InputStream. Note that for passing the information on, the
     * content-type is useful. This information can be found by fetching the object information. <b>BE AWARE</b>
-    * that the original InputStream must be closed after usage, which can be accomplished by calling the
-    * closeStream() method on InputStreamWrapper (which consumes the entire original response).
+    * that the original InputStream must be closed after usage, which can be accomplished by calling close
+    * on the InputStream (which consumes the entire original response).
     * @return the object in an InputStreamWrapper (containing the input stream)
     */
     public InputStream downloadObjectAsInputStream();

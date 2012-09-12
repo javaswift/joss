@@ -3,6 +3,13 @@ package nl.tweeenveertig.openstack.client;
 /**
  * The authenticate call creates a new Account object, which allows you to interact with the Object Store.
  * Note that security tokens last for a maximum of 24 hours, after which a new one must be fetched.
+ * <ul>
+ *     <li>Instantiate ClientImpl for the real client to the Object Store.</li>
+ *     <li>Instantiate ClientMock for the client with mocked access, simulated by holding objects in-memory</li>
+ * </ul>
+ * Call {@link #authenticate(String, String, String) authenticate} to get an {@link Account} which allows you to
+ * start operating on the Object Store.
+ * @author Robert Bor
  */
 public interface Client {
 
