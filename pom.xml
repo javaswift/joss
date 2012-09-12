@@ -3,7 +3,7 @@
 
     <groupId>nl.tweeenveertig.openstack</groupId>
     <artifactId>joss</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Java OpenStack Storage</name>
     <description>Java Client library for OpenStack Storage (Swift)</description>
@@ -30,8 +30,8 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/java-openstack/joss.git</url>
-        <connection>https://github.com/java-openstack/joss.git</connection>
+        <url>https://github.com/java-openstack/joss.git/tags/joss-0.2.0</url>
+        <connection>https://github.com/java-openstack/joss.git/tags/joss-0.2.0</connection>
     </scm>
 
     <developers>
