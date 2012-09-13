@@ -7,8 +7,8 @@ package nl.tweeenveertig.openstack.client;
  *     <li>Instantiate ClientImpl for the real client to the Object Store.</li>
  *     <li>Instantiate ClientMock for the client with mocked access, simulated by holding objects in-memory</li>
  * </ul>
- * Call {@link #authenticate(String, String, String) authenticate} to get an {@link Account} which allows you to
- * start operating on the Object Store.
+ * Call {@link #authenticate(String, String, String, String) authenticate} to get an {@link Account} which allows
+ * you to start operating on the Object Store.
  * @author Robert Bor
  */
 public interface Client {
@@ -21,6 +21,6 @@ public interface Client {
     * @param password password of the account
     * @param authUrl URL to call the authenticate against, supplied by your OpenStack implementation vendor
     */
-    public Account authenticate(String username, String password, String authUrl);
+    public Account authenticate(String tenant, String username, String password, String authUrl);
 
 }

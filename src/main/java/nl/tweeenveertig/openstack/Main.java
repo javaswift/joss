@@ -16,16 +16,17 @@ import java.util.TreeMap;
 public class Main {
     public static void main(String args[]) throws IOException {
 
-        if (args.length != 3) {
-            System.out.println("Use syntax: <USERNAME> <PASSWORD> <URL>");
+        if (args.length != 4) {
+            System.out.println("Use syntax: <TENANT> <USERNAME> <PASSWORD> <URL>");
             return;
         }
-        String username = args[0];
-        String password = args[1];
-        String url = args[2];
+        String tenant = args[0];
+        String username = args[1];
+        String password = args[2];
+        String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-//        Account account = new ClientImpl().authenticate(username, password, url);
+        Account account = new ClientImpl().authenticate(tenant, username, password, url);
 
 //        Container container = account.getContainer("images");
 //        container.create();

@@ -16,14 +16,14 @@ import static nl.tweeenveertig.openstack.command.core.CommandUtil.createObjectMa
 
 public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
 
-    public AuthenticationCommand(HttpClient httpClient, String url, String username, String password) {
+    public AuthenticationCommand(HttpClient httpClient, String url, String tenant, String username, String password) {
         super(httpClient, url);
-        setAuthenticationHeader(username, password);
+        setAuthenticationHeader(tenant, username, password);
     }
 
-    private void setAuthenticationHeader(String username, String password) {
+    private void setAuthenticationHeader(String tenant, String username, String password) {
         try {
-            Authentication auth = new Authentication(username, password);
+            Authentication auth = new Authentication(tenant, username, password);
             String jsonString = createObjectMapper().writeValueAsString(auth);
             StringEntity input = new StringEntity(jsonString);
             input.setContentType("application/json");

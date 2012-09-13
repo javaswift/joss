@@ -26,17 +26,17 @@ public class AuthenticationCommandTest extends BaseCommandTest {
 
     @Test
     public void authenticateSuccessful() throws IOException {
-        Access access = new AuthenticationCommand(httpClient, "someurl", "user", "pwd").call();
+        Access access = new AuthenticationCommand(httpClient, "sometenant", "someurl", "user", "pwd").call();
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
     }
 
     @Test
     public void authenticateFail() throws IOException {
-        checkForError(401, new AuthenticationCommand(httpClient, "someurl", "user", "pwd"), CommandExceptionError.UNAUTHORIZED);
+        checkForError(401, new AuthenticationCommand(httpClient, "sometenant", "someurl", "user", "pwd"), CommandExceptionError.UNAUTHORIZED);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new AuthenticationCommand(httpClient, "someurl", "user", "pwd"), CommandExceptionError.UNKNOWN);
+        checkForError(500, new AuthenticationCommand(httpClient, "sometenant", "someurl", "user", "pwd"), CommandExceptionError.UNKNOWN);
     }
 }

@@ -11,8 +11,8 @@ public class ClientImpl implements Client {
 
     private HttpClient httpClient = new DefaultHttpClient();
 
-    public Account authenticate(String username, String password, String authUrl) {
-        Access access = new AuthenticationCommand(httpClient, authUrl, username, password).call();
+    public Account authenticate(String tenant, String username, String password, String authUrl) {
+        Access access = new AuthenticationCommand(httpClient, authUrl, tenant, username, password).call();
         return new AccountImpl(httpClient, access);
     }
 

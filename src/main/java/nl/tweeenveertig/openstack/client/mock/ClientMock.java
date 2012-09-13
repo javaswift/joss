@@ -7,7 +7,7 @@ public class ClientMock implements Client {
 
     private MockUserStore users = new MockUserStore();
 
-    public Account authenticate(String username, String password, String authUrl) {
+    public Account authenticate(String tenant, String username, String password, String authUrl) {
         users.authenticate(username, password);
         return new AccountMock();
     }

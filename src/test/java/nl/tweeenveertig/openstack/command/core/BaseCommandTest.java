@@ -1,10 +1,7 @@
 package nl.tweeenveertig.openstack.command.core;
 
-import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.impl.AccountImpl;
-import nl.tweeenveertig.openstack.client.impl.ContainerImpl;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
@@ -16,9 +13,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +22,6 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
