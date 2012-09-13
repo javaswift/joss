@@ -24,16 +24,16 @@ public class ObjectMetadataCommandTest extends BaseCommandTest {
         Map<String, Object> metadata = new TreeMap<String, Object>();
         metadata.put("Year", 1989);
         metadata.put("Company", "42 BV");
-        new ObjectMetadataCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), metadata).call();
+        new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), metadata).call();
     }
 
     @Test
     public void objectDoesNotExist() throws IOException {
-        checkForError(404, new ObjectMetadataCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new TreeMap<String, Object>()), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+        checkForError(404, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new TreeMap<String, Object>()), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new ObjectMetadataCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new TreeMap<String, Object>()), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new TreeMap<String, Object>()), CommandExceptionError.UNKNOWN);
     }
 }

@@ -21,16 +21,16 @@ public class CreateContainerCommandTest extends BaseCommandTest {
     @Test
     public void createContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
-        new CreateContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")).call();
+        new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 
     @Test
     public void createContainerFail() throws IOException {
-        checkForError(202, new CreateContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.CONTAINER_ALREADY_EXISTS);
+        checkForError(202, new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.CONTAINER_ALREADY_EXISTS);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new CreateContainerCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
     }
 }

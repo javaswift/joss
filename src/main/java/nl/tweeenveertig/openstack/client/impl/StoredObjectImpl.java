@@ -18,56 +18,65 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public InputStream downloadObjectAsInputStream() {
-        return new DownloadObjectAsInputStreamCommand(getClient(), getAccess(), getContainer(), this).call();
+        return new DownloadObjectAsInputStreamCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
     }
 
     public byte[] downloadObject() {
-        return new DownloadObjectAsByteArrayCommand(getClient(), getAccess(), getContainer(), this).call();
+        return new DownloadObjectAsByteArrayCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
     }
 
     public void downloadObject(File targetFile) {
-        new DownloadObjectToFileCommand(getClient(), getAccess(), getContainer(), this, targetFile).call();
+        new DownloadObjectToFileCommand(getAccount(), getClient(), getAccess(), getContainer(), this, targetFile).call();
     }
 
     public void uploadObject(InputStream inputStream) {
-        new UploadObjectCommand(getClient(), getAccess(), getContainer(), this, inputStream).call();
+        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, inputStream).call();
     }
 
     public void uploadObject(byte[] fileToUpload) {
-        new UploadObjectCommand(getClient(), getAccess(), getContainer(), this, fileToUpload).call();
+        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, fileToUpload).call();
     }
 
     public void uploadObject(File fileToUpload) {
-        new UploadObjectCommand(getClient(), getAccess(), getContainer(), this, fileToUpload).call();
+        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, fileToUpload).call();
     }
 
     public void delete() {
-        new DeleteObjectCommand(getClient(), getAccess(), getContainer(), this).call();
+        new DeleteObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
     }
 
     public void copyObject(Container targetContainer, StoredObject targetObject) {
-        new CopyObjectCommand(getClient(), getAccess(), getContainer(), this, targetContainer, targetObject).call();
+        new CopyObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, targetContainer, targetObject).call();
     }
 
     public String getPublicURL() {
         return getAccess().getPublicURL() + "/" + getContainer().getName() + "/" + getName();
     }
 
+    protected AccountImpl getAccount() {
+        return (AccountImpl)getContainer().getAccount();
+    }
+
+    @Override
+    public ContainerImpl getContainer() {
+        return (ContainerImpl)super.getContainer();
+    }
+
     protected HttpClient getClient() {
-        return ((ContainerImpl)getContainer()).getClient();
+        return getContainer().getClient();
     }
 
     protected Access getAccess() {
-        return ((ContainerImpl)getContainer()).getAccess();
+        return getContainer().getAccess();
     }
 
     @Override
     protected void saveMetadata() {
-        new ObjectMetadataCommand(getClient(), getAccess(), getContainer(), this, getMetadataWithoutTriggeringCheck()).call();
+        new ObjectMetadataCommand(getAccount(), getClient(), getAccess(), getContainer(), this, getMetadataWithoutTriggeringCheck()).call();
     }
 
     protected void getInfo() {
-        ObjectInformation info = new ObjectInformationCommand(getClient(), getAccess(), getContainer(), this).call();
+        ObjectInformation info = new ObjectInformationCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
         this.lastModified = info.getLastModified();
         this.etag = info.getEtag();
         this.contentLength = info.getContentLength();

@@ -32,7 +32,7 @@ public class AccountInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, X_ACCOUNT_OBJECT_COUNT, "123", headers);
         prepareHeader(response, X_ACCOUNT_BYTES_USED, "654321", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
-        AccountInformation info = new AccountInformationCommand(httpClient, defaultAccess).call();
+        AccountInformation info = new AccountInformationCommand(this.account, httpClient, defaultAccess).call();
         assertEquals(7, info.getContainerCount());
         assertEquals(123, info.getObjectCount());
         assertEquals(654321, info.getBytesUsed());
@@ -40,6 +40,6 @@ public class AccountInformationCommandTest extends BaseCommandTest {
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerInformationCommand(httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
     }
 }

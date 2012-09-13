@@ -19,16 +19,16 @@ public class ContainerRightsCommandTest extends BaseCommandTest {
     @Test
     public void createContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(202);
-        new ContainerRightsCommand(httpClient, defaultAccess, account.getContainer("containerName"), true).call();
+        new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true).call();
     }
 
     @Test
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerRightsCommand(httpClient, defaultAccess, account.getContainer("containerName"), true), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerRightsCommand(httpClient, defaultAccess, account.getContainer("containerName"), true), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true), CommandExceptionError.UNKNOWN);
     }
 }

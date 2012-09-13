@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
@@ -20,8 +21,8 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
     public static final String ETAG             = "ETag";
     public static final String CONTENT_LENGTH   = "Content-Length";
 
-    public AbstractDownloadObjectCommand(HttpClient httpClient, Access access, Container container, StoredObject object) {
-        super(httpClient, access, container, object);
+    public AbstractDownloadObjectCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, StoredObject object) {
+        super(account, httpClient, access, container, object);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -15,8 +16,8 @@ public class DownloadObjectAsByteArrayCommand extends AbstractDownloadObjectComm
 
     private byte[] result;
 
-    public DownloadObjectAsByteArrayCommand(HttpClient httpClient, Access access, Container container, StoredObject object) {
-        super(httpClient, access, container, object);
+    public DownloadObjectAsByteArrayCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, StoredObject object) {
+        super(account, httpClient, access, container, object);
     }
 
     @Override

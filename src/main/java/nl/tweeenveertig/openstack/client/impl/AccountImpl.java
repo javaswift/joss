@@ -6,6 +6,7 @@ import nl.tweeenveertig.openstack.command.account.AccountInformation;
 import nl.tweeenveertig.openstack.command.account.AccountInformationCommand;
 import nl.tweeenveertig.openstack.command.account.AccountMetadataCommand;
 import nl.tweeenveertig.openstack.command.account.ListContainersCommand;
+import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import org.apache.http.client.HttpClient;
 
@@ -14,16 +15,22 @@ import java.util.Collection;
 
 public class AccountImpl extends AbstractAccount {
 
+    private AuthenticationCommand command;
     private HttpClient httpClient;
     private Access access;
 
-    public AccountImpl(HttpClient httpClient, Access access) {
+    public Access retryAuth() {
+        return access = command.call();
+    }
+
+    public AccountImpl(AuthenticationCommand command, HttpClient httpClient, Access access) {
+        this.command = command;
         this.httpClient = httpClient;
         this.access = access;
     }
 
     public Collection<Container> listContainers() {
-        Collection<String> containerNames = new ListContainersCommand(httpClient, access).call();
+        Collection<String> containerNames = new ListContainersCommand(this, httpClient, access).call();
         Collection<Container> containers = new ArrayList<Container>();
         for (String containerName : containerNames) {
             containers.add(this.getContainer(containerName));
@@ -37,11 +44,11 @@ public class AccountImpl extends AbstractAccount {
 
     @Override
     protected void saveMetadata() {
-        new AccountMetadataCommand(getClient(), getAccess(), getMetadataWithoutTriggeringCheck()).call();
+        new AccountMetadataCommand(this, getClient(), getAccess(), getMetadataWithoutTriggeringCheck()).call();
     }
 
     protected void getInfo() {
-        AccountInformation info = new AccountInformationCommand(httpClient, access).call();
+        AccountInformation info = new AccountInformationCommand(this, httpClient, access).call();
         this.bytesUsed = info.getBytesUsed();
         this.containerCount = info.getContainerCount();
         this.objectCount = info.getObjectCount();

@@ -52,7 +52,7 @@ public abstract class BaseCommandTest {
         when(statusLine.getStatusCode()).thenReturn(200);
         when(response.getStatusLine()).thenReturn(statusLine);
         when(httpClient.execute(any(HttpRequestBase.class))).thenReturn(response);
-        account = new AccountImpl(httpClient, defaultAccess);
+        account = new AccountImpl(null, httpClient, defaultAccess);
     }
 
     protected StoredObject getObject(String name) {

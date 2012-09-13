@@ -19,19 +19,19 @@ public class CopyObjectCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
-        new CopyObjectCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
+        new CopyObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
                 account.getContainer("containerName"), getObject("objectName")).call();
     }
 
     @Test
     public void deleteContainerDoesNotExist() throws IOException {
-        checkForError(404, new CopyObjectCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
+        checkForError(404, new CopyObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
                 account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new CopyObjectCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
+        checkForError(500, new CopyObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
                 account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.UNKNOWN);
     }
 }

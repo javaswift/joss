@@ -19,16 +19,16 @@ public class DeleteObjectCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        new DeleteObjectCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")).call();
+        new DeleteObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")).call();
     }
 
     @Test
     public void deleteContainerDoesNotExist() throws IOException {
-        checkForError(404, new DeleteObjectCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+        checkForError(404, new DeleteObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new DeleteObjectCommand(httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new DeleteObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.UNKNOWN);
     }
 }

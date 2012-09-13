@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
@@ -25,8 +26,8 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
 
     public static final String ETAG = "ETag";
 
-    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoredObject target, InputStream inputStream) {
-        super(httpClient, access, container, target);
+    public UploadObjectCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, StoredObject target, InputStream inputStream) {
+        super(account, httpClient, access, container, target);
         try {
             prepareUpload(new InputStreamEntity(inputStream, -1));
         } catch (IOException err) {
@@ -34,8 +35,8 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         }
     }
 
-    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoredObject target, File fileToUpload) {
-        super(httpClient, access, container, target);
+    public UploadObjectCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, StoredObject target, File fileToUpload) {
+        super(account, httpClient, access, container, target);
         try {
             prepareUpload(new FileEntity(fileToUpload));
         } catch (IOException err) {
@@ -43,8 +44,8 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         }
     }
 
-    public UploadObjectCommand(HttpClient httpClient, Access access, Container container, StoredObject target, byte[] fileToUpload) {
-        super(httpClient, access, container, target);
+    public UploadObjectCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, StoredObject target, byte[] fileToUpload) {
+        super(account, httpClient, access, container, target);
         try {
             prepareUpload(new ByteArrayEntity(fileToUpload));
         } catch (IOException err) {

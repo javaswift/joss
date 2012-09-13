@@ -32,10 +32,10 @@ public class Main {
 //        container.create();
 //        container.makePublic();
 //
-//        Collection<Container> containers = account.listContainers();
-//        for (Container currentContainer : containers) {
-//            System.out.println(currentContainer.getName());
-//        }
+        Collection<Container> containers = account.listContainers();
+        for (Container currentContainer : containers) {
+            System.out.println(currentContainer.getName());
+        }
 
 //        StoredObject object = container.getObject("dog.png");
 //        object.uploadObject(new File("/dog.png"));

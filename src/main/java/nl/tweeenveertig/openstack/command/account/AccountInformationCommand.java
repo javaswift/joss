@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.account;
 
+import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import org.apache.http.Header;
@@ -17,8 +18,8 @@ public class AccountInformationCommand extends AbstractSecureCommand<HttpHead, A
     public static final String X_ACCOUNT_OBJECT_COUNT     = "X-Account-Object-Count";
     public static final String X_ACCOUNT_BYTES_USED       = "X-Account-Bytes-Used";
 
-    public AccountInformationCommand(HttpClient httpClient, Access access) {
-        super(httpClient, access);
+    public AccountInformationCommand(AccountImpl account, HttpClient httpClient, Access access) {
+        super(account, httpClient, access);
         request.addHeader("Content-type", "application/json");
     }
 

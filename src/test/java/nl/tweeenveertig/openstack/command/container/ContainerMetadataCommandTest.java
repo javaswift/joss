@@ -25,16 +25,16 @@ public class ContainerMetadataCommandTest extends BaseCommandTest {
         metadata.put("Year", 123);
         metadata.put("Title", "Roses are Red");
         metadata.put("ISBN", 123456789);
-        new ContainerMetadataCommand(httpClient, defaultAccess, account.getContainer("containerName"), metadata).call();
+        new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), metadata).call();
     }
 
     @Test
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerMetadataCommand(httpClient, defaultAccess, account.getContainer("containerName"), new TreeMap<String, Object>()), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new TreeMap<String, Object>()), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerMetadataCommand(httpClient, defaultAccess, account.getContainer("containerName"), new TreeMap<String, Object>()), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new TreeMap<String, Object>()), CommandExceptionError.UNKNOWN);
     }
 }

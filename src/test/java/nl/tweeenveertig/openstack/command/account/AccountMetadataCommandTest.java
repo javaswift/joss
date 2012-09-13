@@ -24,11 +24,11 @@ public class AccountMetadataCommandTest extends BaseCommandTest {
         Map<String, Object> metadata = new TreeMap<String, Object>();
         metadata.put("Year", 1989);
         metadata.put("Company", "42 BV");
-        new AccountMetadataCommand(httpClient, defaultAccess, metadata).call();
+        new AccountMetadataCommand(this.account, httpClient, defaultAccess, metadata).call();
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new AccountMetadataCommand(httpClient, defaultAccess, new TreeMap<String, Object>()), CommandExceptionError.UNKNOWN);
+        checkForError(500, new AccountMetadataCommand(this.account, httpClient, defaultAccess, new TreeMap<String, Object>()), CommandExceptionError.UNKNOWN);
     }
 }

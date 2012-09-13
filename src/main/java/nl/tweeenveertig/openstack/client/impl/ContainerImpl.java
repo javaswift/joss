@@ -18,15 +18,15 @@ public class ContainerImpl extends AbstractContainer {
     }
 
     public void makePublic() {
-        new ContainerRightsCommand(getClient(), getAccess(), this, true).call();
+        new ContainerRightsCommand(getAccount(), getClient(), getAccess(), this, true).call();
     }
 
     public void makePrivate() {
-        new ContainerRightsCommand(getClient(), getAccess(), this, false).call();
+        new ContainerRightsCommand(getAccount(), getClient(), getAccess(), this, false).call();
     }
 
     public Collection<StoredObject> listObjects() {
-        Collection<String> objectNames = new ListObjectsCommand(getClient(), getAccess(), this).call();
+        Collection<String> objectNames = new ListObjectsCommand(getAccount(), getClient(), getAccess(), this).call();
         Collection<StoredObject> objects = new ArrayList<StoredObject>();
         for (String objectName : objectNames) {
             objects.add(getObject(objectName));
@@ -35,11 +35,11 @@ public class ContainerImpl extends AbstractContainer {
     }
 
     public void create() {
-        new CreateContainerCommand(getClient(), getAccess(), this).call();
+        new CreateContainerCommand(getAccount(), getClient(), getAccess(), this).call();
     }
 
     public void delete() {
-        new DeleteContainerCommand(getClient(), getAccess(), this).call();
+        new DeleteContainerCommand(getAccount(), getClient(), getAccess(), this).call();
     }
 
     public StoredObject getObject(String objectName) {
@@ -56,11 +56,16 @@ public class ContainerImpl extends AbstractContainer {
 
     @Override
     protected void saveMetadata() {
-        new ContainerMetadataCommand(getClient(), getAccess(), this, getMetadataWithoutTriggeringCheck()).call();
+        new ContainerMetadataCommand(getAccount(), getClient(), getAccess(), this, getMetadataWithoutTriggeringCheck()).call();
+    }
+
+    @Override
+    public AccountImpl getAccount() {
+        return (AccountImpl)super.getAccount();
     }
 
     protected void getInfo() {
-        ContainerInformation info = new ContainerInformationCommand(getClient(), getAccess(), this).call();
+        ContainerInformation info = new ContainerInformationCommand(getAccount(), getClient(), getAccess(), this).call();
         this.bytesUsed = info.getBytesUsed();
         this.objectCount = info.getObjectCount();
         this.publicContainer = info.isPublicContainer();

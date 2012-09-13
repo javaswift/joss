@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
@@ -14,9 +15,9 @@ public class CopyObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
 
     public static final String X_COPY_FROM      = "X-Copy-From";
 
-    public CopyObjectCommand(HttpClient httpClient, Access access, Container sourceContainer, StoredObject sourceObject,
-                             Container targetContainer, StoredObject targetObject) {
-        super(httpClient, access, targetContainer, targetObject);
+    public CopyObjectCommand(AccountImpl account, HttpClient httpClient, Access access, Container sourceContainer,
+                             StoredObject sourceObject, Container targetContainer, StoredObject targetObject) {
+        super(account, httpClient, access, targetContainer, targetObject);
         request.addHeader(X_COPY_FROM, getObjectPath(sourceContainer, sourceObject));
     }
 

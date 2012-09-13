@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.container;
 
+import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
@@ -20,8 +21,8 @@ public class ContainerInformationCommand extends AbstractContainerCommand<HttpHe
     public static final String X_CONTAINER_BYTES_USED       = "X-Container-Bytes-Used";
     public static final String X_CONTAINER_READ             = "X-Container-Read";
 
-    public ContainerInformationCommand(HttpClient httpClient, Access access, Container container) {
-        super(httpClient, access, container);
+    public ContainerInformationCommand(AccountImpl account, HttpClient httpClient, Access access, Container container) {
+        super(account, httpClient, access, container);
     }
 
     @Override

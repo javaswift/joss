@@ -1,5 +1,9 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
+import nl.tweeenveertig.openstack.command.identity.access.Access;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -30,13 +34,13 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
         try {
             response = httpClient.execute(request);
             HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
-            N object = getReturnObject(response);
-            if (closeStreamAutomatically()) {
-                close();
-            }
-            return object;
+            return getReturnObject(response);
         } catch (IOException err) {
             throw new CommandException("Unable to execute the HTTP call or to convert the HTTP Response", err);
+        } finally {
+            if (closeStreamAutomatically()) {
+                try { close(); } catch (IOException err) { /* ignore */ }
+            }
         }
     }
 
