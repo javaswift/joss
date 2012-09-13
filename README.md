@@ -28,7 +28,7 @@ We start by opening up a stateful client and **authenticating** ourselves:
     Account account = new ClientImpl().authenticate(tenant, username, password, url);
 ```
 
-On failure, the client will throw an exception. On success, the account can now be used to execute actions on the Object Store. The account takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire, probably after 24 hours or so. You can control this by reauthenticating. You will have to take care of this logic on your side of the application.
+On failure, the client will throw an exception. On success, the account can now be used to execute actions on the Object Store. The account takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire after 24 hours. The client will get a new token when it encounters a 401 and retry the original command just once.
 
 Next, we want to create a public container, where we can store our images:
 
