@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
@@ -17,7 +17,7 @@ public class ObjectMetadataCommand extends AbstractObjectCommand<HttpPost, Objec
 
     public static final String X_OBJECT_META_PREFIX = "X-Object-Meta-";
 
-    public ObjectMetadataCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, StoredObject object, Map<String, Object> metadata) {
+    public ObjectMetadataCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject object, Map<String, Object> metadata) {
         super(account, httpClient, access, container, object);
         addMetadata(metadata);
     }

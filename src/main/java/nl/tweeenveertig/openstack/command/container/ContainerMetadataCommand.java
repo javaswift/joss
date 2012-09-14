@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
@@ -16,7 +16,7 @@ public class ContainerMetadataCommand extends AbstractContainerCommand<HttpPost,
 
     public static final String X_CONTAINER_META_PREFIX      = "X-Container-Meta-";
 
-    public ContainerMetadataCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, Map<String, Object> metadata) {
+    public ContainerMetadataCommand(Account account, HttpClient httpClient, Access access, Container container, Map<String, Object> metadata) {
         super(account, httpClient, access, container);
         addMetadata(metadata);
     }

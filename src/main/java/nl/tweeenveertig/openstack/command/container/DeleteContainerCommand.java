@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
@@ -12,7 +12,7 @@ import org.apache.http.client.methods.HttpDelete;
 
 public class DeleteContainerCommand extends AbstractContainerCommand<HttpDelete, String[]> {
 
-    public DeleteContainerCommand(AccountImpl account, HttpClient httpClient, Access access, Container container) {
+    public DeleteContainerCommand(Account account, HttpClient httpClient, Access access, Container container) {
         super(account, httpClient, access, container);
     }
 

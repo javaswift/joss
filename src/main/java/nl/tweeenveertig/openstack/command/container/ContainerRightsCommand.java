@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
@@ -14,7 +14,7 @@ public class ContainerRightsCommand extends AbstractContainerCommand<HttpPut, St
 
     public static final String X_CONTAINER_READ = "X-Container-Read";
 
-    public ContainerRightsCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, boolean publicContainer) {
+    public ContainerRightsCommand(Account account, HttpClient httpClient, Access access, Container container, boolean publicContainer) {
         super(account, httpClient, access, container);
         request.addHeader(X_CONTAINER_READ, publicContainer ? ".r:*" : "");
     }

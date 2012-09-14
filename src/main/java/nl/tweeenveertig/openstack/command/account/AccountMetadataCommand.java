@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.account;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.AbstractSecureCommand;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
@@ -15,7 +15,7 @@ public class AccountMetadataCommand extends AbstractSecureCommand<HttpPost, Obje
 
     public static final String X_ACCOUNT_META_PREFIX = "X-Account-Meta-";
 
-    public AccountMetadataCommand(AccountImpl account, HttpClient httpClient, Access access, Map<String, Object> metadata) {
+    public AccountMetadataCommand(Account account, HttpClient httpClient, Access access, Map<String, Object> metadata) {
         super(account, httpClient, access);
         addMetadata(metadata);
     }

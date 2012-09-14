@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
@@ -13,7 +13,7 @@ import org.apache.http.client.methods.HttpDelete;
 
 public class DeleteObjectCommand extends AbstractObjectCommand<HttpDelete, Object> {
 
-    public DeleteObjectCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, StoredObject target) {
+    public DeleteObjectCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject target) {
         super(account, httpClient, access, container, target);
     }
 

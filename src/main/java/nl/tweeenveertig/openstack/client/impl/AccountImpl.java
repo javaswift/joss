@@ -19,7 +19,7 @@ public class AccountImpl extends AbstractAccount {
     private HttpClient httpClient;
     private Access access;
 
-    public Access retryAuth() {
+    public Access authenticate() {
         return access = command.call();
     }
 

@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.client;
 
 import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
+import nl.tweeenveertig.openstack.command.identity.access.Access;
 
 import java.util.Collection;
 
@@ -28,6 +29,14 @@ public interface Account extends ObjectStoreEntity {
     * @return the container handle
     */
     public Container getContainer(String name);
+
+    /**
+    * Trigger the authentication against Object Store. There are two use cases for this method. The first is
+    * triggered pro-actively by the user by calling authenticate on the client. The second is when the token
+    * has expired and AbstractSecureCommand triggers a re-authentication.
+    * @return the access element including a new token
+    */
+    public Access authenticate();
 
     public int getContainerCount();
     public long getBytesUsed();

@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.impl.InputStreamWrapper;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
@@ -15,7 +15,7 @@ public class DownloadObjectAsInputStreamCommand extends AbstractDownloadObjectCo
 
     private InputStreamWrapper inputStream;
 
-    public DownloadObjectAsInputStreamCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, StoredObject object) {
+    public DownloadObjectAsInputStreamCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject object) {
         super(account, httpClient, access, container, object);
     }
 

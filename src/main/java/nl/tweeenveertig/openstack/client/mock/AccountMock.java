@@ -2,12 +2,15 @@ package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
+import nl.tweeenveertig.openstack.command.identity.access.Access;
 
 import java.util.*;
 
 public class AccountMock extends AbstractAccount {
 
     private Map<String, Container> containers = new TreeMap<String, Container>();
+
+    public Access authenticate() { return null; /* ignore */ }
 
     @Override
     protected void saveMetadata() {} // no action necessary

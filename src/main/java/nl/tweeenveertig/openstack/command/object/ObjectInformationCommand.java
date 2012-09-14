@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
@@ -24,7 +24,7 @@ public class ObjectInformationCommand extends AbstractObjectCommand<HttpHead, Ob
     public static final String CONTENT_LENGTH            = "Content-Length";
     public static final String CONTENT_TYPE              = "Content-Type";
 
-    public ObjectInformationCommand(AccountImpl account, HttpClient httpClient, Access access, Container container, StoredObject object) {
+    public ObjectInformationCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject object) {
         super(account, httpClient, access, container, object);
     }
 

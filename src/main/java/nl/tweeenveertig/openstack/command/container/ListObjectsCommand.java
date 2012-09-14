@@ -1,27 +1,24 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
-import nl.tweeenveertig.openstack.client.StoredObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertResponseToString;
 
 public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collection<String>> {
 
-    public ListObjectsCommand(AccountImpl account, HttpClient httpClient, Access access, Container container) {
+    public ListObjectsCommand(Account account, HttpClient httpClient, Access access, Container container) {
         super(account, httpClient, access, container);
     }
 

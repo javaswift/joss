@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.account;
 
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import org.apache.http.HttpResponse;
@@ -15,7 +15,7 @@ import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertRespons
 
 public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Collection<String>> {
 
-    public ListContainersCommand(AccountImpl account, HttpClient httpClient, Access access) {
+    public ListContainersCommand(Account account, HttpClient httpClient, Access access) {
         super(account, httpClient, access);
     }
 

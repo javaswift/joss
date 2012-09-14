@@ -59,11 +59,6 @@ public class ContainerImpl extends AbstractContainer {
         new ContainerMetadataCommand(getAccount(), getClient(), getAccess(), this, getMetadataWithoutTriggeringCheck()).call();
     }
 
-    @Override
-    public AccountImpl getAccount() {
-        return (AccountImpl)super.getAccount();
-    }
-
     protected void getInfo() {
         ContainerInformation info = new ContainerInformationCommand(getAccount(), getClient(), getAccess(), this).call();
         this.bytesUsed = info.getBytesUsed();
