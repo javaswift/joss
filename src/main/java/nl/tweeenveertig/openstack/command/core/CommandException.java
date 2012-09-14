@@ -10,6 +10,10 @@ public class CommandException extends RuntimeException {
         this.error = error;
     }
 
+    public CommandException(String message) {
+        super(message);
+    }
+
     public CommandException(String message, Throwable rootCause) {
         super(message, rootCause);
     }

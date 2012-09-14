@@ -16,4 +16,20 @@ public class ServiceCatalog {
     public String type;
 
     public String name;
+
+    public EndPoint getRegion(String regionName) {
+        EndPoint firstEndPoint = null;
+        for (EndPoint endPoint : endpoints) {
+            if (regionName == null) { // If no region is passed, return the first region
+                return endPoint;
+            }
+            if (firstEndPoint == null) { // If the requested region was not found, return the first region -- show must go on
+                firstEndPoint = endPoint;
+            }
+            if (regionName.equals(endPoint.region)) {
+                return endPoint;
+            }
+        }
+        return firstEndPoint;
+    }
 }
