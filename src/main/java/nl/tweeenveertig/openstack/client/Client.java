@@ -17,10 +17,24 @@ public interface Client {
     * Calls the identity module of the OpenStack implementation to authenticate itself against. If
     * successful, it returns the internal URL to work with and the authentication token, which will
     * automatically be added to all calls made by the client henceforth.
+    * @param tenant the account the user is authenticated against
     * @param username username of the account
     * @param password password of the account
     * @param authUrl URL to call the authenticate against, supplied by your OpenStack implementation vendor
     */
     public Account authenticate(String tenant, String username, String password, String authUrl);
+
+    /**
+     * Calls the identity module of the OpenStack implementation to authenticate itself against. If
+     * successful, it returns the internal URL to work with and the authentication token, which will
+     * automatically be added to all calls made by the client henceforth.
+     * @param tenant the account the user is authenticated against
+     * @param username username of the account
+     * @param password password of the account
+     * @param authUrl URL to call the authenticate against, supplied by your OpenStack implementation vendor
+     * @param preferredRegion the end point region that is preferred. Note that this end point is not guaranteed. If
+     *                        it is not available, another end point will be returned.
+     */
+    public Account authenticate(String tenant, String username, String password, String authUrl, String preferredRegion);
 
 }

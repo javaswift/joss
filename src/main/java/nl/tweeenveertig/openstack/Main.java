@@ -26,7 +26,7 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        Account account = new ClientImpl().authenticate(tenant, username, password, url);
+        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
 
 //        Container container = account.getContainer("images");
 //        container.create();
