@@ -12,7 +12,7 @@ In order to use JOSS in your project, simply add the following dependency:
         </dependency>
 ```
 
-You can also download the artifact [Maven Search](http://search.maven.org)
+You can also download the artifact on [Maven Search](http://search.maven.org)
 
 Getting Started
 ---------------

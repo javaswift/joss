@@ -47,6 +47,7 @@ public abstract class BaseCommandTest {
     public void setup() throws IOException {
         InputStream inputStream = IOUtils.toInputStream("");
         when(defaultAccess.getInternalURL()).thenReturn("http://someurl.nowhere");
+        when(defaultAccess.getToken()).thenReturn("cafebabe");
         when(httpEntity.getContent()).thenReturn(inputStream);
         when(response.getEntity()).thenReturn(httpEntity);
         when(statusLine.getStatusCode()).thenReturn(200);
