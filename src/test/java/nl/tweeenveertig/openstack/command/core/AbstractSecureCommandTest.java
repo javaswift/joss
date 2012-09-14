@@ -24,6 +24,14 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
     }
 
     @Test
+    public void reauthenticateSuccess() {
+        when(statusLine.getStatusCode()).thenReturn(401).thenReturn(201);
+        when(authCommand.call()).thenReturn(new Access());
+        this.account = new AccountImpl(authCommand, httpClient, defaultAccess);
+        new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
+    }
+
+    @Test
     public void reauthenticateFailTwice() {
         when(statusLine.getStatusCode()).thenReturn(401);
         when(authCommand.call()).thenReturn(new Access());
