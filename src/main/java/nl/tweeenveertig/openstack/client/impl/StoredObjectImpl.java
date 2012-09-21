@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.client.UploadInstructions;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
 import nl.tweeenveertig.openstack.command.container.ContainerMetadataCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
@@ -30,15 +31,15 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public void uploadObject(InputStream inputStream) {
-        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, inputStream).call();
+        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, new UploadInstructions(inputStream)).call();
     }
 
     public void uploadObject(byte[] fileToUpload) {
-        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, fileToUpload).call();
+        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, new UploadInstructions(fileToUpload)).call();
     }
 
     public void uploadObject(File fileToUpload) {
-        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, fileToUpload).call();
+        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, new UploadInstructions(fileToUpload)).call();
     }
 
     public void delete() {

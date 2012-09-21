@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.client.UploadInstructions;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
@@ -13,41 +14,20 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.params.CoreProtocolPNames;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
 
-    public UploadObjectCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject target, InputStream inputStream) {
+    public UploadObjectCommand(Account account, HttpClient httpClient, Access access, Container container,
+                               StoredObject target, UploadInstructions uploadInstructions) {
         super(account, httpClient, access, container, target);
         try {
-            prepareUpload(new InputStreamEntity(inputStream, -1));
+            prepareUpload(uploadInstructions.getEntity());
         } catch (IOException err) {
             throw new CommandException("Unable to open input stream for uploading", err);
-        }
-    }
-
-    public UploadObjectCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject target, File fileToUpload) {
-        super(account, httpClient, access, container, target);
-        try {
-            prepareUpload(new FileEntity(fileToUpload));
-        } catch (IOException err) {
-            throw new CommandException("Unable to open the file for uploading: "+fileToUpload.getAbsolutePath(), err);
-        }
-    }
-
-    public UploadObjectCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject target, byte[] fileToUpload) {
-        super(account, httpClient, access, container, target);
-        try {
-            prepareUpload(new ByteArrayEntity(fileToUpload));
-        } catch (IOException err) {
-            throw new CommandException("Unable to open the byte[] for uploading", err);
         }
     }
 
