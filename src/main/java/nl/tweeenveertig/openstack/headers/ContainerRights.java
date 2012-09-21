@@ -1,5 +1,8 @@
 package nl.tweeenveertig.openstack.headers;
 
+/**
+ * Allows the rights change of a container to and from public/private
+ */
 public class ContainerRights extends Header {
 
     public static final String X_CONTAINER_READ = "X-Container-Read";

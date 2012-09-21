@@ -1,5 +1,8 @@
 package nl.tweeenveertig.openstack.headers;
 
+/**
+ * Sets the MD5 hash on an object. The server uses this hash to verify that the upload succeeded
+ */
 public class Etag extends Header {
 
     public static final String ETAG = "ETag";
