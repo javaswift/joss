@@ -1,10 +1,11 @@
 package nl.tweeenveertig.openstack.headers.range;
 
+import nl.tweeenveertig.openstack.headers.HeaderTest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ExcludeStartRangeTest {
+public class ExcludeStartRangeTest extends HeaderTest {
 
     @Test
     public void headerValue() {

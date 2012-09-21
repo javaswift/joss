@@ -1,18 +1,20 @@
 package nl.tweeenveertig.openstack.headers;
 
-import nl.tweeenveertig.openstack.headers.range.AbstractRange;
-import nl.tweeenveertig.openstack.headers.range.ExcludeStartRange;
-import org.junit.Test;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.mockito.Mockito.verify;
 
-public class HeaderTest {
+@RunWith(MockitoJUnitRunner.class)
+public abstract class HeaderTest {
 
-    @Test
-    public void removeFromHeaderList() {
-        List<Header> headers = new ArrayList<Header>();
-//        headers.add(new ExcludeStartRange(8));
-//        headers.remove(AbstractRange.RAN);
+    @Mock
+    private HttpRequestBase request;
+
+    protected void testHeader(Header header) {
+        header.addHeader(request);
+        verify(request).addHeader(header.getHeaderName(), header.getHeaderValue());
     }
 }
