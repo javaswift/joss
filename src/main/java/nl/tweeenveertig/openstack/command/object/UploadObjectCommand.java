@@ -9,7 +9,6 @@ import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.headers.Etag;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -54,7 +53,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
 
     protected void prepareUpload(HttpEntity entity) throws IOException {
         if (!(entity instanceof InputStreamEntity)) { // reading an InputStream is not a smart idea
-            addHeader(new Etag(DigestUtils.md5Hex(entity.getContent())));
+            addHeader(new Etag(entity.getContent()));
         }
         request.setEntity(entity);
     }
