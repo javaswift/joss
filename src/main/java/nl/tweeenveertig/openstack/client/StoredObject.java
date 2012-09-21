@@ -30,6 +30,14 @@ public interface StoredObject extends ObjectStoreEntity {
     public InputStream downloadObjectAsInputStream();
 
     /**
+    * See documentation of {@link #downloadObjectAsInputStream()}. This method also accepts the download
+    * instructions, which can be used among others to set the "Range" and "If-*" headers.
+    * @param downloadInstructions the instructions for downloading the object
+    * @return the object in an InputStreamWrapper (containing the input stream)
+    */
+    public InputStream downloadObjectAsInputStream(DownloadInstructions downloadInstructions);
+
+    /**
     * Fetches the object in a Container in a byte array. Note that for passing the information on, the
     * content-type is useful. This information can be found by fetching the object information.
     * @return the object in a byte array
@@ -37,10 +45,26 @@ public interface StoredObject extends ObjectStoreEntity {
     public byte[] downloadObject();
 
     /**
+    * See documentation of {@link #downloadObject()}. This method also accepts the download
+    * instructions, which can be used among others to set the "Range" and "If-*" headers.
+    * @param downloadInstructions the instructions for downloading the object
+    * @return the object in a byte array
+    */
+    public byte[] downloadObject(DownloadInstructions downloadInstructions);
+
+    /**
     * Reads the object and writes it to a file.
     * @param targetFile the file to write the object to
     */
     public void downloadObject(File targetFile);
+
+    /**
+    * See documentation of {@link #downloadObject(java.io.File)}. This method also accepts the download
+    * instructions, which can be used among others to set the "Range" and "If-*" headers.
+    * @param targetFile the file to write the object to
+    * @param downloadInstructions the instructions for downloading the object
+    */
+    public void downloadObject(File targetFile, DownloadInstructions downloadInstructions);
 
     /**
     * Uploads a byte array object to a location designated by the Container and the object.

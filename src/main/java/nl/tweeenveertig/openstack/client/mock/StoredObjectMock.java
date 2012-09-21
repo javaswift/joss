@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.DownloadInstructions;
 import nl.tweeenveertig.openstack.client.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
@@ -31,14 +32,26 @@ public class StoredObjectMock extends AbstractStoredObject {
     }
 
     public InputStream downloadObjectAsInputStream() {
+        return downloadObjectAsInputStream(new DownloadInstructions());
+    }
+
+    public InputStream downloadObjectAsInputStream(DownloadInstructions downloadInstructions) {
         return new MockInputStreamWrapper(new ByteArrayInputStream(object));
     }
 
     public byte[] downloadObject() {
+        return downloadObject(new DownloadInstructions());
+    }
+
+    public byte[] downloadObject(DownloadInstructions downloadInstructions) {
         return object;
     }
 
     public void downloadObject(File targetFile) {
+        downloadObject(targetFile, new DownloadInstructions());
+    }
+
+    public void downloadObject(File targetFile, DownloadInstructions downloadInstructions) {
         InputStream is = null;
         OutputStream os = null;
         try {

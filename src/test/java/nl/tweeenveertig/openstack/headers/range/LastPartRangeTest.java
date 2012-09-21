@@ -10,6 +10,6 @@ public class LastPartRangeTest extends HeaderTest {
     @Test
     public void headerValue() {
         LastPartRange range = new LastPartRange(127);
-        assertEquals("bytes: -127", range.getHeaderValue());
+        assertEquals("bytes=-127", range.getHeaderValue());
     }
 }

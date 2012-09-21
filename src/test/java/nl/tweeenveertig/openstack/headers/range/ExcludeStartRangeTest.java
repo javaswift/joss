@@ -10,6 +10,6 @@ public class ExcludeStartRangeTest extends HeaderTest {
     @Test
     public void headerValue() {
         ExcludeStartRange range = new ExcludeStartRange(32);
-        assertEquals("bytes: 32-", range.getHeaderValue());
+        assertEquals("bytes=32-", range.getHeaderValue());
     }
 }

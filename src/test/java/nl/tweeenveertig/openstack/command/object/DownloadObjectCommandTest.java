@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.client.DownloadInstructions;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -33,23 +34,23 @@ public class DownloadObjectCommandTest extends BaseCommandTest {
     public void downloadSuccess() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
-        byte[] result = new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname")).call();
+        byte[] result = new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()).call();
         assertEquals(bytes.length, result.length);
     }
 
     @Test
     public void md5Mismatch() throws IOException {
         prepareBytes(new byte[] { 0x01}, "cafebabe"); // non-matching MD5
-        checkForError(200, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname")), CommandExceptionError.MD5_CHECKSUM);
+        checkForError(200, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.MD5_CHECKSUM);
     }
 
     @Test
     public void objectNotFound() throws IOException {
-        checkForError(404, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.UNKNOWN);
     }
 }

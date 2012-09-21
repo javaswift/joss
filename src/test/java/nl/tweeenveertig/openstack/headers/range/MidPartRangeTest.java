@@ -10,6 +10,6 @@ public class MidPartRangeTest extends HeaderTest {
     @Test
     public void headerValue() {
         MidPartRange range = new MidPartRange(16, 32);
-        assertEquals("bytes: 16-32", range.getHeaderValue());
+        assertEquals("bytes=16-32", range.getHeaderValue());
     }
 }

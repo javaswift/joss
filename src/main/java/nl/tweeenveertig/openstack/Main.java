@@ -1,11 +1,13 @@
 package nl.tweeenveertig.openstack;
 
-import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.client.Container;
-import nl.tweeenveertig.openstack.client.UploadInstructions;
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.client.*;
+import nl.tweeenveertig.openstack.client.impl.ClientImpl;
 import nl.tweeenveertig.openstack.client.mock.ClientMock;
 import nl.tweeenveertig.openstack.client.mock.MockUserStore;
+import nl.tweeenveertig.openstack.headers.range.ExcludeStartRange;
+import nl.tweeenveertig.openstack.headers.range.FirstPartRange;
+import nl.tweeenveertig.openstack.headers.range.LastPartRange;
+import nl.tweeenveertig.openstack.headers.range.MidPartRange;
 
 import java.io.*;
 
@@ -22,7 +24,12 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-//        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+        Container container = account.getContainer("images");
+        StoredObject object = container.getObject("dog.png");
+        byte[] bytes = object.downloadObject(new DownloadInstructions().setRange(new FirstPartRange(8)));
+        System.out.println("Number of bytes: "+bytes.length);
+
 //        System.out.println("Bytes used:      "+account.getBytesUsed());
 //        System.out.println("Container count: "+account.getContainerCount());
 //        System.out.println("Object count:    "+account.getObjectCount());
@@ -70,17 +77,17 @@ public class Main {
 //            System.out.println("META / "+name+": "+metadata.get(name));
 //        }
 
-        ClientMock client = new ClientMock();
-        MockUserStore users = new MockUserStore();
-        users.addUser("testuser", "testpassword");
-        client.setUsers(users);
-
-        Account account = client.authenticate("tenant", "testuser", "testpassword", null);
-        Container container = account.getContainer("alpha");
-        container.create();
-        StoredObject object = container.getObject("some-object");
-        object.uploadObject(new UploadInstructions(new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
-        byte[] bytes = object.downloadObject();
-        System.out.println("Number of bytes: "+bytes.length);
+//        ClientMock client = new ClientMock();
+//        MockUserStore users = new MockUserStore();
+//        users.addUser("testuser", "testpassword");
+//        client.setUsers(users);
+//
+//        Account account = client.authenticate("tenant", "testuser", "testpassword", null);
+//        Container container = account.getContainer("alpha");
+//        container.create();
+//        StoredObject object = container.getObject("some-object");
+//        object.uploadObject(new UploadInstructions(new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
+//        byte[] bytes = object.downloadObject();
+//        System.out.println("Number of bytes: "+bytes.length);
     }
 }

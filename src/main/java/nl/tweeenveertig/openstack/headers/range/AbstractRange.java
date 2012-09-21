@@ -15,7 +15,7 @@ import nl.tweeenveertig.openstack.headers.Header;
 public class AbstractRange extends Header {
 
     public String RANGE_HEADER_NAME = "Range";
-    public String RANGE_HEADER_VALUE_PREFIX = "bytes: ";
+    public String RANGE_HEADER_VALUE_PREFIX = "bytes=";
 
     private long offset;
 

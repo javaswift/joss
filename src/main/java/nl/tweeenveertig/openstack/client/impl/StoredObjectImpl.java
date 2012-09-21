@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.DownloadInstructions;
 import nl.tweeenveertig.openstack.client.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
@@ -18,15 +19,27 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public InputStream downloadObjectAsInputStream() {
-        return new DownloadObjectAsInputStreamCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
+        return downloadObjectAsInputStream(new DownloadInstructions());
+    }
+
+    public InputStream downloadObjectAsInputStream(DownloadInstructions downloadInstructions) {
+        return new DownloadObjectAsInputStreamCommand(getAccount(), getClient(), getAccess(), getContainer(), this, downloadInstructions).call();
     }
 
     public byte[] downloadObject() {
-        return new DownloadObjectAsByteArrayCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
+        return downloadObject(new DownloadInstructions());
+    }
+
+    public byte[] downloadObject(DownloadInstructions downloadInstructions) {
+        return new DownloadObjectAsByteArrayCommand(getAccount(), getClient(), getAccess(), getContainer(), this, downloadInstructions).call();
     }
 
     public void downloadObject(File targetFile) {
-        new DownloadObjectToFileCommand(getAccount(), getClient(), getAccess(), getContainer(), this, targetFile).call();
+        downloadObject(targetFile, new DownloadInstructions());
+    }
+
+    public void downloadObject(File targetFile, DownloadInstructions downloadInstructions) {
+        new DownloadObjectToFileCommand(getAccount(), getClient(), getAccess(), getContainer(), this, downloadInstructions, targetFile).call();
     }
 
     public void uploadObject(UploadInstructions uploadInstructions) {
