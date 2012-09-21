@@ -44,6 +44,15 @@ public class HttpStatusCheckerTest {
     }
 
     @Test
+    public void accessForbiddenError() {
+        try {
+            HttpStatusChecker.verifyCode(checkers, 403);
+        } catch (CommandException err) {
+            assertEquals(CommandExceptionError.ACCESS_FORBIDDEN, err.getError());
+        }
+    }
+
+    @Test
     public void unknownError() {
         try {
             HttpStatusChecker.verifyCode(checkers, 500);

@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.command.core;
 
 public enum CommandExceptionError {
     UNKNOWN,
+    ACCESS_FORBIDDEN,
     CONTAINER_ALREADY_EXISTS,
     CONTAINER_DOES_NOT_EXIST,
     CONTAINER_OR_OBJECT_DOES_NOT_EXIST,

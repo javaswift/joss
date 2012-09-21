@@ -10,6 +10,8 @@ public class HttpStatusChecker {
 
     private static final HttpStatusChecker authorizationMatcher =
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_UNAUTHORIZED), CommandExceptionError.UNAUTHORIZED);
+    private static final HttpStatusChecker forbiddenMatcher =
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_FORBIDDEN), CommandExceptionError.ACCESS_FORBIDDEN);
 
     public HttpStatusChecker(final HttpStatusMatcher matcher, final CommandExceptionError error) {
         this.matcher = matcher;
@@ -29,6 +31,7 @@ public class HttpStatusChecker {
 
     public static void verifyCode(HttpStatusChecker[] checkers, int httpStatusCode) {
         authorizationMatcher.isOk(httpStatusCode);
+        forbiddenMatcher.isOk(httpStatusCode);
         for (HttpStatusChecker checker : checkers) {
             if (checker.isOk(httpStatusCode)) {
                 return;
