@@ -7,18 +7,17 @@ import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.headers.CopyFrom;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
 
 public class CopyObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
 
-    public static final String X_COPY_FROM      = "X-Copy-From";
-
     public CopyObjectCommand(Account account, HttpClient httpClient, Access access, Container sourceContainer,
                              StoredObject sourceObject, Container targetContainer, StoredObject targetObject) {
         super(account, httpClient, access, targetContainer, targetObject);
-        request.addHeader(X_COPY_FROM, getObjectPath(sourceContainer, sourceObject));
+        addHeader(new CopyFrom(getObjectPath(sourceContainer, sourceObject)));
     }
 
     @Override

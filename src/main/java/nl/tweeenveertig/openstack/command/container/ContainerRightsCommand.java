@@ -6,17 +6,16 @@ import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.headers.ContainerRights;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
 
 public class ContainerRightsCommand extends AbstractContainerCommand<HttpPut, String[]> {
 
-    public static final String X_CONTAINER_READ = "X-Container-Read";
-
     public ContainerRightsCommand(Account account, HttpClient httpClient, Access access, Container container, boolean publicContainer) {
         super(account, httpClient, access, container);
-        request.addHeader(X_CONTAINER_READ, publicContainer ? ".r:*" : "");
+        addHeader(new ContainerRights(publicContainer));
     }
 
     @Override

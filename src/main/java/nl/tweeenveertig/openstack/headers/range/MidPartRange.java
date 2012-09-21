@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.object.range;
+package nl.tweeenveertig.openstack.headers.range;
 
 /**
  * Take the object starting at 'offset' with a length equal to 'length'

@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack;
 
+import com.sun.servicetag.SystemEnvironment;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -27,15 +28,18 @@ public class Main {
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
         Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+        System.out.println("Bytes used:      "+account.getBytesUsed());
+        System.out.println("Container count: "+account.getContainerCount());
+        System.out.println("Object count:    "+account.getObjectCount());
 
 //        Container container = account.getContainer("images");
 //        container.create();
 //        container.makePublic();
 //
-        Collection<Container> containers = account.listContainers();
-        for (Container currentContainer : containers) {
-            System.out.println(currentContainer.getName());
-        }
+//        Collection<Container> containers = account.listContainers();
+//        for (Container currentContainer : containers) {
+//            System.out.println(currentContainer.getName());
+//        }
 
 //        StoredObject object = container.getObject("dog.png");
 //        object.uploadObject(new File("/dog.png"));

@@ -8,6 +8,7 @@ import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.headers.Etag;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -23,8 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
-
-    public static final String ETAG = "ETag";
 
     public UploadObjectCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject target, InputStream inputStream) {
         super(account, httpClient, access, container, target);
@@ -55,7 +54,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
 
     protected void prepareUpload(HttpEntity entity) throws IOException {
         if (!(entity instanceof InputStreamEntity)) { // reading an InputStream is not a smart idea
-            request.addHeader(ETAG, DigestUtils.md5Hex(entity.getContent()));
+            addHeader(new Etag(DigestUtils.md5Hex(entity.getContent())));
         }
         request.setEntity(entity);
     }

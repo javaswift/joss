@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.object.range;
+package nl.tweeenveertig.openstack.headers.range;
 
 import org.junit.Test;
 
@@ -9,6 +9,6 @@ public class LastPartRangeTest {
     @Test
     public void headerValue() {
         LastPartRange range = new LastPartRange(127);
-        assertEquals("bytes: -127", range.generateHeaderValue());
+        assertEquals("bytes: -127", range.getHeaderValue());
     }
 }

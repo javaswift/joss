@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.object.range;
+package nl.tweeenveertig.openstack.headers.range;
 
 import org.junit.Test;
 
@@ -9,6 +9,6 @@ public class ExcludeStartRangeTest {
     @Test
     public void headerValue() {
         ExcludeStartRange range = new ExcludeStartRange(32);
-        assertEquals("bytes: 32-", range.generateHeaderValue());
+        assertEquals("bytes: 32-", range.getHeaderValue());
     }
 }

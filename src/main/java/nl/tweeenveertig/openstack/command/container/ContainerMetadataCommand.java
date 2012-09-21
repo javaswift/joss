@@ -6,6 +6,8 @@ import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.headers.metadata.ContainerMetadata;
+import nl.tweeenveertig.openstack.headers.metadata.Metadata;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -23,7 +25,7 @@ public class ContainerMetadataCommand extends AbstractContainerCommand<HttpPost,
 
     protected void addMetadata(Map<String, Object> metadata) {
         for (String name : metadata.keySet()) {
-            request.addHeader(X_CONTAINER_META_PREFIX+name, metadata.get(name).toString());
+            addHeader(new ContainerMetadata(name, metadata.get(name).toString()));
         }
     }
 

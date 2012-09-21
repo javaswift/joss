@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.object.range;
+package nl.tweeenveertig.openstack.headers.range;
 
 /**
  * Take the first bytes of the object until position 'until'

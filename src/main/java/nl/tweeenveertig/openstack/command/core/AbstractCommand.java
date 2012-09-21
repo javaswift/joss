@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -38,6 +39,14 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
                 try { close(); } catch (IOException err) { /* ignore */ }
             }
         }
+    }
+
+    protected void removeHeaders(String headerName) {
+        this.request.removeHeaders(headerName);
+    }
+
+    protected void addHeader(Header header) {
+        header.addHeader(request);
     }
 
     public void close() throws IOException {

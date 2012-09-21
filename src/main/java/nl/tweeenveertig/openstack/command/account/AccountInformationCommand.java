@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.command.account;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.headers.metadata.AccountMetadata;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -20,7 +21,6 @@ public class AccountInformationCommand extends AbstractSecureCommand<HttpHead, A
 
     public AccountInformationCommand(Account account, HttpClient httpClient, Access access) {
         super(account, httpClient, access);
-        request.addHeader("Content-type", "application/json");
     }
 
     @Override

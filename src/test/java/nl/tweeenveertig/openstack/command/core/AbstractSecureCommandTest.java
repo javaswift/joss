@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.container.CreateContainerCommand;
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.http.Header;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
     public void checkAuthenticationToken() {
         when(statusLine.getStatusCode()).thenReturn(201);
         CreateContainerCommand command = new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"));
-        Header[] xAuth = command.request.getHeaders(AbstractSecureCommand.X_AUTH_TOKEN);
+        Header[] xAuth = command.request.getHeaders(Token.X_AUTH_TOKEN);
         assertEquals(1, xAuth.length);
         assertEquals("cafebabe", xAuth[0].getValue());
     }
