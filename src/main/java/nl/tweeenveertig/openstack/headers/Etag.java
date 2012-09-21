@@ -14,6 +14,10 @@ public class Etag extends Header {
 
     private String md5;
 
+    public Etag(String md5) throws IOException {
+        this.md5 = md5;
+    }
+
     public Etag(InputStream inputStream) throws IOException {
         this.md5 = DigestUtils.md5Hex(inputStream);
     }

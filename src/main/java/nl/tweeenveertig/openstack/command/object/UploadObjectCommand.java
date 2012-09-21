@@ -25,14 +25,18 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
                                StoredObject target, UploadInstructions uploadInstructions) {
         super(account, httpClient, access, container, target);
         try {
-            prepareUpload(uploadInstructions.getEntity());
+            prepareUpload(uploadInstructions);
         } catch (IOException err) {
             throw new CommandException("Unable to open input stream for uploading", err);
         }
     }
 
-    protected void prepareUpload(HttpEntity entity) throws IOException {
-        if (!(entity instanceof InputStreamEntity)) { // reading an InputStream is not a smart idea
+    protected void prepareUpload(UploadInstructions uploadInstructions) throws IOException {
+        HttpEntity entity = uploadInstructions.getEntity();
+        if (uploadInstructions.getMd5() != null) {
+            addHeader(new Etag(uploadInstructions.getMd5()));
+        }
+        else if (!(entity instanceof InputStreamEntity)) { // reading an InputStream is not a smart idea
             addHeader(new Etag(entity.getContent()));
         }
         request.setEntity(entity);

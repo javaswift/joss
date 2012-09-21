@@ -46,6 +46,9 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
     }
 
     protected void addHeader(Header header) {
+        if (header == null) {
+            return;
+        }
         header.addHeader(request);
     }
 

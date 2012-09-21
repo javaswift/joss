@@ -1,18 +1,13 @@
 package nl.tweeenveertig.openstack;
 
-import com.sun.servicetag.SystemEnvironment;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
-import nl.tweeenveertig.openstack.client.impl.ClientImpl;
-import nl.tweeenveertig.openstack.client.mock.AccountMock;
 import nl.tweeenveertig.openstack.client.mock.ClientMock;
 import nl.tweeenveertig.openstack.client.mock.MockUserStore;
 
 import java.io.*;
-import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class Main {
     public static void main(String args[]) throws IOException {
@@ -27,10 +22,10 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
-        System.out.println("Bytes used:      "+account.getBytesUsed());
-        System.out.println("Container count: "+account.getContainerCount());
-        System.out.println("Object count:    "+account.getObjectCount());
+//        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+//        System.out.println("Bytes used:      "+account.getBytesUsed());
+//        System.out.println("Container count: "+account.getContainerCount());
+//        System.out.println("Object count:    "+account.getObjectCount());
 
 //        Container container = account.getContainer("images");
 //        container.create();
@@ -79,5 +74,13 @@ public class Main {
         MockUserStore users = new MockUserStore();
         users.addUser("testuser", "testpassword");
         client.setUsers(users);
+
+        Account account = client.authenticate("tenant", "testuser", "testpassword", null);
+        Container container = account.getContainer("alpha");
+        container.create();
+        StoredObject object = container.getObject("some-object");
+        object.uploadObject(new UploadInstructions(new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
+        byte[] bytes = object.downloadObject();
+        System.out.println("Number of bytes: "+bytes.length);
     }
 }
