@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.client;
 import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -43,6 +44,12 @@ public interface StoredObject extends ObjectStoreEntity {
 
     /**
     * Uploads a byte array object to a location designated by the Container and the object.
+    * @param uploadInstructions not only the content to be uploaded, but also additional headers that need to be set
+    */
+    public void uploadObject(UploadInstructions uploadInstructions) throws IOException;
+
+    /**
+    * Uploads a byte array object to a location designated by the Container and the object.
     * @param inputStream the actual content that must be uploaded to the object, in InputStream format
     */
     public void uploadObject(InputStream inputStream);
@@ -51,7 +58,7 @@ public interface StoredObject extends ObjectStoreEntity {
     * Uploads a byte array object to a location designated by the Container and the object.
     * @param fileToUpload the actual content that must be uploaded to the object
     */
-    public void uploadObject(byte[] fileToUpload);
+    public void uploadObject(byte[] fileToUpload) throws IOException;
 
     /**
     * Uploads a file from a designated location to a location designated by the Container and the
@@ -72,7 +79,7 @@ public interface StoredObject extends ObjectStoreEntity {
     * @param targetContainer the owning Container of the target location of the copy
     * @param targetObject the object location where the copy must be placed
     */
-    public void copyObject(Container targetContainer, StoredObject targetObject);
+    public void copyObject(Container targetContainer, StoredObject targetObject) throws IOException;
 
     /**
     * Returns the public URL through which the resource can be viewed

@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.client.UploadInstructions;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
@@ -52,6 +53,14 @@ public class StoredObjectMock extends AbstractStoredObject {
         }
     }
 
+    public void uploadObject(UploadInstructions uploadInstructions) throws IOException {
+        if (!this.created) {
+            ((ContainerMock)getContainer()).createObject(this);
+            this.created = true;
+        }
+        saveObject(IOUtils.toByteArray(uploadInstructions.getEntity().getContent()));
+    }
+
     public void uploadObject(InputStream inputStream) {
         try {
             this.uploadObject(IOUtils.toByteArray(inputStream));
@@ -60,12 +69,8 @@ public class StoredObjectMock extends AbstractStoredObject {
         }
     }
 
-    public void uploadObject(byte[] fileToUpload) {
-        if (!this.created) {
-            ((ContainerMock)getContainer()).createObject(this);
-            this.created = true;
-        }
-        saveObject(fileToUpload);
+    public void uploadObject(byte[] fileToUpload) throws IOException {
+        uploadObject(new UploadInstructions(fileToUpload));
     }
 
     public void uploadObject(File fileToUpload) {
@@ -94,7 +99,7 @@ public class StoredObjectMock extends AbstractStoredObject {
         invalidate();
     }
 
-    public void copyObject(Container targetContainer, StoredObject targetObject) {
+    public void copyObject(Container targetContainer, StoredObject targetObject) throws IOException {
         byte[] targetContent = object.clone();
         if (!targetContainer.exists()) {
             targetContainer.create();

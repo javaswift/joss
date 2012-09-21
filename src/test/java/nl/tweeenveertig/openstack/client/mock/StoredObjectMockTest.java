@@ -4,6 +4,8 @@ import nl.tweeenveertig.openstack.client.StoredObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static junit.framework.Assert.assertEquals;
 
 public class StoredObjectMockTest {
@@ -16,14 +18,14 @@ public class StoredObjectMockTest {
     }
 
     @Test
-    public void saveObject() {
+    public void saveObject() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
         object.uploadObject(bytes);
         assertEquals(bytes.length, object.downloadObject().length);
     }
 
     @Test
-    public void getInfo() {
+    public void getInfo() throws IOException {
         object = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
         object.uploadObject(bytes);

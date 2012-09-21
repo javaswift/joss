@@ -30,6 +30,10 @@ public class StoredObjectImpl extends AbstractStoredObject {
         new DownloadObjectToFileCommand(getAccount(), getClient(), getAccess(), getContainer(), this, targetFile).call();
     }
 
+    public void uploadObject(UploadInstructions uploadInstructions) {
+        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, uploadInstructions).call();
+    }
+
     public void uploadObject(InputStream inputStream) {
         new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, new UploadInstructions(inputStream)).call();
     }

@@ -7,6 +7,7 @@ import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -72,7 +73,7 @@ public class AccountMockTest {
     }
 
     @Test
-    public void deleteNonEmptyContainer() {
+    public void deleteNonEmptyContainer() throws IOException {
         Account account = new AccountMock();
         Container container = account.getContainer("town1");
         container.create();
@@ -96,7 +97,7 @@ public class AccountMockTest {
     }
 
     @Test
-    public void copyObject() {
+    public void copyObject() throws IOException {
         Container container = new AccountMock().getContainer("town1");
         container.create();
         StoredObject sourceObject = container.getObject("source-object");

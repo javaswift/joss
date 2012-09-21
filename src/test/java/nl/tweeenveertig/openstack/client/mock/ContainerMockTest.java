@@ -6,6 +6,8 @@ import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static junit.framework.Assert.*;
 
 public class ContainerMockTest {
@@ -46,19 +48,19 @@ public class ContainerMockTest {
     }
 
     @Test
-    public void numberOfObjects() {
+    public void numberOfObjects() throws IOException {
         addObjects(3);
         assertEquals(3, container.getObjectCount());
     }
 
     @Test
-    public void listObjects() {
+    public void listObjects() throws IOException {
         addObjects(3);
         assertEquals(3, container.listObjects().size());
     }
 
     @Test
-    public void deleteObject() {
+    public void deleteObject() throws IOException {
         object.uploadObject(new byte[]{});
         assertEquals(1, container.getObjectCount());
         object.delete();
@@ -66,7 +68,7 @@ public class ContainerMockTest {
     }
 
     @Test
-    public void getInfo() {
+    public void getInfo() throws IOException {
         addObject("object1", new byte[] { 0x01, 0x02, 0x03 } );
         addObject("object2", new byte[] { 0x01, 0x02 } );
         addObject("object3", new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 } );
@@ -74,12 +76,12 @@ public class ContainerMockTest {
         assertEquals(3, container.getObjectCount());
     }
 
-    protected void addObject(String name, byte[] bytes) {
+    protected void addObject(String name, byte[] bytes) throws IOException {
         StoredObject object = container.getObject(name);
         object.uploadObject(bytes);
     }
 
-    protected void addObjects(int times) {
+    protected void addObjects(int times) throws IOException {
         for (int i = 0; i < times; i++) {
             container.getObject("someobject"+i).uploadObject(new byte[] {});
         }
