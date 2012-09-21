@@ -5,7 +5,17 @@ package nl.tweeenveertig.openstack.headers.range;
  */
 public class ExcludeStartRange extends AbstractRange {
 
-    public ExcludeStartRange(long offset) {
+    public ExcludeStartRange(int offset) {
         super(offset, -1);
+    }
+
+    @Override
+    public int getFrom(int byteArrayLength) {
+        return this.offset;
+    }
+
+    @Override
+    public int getTo(int byteArrayLength) {
+        return byteArrayLength;
     }
 }

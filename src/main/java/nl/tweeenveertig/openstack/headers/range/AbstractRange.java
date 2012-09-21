@@ -2,6 +2,8 @@ package nl.tweeenveertig.openstack.headers.range;
 
 import nl.tweeenveertig.openstack.headers.Header;
 
+import java.util.Arrays;
+
 /**
  * Offers the option to return not the entire object, but only a designated part. The various options are
  * <ul>
@@ -12,16 +14,16 @@ import nl.tweeenveertig.openstack.headers.Header;
  * </ul>
  * Also see: http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html
  */
-public class AbstractRange extends Header {
+public abstract class AbstractRange extends Header {
 
     public String RANGE_HEADER_NAME = "Range";
     public String RANGE_HEADER_VALUE_PREFIX = "bytes=";
 
-    private long offset;
+    protected int offset;
 
-    private long length;
+    protected int length;
 
-    protected AbstractRange(long offset, long length) {
+    protected AbstractRange(int offset, int length) {
         this.offset = offset;
         this.length = length;
     }
@@ -36,5 +38,15 @@ public class AbstractRange extends Header {
 
     public String getHeaderName() {
         return RANGE_HEADER_NAME;
+    }
+
+    public abstract int getFrom(int byteArrayLength);
+
+    public abstract int getTo(int byteArrayLength);
+
+    public byte[] copy(byte[] original) {
+        int from = getFrom(original.length);
+        int to = getTo(original.length);
+        return Arrays.copyOfRange(original, getFrom(original.length), getTo(original.length));
     }
 }

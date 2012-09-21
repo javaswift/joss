@@ -5,8 +5,17 @@ package nl.tweeenveertig.openstack.headers.range;
  */
 public class LastPartRange extends AbstractRange {
 
-    public LastPartRange(long lastBytes) {
+    public LastPartRange(int lastBytes) {
         super(-1, lastBytes);
     }
 
+    @Override
+    public int getFrom(int byteArrayLength) {
+        return byteArrayLength - length;
+    }
+
+    @Override
+    public int getTo(int byteArrayLength) {
+        return byteArrayLength;
+    }
 }

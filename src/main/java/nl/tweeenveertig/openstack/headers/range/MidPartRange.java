@@ -5,7 +5,17 @@ package nl.tweeenveertig.openstack.headers.range;
  */
 public class MidPartRange extends AbstractRange {
 
-    public MidPartRange(long startPos, long endPos) {
+    public MidPartRange(int startPos, int endPos) {
         super(startPos, endPos);
+    }
+
+    @Override
+    public int getFrom(int byteArrayLength) {
+        return offset;
+    }
+
+    @Override
+    public int getTo(int byteArrayLength) {
+        return length;
     }
 }
