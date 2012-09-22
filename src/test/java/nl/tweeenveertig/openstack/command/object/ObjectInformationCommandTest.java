@@ -12,7 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
-import static nl.tweeenveertig.openstack.command.object.ObjectInformationCommand.*;
+import static nl.tweeenveertig.openstack.command.object.ObjectInformationCommand.X_OBJECT_META_PREFIX;
+import static nl.tweeenveertig.openstack.headers.object.ObjectLastModified.LAST_MODIFIED;
+import static nl.tweeenveertig.openstack.headers.object.Etag.ETAG;
+import static nl.tweeenveertig.openstack.headers.object.ObjectContentLength.CONTENT_LENGTH;
+import static nl.tweeenveertig.openstack.headers.object.ObjectContentType.CONTENT_TYPE;
 import static org.mockito.Mockito.when;
 
 public class ObjectInformationCommandTest extends BaseCommandTest {

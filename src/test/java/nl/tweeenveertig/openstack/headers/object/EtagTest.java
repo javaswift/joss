@@ -1,5 +1,7 @@
-package nl.tweeenveertig.openstack.headers;
+package nl.tweeenveertig.openstack.headers.object;
 
+import nl.tweeenveertig.openstack.headers.HeaderTest;
+import nl.tweeenveertig.openstack.headers.object.Etag;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 

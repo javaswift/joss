@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.headers.account;
 
-import nl.tweeenveertig.openstack.headers.metadata.Metadata;
+import nl.tweeenveertig.openstack.headers.Metadata;
 
 public class AccountMetadata extends Metadata {
 

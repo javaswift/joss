@@ -1,4 +1,6 @@
-package nl.tweeenveertig.openstack.headers.metadata;
+package nl.tweeenveertig.openstack.headers.object;
+
+import nl.tweeenveertig.openstack.headers.Metadata;
 
 public class ObjectMetadata extends Metadata {
 

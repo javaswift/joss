@@ -1,4 +1,6 @@
-package nl.tweeenveertig.openstack.headers;
+package nl.tweeenveertig.openstack.headers.object;
+
+import nl.tweeenveertig.openstack.headers.SimpleHeader;
 
 /**
  * Determines the source object in a copy action

@@ -1,6 +1,8 @@
-package nl.tweeenveertig.openstack.headers;
+package nl.tweeenveertig.openstack.headers.object;
 
+import nl.tweeenveertig.openstack.headers.SimpleHeader;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.http.HttpResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +14,7 @@ public class Etag extends SimpleHeader {
 
     public static final String ETAG = "ETag";
 
-    public Etag(String md5) throws IOException {
+    public Etag(String md5) {
         super(md5);
     }
 
@@ -23,5 +25,9 @@ public class Etag extends SimpleHeader {
     @Override
     public String getHeaderName() {
         return ETAG;
+    }
+
+    public static Etag fromResponse(HttpResponse response) {
+        return new Etag(convertResponseHeader(response, ETAG));
     }
 }

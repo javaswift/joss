@@ -1,5 +1,8 @@
 package nl.tweeenveertig.openstack.mock;
 
+import nl.tweeenveertig.openstack.headers.object.Etag;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.util.MimeTypeMap;
@@ -25,9 +28,9 @@ public class MockObject extends AbstractMock<ObjectInformation> {
 
     @Override
     protected void appendInformation(ObjectInformation info) {
-        info.setContentLength(this.object.length);
-        info.setEtag(this.md5);
-        info.setContentType(this.contentType);
+        info.setContentLength(new ObjectContentLength(Integer.toString(this.object.length)));
+        info.setEtag(new Etag(this.md5));
+        info.setContentType(new ObjectContentType(this.contentType));
         //info.setLastModified();
     }
 

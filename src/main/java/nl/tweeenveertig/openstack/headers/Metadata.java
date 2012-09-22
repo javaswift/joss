@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.headers.metadata;
+package nl.tweeenveertig.openstack.headers;
 
 import nl.tweeenveertig.openstack.headers.SimpleHeader;
 

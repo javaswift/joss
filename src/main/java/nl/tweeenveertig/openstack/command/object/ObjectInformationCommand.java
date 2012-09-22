@@ -8,6 +8,10 @@ import nl.tweeenveertig.openstack.command.core.HttpStatusRange;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.headers.object.Etag;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
+import nl.tweeenveertig.openstack.headers.object.ObjectLastModified;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -20,10 +24,6 @@ import java.io.IOException;
 public class ObjectInformationCommand extends AbstractObjectCommand<HttpHead, ObjectInformation> {
 
     public static final String X_OBJECT_META_PREFIX      = "X-Object-Meta-";
-    public static final String LAST_MODIFIED             = "Last-Modified";
-    public static final String ETAG                      = "Etag";
-    public static final String CONTENT_LENGTH            = "Content-Length";
-    public static final String CONTENT_TYPE              = "Content-Type";
 
     public ObjectInformationCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject object) {
         super(account, httpClient, access, container, object);
@@ -37,10 +37,10 @@ public class ObjectInformationCommand extends AbstractObjectCommand<HttpHead, Ob
                 info.addMetadata(header.getName().substring(X_OBJECT_META_PREFIX.length()), header.getValue());
             }
         }
-        info.setLastModified(response.getHeaders(LAST_MODIFIED)[0].getValue());
-        info.setEtag(response.getHeaders(ETAG)[0].getValue());
-        info.setContentLength(Integer.parseInt(response.getHeaders(CONTENT_LENGTH)[0].getValue()));
-        info.setContentType(response.getHeaders(CONTENT_TYPE)[0].getValue());
+        info.setLastModified(ObjectLastModified.fromResponse(response));
+        info.setEtag(Etag.fromResponse(response));
+        info.setContentLength(ObjectContentLength.fromResponse(response));
+        info.setContentType(ObjectContentType.fromResponse(response));
         return info;
     }
 

@@ -1,43 +1,47 @@
 package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.command.core.AbstractInformation;
+import nl.tweeenveertig.openstack.headers.object.Etag;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
+import nl.tweeenveertig.openstack.headers.object.ObjectLastModified;
 
 public class ObjectInformation extends AbstractInformation {
 
-    private String lastModified;
-    private String etag;
-    private long contentLength;
-    private String contentType;
+    private ObjectLastModified lastModified;
+    private Etag etag;
+    private ObjectContentLength contentLength;
+    private ObjectContentType contentType;
 
     public String getLastModified() {
-        return lastModified;
+        return lastModified.getHeaderValue();
     }
 
-    public void setLastModified(String lastModified) {
+    public void setLastModified(ObjectLastModified lastModified) {
         this.lastModified = lastModified;
     }
 
     public String getEtag() {
-        return etag;
+        return etag.getHeaderValue();
     }
 
-    public void setEtag(String etag) {
+    public void setEtag(Etag etag) {
         this.etag = etag;
     }
 
     public long getContentLength() {
-        return contentLength;
+        return Long.parseLong(contentLength.getHeaderValue());
     }
 
-    public void setContentLength(long contentLength) {
+    public void setContentLength(ObjectContentLength contentLength) {
         this.contentLength = contentLength;
     }
 
     public String getContentType() {
-        return contentType;
+        return contentType.getHeaderValue();
     }
 
-    public void setContentType(String contentType) {
+    public void setContentType(ObjectContentType contentType) {
         this.contentType = contentType;
     }
 }
