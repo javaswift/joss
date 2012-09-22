@@ -6,6 +6,9 @@ import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
+import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;
+import nl.tweeenveertig.openstack.headers.container.ContainerRights;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -18,9 +21,6 @@ import java.io.IOException;
 public class ContainerInformationCommand extends AbstractContainerCommand<HttpHead, ContainerInformation> {
 
     public static final String X_CONTAINER_META_PREFIX      = "X-Container-Meta-";
-    public static final String X_CONTAINER_OBJECT_COUNT     = "X-Container-Object-Count";
-    public static final String X_CONTAINER_BYTES_USED       = "X-Container-Bytes-Used";
-    public static final String X_CONTAINER_READ             = "X-Container-Read";
 
     public ContainerInformationCommand(Account account, HttpClient httpClient, Access access, Container container) {
         super(account, httpClient, access, container);
@@ -34,9 +34,9 @@ public class ContainerInformationCommand extends AbstractContainerCommand<HttpHe
                 info.addMetadata(header.getName().substring(X_CONTAINER_META_PREFIX.length()), header.getValue());
             }
         }
-        info.setPublicContainer(response.getHeaders(X_CONTAINER_READ).length > 0);
-        info.setObjectCount(Integer.parseInt(response.getHeaders(X_CONTAINER_OBJECT_COUNT)[0].getValue()));
-        info.setBytesUsed(Long.parseLong(response.getHeaders(X_CONTAINER_BYTES_USED)[0].getValue()));
+        info.setObjectCount(ContainerObjectCount.fromResponse(response));
+        info.setBytesUsed(ContainerBytesUsed.fromResponse(response));
+        info.setPublicContainer(ContainerRights.fromResponse(response));
         return info;
     }
 

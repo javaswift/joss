@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.headers.account;
 
-import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.headers.SimpleHeader;
+import org.apache.http.HttpResponse;
 
 public class AccountContainerCount extends SimpleHeader {
 
@@ -14,5 +14,9 @@ public class AccountContainerCount extends SimpleHeader {
     @Override
     public String getHeaderName() {
         return X_ACCOUNT_CONTAINER_COUNT;
+    }
+
+    public static AccountContainerCount fromResponse(HttpResponse response) {
+        return new AccountContainerCount(convertResponseHeader(response, X_ACCOUNT_CONTAINER_COUNT));
     }
 }

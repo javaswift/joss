@@ -1,36 +1,39 @@
 package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.command.core.AbstractInformation;
+import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
+import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
+import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
 
 public class AccountInformation extends AbstractInformation {
 
-    private int containerCount;
+    private AccountContainerCount containerCount;
 
-    private int objectCount;
+    private AccountObjectCount objectCount;
 
-    private long bytesUsed;
+    private AccountBytesUsed bytesUsed;
 
     public int getContainerCount() {
-        return containerCount;
+        return Integer.parseInt(containerCount.getHeaderValue());
     }
 
-    public void setContainerCount(int containerCount) {
+    public void setContainerCount(AccountContainerCount containerCount) {
         this.containerCount = containerCount;
     }
 
     public long getBytesUsed() {
-        return bytesUsed;
+        return Long.parseLong(bytesUsed.getHeaderValue());
     }
 
-    public void setBytesUsed(long bytesUsed) {
+    public void setBytesUsed(AccountBytesUsed bytesUsed) {
         this.bytesUsed = bytesUsed;
     }
 
     public int getObjectCount() {
-        return objectCount;
+        return Integer.parseInt(objectCount.getHeaderValue());
     }
 
-    public void setObjectCount(int objectCount) {
+    public void setObjectCount(AccountObjectCount objectCount) {
         this.objectCount = objectCount;
     }
 }

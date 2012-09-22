@@ -16,6 +16,9 @@ import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import static nl.tweeenveertig.openstack.command.container.ContainerInformationCommand.*;
+import static nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed.X_CONTAINER_BYTES_USED;
+import static nl.tweeenveertig.openstack.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
+import static nl.tweeenveertig.openstack.headers.container.ContainerRights.X_CONTAINER_READ;
 
 public class ContainerInformationCommandTest extends BaseCommandTest {
 

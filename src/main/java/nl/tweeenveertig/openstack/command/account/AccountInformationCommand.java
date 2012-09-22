@@ -3,6 +3,9 @@ package nl.tweeenveertig.openstack.command.account;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
+import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
+import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
 import nl.tweeenveertig.openstack.model.AccountInformation;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -15,9 +18,6 @@ import java.io.IOException;
 public class AccountInformationCommand extends AbstractSecureCommand<HttpHead, AccountInformation> {
 
     public static final String X_ACCOUNT_META_PREFIX      = "X-Account-Meta-";
-    public static final String X_ACCOUNT_CONTAINER_COUNT  = "X-Account-Container-Count";
-    public static final String X_ACCOUNT_OBJECT_COUNT     = "X-Account-Object-Count";
-    public static final String X_ACCOUNT_BYTES_USED       = "X-Account-Bytes-Used";
 
     public AccountInformationCommand(Account account, HttpClient httpClient, Access access) {
         super(account, httpClient, access);
@@ -31,9 +31,9 @@ public class AccountInformationCommand extends AbstractSecureCommand<HttpHead, A
                 info.addMetadata(header.getName().substring(X_ACCOUNT_META_PREFIX.length()), header.getValue());
             }
         }
-        info.setContainerCount(Integer.parseInt(response.getHeaders(X_ACCOUNT_CONTAINER_COUNT)[0].getValue()));
-        info.setObjectCount(Integer.parseInt(response.getHeaders(X_ACCOUNT_OBJECT_COUNT)[0].getValue()));
-        info.setBytesUsed(Long.parseLong(response.getHeaders(X_ACCOUNT_BYTES_USED)[0].getValue()));
+        info.setContainerCount(AccountContainerCount.fromResponse(response));
+        info.setObjectCount(AccountObjectCount.fromResponse(response));
+        info.setBytesUsed(AccountBytesUsed.fromResponse(response));
         return info;
     }
 

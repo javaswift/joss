@@ -1,36 +1,39 @@
 package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.command.core.AbstractInformation;
+import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
+import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;
+import nl.tweeenveertig.openstack.headers.container.ContainerRights;
 
 public class ContainerInformation extends AbstractInformation {
 
-    private int objectCount;
+    private ContainerObjectCount objectCount;
 
-    private long bytesUsed;
+    private ContainerBytesUsed bytesUsed;
 
-    private boolean publicContainer;
+    private ContainerRights containerRights;
 
     public int getObjectCount() {
-        return objectCount;
+        return Integer.parseInt(objectCount.getHeaderValue());
     }
 
-    public void setObjectCount(int objectCount) {
+    public void setObjectCount(ContainerObjectCount objectCount) {
         this.objectCount = objectCount;
     }
 
     public long getBytesUsed() {
-        return bytesUsed;
+        return Long.parseLong(bytesUsed.getHeaderValue());
     }
 
-    public void setBytesUsed(long bytesUsed) {
+    public void setBytesUsed(ContainerBytesUsed bytesUsed) {
         this.bytesUsed = bytesUsed;
     }
 
     public boolean isPublicContainer() {
-        return publicContainer;
+        return containerRights.isPublic();
     }
 
-    public void setPublicContainer(boolean publicContainer) {
-        this.publicContainer = publicContainer;
+    public void setPublicContainer(ContainerRights containerRights) {
+        this.containerRights = containerRights;
     }
 }

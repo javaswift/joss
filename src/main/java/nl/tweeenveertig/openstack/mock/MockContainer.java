@@ -2,6 +2,9 @@ package nl.tweeenveertig.openstack.mock;
 
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
+import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;
+import nl.tweeenveertig.openstack.headers.container.ContainerRights;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import org.apache.http.HttpStatus;
@@ -47,15 +50,15 @@ public class MockContainer extends AbstractMock<ContainerInformation>{
 
     @Override
     protected void appendInformation(ContainerInformation info) {
-        info.setPublicContainer(this.publicContainer);
+        info.setPublicContainer(new ContainerRights(this.publicContainer));
         int numberOfObjects = 0;
         long numberOfBytes = 0;
         for (MockObject object : objects.values()) {
             numberOfObjects++;
             numberOfBytes += object.getInfo().getContentLength();
         }
-        info.setObjectCount(numberOfObjects);
-        info.setBytesUsed(numberOfBytes);
+        info.setObjectCount(new ContainerObjectCount(Integer.toString(numberOfObjects)));
+        info.setBytesUsed(new ContainerBytesUsed(Long.toString(numberOfBytes)));
     }
 
     @Override

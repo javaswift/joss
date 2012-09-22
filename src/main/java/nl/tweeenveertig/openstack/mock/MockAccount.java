@@ -2,6 +2,9 @@ package nl.tweeenveertig.openstack.mock;
 
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
+import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
+import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
 import nl.tweeenveertig.openstack.model.AccountInformation;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
@@ -65,7 +68,7 @@ public class MockAccount extends AbstractMock<AccountInformation> {
 
     @Override
     protected void appendInformation(AccountInformation info) {
-        info.setContainerCount(containers.size());
+        info.setContainerCount(new AccountContainerCount(Integer.toString(containers.size())));
         int numberOfObjects = 0;
         long numberOfBytes = 0;
         for (MockContainer container : containers.values()) {
@@ -73,8 +76,8 @@ public class MockAccount extends AbstractMock<AccountInformation> {
             numberOfObjects += containerInformation.getObjectCount();
             numberOfBytes += containerInformation.getBytesUsed();
         }
-        info.setObjectCount(numberOfObjects);
-        info.setBytesUsed(numberOfBytes);
+        info.setObjectCount(new AccountObjectCount(Integer.toString(numberOfObjects)));
+        info.setBytesUsed(new AccountBytesUsed(Long.toString(numberOfBytes)));
     }
 
     @Override

@@ -14,6 +14,9 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static nl.tweeenveertig.openstack.command.account.AccountInformationCommand.*;
+import static nl.tweeenveertig.openstack.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
+import static nl.tweeenveertig.openstack.headers.account.AccountBytesUsed.X_ACCOUNT_BYTES_USED;
+import static nl.tweeenveertig.openstack.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
 import static org.mockito.Mockito.when;
 
 public class AccountInformationCommandTest extends BaseCommandTest {

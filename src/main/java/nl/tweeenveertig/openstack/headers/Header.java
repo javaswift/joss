@@ -1,6 +1,10 @@
 package nl.tweeenveertig.openstack.headers;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Basic header that needs to be added to a command. The underlying implementation takes care of the
@@ -28,5 +32,19 @@ public abstract class Header {
     * @return the name for the request header
     */
     public abstract String getHeaderName();
+
+    public static List<org.apache.http.Header> getResponseHeadersStartingWith(HttpResponse response, String prefix) {
+        List<org.apache.http.Header> headers = new ArrayList<org.apache.http.Header>();
+        for (org.apache.http.Header header : response.getAllHeaders()) {
+            if (header.getName().startsWith(prefix)) {
+                headers.add(header);
+            }
+        }
+        return headers;
+    }
+
+    public static String convertResponseHeader(HttpResponse response, String name) {
+        return response.getHeaders(name)[0].getValue();
+    }
 
 }

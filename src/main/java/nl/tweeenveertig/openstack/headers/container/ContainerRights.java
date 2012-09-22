@@ -1,4 +1,7 @@
-package nl.tweeenveertig.openstack.headers;
+package nl.tweeenveertig.openstack.headers.container;
+
+import nl.tweeenveertig.openstack.headers.Header;
+import org.apache.http.HttpResponse;
 
 /**
  * Allows the rights change of a container to and from public/private
@@ -13,6 +16,10 @@ public class ContainerRights extends Header {
         this.publicContainer = publicContainer;
     }
 
+    public boolean isPublic() {
+        return this.publicContainer;
+    }
+
     @Override
     public String getHeaderValue() {
         return publicContainer ? ".r:*" : "";
@@ -22,4 +29,9 @@ public class ContainerRights extends Header {
     public String getHeaderName() {
         return X_CONTAINER_READ;
     }
+
+    public static ContainerRights fromResponse(HttpResponse response) {
+        return new ContainerRights(response.getHeaders(X_CONTAINER_READ).length > 0);
+    }
+
 }
