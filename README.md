@@ -178,7 +178,7 @@ More information
 
 Keep up to date on the library development by joining the Java OpenStack Storage discussion group [Google Group](https://groups.google.com/forum/?fromgroups#!forum/java-openstack-storage---joss)
 
-or follow us on [Twitter](http://twitter.com/robert_bor)
+or follow us on [Twitter](http://twitter.com/JavaOSS)
 
 Special thanks to Oscar Westra van Holthe - Kind for premium advice and support.
 
