@@ -2,9 +2,9 @@ package nl.tweeenveertig.openstack.mock;
 
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.command.account.AccountInformation;
+import nl.tweeenveertig.openstack.model.AccountInformation;
 import nl.tweeenveertig.openstack.client.Container;
-import nl.tweeenveertig.openstack.command.container.ContainerInformation;
+import nl.tweeenveertig.openstack.model.ContainerInformation;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import org.apache.http.HttpStatus;
 

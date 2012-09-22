@@ -8,23 +8,16 @@ import java.io.InputStream;
 /**
  * Sets the MD5 hash on an object. The server uses this hash to verify that the upload succeeded
  */
-public class Etag extends Header {
+public class Etag extends SimpleHeader {
 
     public static final String ETAG = "ETag";
 
-    private String md5;
-
     public Etag(String md5) throws IOException {
-        this.md5 = md5;
+        super(md5);
     }
 
     public Etag(InputStream inputStream) throws IOException {
-        this.md5 = DigestUtils.md5Hex(inputStream);
-    }
-
-    @Override
-    public String getHeaderValue() {
-        return this.md5;
+        this(DigestUtils.md5Hex(inputStream));
     }
 
     @Override

@@ -1,6 +1,8 @@
 package nl.tweeenveertig.openstack.client;
 
 import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
+import nl.tweeenveertig.openstack.model.DownloadInstructions;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.File;
 import java.io.IOException;

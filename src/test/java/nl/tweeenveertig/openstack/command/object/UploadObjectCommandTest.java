@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.client.UploadInstructions;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.junit.Before;

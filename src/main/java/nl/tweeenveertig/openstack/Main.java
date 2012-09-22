@@ -2,12 +2,8 @@ package nl.tweeenveertig.openstack;
 
 import nl.tweeenveertig.openstack.client.*;
 import nl.tweeenveertig.openstack.client.impl.ClientImpl;
-import nl.tweeenveertig.openstack.client.mock.ClientMock;
-import nl.tweeenveertig.openstack.client.mock.MockUserStore;
-import nl.tweeenveertig.openstack.headers.range.ExcludeStartRange;
 import nl.tweeenveertig.openstack.headers.range.FirstPartRange;
-import nl.tweeenveertig.openstack.headers.range.LastPartRange;
-import nl.tweeenveertig.openstack.headers.range.MidPartRange;
+import nl.tweeenveertig.openstack.model.DownloadInstructions;
 
 import java.io.*;
 

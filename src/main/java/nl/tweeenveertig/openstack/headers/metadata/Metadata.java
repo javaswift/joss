@@ -1,25 +1,18 @@
 package nl.tweeenveertig.openstack.headers.metadata;
 
-import nl.tweeenveertig.openstack.headers.Header;
+import nl.tweeenveertig.openstack.headers.SimpleHeader;
 
-public abstract class Metadata extends Header {
+public abstract class Metadata extends SimpleHeader {
 
     private String name;
 
-    private String value;
-
     public Metadata(String name, String value) {
+        super(value);
         this.name = name;
-        this.value = value;
     }
 
-    protected String getName() {
+    public String getName() {
         return this.name;
-    }
-
-    @Override
-    public String getHeaderValue() {
-        return this.value;
     }
 
 }

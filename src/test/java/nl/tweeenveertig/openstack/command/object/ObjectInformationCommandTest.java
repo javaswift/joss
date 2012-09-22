@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.model.ObjectInformation;
 import org.apache.http.Header;
 import org.junit.Before;
 import org.junit.Test;

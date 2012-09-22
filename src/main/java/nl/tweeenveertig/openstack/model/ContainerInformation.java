@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.container;
+package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.command.core.AbstractInformation;
 

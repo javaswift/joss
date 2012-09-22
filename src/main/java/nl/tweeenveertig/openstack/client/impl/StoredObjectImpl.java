@@ -1,8 +1,9 @@
 package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
-import nl.tweeenveertig.openstack.client.DownloadInstructions;
-import nl.tweeenveertig.openstack.client.UploadInstructions;
+import nl.tweeenveertig.openstack.model.DownloadInstructions;
+import nl.tweeenveertig.openstack.model.ObjectInformation;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
 import nl.tweeenveertig.openstack.command.identity.access.Access;

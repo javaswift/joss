@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.client;
+package nl.tweeenveertig.openstack.model;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ByteArrayEntity;

@@ -2,7 +2,7 @@ package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
-import nl.tweeenveertig.openstack.command.account.AccountInformation;
+import nl.tweeenveertig.openstack.model.AccountInformation;
 import nl.tweeenveertig.openstack.command.account.AccountInformationCommand;
 import nl.tweeenveertig.openstack.command.account.AccountMetadataCommand;
 import nl.tweeenveertig.openstack.command.account.ListContainersCommand;

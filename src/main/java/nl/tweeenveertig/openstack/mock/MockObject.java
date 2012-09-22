@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.mock;
 
-import nl.tweeenveertig.openstack.command.object.ObjectInformation;
+import nl.tweeenveertig.openstack.model.ObjectInformation;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.util.MimeTypeMap;
 import org.apache.commons.codec.digest.DigestUtils;

@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.client;
+package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.headers.range.AbstractRange;
 import org.apache.http.HttpEntity;

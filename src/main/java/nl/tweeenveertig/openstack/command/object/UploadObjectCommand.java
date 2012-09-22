@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.client.UploadInstructions;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
