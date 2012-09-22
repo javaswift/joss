@@ -5,7 +5,6 @@ import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
 import nl.tweeenveertig.openstack.command.container.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.model.ContainerInformation;
 import org.apache.http.client.HttpClient;
 
 import java.util.ArrayList;
@@ -60,11 +59,7 @@ public class ContainerImpl extends AbstractContainer {
     }
 
     protected void getInfo() {
-        ContainerInformation info = new ContainerInformationCommand(getAccount(), getClient(), getAccess(), this).call();
-        this.bytesUsed = info.getBytesUsed();
-        this.objectCount = info.getObjectCount();
-        this.publicContainer = info.isPublicContainer();
-        this.setMetadata(info.getMetadata());
+        this.info = new ContainerInformationCommand(getAccount(), getClient(), getAccess(), this).call();
         this.setInfoRetrieved();
     }
 

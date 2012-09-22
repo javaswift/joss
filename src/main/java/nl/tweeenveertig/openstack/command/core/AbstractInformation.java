@@ -1,18 +1,24 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import nl.tweeenveertig.openstack.headers.Metadata;
+
 import java.util.Map;
 import java.util.TreeMap;
 
 public abstract class AbstractInformation {
 
-    private Map<String, Object> metadata = new TreeMap<String, Object>();
+    private Map<String, Metadata> metadataHeaders = new TreeMap<String, Metadata>();
 
-    public void addMetadata(String name, Object value) {
-        metadata.put(name, value);
+    public void addMetadata(Metadata metadata) {
+        metadataHeaders.put(metadata.getName(), metadata);
     }
 
-    public Map<String, Object> getMetadata() {
-        return this.metadata;
+    public String getMetadata(String name) {
+        return this.metadataHeaders.get(name) != null ? this.metadataHeaders.get(name).getHeaderValue() : null;
+    }
+
+    public void setMetadata(Map<String, Metadata> metadataHeaders) {
+        this.metadataHeaders = metadataHeaders;
     }
 
 }

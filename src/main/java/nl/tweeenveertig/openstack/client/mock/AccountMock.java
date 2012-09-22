@@ -3,6 +3,9 @@ package nl.tweeenveertig.openstack.client.mock;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
+import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
+import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
 
 import java.util.*;
 
@@ -18,14 +21,17 @@ public class AccountMock extends AbstractAccount {
     @Override
     protected void getInfo() {
 
-        this.containerCount= 0;
-        this.objectCount = 0;
-        this.bytesUsed = 0;
+        int containerCount= 0;
+        int objectCount = 0;
+        long bytesUsed = 0;
         for (Container container : containers.values()) {
-            this.containerCount= 0;
-            this.objectCount += container.getObjectCount();
-            this.bytesUsed += container.getBytesUsed();
+            containerCount= 0;
+            objectCount += container.getObjectCount();
+            bytesUsed += container.getBytesUsed();
         }
+        this.info.setContainerCount(new AccountContainerCount(Integer.toString(containerCount)));
+        this.info.setObjectCount(new AccountObjectCount(Integer.toString(objectCount)));
+        this.info.setBytesUsed(new AccountBytesUsed(Long.toString(bytesUsed)));
     }
 
     public Collection<Container> listContainers() {

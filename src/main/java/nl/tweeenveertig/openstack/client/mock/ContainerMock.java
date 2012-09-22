@@ -5,6 +5,10 @@ import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
+import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;
+import nl.tweeenveertig.openstack.headers.container.ContainerRights;
+import nl.tweeenveertig.openstack.model.ContainerInformation;
 import org.apache.http.HttpStatus;
 
 import java.util.*;
@@ -17,24 +21,27 @@ public class ContainerMock extends AbstractContainer {
 
     public ContainerMock(Account account, String name) {
         super(account, name);
+        this.info = new ContainerInformation();
     }
 
     @Override
     protected void getInfo() {
-        this.objectCount = 0;
-        this.bytesUsed = 0;
+        int objectCount = 0;
+        long bytesUsed = 0;
         for (StoredObject object : objects.values()) {
-            this.objectCount++;
-            this.bytesUsed += object.getContentLength();
+            objectCount++;
+            bytesUsed += object.getContentLength();
         }
+        this.info.setBytesUsed(new ContainerBytesUsed(Long.toString(bytesUsed)));
+        this.info.setObjectCount(new ContainerObjectCount(Integer.toString(objectCount)));
     }
 
     public void makePublic() {
-        this.publicContainer = true;
+        this.info.setPublicContainer(new ContainerRights(true));
     }
 
     public void makePrivate() {
-        this.publicContainer = false;
+        this.info.setPublicContainer(new ContainerRights(false));
     }
 
     public Collection<StoredObject> listObjects() {

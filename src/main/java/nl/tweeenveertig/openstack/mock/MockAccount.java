@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
 import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
+import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
 import nl.tweeenveertig.openstack.model.AccountInformation;
 import nl.tweeenveertig.openstack.client.Container;
@@ -15,7 +16,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class MockAccount extends AbstractMock<AccountInformation> {
+public class MockAccount extends AbstractMock<AccountInformation, AccountMetadata> {
 
     private Map<Container, MockContainer> containers = new TreeMap<Container, MockContainer>();
 
@@ -54,7 +55,7 @@ public class MockAccount extends AbstractMock<AccountInformation> {
     public AccountInformation getInfo() {
         AccountInformation info = new AccountInformation();
         for (String metadataKey : metadata.keySet()) {
-            info.addMetadata(metadataKey, metadata.get(metadataKey).toString());
+            info.addMetadata(new AccountMetadata(metadataKey, metadata.get(metadataKey).toString()));
         }
         return info;
     }
@@ -83,6 +84,11 @@ public class MockAccount extends AbstractMock<AccountInformation> {
     @Override
     protected AccountInformation createInformationContainer() {
         return new AccountInformation();
+    }
+
+    @Override
+    protected AccountMetadata createMetadata(String name, String value) {
+        return new AccountMetadata(name, value);
     }
 
     public void setInfo(Map<String, Object> metadata) {

@@ -2,13 +2,12 @@ package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.model.ObjectInformation;
 
 public abstract class AbstractStoredObject extends AbstractObjectStoreEntity implements StoredObject, Comparable<StoredObject> {
 
-    protected String lastModified;
-    protected String etag;
-    protected long contentLength;
-    protected String contentType;
+    protected ObjectInformation info = new ObjectInformation();
+
     protected String name;
 
     private Container container;
@@ -20,22 +19,22 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity imp
 
     public String getLastModified() {
         checkForInfo();
-        return lastModified;
+        return info.getLastModified();
     }
 
     public String getEtag() {
         checkForInfo();
-        return etag;
+        return info.getEtag();
     }
 
     public long getContentLength() {
         checkForInfo();
-        return contentLength;
+        return info.getContentLength();
     }
 
     public String getContentType() {
         checkForInfo();
-        return contentType;
+        return info.getContentType();
     }
 
     public String getName() {

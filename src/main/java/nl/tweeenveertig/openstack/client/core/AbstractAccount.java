@@ -1,26 +1,25 @@
 package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.model.AccountInformation;
 
 public abstract class AbstractAccount extends AbstractObjectStoreEntity implements Account {
 
-    protected int containerCount;
-    protected int objectCount;
-    protected long bytesUsed;
+    protected AccountInformation info = new AccountInformation();
 
     public int getContainerCount() {
         checkForInfo();
-        return containerCount;
+        return info.getContainerCount();
     }
 
     public long getBytesUsed() {
         checkForInfo();
-        return bytesUsed;
+        return info.getBytesUsed();
     }
 
     public int getObjectCount() {
         checkForInfo();
-        return objectCount;
+        return info.getObjectCount();
     }
 
 }

@@ -14,8 +14,6 @@ import java.util.Map;
 
 public class AccountMetadataCommand extends AbstractSecureCommand<HttpPost, Object> {
 
-    public static final String X_ACCOUNT_META_PREFIX = "X-Account-Meta-";
-
     public AccountMetadataCommand(Account account, HttpClient httpClient, Access access, Map<String, Object> metadata) {
         super(account, httpClient, access);
         addMetadata(metadata);

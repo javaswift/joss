@@ -3,12 +3,13 @@ package nl.tweeenveertig.openstack.mock;
 import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
+import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.util.MimeTypeMap;
 import org.apache.commons.codec.digest.DigestUtils;
 
-public class MockObject extends AbstractMock<ObjectInformation> {
+public class MockObject extends AbstractMock<ObjectInformation, ObjectMetadata> {
 
     private byte[] object;
 
@@ -37,5 +38,10 @@ public class MockObject extends AbstractMock<ObjectInformation> {
     @Override
     protected ObjectInformation createInformationContainer() {
         return new ObjectInformation();
+    }
+
+    @Override
+    protected ObjectMetadata createMetadata(String name, String value) {
+        return new ObjectMetadata(name, value);
     }
 }

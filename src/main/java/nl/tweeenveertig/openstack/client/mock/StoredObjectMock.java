@@ -1,6 +1,9 @@
 package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.headers.object.Etag;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -26,9 +29,9 @@ public class StoredObjectMock extends AbstractStoredObject {
 
     @Override
     protected void getInfo() {
-        this.etag = object == null ? "" : DigestUtils.md5Hex(object);
-        this.contentType = MimeTypeMap.getContentType(getName());
-        this.contentLength = object == null ? 0 : object.length;
+        this.info.setEtag(new Etag(object == null ? "" : DigestUtils.md5Hex(object)));
+        this.info.setContentType(new ObjectContentType(MimeTypeMap.getContentType(getName())));
+        this.info.setContentLength(new ObjectContentLength(Long.toString(object == null ? 0 : object.length)));
     }
 
     public InputStream downloadObjectAsInputStream() {

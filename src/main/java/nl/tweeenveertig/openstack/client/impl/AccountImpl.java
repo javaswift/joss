@@ -2,7 +2,6 @@ package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
-import nl.tweeenveertig.openstack.model.AccountInformation;
 import nl.tweeenveertig.openstack.command.account.AccountInformationCommand;
 import nl.tweeenveertig.openstack.command.account.AccountMetadataCommand;
 import nl.tweeenveertig.openstack.command.account.ListContainersCommand;
@@ -48,11 +47,7 @@ public class AccountImpl extends AbstractAccount {
     }
 
     protected void getInfo() {
-        AccountInformation info = new AccountInformationCommand(this, httpClient, access).call();
-        this.bytesUsed = info.getBytesUsed();
-        this.containerCount = info.getContainerCount();
-        this.objectCount = info.getObjectCount();
-        this.setMetadata(info.getMetadata());
+        this.info = new AccountInformationCommand(this, httpClient, access).call();
         this.setInfoRetrieved();
     }
 

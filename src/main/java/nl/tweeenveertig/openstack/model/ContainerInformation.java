@@ -13,6 +13,10 @@ public class ContainerInformation extends AbstractInformation {
 
     private ContainerRights containerRights;
 
+    public ContainerInformation() {
+        this.containerRights = new ContainerRights(false);
+    }
+
     public int getObjectCount() {
         return Integer.parseInt(objectCount.getHeaderValue());
     }

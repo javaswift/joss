@@ -2,12 +2,12 @@ package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.model.ContainerInformation;
 
 public abstract class AbstractContainer extends AbstractObjectStoreEntity implements Container, Comparable<Container> {
 
-    protected int objectCount;
-    protected long bytesUsed;
-    protected boolean publicContainer;
+    protected ContainerInformation info = new ContainerInformation();
+
     protected String name;
 
     private Account account;
@@ -19,16 +19,16 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity implem
 
     public int getObjectCount() {
         checkForInfo();
-        return objectCount;
+        return info.getObjectCount();
     }
 
     public long getBytesUsed() {
         checkForInfo();
-        return bytesUsed;
+        return info.getBytesUsed();
     }
     public boolean isPublic() {
         checkForInfo();
-        return publicContainer;
+        return info.isPublicContainer();
     }
 
     public String getName() {

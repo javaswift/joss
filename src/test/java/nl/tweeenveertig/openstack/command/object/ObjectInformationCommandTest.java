@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
-import static nl.tweeenveertig.openstack.command.object.ObjectInformationCommand.X_OBJECT_META_PREFIX;
+import static nl.tweeenveertig.openstack.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
 import static nl.tweeenveertig.openstack.headers.object.ObjectLastModified.LAST_MODIFIED;
 import static nl.tweeenveertig.openstack.headers.object.Etag.ETAG;
 import static nl.tweeenveertig.openstack.headers.object.ObjectContentLength.CONTENT_LENGTH;
@@ -38,8 +38,8 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, CONTENT_TYPE, "image/png", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
         ObjectInformation info = new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")).call();
-        assertEquals("Photo album", info.getMetadata().get("Description"));
-        assertEquals("1984", info.getMetadata().get("Year"));
+        assertEquals("Photo album", info.getMetadata("Description"));
+        assertEquals("1984", info.getMetadata("Year"));
         assertEquals("Mon, 03 Sep 2012 05:40:33 GMT", info.getLastModified());
         assertEquals("cae4ebb15a282e98ba7b65402a72f57c", info.getEtag());
         assertEquals(654321, info.getContentLength());

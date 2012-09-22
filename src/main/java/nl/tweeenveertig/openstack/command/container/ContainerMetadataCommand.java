@@ -15,8 +15,6 @@ import java.util.Map;
 
 public class ContainerMetadataCommand extends AbstractContainerCommand<HttpPost, Object> {
 
-    public static final String X_CONTAINER_META_PREFIX      = "X-Container-Meta-";
-
     public ContainerMetadataCommand(Account account, HttpClient httpClient, Access access, Container container, Map<String, Object> metadata) {
         super(account, httpClient, access, container);
         addMetadata(metadata);

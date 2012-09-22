@@ -15,7 +15,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
-import static nl.tweeenveertig.openstack.command.container.ContainerInformationCommand.*;
+import static nl.tweeenveertig.openstack.headers.container.ContainerMetadata.*;
 import static nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed.X_CONTAINER_BYTES_USED;
 import static nl.tweeenveertig.openstack.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
 import static nl.tweeenveertig.openstack.headers.container.ContainerRights.X_CONTAINER_READ;
@@ -38,8 +38,8 @@ public class ContainerInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, X_CONTAINER_READ, ".r:*", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
         ContainerInformation info = new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
-        assertEquals("Photo album", info.getMetadata().get("Description"));
-        assertEquals("1984", info.getMetadata().get("Year"));
+        assertEquals("Photo album", info.getMetadata("Description"));
+        assertEquals("1984", info.getMetadata("Year"));
         assertEquals(123, info.getObjectCount());
         assertEquals(654321, info.getBytesUsed());
         assertTrue(info.isPublicContainer());

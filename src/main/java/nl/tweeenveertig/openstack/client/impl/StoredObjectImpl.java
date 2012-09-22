@@ -2,7 +2,6 @@ package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
-import nl.tweeenveertig.openstack.model.ObjectInformation;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
@@ -94,12 +93,7 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     protected void getInfo() {
-        ObjectInformation info = new ObjectInformationCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
-        this.lastModified = info.getLastModified();
-        this.etag = info.getEtag();
-        this.contentLength = info.getContentLength();
-        this.contentType = info.getContentType();
-        this.setMetadata(info.getMetadata());
+        this.info = new ObjectInformationCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
         this.setInfoRetrieved();
     }
 
