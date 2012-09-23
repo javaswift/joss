@@ -14,7 +14,6 @@ public abstract class AbstractObjectCommand<M extends HttpRequestBase, N extends
         super(account, httpClient, access.getInternalURL() + getObjectPath(container, object), access.getToken());
     }
 
-
     protected static String getObjectPath(Container container, StoredObject object) {
         return "/" + container.getName() + "/" + object.getName();
     }

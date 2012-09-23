@@ -2,10 +2,14 @@ package nl.tweeenveertig.openstack.command.account;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.headers.Header;
+import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -21,14 +25,14 @@ public class AccountMetadataCommandTest extends BaseCommandTest {
     @Test
     public void getInfoSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        Map<String, Object> metadata = new TreeMap<String, Object>();
-        metadata.put("Year", 1989);
-        metadata.put("Company", "42 BV");
-        new AccountMetadataCommand(this.account, httpClient, defaultAccess, metadata).call();
+        Collection<Header> headers = new ArrayList<Header>();
+        headers.add(new AccountMetadata("Year", "1989"));
+        headers.add(new AccountMetadata("Company", "42 BV"));
+        new AccountMetadataCommand(this.account, httpClient, defaultAccess, headers).call();
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new AccountMetadataCommand(this.account, httpClient, defaultAccess, new TreeMap<String, Object>()), CommandExceptionError.UNKNOWN);
+        checkForError(500, new AccountMetadataCommand(this.account, httpClient, defaultAccess, new ArrayList<Header>()), CommandExceptionError.UNKNOWN);
     }
 }

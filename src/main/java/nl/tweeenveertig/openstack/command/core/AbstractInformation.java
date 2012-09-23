@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.headers.Metadata;
 
 import java.util.Collection;

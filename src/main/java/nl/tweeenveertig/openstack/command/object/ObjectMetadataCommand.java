@@ -7,24 +7,18 @@ import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
-import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
+import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 
-import java.util.Map;
+import java.util.Collection;
 
 public class ObjectMetadataCommand extends AbstractObjectCommand<HttpPost, Object> {
 
-    public ObjectMetadataCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject object, Map<String, Object> metadata) {
+    public ObjectMetadataCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject object, Collection<? extends Header> headers) {
         super(account, httpClient, access, container, object);
-        addMetadata(metadata);
-    }
-
-    protected void addMetadata(Map<String, Object> metadata) {
-        for (String name : metadata.keySet()) {
-            addHeader(new ObjectMetadata(name, metadata.get(name).toString()));
-        }
+        addHeaders(headers);
     }
 
     @Override

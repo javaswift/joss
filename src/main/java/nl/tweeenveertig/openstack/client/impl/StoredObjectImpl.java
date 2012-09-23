@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -11,6 +12,7 @@ import org.apache.http.client.HttpClient;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Collection;
 
 public class StoredObjectImpl extends AbstractStoredObject {
 
@@ -89,7 +91,7 @@ public class StoredObjectImpl extends AbstractStoredObject {
 
     @Override
     protected void saveMetadata() {
-        new ObjectMetadataCommand(getAccount(), getClient(), getAccess(), getContainer(), this, getMetadataWithoutTriggeringCheck()).call();
+        new ObjectMetadataCommand(getAccount(), getClient(), getAccess(), getContainer(), this, info.getMetadata()).call();
     }
 
     protected void getInfo() {

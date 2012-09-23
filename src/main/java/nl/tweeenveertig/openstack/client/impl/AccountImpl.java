@@ -7,6 +7,7 @@ import nl.tweeenveertig.openstack.command.account.AccountMetadataCommand;
 import nl.tweeenveertig.openstack.command.account.ListContainersCommand;
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.client.HttpClient;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class AccountImpl extends AbstractAccount {
 
     @Override
     protected void saveMetadata() {
-        new AccountMetadataCommand(this, getClient(), getAccess(), getMetadataWithoutTriggeringCheck()).call();
+        new AccountMetadataCommand(this, getClient(), getAccess(), info.getMetadata()).call();
     }
 
     protected void getInfo() {

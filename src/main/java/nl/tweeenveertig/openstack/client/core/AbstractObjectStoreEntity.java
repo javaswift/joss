@@ -8,9 +8,9 @@ import nl.tweeenveertig.openstack.headers.Metadata;
 import java.util.Map;
 import java.util.TreeMap;
 
-public abstract class AbstractObjectStoreEntity<C extends AbstractInformation> implements ObjectStoreEntity {
+public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> implements ObjectStoreEntity {
 
-    protected C info;
+    protected I info;
 
     private boolean infoRetrieved = false;
 
@@ -28,10 +28,6 @@ public abstract class AbstractObjectStoreEntity<C extends AbstractInformation> i
 
     public Map<String, Object> getMetadata() {
         checkForInfo();
-        return getMetadataWithoutTriggeringCheck();
-    }
-
-    public Map<String, Object> getMetadataWithoutTriggeringCheck() {
         Map<String, Object> metadataValues = new TreeMap<String, Object>();
         for (Metadata metadata : this.info.getMetadata()) {
             metadataValues.put(metadata.getName(), metadata.getHeaderValue());

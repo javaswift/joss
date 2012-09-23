@@ -5,24 +5,18 @@ import nl.tweeenveertig.openstack.command.core.AbstractSecureCommand;
 import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
+import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 
-import java.util.Map;
+import java.util.Collection;
 
 public class AccountMetadataCommand extends AbstractSecureCommand<HttpPost, Object> {
 
-    public AccountMetadataCommand(Account account, HttpClient httpClient, Access access, Map<String, Object> metadata) {
+    public AccountMetadataCommand(Account account, HttpClient httpClient, Access access, Collection<? extends Header> headers) {
         super(account, httpClient, access);
-        addMetadata(metadata);
-    }
-
-    protected void addMetadata(Map<String, Object> metadata) {
-        for (String name : metadata.keySet()) {
-            addHeader(new AccountMetadata(name, metadata.get(name).toString()));
-        }
+        addHeaders(headers);
     }
 
     @Override

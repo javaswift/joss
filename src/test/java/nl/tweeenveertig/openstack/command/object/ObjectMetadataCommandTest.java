@@ -2,10 +2,14 @@ package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.headers.Header;
+import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -21,19 +25,19 @@ public class ObjectMetadataCommandTest extends BaseCommandTest {
     @Test
     public void getInfoSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(202);
-        Map<String, Object> metadata = new TreeMap<String, Object>();
-        metadata.put("Year", 1989);
-        metadata.put("Company", "42 BV");
-        new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), metadata).call();
+        Collection<Header> headers = new ArrayList<Header>();
+        headers.add(new AccountMetadata("Year", "1989"));
+        headers.add(new AccountMetadata("Company", "42 BV"));
+        new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), headers).call();
     }
 
     @Test
     public void objectDoesNotExist() throws IOException {
-        checkForError(404, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new TreeMap<String, Object>()), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+        checkForError(404, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new ArrayList<Header>()), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-        checkForError(500, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new TreeMap<String, Object>()), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new ArrayList<Header>()), CommandExceptionError.UNKNOWN);
     }
 }

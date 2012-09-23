@@ -5,6 +5,7 @@ import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
 import nl.tweeenveertig.openstack.command.container.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.client.HttpClient;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class ContainerImpl extends AbstractContainer {
 
     @Override
     protected void saveMetadata() {
-        new ContainerMetadataCommand(getAccount(), getClient(), getAccess(), this, getMetadataWithoutTriggeringCheck()).call();
+        new ContainerMetadataCommand(getAccount(), getClient(), getAccess(), this, info.getMetadata()).call();
     }
 
     protected void getInfo() {

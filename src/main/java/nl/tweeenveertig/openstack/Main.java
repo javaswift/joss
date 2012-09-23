@@ -6,6 +6,8 @@ import nl.tweeenveertig.openstack.headers.range.FirstPartRange;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 
 import java.io.*;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String args[]) throws IOException {
@@ -21,16 +23,33 @@ public class Main {
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
         Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
-        Container container = account.getContainer("images");
-        StoredObject object = container.getObject("dog.png");
-        byte[] bytes = object.downloadObject(new DownloadInstructions().setRange(new FirstPartRange(8)));
-        System.out.println("Number of bytes: "+bytes.length);
+
+//        Container container = account.getContainer("images");
+//        StoredObject object = container.getObject("dog.png");
+//        byte[] bytes = object.downloadObject(new DownloadInstructions().setRange(new FirstPartRange(8)));
+//        System.out.println("Number of bytes: "+bytes.length);
 
 //        System.out.println("Bytes used:      "+account.getBytesUsed());
 //        System.out.println("Container count: "+account.getContainerCount());
 //        System.out.println("Object count:    "+account.getObjectCount());
 
-//        Container container = account.getContainer("images");
+        Container container = account.getContainer("images");
+        StoredObject object = container.getObject("dog.png");
+
+        Map<String, Object> metadata = new TreeMap<String, Object>();
+        metadata.put("title", "Some Title");
+        metadata.put("department", "Some Department 2");
+        metadata.put("description", "Some Description");
+        object.setMetadata(metadata);
+
+        printObjectMetadata(object);
+
+        metadata.clear();
+        metadata.put("title", "Some Title");
+        object.setMetadata(metadata);
+
+        printObjectMetadata(object);
+
 //        container.create();
 //        container.makePublic();
 //
@@ -85,5 +104,18 @@ public class Main {
 //        object.uploadObject(new UploadInstructions(new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
 //        byte[] bytes = object.downloadObject();
 //        System.out.println("Number of bytes: "+bytes.length);
+    }
+
+    protected static void printObjectMetadata(StoredObject object) {
+        System.out.println("Object:         "+object.getName());
+        System.out.println("Last modified:  "+object.getLastModified());
+        System.out.println("Etag:           "+object.getEtag());
+        System.out.println("Content length: "+object.getContentLength());
+        System.out.println("Content type:   "+object.getContentType());
+
+        Map<String, Object>retrievedMetadata = object.getMetadata();
+        for (String name : retrievedMetadata.keySet()) {
+            System.out.println("META / " + name + ": " + retrievedMetadata.get(name));
+        }
     }
 }

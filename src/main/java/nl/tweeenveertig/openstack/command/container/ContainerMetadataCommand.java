@@ -6,24 +6,20 @@ import nl.tweeenveertig.openstack.command.core.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 
+import java.util.Collection;
 import java.util.Map;
 
 public class ContainerMetadataCommand extends AbstractContainerCommand<HttpPost, Object> {
 
-    public ContainerMetadataCommand(Account account, HttpClient httpClient, Access access, Container container, Map<String, Object> metadata) {
+    public ContainerMetadataCommand(Account account, HttpClient httpClient, Access access, Container container, Collection<? extends Header> headers) {
         super(account, httpClient, access, container);
-        addMetadata(metadata);
-    }
-
-    protected void addMetadata(Map<String, Object> metadata) {
-        for (String name : metadata.keySet()) {
-            addHeader(new ContainerMetadata(name, metadata.get(name).toString()));
-        }
+        addHeaders(headers);
     }
 
     @Override

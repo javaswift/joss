@@ -8,6 +8,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.concurrent.Callable;
 
 public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> implements Callable<N>, Closeable {
@@ -58,6 +59,12 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     protected boolean closeStreamAutomatically() {
         return true;
+    }
+
+    protected void addHeaders(Collection<? extends Header> headers) {
+        for (Header header : headers) {
+            addHeader(header);
+        }
     }
 
     protected abstract M createRequest(String url);
