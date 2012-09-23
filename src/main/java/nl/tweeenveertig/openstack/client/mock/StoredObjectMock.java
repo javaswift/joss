@@ -10,11 +10,11 @@ import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.util.MimeTypeMap;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
 
 public class StoredObjectMock extends AbstractStoredObject {
@@ -30,7 +30,7 @@ public class StoredObjectMock extends AbstractStoredObject {
     @Override
     protected void getInfo() {
         this.info.setEtag(new Etag(object == null ? "" : DigestUtils.md5Hex(object)));
-        this.info.setContentType(new ObjectContentType(MimeTypeMap.getContentType(getName())));
+        this.info.setContentType(new ObjectContentType(new MimetypesFileTypeMap().getContentType(getName())));
         this.info.setContentLength(new ObjectContentLength(Long.toString(object == null ? 0 : object.length)));
     }
 

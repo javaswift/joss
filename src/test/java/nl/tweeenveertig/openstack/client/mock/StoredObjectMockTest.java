@@ -6,6 +6,7 @@ import nl.tweeenveertig.openstack.headers.range.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -75,4 +76,10 @@ public class StoredObjectMockTest {
         assertTrue(Arrays.equals(expectedBytes, part));
     }
 
+    @Test
+    public void testMimeTypes() {
+        assertEquals("application/andrew-inset", new MimetypesFileTypeMap().getContentType("somefile.ez"));
+        assertEquals("video/x-f4v", new MimetypesFileTypeMap().getContentType("somefile.f4v"));
+        assertEquals("test/42", new MimetypesFileTypeMap().getContentType("somefile.42")); // added fake format to test reading of mime.types file
+    }
 }
