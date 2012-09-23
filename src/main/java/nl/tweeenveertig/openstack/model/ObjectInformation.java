@@ -1,10 +1,14 @@
 package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.command.core.AbstractInformation;
+import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.headers.object.ObjectLastModified;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class ObjectInformation extends AbstractInformation {
 
@@ -37,11 +41,23 @@ public class ObjectInformation extends AbstractInformation {
         this.contentLength = contentLength;
     }
 
+    public Header getContentTypeHeader() {
+        return this.contentType;
+    }
+
     public String getContentType() {
         return contentType.getHeaderValue();
     }
 
     public void setContentType(ObjectContentType contentType) {
         this.contentType = contentType;
+    }
+
+    public Collection<Header> getHeadersIncludingContentType(String contentType) {
+        setContentType(new ObjectContentType(contentType));
+        Collection<Header> headers = new ArrayList<Header>();
+        headers.add(getContentTypeHeader());
+        headers.addAll(getMetadata()); // The original metadata must be passed as well, otherwise it's deleted
+        return headers;
     }
 }

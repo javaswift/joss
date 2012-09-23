@@ -108,6 +108,14 @@ public interface StoredObject extends ObjectStoreEntity {
     public void copyObject(Container targetContainer, StoredObject targetObject) throws IOException;
 
     /**
+    * Explicitly sets the content type of an object. This can be useful, for example when you have content-sniffers
+    * in the application that need to advise the object store (which uses a simple file extension matching instead
+    * of content-sniffing) as to the real nature of the uploaded file.
+    * @param contentType the content type of the object
+    */
+    public void setContentType(String contentType);
+
+    /**
     * Returns the public URL through which the resource can be viewed
     * @return the public URL of the resource
     */

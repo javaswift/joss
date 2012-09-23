@@ -41,6 +41,13 @@ public class StoredObjectMockTest {
     }
 
     @Test
+    public void setContentType() {
+        object = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
+        object.setContentType("text/plain");
+        assertEquals("text/plain", object.getContentType());
+    }
+
+    @Test
     public void downloadFirstPartRange() throws IOException {
         verifyRangeDownload(uploadBytes, new byte[]{0x01, 0x02, 0x03, 0x04}, new FirstPartRange(4));
     }

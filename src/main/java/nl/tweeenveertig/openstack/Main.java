@@ -35,20 +35,21 @@ public class Main {
 
         Container container = account.getContainer("images");
         StoredObject object = container.getObject("dog.png");
+        object.setContentType("image/png");
 
-        Map<String, Object> metadata = new TreeMap<String, Object>();
-        metadata.put("title", "Some Title");
-        metadata.put("department", "Some Department 2");
-        metadata.put("description", "Some Description");
-        object.setMetadata(metadata);
-
-        printObjectMetadata(object);
-
-        metadata.clear();
-        metadata.put("title", "Some Title");
-        object.setMetadata(metadata);
+//        Map<String, Object> metadata = new TreeMap<String, Object>();
+//        metadata.put("title", "Some Title");
+//        metadata.put("department", "Some Department 2");
+//        metadata.put("description", "Some Description");
+//        object.setMetadata(metadata);
 
         printObjectMetadata(object);
+
+//        metadata.clear();
+//        metadata.put("title", "Some Title");
+//        object.setMetadata(metadata);
+//
+//        printObjectMetadata(object);
 
 //        container.create();
 //        container.makePublic();

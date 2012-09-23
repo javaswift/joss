@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.headers.Header;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -12,7 +13,9 @@ import org.apache.http.client.HttpClient;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class StoredObjectImpl extends AbstractStoredObject {
 
@@ -66,6 +69,13 @@ public class StoredObjectImpl extends AbstractStoredObject {
 
     public void copyObject(Container targetContainer, StoredObject targetObject) {
         new CopyObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, targetContainer, targetObject).call();
+    }
+
+    public void setContentType(String contentType) {
+        checkForInfo();
+        new ObjectMetadataCommand(
+                getAccount(), getClient(), getAccess(), getContainer(),
+                this, info.getHeadersIncludingContentType(contentType)).call();
     }
 
     public String getPublicURL() {

@@ -126,6 +126,10 @@ public class StoredObjectMock extends AbstractStoredObject {
         targetObject.uploadObject(targetContent);
     }
 
+    public void setContentType(String contentType) {
+        info.setContentType(new ObjectContentType(contentType));
+    }
+
     public String getPublicURL() {
         return "";
     }
