@@ -4,9 +4,7 @@ import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
 
-public abstract class AbstractContainer extends AbstractObjectStoreEntity implements Container, Comparable<Container> {
-
-    protected ContainerInformation info = new ContainerInformation();
+public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container, Comparable<Container> {
 
     protected String name;
 
@@ -15,6 +13,7 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity implem
     public AbstractContainer(Account account, String name) {
         this.name = name;
         this.account = account;
+        this.info = new ContainerInformation();
     }
 
     public int getObjectCount() {

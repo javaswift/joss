@@ -1,12 +1,15 @@
 package nl.tweeenveertig.openstack.client.core;
 
+import nl.tweeenveertig.openstack.command.core.AbstractInformation;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-public abstract class AbstractObjectStoreEntity implements ObjectStoreEntity {
+public abstract class AbstractObjectStoreEntity<C extends AbstractInformation> implements ObjectStoreEntity {
+
+    protected C info;
 
     private Map<String, Object> metadata = new TreeMap<String, Object>();
 

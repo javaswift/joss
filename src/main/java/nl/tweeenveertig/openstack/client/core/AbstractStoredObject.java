@@ -4,9 +4,7 @@ import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 
-public abstract class AbstractStoredObject extends AbstractObjectStoreEntity implements StoredObject, Comparable<StoredObject> {
-
-    protected ObjectInformation info = new ObjectInformation();
+public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject, Comparable<StoredObject> {
 
     protected String name;
 
@@ -15,6 +13,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity imp
     public AbstractStoredObject(Container container, String name) {
         this.container = container;
         this.name = name;
+        this.info = new ObjectInformation();
     }
 
     public String getLastModified() {

@@ -3,9 +3,11 @@ package nl.tweeenveertig.openstack.client.core;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.model.AccountInformation;
 
-public abstract class AbstractAccount extends AbstractObjectStoreEntity implements Account {
+public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountInformation> implements Account {
 
-    protected AccountInformation info = new AccountInformation();
+    public AbstractAccount() {
+        this.info = new AccountInformation();
+    }
 
     public int getContainerCount() {
         checkForInfo();
