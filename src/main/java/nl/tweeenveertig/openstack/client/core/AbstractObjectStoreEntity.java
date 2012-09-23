@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.client.core;
 import nl.tweeenveertig.openstack.command.core.AbstractInformation;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.headers.Metadata;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -11,27 +12,31 @@ public abstract class AbstractObjectStoreEntity<C extends AbstractInformation> i
 
     protected C info;
 
-    private Map<String, Object> metadata = new TreeMap<String, Object>();
-
     private boolean infoRetrieved = false;
 
     public void setMetadata(Map<String, Object> metadata) {
-        this.metadata = new TreeMap<String, Object>();
+        info.clear();
         for (String key : metadata.keySet()) {
-            this.metadata.put(key, metadata.get(key).toString());
+            info.addMetadata(createMetadataEntry(key, metadata.get(key).toString()));
         }
         saveMetadata();
     }
+
+    protected abstract Metadata createMetadataEntry(String name, String value);
 
     protected abstract void saveMetadata();
 
     public Map<String, Object> getMetadata() {
         checkForInfo();
-        return this.metadata;
+        return getMetadataWithoutTriggeringCheck();
     }
 
     public Map<String, Object> getMetadataWithoutTriggeringCheck() {
-        return this.metadata;
+        Map<String, Object> metadataValues = new TreeMap<String, Object>();
+        for (Metadata metadata : this.info.getMetadata()) {
+            metadataValues.put(metadata.getName(), metadata.getHeaderValue());
+        }
+        return metadataValues;
     }
 
     protected void checkForInfo() {

@@ -2,6 +2,8 @@ package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.headers.Metadata;
+import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 
 public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject, Comparable<StoredObject> {
@@ -56,5 +58,9 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     @SuppressWarnings("ConstantConditions")
     public int compareTo(StoredObject o) {
         return getName().compareTo(o.getName());
+    }
+
+    protected Metadata createMetadataEntry(String name, String value) {
+        return new ObjectMetadata(name, value);
     }
 }

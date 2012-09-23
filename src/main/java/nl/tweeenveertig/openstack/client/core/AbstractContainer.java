@@ -2,6 +2,8 @@ package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.headers.Metadata;
+import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
 
 public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container, Comparable<Container> {
@@ -50,5 +52,9 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     @SuppressWarnings("ConstantConditions")
     public int compareTo(Container o) {
         return getName().compareTo(o.getName());
+    }
+
+    protected Metadata createMetadataEntry(String name, String value) {
+        return new ContainerMetadata(name, value);
     }
 }
