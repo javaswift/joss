@@ -6,14 +6,18 @@ import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static junit.framework.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,29 +35,17 @@ public class UploadObjectCommandTest extends BaseCommandTest {
         new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new UploadInstructions(new byte[] {})).call();
     }
 
-    protected void verifyRequestHeaders(UploadInstructions instructions, String[][] expectedHeaders ) {
-        final HttpPut mockedRequest = mock(HttpPut.class);
-        new UploadObjectCommand(
-                this.account, httpClient, defaultAccess, account.getContainer("containerName"),
-                getObject("objectname"), instructions) {
-
-            @Override
-            protected HttpPut createRequest(String url) {
-                return mockedRequest;
-            }
-        }.call();
-
-        for (String[] expectedHeader : expectedHeaders) {
-            verify(mockedRequest).addHeader(expectedHeader[0], expectedHeader[1]);
-        }
-    }
-
     @Test
     public void uploadInputStream() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[] { 0x01, 0x02, 0x03 });
-        verifyRequestHeaders(new UploadInstructions(inputStream),
-                new String[][] { {Token.X_AUTH_TOKEN,"cafebabe"} });
+
+        new UploadObjectCommand(
+                this.account, httpClient, defaultAccess, account.getContainer("containerName"),
+                getObject("objectname"), new UploadInstructions(inputStream)).call();
+        ArgumentCaptor<HttpRequestBase> argument = ArgumentCaptor.forClass(HttpRequestBase.class);
+        verify(httpClient).execute(argument.capture());
+        assertEquals("cafebabe", argument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
         inputStream.close();
     }
 
@@ -61,11 +53,15 @@ public class UploadObjectCommandTest extends BaseCommandTest {
     public void supplyMd5() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[] { 0x01, 0x02, 0x03 });
-        verifyRequestHeaders(new UploadInstructions(inputStream).setMd5("ebabefac"),
-                new String[][] { {Token.X_AUTH_TOKEN,"cafebabe"}, {Etag.ETAG, "ebabefac"} });
+        new UploadObjectCommand(
+                this.account, httpClient, defaultAccess, account.getContainer("containerName"),
+                getObject("objectname"), new UploadInstructions(inputStream).setMd5("ebabefac")).call();
+        ArgumentCaptor<HttpRequestBase> argument = ArgumentCaptor.forClass(HttpRequestBase.class);
+        verify(httpClient).execute(argument.capture());
+        assertEquals("cafebabe", argument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
+        assertEquals("ebabefac", argument.getValue().getFirstHeader(Etag.ETAG).getValue());
         inputStream.close();
     }
-
 
     @Test
     public void noContentTypeFoundError() throws IOException {
