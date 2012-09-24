@@ -48,6 +48,11 @@
         <jackson.version>1.9.7</jackson.version>
         <junit.version>4.10</junit.version>
         <mockito.version>1.9.0</mockito.version>
+        <!-- Reporting -->
+        <maven.cobertura.version>2.5.2</maven.cobertura.version>
+        <maven.javadoc.version>2.8</maven.javadoc.version>
+        <maven.project.version>2.4</maven.project.version>
+        <maven.site.plugin.version>3.1</maven.site.plugin.version>
     </properties>
 
     <dependencies>
@@ -100,21 +105,37 @@
 
     <build>
         <plugins>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${maven.cobertura.version}</version>
+                <configuration>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>nl/tweeenveertig/openstack/*.class</exclude>
+                        </excludes>
+                    </instrumentation>
+                    <check/>
+                </configuration>
+            </plugin>
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.1</version>
+                <version>${maven.site.plugin.version}</version>
                 <configuration>
                     <reportPlugins>
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-project-info-reports-plugin</artifactId>
-                            <version>2.4</version>
+                            <version>${maven.project.version}</version>
                             <configuration>
                                 <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
                                 <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                             </configuration>
-                            <!-- simpler configuration without reportSets available for usual cases -->
                             <reports>
                                 <report>dependencies</report>
                                 <report>scm</report>
@@ -123,12 +144,12 @@
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-javadoc-plugin</artifactId>
-                            <version>2.8</version>
+                            <version>${maven.javadoc.version}</version>
                         </plugin>
                         <plugin>
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>cobertura-maven-plugin</artifactId>
-                            <version>2.3</version>
+                            <version>${maven.cobertura.version}</version>
                         </plugin>
                     </reportPlugins>
                 </configuration>
