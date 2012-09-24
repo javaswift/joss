@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.command.core;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -11,6 +12,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -22,6 +24,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,6 +47,8 @@ public abstract class BaseCommandTest {
     @Mock
     protected StatusLine statusLine;
 
+    protected ArgumentCaptor<HttpRequestBase> requestArgument;
+
     public void setup() throws IOException {
         InputStream inputStream = IOUtils.toInputStream("");
         when(defaultAccess.getInternalURL()).thenReturn("http://someurl.nowhere");
@@ -54,6 +59,7 @@ public abstract class BaseCommandTest {
         when(response.getStatusLine()).thenReturn(statusLine);
         when(httpClient.execute(any(HttpRequestBase.class))).thenReturn(response);
         account = new AccountImpl(null, httpClient, defaultAccess);
+        requestArgument = ArgumentCaptor.forClass(HttpRequestBase.class);
     }
 
     protected StoredObject getObject(String name) {
@@ -82,6 +88,17 @@ public abstract class BaseCommandTest {
 
     protected void prepareHeader(HttpResponse response, String name, String value) {
         prepareHeader(response, name, value, null);
+    }
+
+    protected void isSecure(AbstractCommand command, int expectedOk) throws IOException {
+        when(statusLine.getStatusCode()).thenReturn(expectedOk);
+        command.call();
+        verify(httpClient).execute(requestArgument.capture());
+        assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
+    }
+
+    protected void isSecure(AbstractCommand command) throws IOException {
+        isSecure(command, 200);
     }
 
 }

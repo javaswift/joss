@@ -33,4 +33,9 @@ public class CreateContainerCommandTest extends BaseCommandTest {
     public void unknownError() throws IOException {
         checkForError(500, new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
     }
+
+    @Test
+    public void isSecure() throws IOException {
+        isSecure(new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), 201);
+    }
 }

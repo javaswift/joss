@@ -24,11 +24,10 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
     @Before
     public void setup() throws IOException {
         super.setup();
+        prepareMetadata();
     }
 
-    @Test
-    public void getInfoSuccess() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(200);
+    private void prepareMetadata() {
         List<Header> headers = new ArrayList<Header>();
         prepareHeader(response, X_OBJECT_META_PREFIX+ "Description", "Photo album", headers);
         prepareHeader(response, X_OBJECT_META_PREFIX+ "Year", "1984", headers);
@@ -37,6 +36,11 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, CONTENT_LENGTH, "654321", headers);
         prepareHeader(response, CONTENT_TYPE, "image/png", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
+    }
+
+    @Test
+    public void getInfoSuccess() throws IOException {
+        when(statusLine.getStatusCode()).thenReturn(200);
         ObjectInformation info = new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")).call();
         assertEquals("Photo album", info.getMetadata("Description"));
         assertEquals("1984", info.getMetadata("Year"));
@@ -55,4 +59,11 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
     public void unknownError() throws IOException {
         checkForError(500, new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.UNKNOWN);
     }
+
+    @Test
+    public void isSecure() throws IOException {
+        isSecure(new ObjectInformationCommand(this.account, httpClient, defaultAccess,
+                account.getContainer("containerName"), getObject("objectName")));
+    }
+
 }

@@ -36,4 +36,9 @@ public class ListObjectsCommandTest extends BaseCommandTest {
     public void unknownError() throws IOException {
         checkForError(500, new ListObjectsCommand(this.account, httpClient, defaultAccess, account.getContainer("containername")), CommandExceptionError.UNKNOWN);
     }
+
+    @Test
+    public void isSecure() throws IOException {
+        isSecure(new ListObjectsCommand(this.account, httpClient, defaultAccess, account.getContainer("containername")));
+    }
 }

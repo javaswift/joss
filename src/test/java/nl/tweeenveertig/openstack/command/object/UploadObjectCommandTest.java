@@ -1,23 +1,23 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.headers.Token;
 import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.HttpEntity;
+import org.apache.http.params.CoreProtocolPNames;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Matchers.any;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,6 +36,26 @@ public class UploadObjectCommandTest extends BaseCommandTest {
     }
 
     @Test
+    public void failReadingTheEntity() throws IOException {
+        when(statusLine.getStatusCode()).thenReturn(201);
+        byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
+        final HttpEntity mockedEntity = mock(HttpEntity.class);
+        when(mockedEntity.getContent()).thenThrow(new IOException("some error"));
+        UploadInstructions instructions = new UploadInstructions(bytes) {
+            @Override
+            public HttpEntity getEntity() {
+                return mockedEntity;
+            }
+        };
+        try {
+            new UploadObjectCommand(
+                this.account, httpClient, defaultAccess, account.getContainer("containerName"),
+                getObject("objectname"), instructions).call();
+            fail("Should have thrown an exception");
+        } catch (CommandException err) {}
+    }
+
+    @Test
     public void uploadInputStream() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[] { 0x01, 0x02, 0x03 });
@@ -43,9 +63,10 @@ public class UploadObjectCommandTest extends BaseCommandTest {
         new UploadObjectCommand(
                 this.account, httpClient, defaultAccess, account.getContainer("containerName"),
                 getObject("objectname"), new UploadInstructions(inputStream)).call();
-        ArgumentCaptor<HttpRequestBase> argument = ArgumentCaptor.forClass(HttpRequestBase.class);
-        verify(httpClient).execute(argument.capture());
-        assertEquals("cafebabe", argument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
+        verify(httpClient).execute(requestArgument.capture());
+        assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
+        // USE_EXPECT_CONTINUE is essential for uploading, since the Object Store requires it
+        assertTrue(Boolean.valueOf(requestArgument.getValue().getParams().getParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE).toString()));
         inputStream.close();
     }
 
@@ -56,10 +77,9 @@ public class UploadObjectCommandTest extends BaseCommandTest {
         new UploadObjectCommand(
                 this.account, httpClient, defaultAccess, account.getContainer("containerName"),
                 getObject("objectname"), new UploadInstructions(inputStream).setMd5("ebabefac")).call();
-        ArgumentCaptor<HttpRequestBase> argument = ArgumentCaptor.forClass(HttpRequestBase.class);
-        verify(httpClient).execute(argument.capture());
-        assertEquals("cafebabe", argument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
-        assertEquals("ebabefac", argument.getValue().getFirstHeader(Etag.ETAG).getValue());
+        verify(httpClient).execute(requestArgument.capture());
+        assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
+        assertEquals("ebabefac", requestArgument.getValue().getFirstHeader(Etag.ETAG).getValue());
         inputStream.close();
     }
 

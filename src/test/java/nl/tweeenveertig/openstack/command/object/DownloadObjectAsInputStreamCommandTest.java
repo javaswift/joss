@@ -52,4 +52,11 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
             fail("Downloading as an inputstream does not check for the MD5 checksum, so therefore should not throw an error");
         }
     }
+
+    @Test
+    public void isSecure() throws IOException {
+        prepareBytes(new byte[] { 0x01, 0x02, 0x03}, null);
+        isSecure(new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess,
+                account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
+    }
 }

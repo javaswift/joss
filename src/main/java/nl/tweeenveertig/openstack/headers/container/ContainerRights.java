@@ -10,6 +10,8 @@ public class ContainerRights extends Header {
 
     public static final String X_CONTAINER_READ = "X-Container-Read";
 
+    public static final String PUBLIC_CONTAINER = ".r:*";
+
     private boolean publicContainer;
 
     public ContainerRights(boolean publicContainer) {
@@ -22,7 +24,7 @@ public class ContainerRights extends Header {
 
     @Override
     public String getHeaderValue() {
-        return publicContainer ? ".r:*" : "";
+        return publicContainer ? PUBLIC_CONTAINER : "";
     }
 
     @Override

@@ -53,4 +53,11 @@ public class DownloadObjectCommandTest extends BaseCommandTest {
     public void unknownError() throws IOException {
         checkForError(500, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.UNKNOWN);
     }
+
+    @Test
+    public void isSecure() throws IOException {
+        prepareBytes(new byte[] { 0x01, 0x02, 0x03}, null);
+        isSecure(new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess,
+                account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
+    }
 }

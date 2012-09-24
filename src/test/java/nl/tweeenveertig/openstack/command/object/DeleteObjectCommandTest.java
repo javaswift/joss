@@ -31,4 +31,10 @@ public class DeleteObjectCommandTest extends BaseCommandTest {
     public void unknownError() throws IOException {
         checkForError(500, new DeleteObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.UNKNOWN);
     }
+
+    @Test
+    public void isSecure() throws IOException {
+        isSecure(new DeleteObjectCommand(this.account, httpClient, defaultAccess,
+                account.getContainer("containerName"), getObject("objectName")), 204);
+    }
 }
