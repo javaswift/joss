@@ -66,4 +66,29 @@ public class AccessTest {
         }
     }
 
+    @Test
+    public void getInternalURLAndInitCurrentEndPoint() {
+        Access access = createAccessWithEndPoint();
+        assertEquals("https://some.internal.url", access.getInternalURL()); // trigger the init
+        assertEquals("https://some.internal.url", access.getInternalURL());
+    }
+
+    @Test
+    public void getPublicURLAndInitCurrentEndPoint() {
+        Access access = createAccessWithEndPoint();
+        assertEquals("https://some.public.url", access.getPublicURL()); // trigger the init
+        assertEquals("https://some.public.url", access.getPublicURL());
+    }
+
+    protected Access createAccessWithEndPoint() {
+        Access access = new Access();
+        List<EndPoint> endPoints = new ArrayList<EndPoint>();
+        endPoints.add(new EndPointBuilder()
+                .setRegion("AMS-01")
+                .setInternalURL("https://some.internal.url")
+                .setPublicURL("https://some.public.url")
+                .getEndPoint());
+        access.serviceCatalog.add(createServiceCatalog("swift", "object-store", endPoints ));
+        return access;
+    }
 }
