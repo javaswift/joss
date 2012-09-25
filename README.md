@@ -171,10 +171,12 @@ License
 
 More information
 ----------------
-* http://api.openstack.org/
-* http://docs.openstack.org/api/openstack-object-storage/1.0/content/
+* http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss
+* http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage
 * http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/
 * https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/
+* http://api.openstack.org/
+* http://docs.openstack.org/api/openstack-object-storage/1.0/content/
 
 Keep up to date on the library development by joining the Java OpenStack Storage discussion group [Google Group](https://groups.google.com/forum/?fromgroups#!forum/java-openstack-storage---joss)
 
