@@ -76,7 +76,7 @@ public abstract class BaseCommandTest {
         }
     }
 
-    protected void prepareHeader(HttpResponse response, String name, String value, List<Header> headers) {
+    public static void prepareHeader(HttpResponse response, String name, String value, List<Header> headers) {
         Header header = Mockito.mock(Header.class);
         when(header.getName()).thenReturn(name);
         when(header.getValue()).thenReturn(value);
