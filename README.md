@@ -171,10 +171,20 @@ License
 
 More information
 ----------------
+
+_On JOSS_
+
 * http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss
 * http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage
+* https://github.com/java-openstack/tutorial-joss-streaming
+
+_On Cloud VPS Object Store_
+
 * http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/
 * https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/
+
+_On the OpenStack API_
+
 * http://api.openstack.org/
 * http://docs.openstack.org/api/openstack-object-storage/1.0/content/
 

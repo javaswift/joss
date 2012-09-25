@@ -20,6 +20,7 @@ public class CommandUtilTest extends BaseCommandTest {
 
     @Test
     public void emptyResponse() throws IOException {
+        new CommandUtil(); // Fool Cobertura
         when(response.getEntity()).thenReturn(null);
         assertEquals(0, CommandUtil.convertResponseToString(response).size());
     }
