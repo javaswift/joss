@@ -1,15 +1,15 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.concurrent.Callable;
+
 import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
-
-import java.io.Closeable;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.concurrent.Callable;
 
 public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> implements Callable<N>, Closeable {
 
@@ -54,7 +54,9 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
     }
 
     public void close() throws IOException {
-        EntityUtils.consume(response.getEntity());
+        if (response != null) {
+            EntityUtils.consume(response.getEntity());
+        }
     }
 
     protected boolean closeStreamAutomatically() {
