@@ -18,4 +18,10 @@ public class HttpStatusRangeTest {
         HttpStatusRange range = new HttpStatusRange(200, 299);
         assertFalse("Should NOT be in the 200-range", range.matches(500));
     }
+
+    @Test
+    public void beforeRange() {
+        HttpStatusRange range = new HttpStatusRange(200, 299);
+        assertFalse("Should NOT be in the 200-range", range.matches(102));
+    }
 }
