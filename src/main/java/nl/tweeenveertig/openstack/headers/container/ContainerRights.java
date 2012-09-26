@@ -35,6 +35,7 @@ public class ContainerRights extends Header {
     public static ContainerRights fromResponse(HttpResponse response) {
         return new ContainerRights(
                 response.getHeaders(X_CONTAINER_READ) != null &&
+                response.getHeaders(X_CONTAINER_READ).length > 0 &&
                 response.getHeaders(X_CONTAINER_READ)[0].getValue().length() > 0);
     }
 

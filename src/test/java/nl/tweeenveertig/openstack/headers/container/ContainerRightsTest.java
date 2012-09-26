@@ -57,4 +57,10 @@ public class ContainerRightsTest extends HeaderTest {
     public void createPrivateContainerFromResponseNoHeadersSet() {
         assertFalse(ContainerRights.fromResponse(response).isPublic());
     }
+
+    @Test
+    public void createPrivateContainerFromResponseEmptyHeaderList() {
+        when(response.getHeaders(ContainerRights.X_CONTAINER_READ)).thenReturn(new Header[] {} );
+        assertFalse(ContainerRights.fromResponse(response).isPublic());
+    }
 }
