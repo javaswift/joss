@@ -5,6 +5,7 @@ import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.model.AccountInformation;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -111,8 +112,16 @@ public class AccountMockTest {
     }
 
     @Test
-    public void getInfo() {
-        // TODO
+    public void getInfo() throws IOException {
+        Account account = new AccountMock();
+        Container container1 = account.getContainer("alpha");
+        container1.create();
+        StoredObject object = container1.getObject("1");
+        byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
+        object.uploadObject(bytes);
+        assertEquals(3 , account.getBytesUsed());
+        assertEquals(1, account.getContainerCount());
+        assertEquals(1, account.getObjectCount());
     }
 
 }

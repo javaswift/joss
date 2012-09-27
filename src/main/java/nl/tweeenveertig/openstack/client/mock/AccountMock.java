@@ -25,7 +25,7 @@ public class AccountMock extends AbstractAccount {
         int objectCount = 0;
         long bytesUsed = 0;
         for (Container container : containers.values()) {
-            containerCount= 0;
+            containerCount++;
             objectCount += container.getObjectCount();
             bytesUsed += container.getBytesUsed();
         }

@@ -33,9 +33,9 @@ public class Main {
 //        System.out.println("Container count: "+account.getContainerCount());
 //        System.out.println("Object count:    "+account.getObjectCount());
 
-        Container container = account.getContainer("images");
-        StoredObject object = container.getObject("dog.png");
-        object.setContentType("image/png");
+//        Container container = account.getContainer("images");
+//        StoredObject object = container.getObject("dog.png");
+//        object.setContentType("image/png");
 
 //        Map<String, Object> metadata = new TreeMap<String, Object>();
 //        metadata.put("title", "Some Title");
@@ -43,7 +43,7 @@ public class Main {
 //        metadata.put("description", "Some Description");
 //        object.setMetadata(metadata);
 
-        printObjectMetadata(object);
+//        printObjectMetadata(object);
 
 //        metadata.clear();
 //        metadata.put("title", "Some Title");
