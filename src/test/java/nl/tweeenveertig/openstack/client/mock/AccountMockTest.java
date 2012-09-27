@@ -19,6 +19,7 @@ public class AccountMockTest {
     @Test
     public void addMetadata() {
         Account account = new AccountMock();
+        account.authenticate(); // Not used in mock implementation
         Map<String, Object> metadata = new TreeMap<String, Object>();
         metadata.put("name", "Alpha");
         metadata.put("year", 1969);
@@ -122,6 +123,15 @@ public class AccountMockTest {
         assertEquals(3 , account.getBytesUsed());
         assertEquals(1, account.getContainerCount());
         assertEquals(1, account.getObjectCount());
+    }
+
+    @Test
+    public void getContainer() {
+        Account account = new AccountMock();
+        Container container1 = account.getContainer("Alpha");
+        container1.create();
+        Container container2 = account.getContainer("Alpha");
+        assertEquals(container1, container2);
     }
 
 }

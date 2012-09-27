@@ -27,7 +27,7 @@ public class MockUserStoreTest {
     }
 
     @Test
-    public void authenticateFail() {
+    public void userDoesNotExist() {
         try {
             users.authenticate("charlie", "123test");
         } catch (CommandException err) {
@@ -35,4 +35,12 @@ public class MockUserStoreTest {
         }
     }
 
+    @Test
+    public void userHasWrongPassword() {
+        try {
+            users.authenticate("richard", "321tset");
+        } catch (CommandException err) {
+            assertEquals(CommandExceptionError.UNAUTHORIZED, err.getError());
+        }
+    }
 }
