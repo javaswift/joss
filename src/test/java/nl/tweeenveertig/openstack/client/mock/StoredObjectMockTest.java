@@ -1,27 +1,48 @@
 package nl.tweeenveertig.openstack.client.mock;
 
+import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.command.core.CommandException;
+import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.headers.range.*;
+import org.apache.commons.io.IOUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.activation.MimetypesFileTypeMap;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.TreeMap;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 public class StoredObjectMockTest {
 
-    private StoredObject object;
+    private StoredObjectMock object;
 
     private byte[] uploadBytes = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
+
+    private File downloadedFile = new File("download.tmp");
 
     @Before
     public void setup() {
         object = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "someObject");
+    }
+
+    @After
+    public void cleanup() {
+        downloadedFile.delete();
+    }
+
+    @Test
+    public void eliminateFluff() { // Pick out the items which are not useful in mock mode
+        assertEquals("", object.getPublicURL());
     }
 
     @Test
@@ -65,7 +86,75 @@ public class StoredObjectMockTest {
 
     @Test
     public void downloadExcludeStartRange() throws IOException {
-        verifyRangeDownload(uploadBytes, new byte[] { 0x04, 0x05, 0x06, 0x07, 0x08}, new ExcludeStartRange(3) );
+        verifyRangeDownload(uploadBytes, new byte[]{0x04, 0x05, 0x06, 0x07, 0x08}, new ExcludeStartRange(3));
+    }
+
+    @Test
+    public void addMetadata() {
+        Map<String, Object> metadata = new TreeMap<String, Object>();
+        metadata.put("name", "value");
+        object.setMetadata(metadata);
+        assertEquals(1, object.getMetadata().size());
+    }
+
+    @Test
+    public void exists() throws IOException {
+        assertFalse(object.exists());
+        object.uploadObject(uploadBytes);
+        assertTrue(object.exists());
+        StoredObject mockObject = new StoredObjectMock(object.getContainer(), "some-object") {
+            @Override
+            public void getInfo() {
+                throw new CommandException(404, CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+            }
+        };
+        assertFalse(mockObject.exists());
+    }
+
+    @Test
+    public void copyObjectToNonExistingContainer() throws IOException {
+        object.uploadObject(uploadBytes);
+        Container copyContainer = object.getContainer().getAccount().getContainer("copy-container");
+        StoredObject copyObject = copyContainer.getObject("copy-object");
+        object.copyObject(object.getContainer().getAccount().getContainer("copy-container"), copyObject);
+        assertTrue(copyObject.exists());
+    }
+
+    @Test
+    public void downloadAsInputStream() throws IOException {
+        object.uploadObject(uploadBytes);
+        assertTrue(Arrays.equals(uploadBytes, IOUtils.toByteArray(object.downloadObjectAsInputStream())));
+        assertTrue(Arrays.equals(uploadBytes, IOUtils.toByteArray(object.downloadObjectAsInputStream(new DownloadInstructions()))));
+    }
+
+    @Test
+    public void uploadAsInputStream() throws IOException {
+        InputStream bytes = new ByteArrayInputStream(uploadBytes);
+        object.uploadObject(bytes);
+        assertTrue(Arrays.equals(uploadBytes, object.downloadObject()));
+    }
+
+    @Test
+    public void downloadToFile() throws IOException {
+        object.uploadObject(uploadBytes);
+        object.downloadObject(downloadedFile);
+        assertTrue(downloadedFile.exists());
+    }
+
+    @Test
+    public void uploadFromFile() throws IOException {
+        object.uploadObject(uploadBytes);
+        object.downloadObject(downloadedFile);
+        object.delete();
+        object.uploadObject(downloadedFile);
+        assertTrue(Arrays.equals(uploadBytes, object.downloadObject()));
+    }
+
+    @Test
+    public void reuploadToAnExistingObject() throws IOException {
+        object.uploadObject(uploadBytes);
+        object.uploadObject(uploadBytes); // re-upload
+        assertTrue(Arrays.equals(uploadBytes, object.downloadObject()));
     }
 
     protected void verifyRangeDownload(byte[] uploadBytes, byte[] expectedBytes, AbstractRange range) throws IOException {
