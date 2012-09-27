@@ -22,4 +22,7 @@ public class ClientImpl implements Client {
         return new AccountImpl(command, httpClient, access);
     }
 
+    public void setHttpClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
 }

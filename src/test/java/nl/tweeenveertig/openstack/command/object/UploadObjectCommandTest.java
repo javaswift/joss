@@ -28,15 +28,12 @@ public class UploadObjectCommandTest extends BaseCommandTest {
 
     @Before
     @Override
-
     public void setup() throws IOException {
-
         super.setup();
     }
 
     @Test
     public void uploadByteArray() throws IOException {
-
         when(statusLine.getStatusCode()).thenReturn(201);
         new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
                                 new UploadInstructions(new byte[]{ })).call();
@@ -44,7 +41,6 @@ public class UploadObjectCommandTest extends BaseCommandTest {
 
     @Test
     public void failReadingTheEntity() throws IOException {
-
         when(statusLine.getStatusCode()).thenReturn(201);
         byte[] bytes = new byte[]{ 0x01, 0x02, 0x03 };
         final HttpEntity mockedEntity = mock(HttpEntity.class);
@@ -66,7 +62,6 @@ public class UploadObjectCommandTest extends BaseCommandTest {
 
     @Test
     public void uploadInputStream() throws IOException {
-
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[]{ 0x01, 0x02, 0x03 });
 
@@ -81,7 +76,6 @@ public class UploadObjectCommandTest extends BaseCommandTest {
 
     @Test(expected = CommandException.class)
     public void uploadInputStreamException() throws IOException {
-
         InputStream inputStream = new ByteArrayInputStream(new byte[]{ 0x01, 0x02, 0x03 });
         when(httpClient.execute(any(HttpRequestBase.class))).thenThrow(new IOException("Oops"));
 
@@ -91,7 +85,6 @@ public class UploadObjectCommandTest extends BaseCommandTest {
 
     @Test
     public void supplyMd5() throws IOException {
-
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[]{ 0x01, 0x02, 0x03 });
         new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
@@ -104,28 +97,24 @@ public class UploadObjectCommandTest extends BaseCommandTest {
 
     @Test
     public void noContentTypeFoundError() throws IOException {
-
         checkForError(411, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
                                                    new UploadInstructions(new byte[]{ })), CommandExceptionError.MISSING_CONTENT_LENGTH_OR_TYPE);
     }
 
     @Test
     public void md5checksumError() throws IOException {
-
         checkForError(422, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
                                                    new UploadInstructions(new byte[]{ })), CommandExceptionError.MD5_CHECKSUM);
     }
 
     @Test
     public void containerNotFound() throws IOException {
-
         checkForError(404, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
                                                    new UploadInstructions(new byte[]{ })), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
     }
 
     @Test
     public void unknownError() throws IOException {
-
         checkForError(500, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
                                                    new UploadInstructions(new byte[]{ })), CommandExceptionError.UNKNOWN);
     }
