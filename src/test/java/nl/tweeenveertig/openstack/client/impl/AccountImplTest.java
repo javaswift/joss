@@ -21,12 +21,20 @@ import static org.mockito.Mockito.when;
 
 public class AccountImplTest extends BaseCommandTest {
 
-    private ClientImpl client;
-
     @Before
     @Override
     public void setup() throws IOException {
         super.setup();
+    }
+
+    protected void prepareMetadata() {
+        List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, X_ACCOUNT_META_PREFIX + "Year", "1989", headers);
+        prepareHeader(response, X_ACCOUNT_META_PREFIX + "Company", "42 BV", headers);
+        prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "7", headers);
+        prepareHeader(response, X_ACCOUNT_OBJECT_COUNT, "123", headers);
+        prepareHeader(response, X_ACCOUNT_BYTES_USED, "654321", headers);
+        when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
     }
 
     @Test
@@ -38,7 +46,6 @@ public class AccountImplTest extends BaseCommandTest {
         when(httpEntity.getContent()).thenReturn(inputStream);
         Collection<Container> containers = account.listContainers();
         assertEquals(3, containers.size());
-        containers.contains(new ContainerImpl(null, "Alpha"));
     }
 
     @Test
@@ -56,13 +63,7 @@ public class AccountImplTest extends BaseCommandTest {
     @Test
     public void getMetadata() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        List<Header> headers = new ArrayList<Header>();
-        prepareHeader(response, X_ACCOUNT_META_PREFIX + "Year", "1989", headers);
-        prepareHeader(response, X_ACCOUNT_META_PREFIX + "Company", "42 BV", headers);
-        prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "7", headers);
-        prepareHeader(response, X_ACCOUNT_OBJECT_COUNT, "123", headers);
-        prepareHeader(response, X_ACCOUNT_BYTES_USED, "654321", headers);
-        when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
+        prepareMetadata();
         assertEquals("1989", account.getMetadata().get("Year"));
         assertEquals("42 BV", account.getMetadata().get("Company"));
         assertEquals(7, account.getContainerCount());
