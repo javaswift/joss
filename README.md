@@ -182,6 +182,7 @@ _On Cloud VPS Object Store_
 
 * http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/
 * https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/
+* https://www.cloudvps.com/blog/cloudvps-object-store-beta-tester-contributes-java-library/
 
 _On the OpenStack API_
 

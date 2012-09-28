@@ -1,15 +1,12 @@
 package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.client.Client;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.util.ClasspathTemplateResource;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.client.HttpClient;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.io.IOException;
 import java.io.InputStream;
