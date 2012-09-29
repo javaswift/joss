@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.client.impl;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
+import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.object.AbstractDownloadObjectCommand;
 import nl.tweeenveertig.openstack.headers.object.CopyFrom;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -196,4 +197,15 @@ public class StoredObjectImplTest extends BaseCommandTest {
         assertEquals(object1.getName().hashCode(), object1.hashCode());
     }
 
+    @Test
+    public void checkWhetherANonExistingFileExists() {
+        when(statusLine.getStatusCode()).thenReturn(404);
+        assertFalse(object.exists());
+    }
+
+    @Test(expected = CommandException.class)
+    public void checkWhetherANonExistingFileExistsButThrowAnotherError() {
+        when(statusLine.getStatusCode()).thenReturn(500);
+        object.exists();
+    }
 }
