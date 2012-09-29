@@ -27,7 +27,7 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
     protected void prepareBytes(byte[] bytes, String md5) {
         when(statusLine.getStatusCode()).thenReturn(200);
         prepareHeader(response, ETAG, md5 == null ? DigestUtils.md5Hex(bytes) : md5);
-        prepareHeader(response, CONTENT_LENGTH, "3");
+        prepareHeader(response, CONTENT_LENGTH, Long.toString(bytes.length));
         httpEntity = new ByteArrayEntity(bytes);
         when(response.getEntity()).thenReturn(httpEntity);
     }

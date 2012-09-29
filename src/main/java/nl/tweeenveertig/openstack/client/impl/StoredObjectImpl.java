@@ -52,15 +52,15 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public void uploadObject(InputStream inputStream) {
-        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, new UploadInstructions(inputStream)).call();
+        uploadObject(new UploadInstructions(inputStream));
     }
 
     public void uploadObject(byte[] fileToUpload) {
-        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, new UploadInstructions(fileToUpload)).call();
+        uploadObject(new UploadInstructions(fileToUpload));
     }
 
     public void uploadObject(File fileToUpload) {
-        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, new UploadInstructions(fileToUpload)).call();
+        uploadObject(new UploadInstructions(fileToUpload));
     }
 
     public void delete() {
