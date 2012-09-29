@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.client.core.AbstractContainer;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.headers.container.ContainerRights;
 import org.apache.commons.io.IOUtils;
@@ -13,8 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 import static nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed.X_CONTAINER_BYTES_USED;
 import static nl.tweeenveertig.openstack.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
 import static nl.tweeenveertig.openstack.headers.container.ContainerMetadata.X_CONTAINER_META_PREFIX;
@@ -97,6 +97,21 @@ public class ContainerImplTest extends BaseCommandTest {
         assertTrue(container.isPublic());
         assertEquals(123, container.getObjectCount());
         assertEquals(654321, container.getBytesUsed());
+    }
+
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
+    @Test
+    public void compareContainers() {
+        Container container1 = account.getContainer("alpha");
+        Container container2 = account.getContainer("beta");
+        assertFalse(container1.equals("alpha"));
+        assertFalse(container1.equals(container2));
+        Map<Container, String> containers = new TreeMap<Container, String>();
+        containers.put(container1, container1.getName());
+        containers.put(container2, container2.getName());
+        assertEquals(container1.getName(), containers.get(container1));
+        assertEquals(container2.getName(), containers.get(container2));
+        assertEquals(container1.getName().hashCode(), container1.hashCode());
     }
 
     protected void checkContainerRights(String expectedRightsValue) throws IOException {

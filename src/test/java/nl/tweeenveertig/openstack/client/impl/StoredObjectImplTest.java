@@ -18,6 +18,7 @@ import java.io.*;
 import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static nl.tweeenveertig.openstack.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
 import static nl.tweeenveertig.openstack.headers.object.ObjectContentLength.CONTENT_LENGTH;
@@ -31,8 +32,6 @@ import static org.mockito.Mockito.when;
 
 public class StoredObjectImplTest extends BaseCommandTest {
 
-    private Container container;
-
     private StoredObject object;
 
     private byte[] bytes;
@@ -44,10 +43,10 @@ public class StoredObjectImplTest extends BaseCommandTest {
     public void setup() throws IOException {
         super.setup();
         when(statusLine.getStatusCode()).thenReturn(202);
-        container = account.getContainer("alpha");
+        Container container = account.getContainer("alpha");
         object = container.getObject("image.png");
         bytes = new byte[] { 0x01, 0x02, 0x03};
-        prepareBytes(bytes, null );
+        prepareBytes(bytes, null);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -179,6 +178,22 @@ public class StoredObjectImplTest extends BaseCommandTest {
         assertEquals(654321, object.getContentLength());
         assertEquals("image/png", object.getContentType());
         assertEquals("cae4ebb15a282e98ba7b65402a72f57c", object.getEtag());
+    }
+
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
+    @Test
+    public void compareContainers() {
+        Container container = account.getContainer("alpha");
+        StoredObject object1 = container.getObject("img1.png");
+        StoredObject object2 = container.getObject("img2.png");
+        assertFalse(object1.equals("alpha"));
+        assertFalse(object1.equals(object2));
+        Map<StoredObject, String> containers = new TreeMap<StoredObject, String>();
+        containers.put(object1, object1.getName());
+        containers.put(object2, object2.getName());
+        assertEquals(object1.getName(), containers.get(object1));
+        assertEquals(object2.getName(), containers.get(object2));
+        assertEquals(object1.getName().hashCode(), object1.hashCode());
     }
 
 }

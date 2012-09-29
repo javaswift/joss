@@ -153,7 +153,6 @@ Things to do for JOSS:
 * reading of a single directory structure and based on that, building up an in-memory Object Store
 * on-file storage of objects for visual screening purposes
 * fine-grained control of container authentication settings
-* introduction of Tenants
 
 License
 -------
