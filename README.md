@@ -173,20 +173,21 @@ More information
 
 _On JOSS_
 
-* http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss
-* http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage
-* https://github.com/java-openstack/tutorial-joss-streaming
+* **High level explanation of JOSS**; http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss
+* **Hands-on JOSS tutorial**; http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage
+* **Working JOSS tutorial project**; https://github.com/java-openstack/tutorial-joss-quickstart
+* **Working JOSS streaming project**; https://github.com/java-openstack/tutorial-joss-streaming
 
 _On Cloud VPS Object Store_
 
-* http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/
-* https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/
-* https://www.cloudvps.com/blog/cloudvps-object-store-beta-tester-contributes-java-library/
+* **How to use the CloudVPS ObjectStore as a beta-tester**; http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/
+* **How to get a beta-tester account on the CloudVPS ObjectStore**; https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/
+* **CloudVPS writes on collaboration with 42 to create JOSS**; https://www.cloudvps.com/blog/cloudvps-object-store-beta-tester-contributes-java-library/
 
 _On the OpenStack API_
 
-* http://api.openstack.org/
-* http://docs.openstack.org/api/openstack-object-storage/1.0/content/
+* **OpenStack API**; http://api.openstack.org/
+* **OpenStack API**; http://docs.openstack.org/api/openstack-object-storage/1.0/content/
 
 Keep up to date on the library development by joining the Java OpenStack Storage discussion group [Google Group](https://groups.google.com/forum/?fromgroups#!forum/java-openstack-storage---joss)
 
