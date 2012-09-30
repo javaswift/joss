@@ -6,6 +6,7 @@ import nl.tweeenveertig.openstack.headers.range.FirstPartRange;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 
 import java.io.*;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -54,10 +55,14 @@ public class Main {
 //        container.create();
 //        container.makePublic();
 //
-//        Collection<Container> containers = account.listContainers();
-//        for (Container currentContainer : containers) {
-//            System.out.println(currentContainer.getName());
-//        }
+        Collection<Container> containers = account.listContainers();
+        for (Container currentContainer : containers) {
+            System.out.println(currentContainer.getName());
+            Collection<StoredObject> objects = currentContainer.listObjects();
+            for (StoredObject object : objects) {
+                System.out.println("- "+object.getName()+", "+object.getContentType()+", "+object.getContentLength()+"bytes");
+            }
+        }
 
 //        StoredObject object = container.getObject("dog.png");
 //        object.uploadObject(new File("/dog.png"));
