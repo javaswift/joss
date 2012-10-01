@@ -72,7 +72,7 @@ public interface StoredObject extends ObjectStoreEntity {
     * Uploads a byte array object to a location designated by the Container and the object.
     * @param uploadInstructions not only the content to be uploaded, but also additional headers that need to be set
     */
-    public void uploadObject(UploadInstructions uploadInstructions) throws IOException;
+    public void uploadObject(UploadInstructions uploadInstructions);
 
     /**
     * Uploads a byte array object to a location designated by the Container and the object.
@@ -84,7 +84,7 @@ public interface StoredObject extends ObjectStoreEntity {
     * Uploads a byte array object to a location designated by the Container and the object.
     * @param fileToUpload the actual content that must be uploaded to the object
     */
-    public void uploadObject(byte[] fileToUpload) throws IOException;
+    public void uploadObject(byte[] fileToUpload);
 
     /**
     * Uploads a file from a designated location to a location designated by the Container and the
@@ -105,7 +105,7 @@ public interface StoredObject extends ObjectStoreEntity {
     * @param targetContainer the owning Container of the target location of the copy
     * @param targetObject the object location where the copy must be placed
     */
-    public void copyObject(Container targetContainer, StoredObject targetObject) throws IOException;
+    public void copyObject(Container targetContainer, StoredObject targetObject);
 
     /**
     * Explicitly sets the content type of an object. This can be useful, for example when you have content-sniffers

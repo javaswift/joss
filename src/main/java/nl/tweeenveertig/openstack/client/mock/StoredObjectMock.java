@@ -72,12 +72,16 @@ public class StoredObjectMock extends AbstractStoredObject {
         }
     }
 
-    public void uploadObject(UploadInstructions uploadInstructions) throws IOException {
+    public void uploadObject(UploadInstructions uploadInstructions) {
         if (!this.created) {
             ((ContainerMock)getContainer()).createObject(this);
             this.created = true;
         }
-        saveObject(IOUtils.toByteArray(uploadInstructions.getEntity().getContent()));
+        try {
+            saveObject(IOUtils.toByteArray(uploadInstructions.getEntity().getContent()));
+        } catch (IOException err) {
+            throw new CommandException(err.getMessage());
+        }
     }
 
     public void uploadObject(InputStream inputStream) {
@@ -88,7 +92,7 @@ public class StoredObjectMock extends AbstractStoredObject {
         }
     }
 
-    public void uploadObject(byte[] fileToUpload) throws IOException {
+    public void uploadObject(byte[] fileToUpload) {
         uploadObject(new UploadInstructions(fileToUpload));
     }
 
@@ -118,7 +122,7 @@ public class StoredObjectMock extends AbstractStoredObject {
         invalidate();
     }
 
-    public void copyObject(Container targetContainer, StoredObject targetObject) throws IOException {
+    public void copyObject(Container targetContainer, StoredObject targetObject) {
         byte[] targetContent = object.clone();
         if (!targetContainer.exists()) {
             targetContainer.create();
