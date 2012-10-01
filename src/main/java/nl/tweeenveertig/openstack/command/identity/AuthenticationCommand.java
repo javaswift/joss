@@ -3,13 +3,13 @@ package nl.tweeenveertig.openstack.command.identity;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.command.identity.authentication.Authentication;
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 
 import java.io.IOException;
+import java.util.List;
 
 import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertResponseToString;
 import static nl.tweeenveertig.openstack.command.core.CommandUtil.createObjectMapper;
@@ -35,7 +35,15 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
 
     @Override
     public Access getReturnObject(HttpResponse response) throws IOException {
-        return createObjectMapper().readValue(StringUtils.join(convertResponseToString(response), ""), Access.class);
+        return createObjectMapper().readValue(createSingleString(convertResponseToString(response)), Access.class);
+    }
+
+    protected String createSingleString(List<String> lines) {
+        StringBuilder oneString = new StringBuilder();
+        for (String line : lines) {
+            oneString.append(line);
+        }
+        return oneString.toString();
     }
 
     @Override

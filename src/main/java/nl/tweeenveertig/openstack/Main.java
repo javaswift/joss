@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.*;
 import nl.tweeenveertig.openstack.client.impl.ClientImpl;
 import nl.tweeenveertig.openstack.headers.range.FirstPartRange;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.*;
 import java.util.Collection;
@@ -24,6 +25,9 @@ public class Main {
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
         Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+        Container container = account.getContainer("images");
+        StoredObject object = container.getObject("joss-logo.png");
+        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/joss-logo-square.png")).setContentType("image/bmp"));
 
 //        Container container = account.getContainer("images");
 //        StoredObject object = container.getObject("dog.png");
@@ -55,14 +59,14 @@ public class Main {
 //        container.create();
 //        container.makePublic();
 //
-        Collection<Container> containers = account.listContainers();
-        for (Container currentContainer : containers) {
-            System.out.println(currentContainer.getName());
-            Collection<StoredObject> objects = currentContainer.listObjects();
-            for (StoredObject object : objects) {
-                System.out.println("- "+object.getName()+", "+object.getContentType()+", "+object.getContentLength()+"bytes");
-            }
-        }
+//        Collection<Container> containers = account.listContainers();
+//        for (Container currentContainer : containers) {
+//            System.out.println(currentContainer.getName());
+//            Collection<StoredObject> objects = currentContainer.listObjects();
+//            for (StoredObject object : objects) {
+//                System.out.println("- "+object.getName()+", "+object.getContentType()+", "+object.getContentLength()+"bytes");
+//            }
+//        }
 
 //        StoredObject object = container.getObject("dog.png");
 //        object.uploadObject(new File("/dog.png"));

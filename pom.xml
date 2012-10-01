@@ -71,13 +71,6 @@
             <version>${httpcomponents.version}</version>
         </dependency>
 
-        <!-- Used for join functionality -->
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>${commons.lang.version}</version>
-        </dependency>
-
         <!-- Used for loading test resources and converting a File to byte[] -->
         <dependency>
             <groupId>commons-io</groupId>
