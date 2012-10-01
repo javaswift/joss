@@ -36,4 +36,10 @@ public class UploadInstructionsTest {
         UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setMd5("cafebabe");
         assertEquals("cafebabe", instructions.getMd5());
     }
+
+    @Test
+    public void contentType() {
+        UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setContentType("image/png");
+        assertEquals("image/png", instructions.getContentType());
+    }
 }

@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
@@ -35,6 +36,9 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         HttpEntity entity = uploadInstructions.getEntity();
         if (uploadInstructions.getMd5() != null) {
             addHeader(new Etag(uploadInstructions.getMd5()));
+        }
+        if (uploadInstructions.getContentType() != null) {
+            addHeader(new ObjectContentType(uploadInstructions.getContentType()));
         }
         else if (!(entity instanceof InputStreamEntity)) { // reading an InputStream is not a smart idea
             addHeader(new Etag(entity.getContent()));

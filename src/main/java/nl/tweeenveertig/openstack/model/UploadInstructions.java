@@ -14,6 +14,8 @@ public class UploadInstructions {
 
     private String md5;
 
+    private String contentType;
+
     public UploadInstructions(File fileToUpload) {
         this.entity = new FileEntity(fileToUpload);
     }
@@ -31,11 +33,20 @@ public class UploadInstructions {
         return this;
     }
 
+    public UploadInstructions setContentType(String contentType) {
+        this.contentType = contentType;
+        return this;
+    }
+
     public HttpEntity getEntity() {
         return this.entity;
     }
 
     public String getMd5() {
         return this.md5;
+    }
+
+    public String getContentType() {
+        return this.contentType;
     }
 }

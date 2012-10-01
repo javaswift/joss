@@ -17,6 +17,7 @@ import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.headers.Token;
 import nl.tweeenveertig.openstack.headers.object.Etag;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -84,16 +85,18 @@ public class UploadObjectCommandTest extends BaseCommandTest {
     }
 
     @Test
-    public void supplyMd5() throws IOException {
+    public void supplyHeaders() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[]{ 0x01, 0x02, 0x03 });
         new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
-                                new UploadInstructions(inputStream).setMd5("ebabefac")).call();
+                                new UploadInstructions(inputStream).setMd5("ebabefac").setContentType("image/bmp")).call();
         verify(httpClient).execute(requestArgument.capture());
+        assertEquals("image/bmp", requestArgument.getValue().getFirstHeader(ObjectContentType.CONTENT_TYPE).getValue());
         assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
         assertEquals("ebabefac", requestArgument.getValue().getFirstHeader(Etag.ETAG).getValue());
         inputStream.close();
     }
+
 
     @Test
     public void noContentTypeFoundError() throws IOException {
