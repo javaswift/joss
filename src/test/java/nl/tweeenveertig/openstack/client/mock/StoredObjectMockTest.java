@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.client.mock;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.headers.object.range.*;
@@ -87,6 +88,18 @@ public class StoredObjectMockTest {
     @Test
     public void downloadExcludeStartRange() throws IOException {
         verifyRangeDownload(uploadBytes, new byte[]{0x04, 0x05, 0x06, 0x07, 0x08}, new ExcludeStartRange(3));
+    }
+
+    @Test
+    public void downloadWithIfNoneMatch() throws IOException {
+        object = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
+        byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
+        object.uploadObject(bytes);
+        try {
+            object.downloadObject(new DownloadInstructions().setMatchConditional(new IfNoneMatch("5289df737df57326fcdd22597afb1fac")));
+        } catch (CommandException err) {
+            assertEquals(CommandExceptionError.CONTENT_NOT_MODIFIED, err.getError());
+        }
     }
 
     @Test

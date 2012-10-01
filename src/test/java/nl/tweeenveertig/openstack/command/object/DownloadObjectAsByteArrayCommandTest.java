@@ -1,5 +1,7 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
+import nl.tweeenveertig.openstack.headers.object.range.AbstractRange;
 import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
@@ -32,11 +34,29 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
     }
 
     @Test
+    public void variousDownloadInstructions() throws IOException {
+        byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
+        prepareBytes(bytes, null);
+        when(statusLine.getStatusCode()).thenReturn(200);
+        new DownloadObjectAsByteArrayCommand(
+                this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
+                new DownloadInstructions()
+                        .setRange(new FirstPartRange(3))
+                        .setMatchConditional(new IfNoneMatch("cafebabe"))).call();
+        verify(httpClient).execute(requestArgument.capture());
+        assertEquals("bytes=0-3", requestArgument.getValue().getFirstHeader("Range").getValue());
+        assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(IfNoneMatch.IF_NONE_MATCH).getValue());
+    }
+
+    @Test
     public void assertPartialContentDoesNotTriggerAnMd5Check() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
         when(statusLine.getStatusCode()).thenReturn(206);
-        DownloadObjectAsByteArrayCommand command = spy(new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions().setRange(new FirstPartRange(3))));
+        DownloadObjectAsByteArrayCommand command =
+                spy(new DownloadObjectAsByteArrayCommand(
+                        this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
+                        new DownloadInstructions().setRange(new FirstPartRange(3))));
         byte[] result = command.call();
         assertEquals(bytes.length, result.length);
         verify(command, never()).getMd5();

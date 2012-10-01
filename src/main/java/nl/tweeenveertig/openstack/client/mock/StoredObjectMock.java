@@ -50,6 +50,9 @@ public class StoredObjectMock extends AbstractStoredObject {
         if (downloadInstructions.getRange() != null) {
             return downloadInstructions.getRange().copy(object);
         }
+        if (downloadInstructions.getMatchConditional() != null) {
+            downloadInstructions.getMatchConditional().matchAgainst(info.getEtag());
+        }
         return object;
     }
 

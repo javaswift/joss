@@ -32,6 +32,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
 
     private void processDownloadInstructions(DownloadInstructions downloadInstructions) {
         addHeader(downloadInstructions.getRange());
+        addHeader(downloadInstructions.getMatchConditional());
     }
 
     @Override
