@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.headers.range;
+package nl.tweeenveertig.openstack.headers.object.range;
 
 /**
  * Take the last bytes of the object with a length equal to 'lastBytes'

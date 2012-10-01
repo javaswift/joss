@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.headers.range;
+package nl.tweeenveertig.openstack.headers.object.range;
 
 /**
  * Take the object starting at 'startPos' and ending at 'endPos'

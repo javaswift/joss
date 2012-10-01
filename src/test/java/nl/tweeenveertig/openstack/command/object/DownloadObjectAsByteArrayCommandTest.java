@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.headers.range.FirstPartRange;
+import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
@@ -8,7 +8,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.entity.ByteArrayEntity;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.headers.range;
+package nl.tweeenveertig.openstack.headers.object.range;
 
 /**
  * Take the first bytes of the object until -- ie not including -- position 'until'

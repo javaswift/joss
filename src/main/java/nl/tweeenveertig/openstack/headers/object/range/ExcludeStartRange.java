@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.headers.range;
+package nl.tweeenveertig.openstack.headers.object.range;
 
 /**
  * Take the entire object, starting from offset. The bytes before offset are ignored

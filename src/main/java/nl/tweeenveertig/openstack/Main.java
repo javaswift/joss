@@ -2,14 +2,10 @@ package nl.tweeenveertig.openstack;
 
 import nl.tweeenveertig.openstack.client.*;
 import nl.tweeenveertig.openstack.client.impl.ClientImpl;
-import nl.tweeenveertig.openstack.headers.range.FirstPartRange;
-import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.*;
-import java.util.Collection;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Main {
     public static void main(String args[]) throws IOException {

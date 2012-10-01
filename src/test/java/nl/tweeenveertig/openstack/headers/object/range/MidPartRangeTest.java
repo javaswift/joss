@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.headers.range;
+package nl.tweeenveertig.openstack.headers.object.range;
 
 import nl.tweeenveertig.openstack.headers.HeaderTest;
 import org.junit.Test;

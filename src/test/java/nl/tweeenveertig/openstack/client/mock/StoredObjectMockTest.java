@@ -5,7 +5,7 @@ import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
-import nl.tweeenveertig.openstack.headers.range.*;
+import nl.tweeenveertig.openstack.headers.object.range.*;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
