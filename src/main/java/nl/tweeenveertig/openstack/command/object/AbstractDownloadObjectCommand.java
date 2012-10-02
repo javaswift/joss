@@ -33,6 +33,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
     private void processDownloadInstructions(DownloadInstructions downloadInstructions) {
         addHeader(downloadInstructions.getRange());
         addHeader(downloadInstructions.getMatchConditional());
+        addHeader(downloadInstructions.getSinceConditional());
     }
 
     @Override
@@ -66,7 +67,9 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
         return new HttpStatusChecker[] {
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_OK), null),
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_PARTIAL_CONTENT), null),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.CONTAINER_DOES_NOT_EXIST)
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.CONTAINER_DOES_NOT_EXIST),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_MODIFIED), CommandExceptionError.CONTENT_NOT_MODIFIED),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_PRECONDITION_FAILED), CommandExceptionError.CONTENT_DIFFERENT)
         };
     }
 
