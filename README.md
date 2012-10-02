@@ -148,11 +148,8 @@ Things JOSS can do for you:
 * Java-based wrapper library for OpenStack, so REST calls do not have to be made directly
 * option to switch between real (ie, HTTPS target) and mock mode
 * in-memory storage of objects for unit testing and local application run purposes
-
-Things to do for JOSS:
-* reading of a single directory structure and based on that, building up an in-memory Object Store
-* on-file storage of objects for visual screening purposes
-* fine-grained control of container authentication settings
+* auto-reconnecting your Swift session
+* documentation and tutorials to help you get started
 
 License
 -------
@@ -175,6 +172,7 @@ _On JOSS_
 
 * High level explanation of JOSS; http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss
 * Hands-on JOSS tutorial; http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage
+* Architecture models; http://blog.42.nl/articles/joss-architecture-approaches-integrating-with-openstack-object-storage
 * Working JOSS tutorial project; https://github.com/java-openstack/tutorial-joss-quickstart
 * Working JOSS streaming project; https://github.com/java-openstack/tutorial-joss-streaming
 
