@@ -2,7 +2,6 @@ package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
-import nl.tweeenveertig.openstack.headers.object.range.AbstractRange;
 import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
@@ -88,6 +87,16 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
     @Test
     public void unknownError() throws IOException {
         checkForError(500, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.UNKNOWN);
+    }
+
+    @Test
+    public void contentNotModified() throws IOException {
+        checkForError(304, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.CONTENT_NOT_MODIFIED);
+    }
+
+    @Test
+    public void contentModified() throws IOException {
+        checkForError(412, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.CONTENT_DIFFERENT);
     }
 
     @Test
