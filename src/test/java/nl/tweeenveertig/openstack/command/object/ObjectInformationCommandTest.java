@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
+import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 import org.apache.http.Header;
@@ -36,6 +37,13 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, CONTENT_LENGTH, "654321", headers);
         prepareHeader(response, CONTENT_TYPE, "image/png", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
+    }
+
+    @Test(expected = CommandException.class)
+    public void illegalDate() {
+        prepareHeader(response, LAST_MODIFIED, "I'm not a date!");
+        when(statusLine.getStatusCode()).thenReturn(200);
+        new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")).call();
     }
 
     @Test
