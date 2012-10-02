@@ -6,15 +6,15 @@ import org.apache.http.impl.cookie.DateUtils;
 
 import java.util.Date;
 
-public abstract class IfSince extends Header {
+public abstract class AbstractIfSince extends Header {
 
     private Date sinceDate;
 
-    public IfSince(String sinceDate) throws DateParseException {
+    public AbstractIfSince(String sinceDate) throws DateParseException {
         this(convertStringToDate(sinceDate));
     }
 
-    public IfSince(Date sinceDate) {
+    public AbstractIfSince(Date sinceDate) {
         this.sinceDate = sinceDate;
     }
 

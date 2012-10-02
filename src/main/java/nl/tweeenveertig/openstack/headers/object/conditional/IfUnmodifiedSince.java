@@ -4,7 +4,7 @@ import org.apache.http.impl.cookie.DateParseException;
 
 import java.util.Date;
 
-public class IfUnmodifiedSince extends IfSince {
+public class IfUnmodifiedSince extends AbstractIfSince {
 
     public static final String IF_UNMODIFIED_SINCE = "If-Unmodified-Since";
 
