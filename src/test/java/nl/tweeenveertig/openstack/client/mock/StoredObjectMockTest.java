@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.client.mock;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -18,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -138,6 +140,35 @@ public class StoredObjectMockTest {
         object.uploadObject(uploadBytes);
         assertTrue(Arrays.equals(uploadBytes, IOUtils.toByteArray(object.downloadObjectAsInputStream())));
         assertTrue(Arrays.equals(uploadBytes, IOUtils.toByteArray(object.downloadObjectAsInputStream(new DownloadInstructions()))));
+    }
+
+    @Test
+    public void checkForLastModificationTime() {
+        InputStream bytes = new ByteArrayInputStream(uploadBytes);
+        assertNull(object.getLastModified());
+        object.uploadObject(bytes);
+        assertNotNull(object.getLastModified());
+    }
+
+    @Test
+    public void downloadIfModifiedSinceOnChangedContent() {
+        InputStream bytes = new ByteArrayInputStream(uploadBytes);
+        object.uploadObject(bytes);
+        Date sinceDate = new Date((new Date()).getTime()-86400); // one day before now
+        assertNotNull(object.downloadObject(new DownloadInstructions().setSinceConditional(new IfModifiedSince(sinceDate))));
+    }
+
+    @Test
+    public void downloadIfModifiedSinceOnUnchangedContent() {
+        InputStream bytes = new ByteArrayInputStream(uploadBytes);
+        object.uploadObject(bytes);
+        Date sinceDate = new Date((new Date()).getTime()+86400); // one day after now
+        try {
+            object.downloadObject(new DownloadInstructions().setSinceConditional(new IfModifiedSince(sinceDate)));
+            fail("Should have thrown an exception");
+        } catch (CommandException err) {
+            assertEquals(CommandExceptionError.CONTENT_NOT_MODIFIED, err.getError());
+        }
     }
 
     @Test

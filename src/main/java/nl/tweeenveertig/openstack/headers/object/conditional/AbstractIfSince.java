@@ -1,34 +1,30 @@
 package nl.tweeenveertig.openstack.headers.object.conditional;
 
-import nl.tweeenveertig.openstack.headers.Header;
+import nl.tweeenveertig.openstack.headers.DateHeader;
 import org.apache.http.impl.cookie.DateParseException;
-import org.apache.http.impl.cookie.DateUtils;
 
 import java.util.Date;
 
-public abstract class AbstractIfSince extends Header {
-
-    private Date sinceDate;
+public abstract class AbstractIfSince extends DateHeader {
 
     public AbstractIfSince(String sinceDate) throws DateParseException {
-        this(convertStringToDate(sinceDate));
+        super(sinceDate);
     }
 
     public AbstractIfSince(Date sinceDate) {
-        this.sinceDate = sinceDate;
-    }
-
-    public static Date convertStringToDate(String sinceDate) throws DateParseException {
-        return DateUtils.parseDate(sinceDate);
-    }
-
-    public static String convertDateToString(Date date) {
-        return DateUtils.formatDate(date);
+        super(sinceDate);
     }
 
     public Date getSinceDate() {
-        return this.sinceDate;
+        return getDate();
     }
+
+    /**
+    * Makes a check against the sinceDate and throws an exception (with the proper HTTP status code) if the value
+    * means no content should be returned.
+    * @param modificationDate the value to match against
+    */
+    public abstract void sinceAgainst(Date modificationDate);
 
     @Override
     public String getHeaderValue() {

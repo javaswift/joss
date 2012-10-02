@@ -9,6 +9,7 @@ import nl.tweeenveertig.openstack.headers.object.ObjectLastModified;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 public class ObjectInformation extends AbstractInformation {
 
@@ -17,8 +18,12 @@ public class ObjectInformation extends AbstractInformation {
     private ObjectContentLength contentLength;
     private ObjectContentType contentType;
 
+    public Date getLastModifiedAsDate() {
+        return lastModified.getDate();
+    }
+
     public String getLastModified() {
-        return lastModified.getHeaderValue();
+        return lastModified == null ? null : lastModified.getHeaderValue();
     }
 
     public void setLastModified(ObjectLastModified lastModified) {

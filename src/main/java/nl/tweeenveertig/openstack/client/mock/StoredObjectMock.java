@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
+import nl.tweeenveertig.openstack.headers.object.ObjectLastModified;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -13,9 +14,11 @@ import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
+import org.apache.http.impl.cookie.DateUtils;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
+import java.util.Date;
 
 public class StoredObjectMock extends AbstractStoredObject {
 
@@ -52,6 +55,9 @@ public class StoredObjectMock extends AbstractStoredObject {
         }
         if (downloadInstructions.getMatchConditional() != null) {
             downloadInstructions.getMatchConditional().matchAgainst(info.getEtag());
+        }
+        if (downloadInstructions.getSinceConditional() != null) {
+            downloadInstructions.getSinceConditional().sinceAgainst(info.getLastModifiedAsDate());
         }
         return object;
     }
@@ -143,6 +149,7 @@ public class StoredObjectMock extends AbstractStoredObject {
 
     protected void saveObject(byte[] object) {
         this.object = object;
+        this.info.setLastModified(new ObjectLastModified(new Date()));
         invalidate();
     }
 
