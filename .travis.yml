@@ -1,4 +1,4 @@
 language: java
-
 jdk:
   - openjdk6
+script: mvn -source 6 clean verify
