@@ -1,4 +1,5 @@
 language: java
 jdk:
   - openjdk6
-script: mvn -source 6 clean verify
+script: mvn -source 6 install --quiet -DskipTests=true
+script: mvn clean verify
