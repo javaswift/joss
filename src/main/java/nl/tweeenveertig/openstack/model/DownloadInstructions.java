@@ -54,6 +54,9 @@ public class DownloadInstructions {
     * @return the download instructions, ready for more settings
     */
     public DownloadInstructions setMatchConditional(AbstractIfMatch ifMatch) {
+        if (ifMatch.getHeaderValue() == null) {
+            return this; // Ignore the setting if no etag has been supplied
+        }
         this.ifMatch= ifMatch;
         return this;
     }
@@ -76,6 +79,9 @@ public class DownloadInstructions {
     * @return the download instructions, ready for more settings
     */
     public DownloadInstructions setSinceConditional(AbstractIfSince ifSince) {
+        if (ifSince.getSinceDate() == null) {
+            return this; // Ignore the setting if no date has been supplied
+        }
         this.ifSince = ifSince;
         return this;
     }

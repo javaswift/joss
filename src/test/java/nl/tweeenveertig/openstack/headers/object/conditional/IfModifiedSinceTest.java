@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.util.Date;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 
 public class IfModifiedSinceTest extends HeaderTest {
@@ -51,6 +52,12 @@ public class IfModifiedSinceTest extends HeaderTest {
         } catch (CommandException err) {
             assertEquals(CommandExceptionError.CONTENT_NOT_MODIFIED, err.getError());
         }
+    }
+
+    @Test
+    public void supplyEmptyString() throws DateParseException {
+        IfModifiedSince ifModifiedSince = new IfModifiedSince((String)null);
+        assertNull(ifModifiedSince.getSinceDate());
     }
 
 }

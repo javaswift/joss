@@ -6,8 +6,11 @@ import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;
 import org.apache.http.impl.cookie.DateParseException;
 import org.junit.Test;
 
+import java.util.Date;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 
 public class DownloadInstructionsTest {
 
@@ -22,6 +25,20 @@ public class DownloadInstructionsTest {
         assertNotNull(instructions.getRange());
         assertEquals("ebabefac", instructions.getMatchConditional().getHeaderValue());
         assertEquals(expectedDateString, instructions.getSinceConditional().getHeaderValue());
+    }
+
+    @Test
+    public void supplyEmptyIfMatch() {
+        DownloadInstructions downloadInstructions = new DownloadInstructions()
+                .setMatchConditional(new IfNoneMatch(null));
+        assertNull(downloadInstructions.getMatchConditional());
+    }
+
+    @Test
+    public void supplyEmptyIfSince() throws DateParseException {
+        DownloadInstructions downloadInstructions = new DownloadInstructions()
+                .setSinceConditional(new IfModifiedSince((Date)null));
+        assertNull(downloadInstructions.getSinceConditional());
     }
 
 }

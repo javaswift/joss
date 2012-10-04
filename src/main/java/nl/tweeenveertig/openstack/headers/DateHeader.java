@@ -18,7 +18,7 @@ public abstract class DateHeader extends Header {
     }
 
     public static Date convertStringToDate(String sinceDate) throws DateParseException {
-        return DateUtils.parseDate(sinceDate);
+        return sinceDate == null ? null : DateUtils.parseDate(sinceDate);
     }
 
     public static String convertDateToString(Date date) {
