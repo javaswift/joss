@@ -42,7 +42,7 @@ public class StoredObjectMock extends AbstractStoredObject {
     }
 
     public InputStream downloadObjectAsInputStream(DownloadInstructions downloadInstructions) {
-        return new MockInputStreamWrapper(new ByteArrayInputStream(downloadObject()));
+        return new MockInputStreamWrapper(new ByteArrayInputStream(downloadObject(downloadInstructions)));
     }
 
     public byte[] downloadObject() {
@@ -70,7 +70,7 @@ public class StoredObjectMock extends AbstractStoredObject {
         InputStream is = null;
         OutputStream os = null;
         try {
-            is = new ByteArrayInputStream(downloadObject());
+            is = new ByteArrayInputStream(downloadObject(downloadInstructions));
             os = new FileOutputStream(targetFile);
             IOUtils.copy(is, os);
         } catch (IOException err) {
