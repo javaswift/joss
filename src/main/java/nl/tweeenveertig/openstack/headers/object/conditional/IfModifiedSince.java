@@ -21,7 +21,8 @@ public class IfModifiedSince extends AbstractIfSince {
 
     @Override
     public void sinceAgainst(Date modificationDate) {
-        if (getDate().compareTo(modificationDate) >= 0) {
+        // Milliseconds are not supplied by the browser
+        if (getDate().getTime() / 1000 >= modificationDate.getTime() / 1000) {
             throw new CommandException(HttpStatus.SC_NOT_MODIFIED, CommandExceptionError.CONTENT_NOT_MODIFIED);
         }
     }
