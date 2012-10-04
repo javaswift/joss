@@ -17,4 +17,10 @@ public class ClientMockTest {
         Account account = client.authenticate("", "richard", "test123", "");
         assertNotNull(account);
     }
+
+    @Test
+    public void authenticateWithAllowEveryone() {
+        ClientMock client = new ClientMock().allowEveryone();
+        assertNotNull(client.authenticate(null, null, null, null));
+    }
 }
