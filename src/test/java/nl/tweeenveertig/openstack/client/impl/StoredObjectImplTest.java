@@ -11,6 +11,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.cookie.DateParseException;
+import org.apache.http.impl.cookie.DateUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -170,12 +172,13 @@ public class StoredObjectImplTest extends BaseCommandTest {
     }
 
     @Test
-    public void getMetadata() throws IOException {
+    public void getMetadata() throws IOException, DateParseException {
         when(statusLine.getStatusCode()).thenReturn(202);
         prepareMetadata();
         assertEquals("1989", object.getMetadata().get("Year"));
         assertEquals("42 BV", object.getMetadata().get("Company"));
         assertEquals("Mon, 03 Sep 2012 05:40:33 GMT", object.getLastModified());
+        assertEquals(DateUtils.parseDate("Mon, 03 Sep 2012 05:40:33 GMT"), object.getLastModifiedAsDate());
         assertEquals(654321, object.getContentLength());
         assertEquals("image/png", object.getContentType());
         assertEquals("cae4ebb15a282e98ba7b65402a72f57c", object.getEtag());

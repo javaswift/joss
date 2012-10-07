@@ -6,6 +6,8 @@ import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 
+import java.util.Date;
+
 public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject, Comparable<StoredObject> {
 
     protected String name;
@@ -16,6 +18,11 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         this.container = container;
         this.name = name;
         this.info = new ObjectInformation();
+    }
+
+    public Date getLastModifiedAsDate() {
+        checkForInfo();
+        return info.getLastModifiedAsDate();
     }
 
     public String getLastModified() {

@@ -146,8 +146,10 @@ public class StoredObjectMockTest {
     public void checkForLastModificationTime() {
         InputStream bytes = new ByteArrayInputStream(uploadBytes);
         assertNull(object.getLastModified());
+        assertNull(object.getLastModifiedAsDate());
         object.uploadObject(bytes);
         assertNotNull(object.getLastModified());
+        assertNotNull(object.getLastModifiedAsDate());
     }
 
     @Test

@@ -19,7 +19,7 @@ public class ObjectInformation extends AbstractInformation {
     private ObjectContentType contentType;
 
     public Date getLastModifiedAsDate() {
-        return lastModified.getDate();
+        return lastModified == null ? null : lastModified.getDate();
     }
 
     public String getLastModified() {

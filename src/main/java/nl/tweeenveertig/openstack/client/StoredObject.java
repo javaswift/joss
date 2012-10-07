@@ -7,6 +7,7 @@ import nl.tweeenveertig.openstack.model.UploadInstructions;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 /**
  * StoredObject is a handler for the actual content in the Object Store. The method used most on this handler are
@@ -127,6 +128,7 @@ public interface StoredObject extends ObjectStoreEntity {
     */
     public boolean exists();
 
+    public Date getLastModifiedAsDate();
     public String getLastModified();
     public String getEtag();
     public long getContentLength();
