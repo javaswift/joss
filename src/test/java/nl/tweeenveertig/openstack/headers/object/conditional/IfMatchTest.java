@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.headers.object.conditional;
 
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.command.core.ModifiedException;
 import nl.tweeenveertig.openstack.headers.HeaderTest;
 import org.junit.Test;
 
@@ -20,14 +21,9 @@ public class IfMatchTest extends HeaderTest{
         new IfMatch("cafebabe").matchAgainst("cafebabe");
     }
 
-    @Test
+    @Test(expected = ModifiedException.class)
     public void differentContentIsError() {
-        try {
-            new IfMatch("cafebabe").matchAgainst("ebacefac");
-            fail("should have thrown an exception");
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.CONTENT_DIFFERENT, err.getError());
-        }
+        new IfMatch("cafebabe").matchAgainst("ebacefac");
     }
 
 }

@@ -1,5 +1,7 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.command.core.ModifiedException;
+import nl.tweeenveertig.openstack.command.core.NotModifiedException;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;
@@ -89,14 +91,16 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
         checkForError(500, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = NotModifiedException.class)
     public void contentNotModified() throws IOException {
-        checkForError(304, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.CONTENT_NOT_MODIFIED);
+        when(statusLine.getStatusCode()).thenReturn(304);
+        new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()).call();
     }
 
-    @Test
+    @Test(expected = ModifiedException.class)
     public void contentModified() throws IOException {
-        checkForError(412, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.CONTENT_DIFFERENT);
+        when(statusLine.getStatusCode()).thenReturn(412);
+        new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()).call();
     }
 
     @Test

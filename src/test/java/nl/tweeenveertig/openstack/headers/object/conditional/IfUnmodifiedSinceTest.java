@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.headers.object.conditional;
 
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.command.core.ModifiedException;
 import nl.tweeenveertig.openstack.headers.HeaderTest;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
@@ -50,14 +51,9 @@ public class IfUnmodifiedSinceTest extends HeaderTest {
         new IfUnmodifiedSince(expectedDateString).sinceAgainst(DateUtils.parseDate(olderDate));
     }
 
-    @Test
+    @Test(expected = ModifiedException.class)
     public void changedContentIsError() throws DateParseException {
-        try {
-            new IfUnmodifiedSince(expectedDateString).sinceAgainst(DateUtils.parseDate(moreRecentDate));
-            fail("should have thrown an exception");
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.CONTENT_DIFFERENT, err.getError());
-        }
+        new IfUnmodifiedSince(expectedDateString).sinceAgainst(DateUtils.parseDate(moreRecentDate));
     }
 
 }

@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.headers.object.conditional;
 
 import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.command.core.NotModifiedException;
 import org.apache.http.HttpStatus;
 
 public class IfNoneMatch extends AbstractIfMatch {
@@ -15,7 +16,7 @@ public class IfNoneMatch extends AbstractIfMatch {
     @Override
     public void matchAgainst(String matchValue) {
         if (getHeaderValue().equals(matchValue)) {
-            throw new CommandException(HttpStatus.SC_NOT_MODIFIED, CommandExceptionError.CONTENT_NOT_MODIFIED);
+            throw new NotModifiedException(HttpStatus.SC_NOT_MODIFIED, CommandExceptionError.CONTENT_NOT_MODIFIED);
         }
     }
 
