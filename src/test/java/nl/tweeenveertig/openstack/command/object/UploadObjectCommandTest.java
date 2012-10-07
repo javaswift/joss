@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandException;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.headers.Token;
 import nl.tweeenveertig.openstack.headers.object.Etag;

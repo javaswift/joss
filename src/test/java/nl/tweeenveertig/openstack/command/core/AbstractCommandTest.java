@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.command.core;
 
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.Before;
 import org.junit.Test;

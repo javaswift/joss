@@ -1,9 +1,9 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import nl.tweeenveertig.openstack.exception.CommandException;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 public class HttpStatusChecker {
 

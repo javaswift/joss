@@ -3,7 +3,7 @@ package nl.tweeenveertig.openstack.client.impl;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandException;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.object.AbstractDownloadObjectCommand;
 import nl.tweeenveertig.openstack.headers.object.CopyFrom;
 import org.apache.commons.codec.digest.DigestUtils;

@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.container.CreateContainerCommand;
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.http.Header;
 import org.junit.Before;

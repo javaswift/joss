@@ -1,8 +1,7 @@
 package nl.tweeenveertig.openstack.headers.object.conditional;
 
-import nl.tweeenveertig.openstack.command.core.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.command.core.ModifiedException;
+import nl.tweeenveertig.openstack.exception.ModifiedException;
 import org.apache.http.HttpStatus;
 
 public class IfMatch extends AbstractIfMatch {

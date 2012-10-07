@@ -1,5 +1,7 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.NotModifiedException;
 import org.junit.Before;
 import org.junit.Test;
 

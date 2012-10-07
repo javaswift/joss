@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.identity.access;
 
-import nl.tweeenveertig.openstack.command.core.CommandException;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.util.ClasspathTemplateResource;
 import org.codehaus.jackson.map.DeserializationConfig;

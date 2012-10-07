@@ -1,8 +1,6 @@
 package nl.tweeenveertig.openstack.headers.object.conditional;
 
-import nl.tweeenveertig.openstack.command.core.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.command.core.NotModifiedException;
+import nl.tweeenveertig.openstack.exception.NotModifiedException;
 import nl.tweeenveertig.openstack.headers.HeaderTest;
 import org.junit.Test;
 

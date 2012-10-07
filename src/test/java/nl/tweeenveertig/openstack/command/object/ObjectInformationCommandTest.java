@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandException;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 import org.apache.http.Header;

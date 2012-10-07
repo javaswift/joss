@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

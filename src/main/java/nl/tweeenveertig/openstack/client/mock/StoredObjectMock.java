@@ -9,12 +9,11 @@ import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
-import nl.tweeenveertig.openstack.command.core.CommandException;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
-import org.apache.http.impl.cookie.DateUtils;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;

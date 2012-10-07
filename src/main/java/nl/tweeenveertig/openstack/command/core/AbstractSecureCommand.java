@@ -1,8 +1,8 @@
 package nl.tweeenveertig.openstack.command.core;
 
 import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;

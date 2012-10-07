@@ -3,7 +3,7 @@ package nl.tweeenveertig.openstack.client.mock;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
-import nl.tweeenveertig.openstack.command.core.CommandException;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
 import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;

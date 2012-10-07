@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.command.core;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;

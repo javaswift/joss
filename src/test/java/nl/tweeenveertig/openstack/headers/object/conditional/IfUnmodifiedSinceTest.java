@@ -1,8 +1,6 @@
 package nl.tweeenveertig.openstack.headers.object.conditional;
 
-import nl.tweeenveertig.openstack.command.core.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.command.core.ModifiedException;
+import nl.tweeenveertig.openstack.exception.ModifiedException;
 import nl.tweeenveertig.openstack.headers.HeaderTest;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;

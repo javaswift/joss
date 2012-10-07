@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.command.identity;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.command.identity.authentication.Authentication;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;

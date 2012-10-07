@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.command.core.ModifiedException;
-import nl.tweeenveertig.openstack.command.core.NotModifiedException;
+import nl.tweeenveertig.openstack.exception.ModifiedException;
+import nl.tweeenveertig.openstack.exception.NotModifiedException;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;

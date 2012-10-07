@@ -1,5 +1,7 @@
-package nl.tweeenveertig.openstack.command.core;
+package nl.tweeenveertig.openstack.exception;
 
+import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import org.junit.Test;
 
 import static junit.framework.Assert.*;

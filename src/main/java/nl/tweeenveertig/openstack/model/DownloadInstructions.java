@@ -44,10 +44,10 @@ public class DownloadInstructions {
     * Return the content under a specific condition, which can be either:
     * <ul>
     *     <li>{@link nl.tweeenveertig.openstack.headers.object.conditional.IfMatch If-Match}; if the etag matches
-    *         the supplied value, return the content. If not, throw a {@link nl.tweeenveertig.openstack.command.core.CommandException}
+    *         the supplied value, return the content. If not, throw a {@link nl.tweeenveertig.openstack.exception.CommandException}
     *         with status "412 Precondition Failed"</li>
     *     <li>{@link nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch If-None-Match}; if the etag
-    *         does NOT match, return the content. If it matches, throw a {@link nl.tweeenveertig.openstack.command.core.CommandException}
+    *         does NOT match, return the content. If it matches, throw a {@link nl.tweeenveertig.openstack.exception.CommandException}
     *         with status "304 Not Modified"</li>
     * </ul>
     * @param ifMatch value to match against the etag value
@@ -70,10 +70,10 @@ public class DownloadInstructions {
     * <ul>
     *     <li>{@link nl.tweeenveertig.openstack.headers.object.conditional.IfUnmodifiedSince If-Unmodified-Since}; if the
     *         content has been unmodified since the date, return the content. If not, throw a
-    *         {@link nl.tweeenveertig.openstack.command.core.CommandException} with status "412 Precondition Failed"</li>
+    *         {@link nl.tweeenveertig.openstack.exception.CommandException} with status "412 Precondition Failed"</li>
     *     <li>{@link nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince If-Modified-Since}; if the
     *         content has been modified since the date, return the content. If not, throw a
-    *         {@link nl.tweeenveertig.openstack.command.core.CommandException} with status "304 Not Modified"</li>
+    *         {@link nl.tweeenveertig.openstack.exception.CommandException} with status "304 Not Modified"</li>
     * </ul>
     * @param ifSince date to match the last modification date
     * @return the download instructions, ready for more settings
