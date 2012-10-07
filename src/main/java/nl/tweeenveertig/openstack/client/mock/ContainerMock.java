@@ -50,7 +50,7 @@ public class ContainerMock extends AbstractContainer {
 
     public void create() {
         if (this.created) {
-            throw new CommandException(HttpStatus.SC_ACCEPTED, CommandExceptionError.CONTAINER_ALREADY_EXISTS);
+            throw new CommandException(HttpStatus.SC_ACCEPTED, CommandExceptionError.ENTITY_ALREADY_EXISTS);
         }
         ((AccountMock)getAccount()).createContainer(this);
         this.created = true;
@@ -60,7 +60,7 @@ public class ContainerMock extends AbstractContainer {
     public void delete() {
 
         if (!this.created) {
-            throw new CommandException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+            throw new CommandException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
         }
         if (this.objects.size() > 0) {
             throw new CommandException(HttpStatus.SC_CONFLICT, CommandExceptionError.CONTAINER_NOT_EMPTY);

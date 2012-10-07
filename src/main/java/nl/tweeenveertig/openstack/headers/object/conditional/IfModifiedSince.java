@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.headers.object.conditional;
 
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
 import nl.tweeenveertig.openstack.exception.NotModifiedException;
 import org.apache.http.HttpStatus;
 import org.apache.http.impl.cookie.DateParseException;
@@ -27,7 +28,7 @@ public class IfModifiedSince extends AbstractIfSince {
     public void sinceAgainst(Date modificationDate) {
         // Milliseconds are not supplied by the browser
         if (getDate().getTime() / 1000 >= modificationDate.getTime() / 1000) {
-            throw new NotModifiedException(HttpStatus.SC_NOT_MODIFIED, CommandExceptionError.CONTENT_NOT_MODIFIED);
+            HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_MODIFIED);
         }
     }
 

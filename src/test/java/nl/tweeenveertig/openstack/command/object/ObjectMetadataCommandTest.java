@@ -1,10 +1,9 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.command.container.ContainerMetadataCommand;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.Header;
-import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,14 +36,14 @@ public class ObjectMetadataCommandTest extends BaseCommandTest {
         assertEquals("42 BV", requestArgument.getValue().getFirstHeader(X_OBJECT_META_PREFIX + "Company").getValue());
     }
 
-    @Test
+    @Test (expected = NotFoundException.class)
     public void objectDoesNotExist() throws IOException {
-        checkForError(404, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new ArrayList<Header>()), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+        checkForError(404, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new ArrayList<Header>()));
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new ArrayList<Header>()), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"), new ArrayList<Header>()));
     }
 
     @Test

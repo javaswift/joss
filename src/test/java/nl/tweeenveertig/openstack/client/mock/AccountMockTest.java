@@ -44,7 +44,7 @@ public class AccountMockTest {
             container.create();
             fail("Should have thrown an exception");
         } catch (CommandException err) {
-            assertEquals(CommandExceptionError.CONTAINER_ALREADY_EXISTS, err.getError());
+            assertEquals(CommandExceptionError.ENTITY_ALREADY_EXISTS, err.getError());
         }
     }
 
@@ -55,7 +55,7 @@ public class AccountMockTest {
             account.getContainer("somevalue").delete();
             fail("Should have thrown an exception");
         } catch (CommandException err) {
-            assertEquals(CommandExceptionError.CONTAINER_DOES_NOT_EXIST, err.getError());
+            assertEquals(CommandExceptionError.ENTITY_DOES_NOT_EXIST, err.getError());
         }
     }
 
@@ -69,7 +69,7 @@ public class AccountMockTest {
             container.delete();
             fail("Should have thrown an exception");
         } catch (CommandException err) {
-            assertEquals(CommandExceptionError.CONTAINER_DOES_NOT_EXIST, err.getError());
+            assertEquals(CommandExceptionError.ENTITY_DOES_NOT_EXIST, err.getError());
         }
     }
 

@@ -2,6 +2,8 @@ package nl.tweeenveertig.openstack.command.container;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,14 +29,14 @@ public class ListObjectsCommandTest extends BaseCommandTest {
         new ListObjectsCommand(this.account, httpClient, defaultAccess, account.getContainer("containername")).call();
     }
 
-    @Test
+    @Test (expected = NotFoundException.class)
     public void containerDoesNotExist() throws IOException {
-        checkForError(404, new ListObjectsCommand(this.account, httpClient, defaultAccess, account.getContainer("containername")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new ListObjectsCommand(this.account, httpClient, defaultAccess, account.getContainer("containername")));
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ListObjectsCommand(this.account, httpClient, defaultAccess, account.getContainer("containername")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ListObjectsCommand(this.account, httpClient, defaultAccess, account.getContainer("containername")));
     }
 
     @Test

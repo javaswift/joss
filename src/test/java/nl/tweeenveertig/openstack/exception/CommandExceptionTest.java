@@ -1,7 +1,6 @@
 package nl.tweeenveertig.openstack.exception;
 
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.exception.CommandException;
 import org.junit.Test;
 
 import static junit.framework.Assert.*;
@@ -25,8 +24,8 @@ public class CommandExceptionTest {
 
     @Test
     public void categorizedError() {
-        CommandException ex = new CommandException(404, CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        CommandException ex = new CommandException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
         assertTrue(ex.toString().contains("404"));
-        assertTrue(ex.toString().contains(CommandExceptionError.CONTAINER_DOES_NOT_EXIST.toString()));
+        assertTrue(ex.toString().contains(CommandExceptionError.ENTITY_DOES_NOT_EXIST.toString()));
     }
 }

@@ -1,7 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.exception.ModifiedException;
-import nl.tweeenveertig.openstack.exception.NotModifiedException;
+import nl.tweeenveertig.openstack.exception.*;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;
@@ -75,32 +74,30 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
         assertEquals(bytes.length, result.length);
     }
 
-    @Test
+    @Test (expected = Md5ChecksumException.class)
     public void md5Mismatch() throws IOException {
         prepareBytes(new byte[] { 0x01}, "cafebabe"); // non-matching MD5
-        checkForError(200, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.MD5_CHECKSUM);
+        checkForError(200, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
     }
 
-    @Test
+    @Test (expected = NotFoundException.class)
     public void objectNotFound() throws IOException {
-        checkForError(404, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()), CommandExceptionError.UNKNOWN);
+        checkForError(500, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
     }
 
     @Test(expected = NotModifiedException.class)
     public void contentNotModified() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(304);
-        new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()).call();
+        checkForError(304, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
     }
 
     @Test(expected = ModifiedException.class)
     public void contentModified() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(412);
-        new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()).call();
+        checkForError(412, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
     }
 
     @Test

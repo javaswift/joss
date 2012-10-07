@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.command.core;
 
 import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Constructor;
@@ -33,19 +34,20 @@ public class HttpStatusChecker {
             if (error == null) {
                 return true; // The OK signal
             } else {
-                if (this.exceptionToThrow == null) {
-                    throw new CommandException(httpStatusCode, error);
-                } else {
-                    try {
-                        Constructor constructor = this.exceptionToThrow.getDeclaredConstructor(new Class[]{Integer.class, CommandExceptionError.class});
-                        Object[] arguments = new Object[] { httpStatusCode, error };
-                        throw (CommandException)constructor.newInstance(arguments);
-                    } catch (Exception err) {
-                        throw err instanceof CommandException ?
-                                (CommandException)err :
-                                new CommandException("Programming error - unable to throw exception for "+httpStatusCode+"/"+error.toString(), err);
-                    }
-                }
+                HttpStatusToExceptionMapper.throwException(httpStatusCode);
+//                if (this.exceptionToThrow == null) {
+//                    throw new CommandException(httpStatusCode, error);
+//                } else {
+//                    try {
+//                        Constructor constructor = this.exceptionToThrow.getDeclaredConstructor(new Class[]{Integer.class, CommandExceptionError.class});
+//                        Object[] arguments = new Object[] { httpStatusCode, error };
+//                        throw (CommandException)constructor.newInstance(arguments);
+//                    } catch (Exception err) {
+//                        throw err instanceof CommandException ?
+//                                (CommandException)err :
+//                                new CommandException("Programming error - unable to throw exception for "+httpStatusCode+"/"+error.toString(), err);
+//                    }
+//                }
             }
         }
         return false;

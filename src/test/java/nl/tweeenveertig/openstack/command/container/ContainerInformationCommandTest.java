@@ -1,8 +1,9 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.command.account.AccountInformationCommand;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
 import org.apache.http.Header;
 import org.junit.Before;
@@ -50,14 +51,14 @@ public class ContainerInformationCommandTest extends BaseCommandTest {
         assertTrue(info.isPublicContainer());
     }
 
-    @Test
+    @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
     @Test

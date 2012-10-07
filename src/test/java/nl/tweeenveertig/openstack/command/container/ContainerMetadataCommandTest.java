@@ -1,8 +1,9 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.command.account.AccountMetadataCommand;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import org.junit.Before;
@@ -11,8 +12,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
 
 import static junit.framework.Assert.assertEquals;
 import static nl.tweeenveertig.openstack.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
@@ -40,14 +39,14 @@ public class ContainerMetadataCommandTest extends BaseCommandTest {
         assertEquals("123456789", requestArgument.getValue().getFirstHeader(X_ACCOUNT_META_PREFIX + "ISBN").getValue());
     }
 
-    @Test
+    @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()));
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()));
     }
 
     @Test

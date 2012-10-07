@@ -10,9 +10,7 @@ import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
 import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;
 import nl.tweeenveertig.openstack.headers.container.ContainerRights;
-import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -45,7 +43,7 @@ public class ContainerInformationCommand extends AbstractContainerCommand<HttpHe
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT), null),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.CONTAINER_DOES_NOT_EXIST)
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.ENTITY_DOES_NOT_EXIST)
         };
     }
 }

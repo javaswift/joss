@@ -1,8 +1,9 @@
 package nl.tweeenveertig.openstack.command.identity;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.UnauthorizedException;
 import nl.tweeenveertig.openstack.util.ClasspathTemplateResource;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -30,13 +31,13 @@ public class AuthenticationCommandTest extends BaseCommandTest {
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
     }
 
-    @Test
+    @Test (expected = UnauthorizedException.class)
     public void authenticateFail() throws IOException {
-        checkForError(401, new AuthenticationCommand(httpClient, "sometenant", "someurl", "user", "pwd"), CommandExceptionError.UNAUTHORIZED);
+        checkForError(401, new AuthenticationCommand(httpClient, "sometenant", "someurl", "user", "pwd"));
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new AuthenticationCommand(httpClient, "sometenant", "someurl", "user", "pwd"), CommandExceptionError.UNKNOWN);
+        checkForError(500, new AuthenticationCommand(httpClient, "sometenant", "someurl", "user", "pwd"));
     }
 }

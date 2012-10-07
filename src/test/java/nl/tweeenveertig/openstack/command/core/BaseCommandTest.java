@@ -67,14 +67,10 @@ public abstract class BaseCommandTest {
         return account.getContainer("objectName").getObject(name);
     }
 
-    protected void checkForError(int httpStatusCode, AbstractCommand command, CommandExceptionError expectedError) throws IOException {
+    protected void checkForError(int httpStatusCode, AbstractCommand command) throws IOException {
         when(statusLine.getStatusCode()).thenReturn(httpStatusCode);
-        try {
-            command.call();
-            fail("Should have thrown an exception");
-        } catch (CommandException err) {
-            assertEquals(expectedError, err.getError());
-        }
+        command.call();
+        fail("Should have thrown an exception");
     }
 
     public static void prepareHeader(HttpResponse response, String name, String value, List<Header> headers) {

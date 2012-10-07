@@ -25,7 +25,7 @@ public class CreateContainerCommand extends AbstractContainerCommand<HttpPut, Ob
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_CREATED), null),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_ACCEPTED), CommandExceptionError.CONTAINER_ALREADY_EXISTS)
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_ACCEPTED), CommandExceptionError.ENTITY_ALREADY_EXISTS)
         };
     }
 

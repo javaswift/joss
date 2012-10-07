@@ -18,7 +18,7 @@ public class HttpStatusCheckerTest {
     public void setUpCheckers() {
         List<HttpStatusChecker> tempCheckers = new ArrayList<HttpStatusChecker>();
         tempCheckers.add(new HttpStatusChecker(new HttpStatusRange(200, 299), null));
-        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(404), CommandExceptionError.CONTAINER_DOES_NOT_EXIST));
+        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(404), CommandExceptionError.ENTITY_DOES_NOT_EXIST));
         tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(304), CommandExceptionError.CONTENT_NOT_MODIFIED, NotModifiedException.class));
         tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(418), CommandExceptionError.UNKNOWN, RuntimeException.class));
         this.checkers = tempCheckers.toArray(new HttpStatusChecker[tempCheckers.size()]);
@@ -34,7 +34,7 @@ public class HttpStatusCheckerTest {
         try {
             HttpStatusChecker.verifyCode(checkers, 404);
         } catch (CommandException err) {
-            assertEquals(CommandExceptionError.CONTAINER_DOES_NOT_EXIST, err.getError());
+            assertEquals(CommandExceptionError.ENTITY_DOES_NOT_EXIST, err.getError());
         }
     }
 

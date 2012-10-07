@@ -50,8 +50,8 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
         try {
             checkForInfo();
         } catch (CommandException err) {
-            if (    CommandExceptionError.CONTAINER_DOES_NOT_EXIST.equals(err.getError()) ||
-                    CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST.equals(err.getError())) {
+            if (    CommandExceptionError.ENTITY_DOES_NOT_EXIST.equals(err.getError()) ||
+                    CommandExceptionError.ENTITY_DOES_NOT_EXIST.equals(err.getError())) {
                 return false;
             }
             throw err;

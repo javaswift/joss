@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.command.object;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
 import nl.tweeenveertig.openstack.exception.ModifiedException;
 import nl.tweeenveertig.openstack.exception.NotModifiedException;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
@@ -45,7 +46,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
             String realMd5 = getMd5();
             if (    realMd5 != null &&
                     !expectedMd5.equals(realMd5)) { // Native Inputstreams are not checked for their MD5
-                throw new CommandException(HttpStatus.SC_UNPROCESSABLE_ENTITY, CommandExceptionError.MD5_CHECKSUM);
+                HttpStatusToExceptionMapper.throwException(HttpStatus.SC_UNPROCESSABLE_ENTITY);
             }
         }
         return getObjectAsReturnObject();
@@ -67,7 +68,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
         return new HttpStatusChecker[] {
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_OK), null),
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_PARTIAL_CONTENT), null),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.CONTAINER_DOES_NOT_EXIST),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.ENTITY_DOES_NOT_EXIST),
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_MODIFIED), CommandExceptionError.CONTENT_NOT_MODIFIED, NotModifiedException.class),
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_PRECONDITION_FAILED), CommandExceptionError.CONTENT_DIFFERENT, ModifiedException.class)
         };

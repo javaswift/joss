@@ -15,6 +15,9 @@ import java.io.InputStream;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.Md5ChecksumException;
+import nl.tweeenveertig.openstack.exception.MissingContentLengthOrTypeException;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.Token;
 import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
@@ -98,27 +101,27 @@ public class UploadObjectCommandTest extends BaseCommandTest {
     }
 
 
-    @Test
+    @Test(expected = MissingContentLengthOrTypeException.class)
     public void noContentTypeFoundError() throws IOException {
-        checkForError(411, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
-                                                   new UploadInstructions(new byte[]{ })), CommandExceptionError.MISSING_CONTENT_LENGTH_OR_TYPE);
+        checkForError(411, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
+                getObject("objectname"), new UploadInstructions(new byte[]{ })));
     }
 
-    @Test
+    @Test(expected = Md5ChecksumException.class)
     public void md5checksumError() throws IOException {
-        checkForError(422, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
-                                                   new UploadInstructions(new byte[]{ })), CommandExceptionError.MD5_CHECKSUM);
+        checkForError(422, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
+                getObject("objectname"), new UploadInstructions(new byte[]{ })));
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void containerNotFound() throws IOException {
-        checkForError(404, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
-                                                   new UploadInstructions(new byte[]{ })), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
+                getObject("objectname"), new UploadInstructions(new byte[]{ })));
     }
 
-    @Test
+    @Test(expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
-                                                   new UploadInstructions(new byte[]{ })), CommandExceptionError.UNKNOWN);
+        checkForError(500, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
+                getObject("objectname"), new UploadInstructions(new byte[]{ })));
     }
 }

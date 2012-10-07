@@ -124,7 +124,7 @@ public class StoredObjectMock extends AbstractStoredObject {
     public void delete() {
 
         if (!this.created) {
-            throw new CommandException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+            throw new CommandException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
         }
         ((ContainerMock)getContainer()).deleteObject(this);
         invalidate();

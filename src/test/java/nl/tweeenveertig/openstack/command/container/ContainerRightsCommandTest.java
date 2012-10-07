@@ -2,6 +2,8 @@ package nl.tweeenveertig.openstack.command.container;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.container.ContainerRights;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,14 +29,14 @@ public class ContainerRightsCommandTest extends BaseCommandTest {
         assertEquals(ContainerRights.PUBLIC_CONTAINER, requestArgument.getValue().getFirstHeader(ContainerRights.X_CONTAINER_READ).getValue());
     }
 
-    @Test
+    @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true));
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true));
     }
 
     @Test

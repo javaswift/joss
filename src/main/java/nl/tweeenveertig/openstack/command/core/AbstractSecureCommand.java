@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.command.core;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.UnauthorizedException;
 import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -25,17 +26,12 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N extends
     public N call() {
         try {
             return super.call();
-        } catch (CommandException err) {
-            if (CommandExceptionError.UNAUTHORIZED.equals(err.getError())) {
-                Access access = account.authenticate();
-                removeHeaders(Token.X_AUTH_TOKEN);
-                addToken(access.getToken());
-                return super.call();
-            } else {
-                throw err; // No retry, just rethrow the error
-            }
+        } catch (UnauthorizedException err) {
+            Access access = account.authenticate();
+            removeHeaders(Token.X_AUTH_TOKEN);
+            addToken(access.getToken());
+            return super.call();
         }
-
     }
 
     private void addToken(String token) {

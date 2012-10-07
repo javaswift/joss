@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.command.account;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,9 +27,9 @@ public class ListContainersCommandTest extends BaseCommandTest {
         new ListContainersCommand(this.account, httpClient, defaultAccess).call();
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ListContainersCommand(this.account, httpClient, defaultAccess), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ListContainersCommand(this.account, httpClient, defaultAccess));
     }
 
     @Test

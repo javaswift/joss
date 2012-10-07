@@ -120,7 +120,7 @@ public class StoredObjectMockTest {
         StoredObject mockObject = new StoredObjectMock(object.getContainer(), "some-object") {
             @Override
             public void getInfo() {
-                throw new CommandException(404, CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+                throw new CommandException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
             }
         };
         assertFalse(mockObject.exists());

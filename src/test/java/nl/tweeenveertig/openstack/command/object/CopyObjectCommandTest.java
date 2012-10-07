@@ -2,6 +2,8 @@ package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.object.CopyFrom;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,16 +30,16 @@ public class CopyObjectCommandTest extends BaseCommandTest {
         assertEquals("/containerName/objectName", requestArgument.getValue().getFirstHeader(CopyFrom.X_COPY_FROM).getValue());
     }
 
-    @Test
+    @Test (expected = NotFoundException.class)
     public void deleteContainerDoesNotExist() throws IOException {
         checkForError(404, new CopyObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
-                account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+                account.getContainer("containerName"), getObject("objectName")));
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
         checkForError(500, new CopyObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
-                account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.UNKNOWN);
+                account.getContainer("containerName"), getObject("objectName")));
     }
 
     @Test

@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.command.account;
 import nl.tweeenveertig.openstack.command.container.ContainerInformationCommand;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Token;
 import nl.tweeenveertig.openstack.model.AccountInformation;
 import org.apache.http.Header;
@@ -48,9 +49,9 @@ public class AccountInformationCommandTest extends BaseCommandTest {
         assertEquals(654321, info.getBytesUsed());
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
     @Test

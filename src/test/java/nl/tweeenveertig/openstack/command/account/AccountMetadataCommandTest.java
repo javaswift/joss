@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.command.account;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import org.junit.Before;
@@ -35,9 +35,9 @@ public class AccountMetadataCommandTest extends BaseCommandTest {
         assertEquals("42 BV", requestArgument.getValue().getFirstHeader(X_ACCOUNT_META_PREFIX + "Company").getValue());
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new AccountMetadataCommand(this.account, httpClient, defaultAccess, new ArrayList<Header>()), CommandExceptionError.UNKNOWN);
+        checkForError(500, new AccountMetadataCommand(this.account, httpClient, defaultAccess, new ArrayList<Header>()));
     }
 
     @Test

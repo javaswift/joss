@@ -37,7 +37,7 @@ public class ContainerMockTest {
             container.getObject("somevalue").delete();
             fail("Should have thrown an exception");
         } catch (CommandException err) {
-            assertEquals(CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST, err.getError());
+            assertEquals(CommandExceptionError.ENTITY_DOES_NOT_EXIST, err.getError());
         }
     }
 
@@ -87,7 +87,7 @@ public class ContainerMockTest {
         Container newContainer = new ContainerMock(container.getAccount(), "test") {
             @Override
             protected void checkForInfo() {
-                throw new CommandException(404, CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+                throw new CommandException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
             }
         };
         assertFalse(newContainer.exists());

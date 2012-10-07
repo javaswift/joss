@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.command.object;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 import org.apache.http.Header;
 import org.junit.Before;
@@ -58,14 +59,14 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         assertEquals("image/png", info.getContentType());
     }
 
-    @Test
+    @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.CONTAINER_OR_OBJECT_DOES_NOT_EXIST);
+        checkForError(404, new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")));
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")));
     }
 
     @Test

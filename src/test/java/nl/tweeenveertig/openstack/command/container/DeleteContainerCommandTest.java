@@ -2,6 +2,9 @@ package nl.tweeenveertig.openstack.command.container;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.NotEmptyException;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,19 +27,19 @@ public class DeleteContainerCommandTest extends BaseCommandTest {
         new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void deleteContainerDoesNotExist() throws IOException {
-        checkForError(404, new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.CONTAINER_DOES_NOT_EXIST);
+        checkForError(404, new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
-    @Test
+    @Test(expected = NotEmptyException.class)
     public void deleteContainerNotEmpty() throws IOException {
-        checkForError(409, new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.CONTAINER_NOT_EMPTY);
+        checkForError(409, new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
-    @Test
+    @Test(expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), CommandExceptionError.UNKNOWN);
+        checkForError(500, new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
     @Test

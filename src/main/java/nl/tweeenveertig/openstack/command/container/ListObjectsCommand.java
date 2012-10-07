@@ -37,7 +37,7 @@ public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collec
         return new HttpStatusChecker[] {
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_OK), null),
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT), null),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.CONTAINER_DOES_NOT_EXIST)
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.ENTITY_DOES_NOT_EXIST)
         };
     }
 }
