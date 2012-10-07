@@ -5,7 +5,7 @@ public class CommandException extends RuntimeException {
     private int httpStatusCode;
     private CommandExceptionError error;
 
-    public CommandException(int httpStatusCode, CommandExceptionError error) {
+    public CommandException(Integer httpStatusCode, CommandExceptionError error) {
         this.httpStatusCode = httpStatusCode;
         this.error = error;
     }

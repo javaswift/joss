@@ -17,6 +17,8 @@ public class HttpStatusCheckerTest {
         List<HttpStatusChecker> tempCheckers = new ArrayList<HttpStatusChecker>();
         tempCheckers.add(new HttpStatusChecker(new HttpStatusRange(200, 299), null));
         tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(404), CommandExceptionError.CONTAINER_DOES_NOT_EXIST));
+        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(304), CommandExceptionError.CONTENT_NOT_MODIFIED, NotModifiedException.class));
+        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(418), CommandExceptionError.UNKNOWN, RuntimeException.class));
         this.checkers = tempCheckers.toArray(new HttpStatusChecker[tempCheckers.size()]);
     }
 
@@ -60,4 +62,15 @@ public class HttpStatusCheckerTest {
             assertEquals(CommandExceptionError.UNKNOWN, err.getError());
         }
     }
+
+    @Test(expected = NotModifiedException.class)
+    public void throwNotModifiedException() {
+        HttpStatusChecker.verifyCode(checkers, 304);
+    }
+
+    @Test(expected = CommandException.class)
+    public void unableToCastException() {
+        HttpStatusChecker.verifyCode(checkers, 418);
+    }
+
 }
