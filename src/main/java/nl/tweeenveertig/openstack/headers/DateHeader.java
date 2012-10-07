@@ -9,6 +9,10 @@ public abstract class DateHeader extends Header {
 
     private Date date;
 
+    public DateHeader(Long milliseconds) {
+        this(new Date(milliseconds));
+    }
+
     public DateHeader(String date) throws DateParseException {
         this(convertStringToDate(date));
     }

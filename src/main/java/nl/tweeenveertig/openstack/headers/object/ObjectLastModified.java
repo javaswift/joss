@@ -12,6 +12,10 @@ public class ObjectLastModified extends DateHeader {
 
     public static final String LAST_MODIFIED = "Last-Modified";
 
+    public ObjectLastModified(Long value) {
+        super(value);
+    }
+
     public ObjectLastModified(String value) throws DateParseException {
         super(value);
     }

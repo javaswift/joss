@@ -22,7 +22,6 @@ public class IfUnmodifiedSinceTest extends HeaderTest {
 
     @Test
     public void insertDate() throws DateParseException {
-        String expectedDateString = "Tue, 02 Oct 2012 17:34:17 GMT";
         Date date = DateUtils.parseDate(expectedDateString);
         IfUnmodifiedSince header = new IfUnmodifiedSince(date);
         assertEquals(expectedDateString, header.getHeaderValue());
@@ -30,8 +29,14 @@ public class IfUnmodifiedSinceTest extends HeaderTest {
 
     @Test
     public void fromStringToDate() throws DateParseException {
-        String expectedDateString = "Tue, 02 Oct 2012 17:34:17 GMT";
         IfUnmodifiedSince header = new IfUnmodifiedSince(expectedDateString);
+        assertEquals(expectedDateString, header.getHeaderValue());
+    }
+
+    @Test
+    public void fromLongToDate() throws DateParseException {
+        Long expectedMilliseconds = DateUtils.parseDate(expectedDateString).getTime();
+        IfUnmodifiedSince header = new IfUnmodifiedSince(expectedMilliseconds);
         assertEquals(expectedDateString, header.getHeaderValue());
     }
 

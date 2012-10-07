@@ -35,6 +35,13 @@ public class IfModifiedSinceTest extends HeaderTest {
     }
 
     @Test
+    public void fromLongToDate() throws DateParseException {
+        Long expectedMilliseconds = DateUtils.parseDate(expectedDateString).getTime();
+        IfModifiedSince header = new IfModifiedSince(expectedMilliseconds);
+        assertEquals(expectedDateString, header.getHeaderValue());
+    }
+
+    @Test
     public void addHeader() throws DateParseException {
         testHeader(new IfModifiedSince(expectedDateString));
     }

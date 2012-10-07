@@ -11,6 +11,10 @@ public class IfUnmodifiedSince extends AbstractIfSince {
 
     public static final String IF_UNMODIFIED_SINCE = "If-Unmodified-Since";
 
+    public IfUnmodifiedSince(Long milliseconds) {
+        super(milliseconds);
+    }
+
     public IfUnmodifiedSince(String sinceDate) throws DateParseException {
         super(sinceDate);
     }

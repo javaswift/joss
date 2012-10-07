@@ -7,6 +7,10 @@ import java.util.Date;
 
 public abstract class AbstractIfSince extends DateHeader {
 
+    public AbstractIfSince(Long milliseconds) {
+        super(milliseconds);
+    }
+
     public AbstractIfSince(String sinceDate) throws DateParseException {
         super(sinceDate);
     }

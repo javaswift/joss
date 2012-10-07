@@ -11,6 +11,10 @@ public class IfModifiedSince extends AbstractIfSince {
 
     public static final String IF_MODIFIED_SINCE = "If-Modified-Since";
 
+    public IfModifiedSince(Long milliseconds) {
+        super(milliseconds);
+    }
+
     public IfModifiedSince(String sinceDate) throws DateParseException {
         super(sinceDate);
     }
