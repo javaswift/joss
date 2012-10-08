@@ -21,9 +21,9 @@ public enum HttpStatusToExceptionMapper {
 
     private CommandExceptionError error;
 
-    private Class exceptionToThrow;
+    private Class<? extends CommandException> exceptionToThrow;
 
-    private HttpStatusToExceptionMapper(int httpStatus, CommandExceptionError error, Class exceptionToThrow) {
+    private HttpStatusToExceptionMapper(int httpStatus, CommandExceptionError error, Class<? extends CommandException> exceptionToThrow) {
         this.httpStatus = httpStatus;
         this.error = error;
         this.exceptionToThrow = exceptionToThrow;
