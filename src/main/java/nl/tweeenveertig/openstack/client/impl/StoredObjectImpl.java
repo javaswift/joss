@@ -96,7 +96,7 @@ public class StoredObjectImpl extends AbstractStoredObject {
 
     @Override
     protected void saveMetadata() {
-        new ObjectMetadataCommand(getAccount(), getClient(), getAccess(), getContainer(), this, info.getMetadata()).call();
+        new ObjectMetadataCommand(getAccount(), getClient(), getAccess(), getContainer(), this, info.getHeaders()).call();
     }
 
     protected void getInfo() {

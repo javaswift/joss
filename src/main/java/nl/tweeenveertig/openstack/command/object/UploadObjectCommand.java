@@ -36,6 +36,8 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
 
     protected void prepareUpload(UploadInstructions uploadInstructions) throws IOException {
         HttpEntity entity = uploadInstructions.getEntity();
+        addHeader(uploadInstructions.getDeleteAt());
+        addHeader(uploadInstructions.getDeleteAfter());
         if (uploadInstructions.getMd5() != null) {
             addHeader(new Etag(uploadInstructions.getMd5()));
         }

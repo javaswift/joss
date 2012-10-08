@@ -1,5 +1,7 @@
 package nl.tweeenveertig.openstack.model;
 
+import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
+import nl.tweeenveertig.openstack.headers.object.DeleteAt;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
@@ -7,8 +9,10 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.util.Date;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 public class UploadInstructionsTest {
@@ -42,4 +46,17 @@ public class UploadInstructionsTest {
         UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setContentType("image/png");
         assertEquals("image/png", instructions.getContentType());
     }
+
+    @Test
+    public void deleteAt() {
+        UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setDeleteAt(new DeleteAt(new Date()));
+        assertNotNull(instructions.getDeleteAt());
+    }
+
+    @Test
+    public void deleteAfter() {
+        UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setDeleteAfter(new DeleteAfter(42));
+        assertNotNull(instructions.getDeleteAfter());
+    }
+
 }

@@ -1,10 +1,7 @@
 package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.headers.Header;
-import nl.tweeenveertig.openstack.headers.object.Etag;
-import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
-import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
-import nl.tweeenveertig.openstack.headers.object.ObjectLastModified;
+import nl.tweeenveertig.openstack.headers.object.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +13,8 @@ public class ObjectInformation extends AbstractInformation {
     private Etag etag;
     private ObjectContentLength contentLength;
     private ObjectContentType contentType;
+    private DeleteAfter deleteAfter;
+    private DeleteAt deleteAt;
 
     public Date getLastModifiedAsDate() {
         return lastModified == null ? null : lastModified.getDate();
@@ -57,11 +56,41 @@ public class ObjectInformation extends AbstractInformation {
         this.contentType = contentType;
     }
 
-    public Collection<Header> getHeadersIncludingContentType(String contentType) {
-        setContentType(new ObjectContentType(contentType));
+    public void setDeleteAt(DeleteAt deleteAt) {
+        this.deleteAt = deleteAt;
+    }
+
+    public DeleteAt getDeleteAt() {
+        return this.deleteAt;
+    }
+
+    public void setDeleteAfter(DeleteAfter deleteAfter) {
+        this.deleteAfter = deleteAfter;
+    }
+
+    public DeleteAfter getDeleteAfter() {
+        return this.deleteAfter;
+    }
+
+    public void addHeader(Collection<Header> headers, Header header) {
+        if (header == null) {
+            return;
+        }
+        headers.add(header);
+    }
+
+    public Collection<Header> getHeaders() {
         Collection<Header> headers = new ArrayList<Header>();
-        headers.add(getContentTypeHeader());
+        addHeader(headers, getDeleteAfter());
+        addHeader(headers, getDeleteAt());
         headers.addAll(getMetadata()); // The original metadata must be passed as well, otherwise it's deleted
+        return headers;
+    }
+
+    public Collection<Header> getHeadersIncludingContentType(String contentType) {
+        Collection<Header> headers = getHeaders();
+        setContentType(new ObjectContentType(contentType));
+        addHeader(headers, getContentTypeHeader());
         return headers;
     }
 }

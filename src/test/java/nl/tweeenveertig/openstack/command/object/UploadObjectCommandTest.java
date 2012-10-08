@@ -19,11 +19,14 @@ import nl.tweeenveertig.openstack.exception.Md5ChecksumException;
 import nl.tweeenveertig.openstack.exception.MissingContentLengthOrTypeException;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.Token;
+import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
+import nl.tweeenveertig.openstack.headers.object.DeleteAt;
 import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.params.CoreProtocolPNames;
 import org.junit.Before;
 import org.junit.Test;
@@ -88,40 +91,44 @@ public class UploadObjectCommandTest extends BaseCommandTest {
     }
 
     @Test
-    public void supplyHeaders() throws IOException {
+    public void supplyHeaders() throws IOException, DateParseException {
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[]{ 0x01, 0x02, 0x03 });
         new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
-                                new UploadInstructions(inputStream).setMd5("ebabefac").setContentType("image/bmp")).call();
+                                new UploadInstructions(inputStream).setMd5("ebabefac")
+                                        .setContentType("image/bmp")
+                                        .setDeleteAt(new DeleteAt("Sat, 22 Sep 2012 07:24:21 GMT"))
+                                        .setDeleteAfter(new DeleteAfter(42))).call();
         verify(httpClient).execute(requestArgument.capture());
         assertEquals("image/bmp", requestArgument.getValue().getFirstHeader(ObjectContentType.CONTENT_TYPE).getValue());
         assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
         assertEquals("ebabefac", requestArgument.getValue().getFirstHeader(Etag.ETAG).getValue());
+        assertEquals("Sat, 22 Sep 2012 07:24:21 GMT", requestArgument.getValue().getFirstHeader(DeleteAt.X_DELETE_AT).getValue());
+        assertEquals("42", requestArgument.getValue().getFirstHeader(DeleteAfter.X_DELETE_AFTER).getValue());
         inputStream.close();
     }
-
 
     @Test(expected = MissingContentLengthOrTypeException.class)
     public void noContentTypeFoundError() throws IOException {
         checkForError(411, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
-                getObject("objectname"), new UploadInstructions(new byte[]{ })));
+                getObject("objectname"), new UploadInstructions(new byte[]{})));
     }
 
     @Test(expected = Md5ChecksumException.class)
     public void md5checksumError() throws IOException {
         checkForError(422, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
-                getObject("objectname"), new UploadInstructions(new byte[]{ })));
+                getObject("objectname"), new UploadInstructions(new byte[]{})));
     }
 
     @Test(expected = NotFoundException.class)
     public void containerNotFound() throws IOException {
         checkForError(404, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
-                getObject("objectname"), new UploadInstructions(new byte[]{ })));
+                getObject("objectname"), new UploadInstructions(new byte[]{})));
     }
 
     @Test(expected = CommandException.class)
     public void unknownError() throws IOException {
         checkForError(500, new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
-                getObject("objectname"), new UploadInstructions(new byte[]{ })));
+                getObject("objectname"), new UploadInstructions(new byte[]{})));
     }
 }

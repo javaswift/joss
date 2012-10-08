@@ -1,6 +1,8 @@
 package nl.tweeenveertig.openstack.headers.object;
 
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.DateHeader;
+import org.apache.http.HttpResponse;
 import org.apache.http.impl.cookie.DateParseException;
 
 import java.util.Date;
@@ -29,5 +31,15 @@ public class DeleteAt extends DateHeader {
     @Override
     public String getHeaderName() {
         return X_DELETE_AT;
+    }
+
+    public static DeleteAt fromResponse(HttpResponse response) {
+        final Date deleteAt;
+        try {
+            deleteAt = convertStringToDate(convertResponseHeader(response, X_DELETE_AT));
+        } catch (DateParseException err) {
+            return null;
+        }
+        return deleteAt == null ? null : new DeleteAt(deleteAt);
     }
 }

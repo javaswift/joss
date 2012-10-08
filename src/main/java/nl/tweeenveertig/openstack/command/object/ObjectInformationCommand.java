@@ -29,6 +29,7 @@ public class ObjectInformationCommand extends AbstractObjectCommand<HttpHead, Ob
         info.setEtag(Etag.fromResponse(response));
         info.setContentLength(ObjectContentLength.fromResponse(response));
         info.setContentType(ObjectContentType.fromResponse(response));
+        info.setDeleteAt(DeleteAt.fromResponse(response));
         return info;
     }
 

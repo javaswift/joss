@@ -1,5 +1,7 @@
 package nl.tweeenveertig.openstack.model;
 
+import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
+import nl.tweeenveertig.openstack.headers.object.DeleteAt;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.FileEntity;
@@ -15,6 +17,10 @@ public class UploadInstructions {
     private String md5;
 
     private String contentType;
+
+    private DeleteAfter deleteAfter;
+
+    private DeleteAt deleteAt;
 
     public UploadInstructions(File fileToUpload) {
         this.entity = new FileEntity(fileToUpload);
@@ -38,6 +44,16 @@ public class UploadInstructions {
         return this;
     }
 
+    public UploadInstructions setDeleteAfter(DeleteAfter deleteAfter) {
+        this.deleteAfter = deleteAfter;
+        return this;
+    }
+
+    public UploadInstructions setDeleteAt(DeleteAt deleteAt) {
+        this.deleteAt = deleteAt;
+        return this;
+    }
+
     public HttpEntity getEntity() {
         return this.entity;
     }
@@ -48,5 +64,13 @@ public class UploadInstructions {
 
     public String getContentType() {
         return this.contentType;
+    }
+
+    public DeleteAt getDeleteAt() {
+        return this.deleteAt;
+    }
+
+    public DeleteAfter getDeleteAfter() {
+        return this.deleteAfter;
     }
 }

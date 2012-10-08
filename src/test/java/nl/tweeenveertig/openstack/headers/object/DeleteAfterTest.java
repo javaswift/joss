@@ -7,7 +7,7 @@ public class DeleteAfterTest extends HeaderTest {
 
     @Test
     public void testAddHeader() {
-        testHeader(new DeleteAfter(3600L));
+        testHeader(new DeleteAfter(30));
     }
 
 }

@@ -6,15 +6,15 @@ public class DeleteAfter extends Header {
 
     public static String X_DELETE_AFTER = "X-Delete-After";
 
-    private Long expireAfter;
+    private int expireAfterSeconds;
 
-    public DeleteAfter(Long expireAfter) {
-        this.expireAfter = expireAfter;
+    public DeleteAfter(int expireAfterSeconds) {
+        this.expireAfterSeconds = expireAfterSeconds;
     }
 
     @Override
     public String getHeaderValue() {
-        return Long.toString(expireAfter);
+        return Integer.toString(expireAfterSeconds);
     }
 
     @Override

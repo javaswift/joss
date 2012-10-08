@@ -2,7 +2,6 @@ package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 import org.apache.http.Header;
@@ -19,6 +18,7 @@ import static nl.tweeenveertig.openstack.headers.object.ObjectLastModified.LAST_
 import static nl.tweeenveertig.openstack.headers.object.Etag.ETAG;
 import static nl.tweeenveertig.openstack.headers.object.ObjectContentLength.CONTENT_LENGTH;
 import static nl.tweeenveertig.openstack.headers.object.ObjectContentType.CONTENT_TYPE;
+import static nl.tweeenveertig.openstack.headers.object.DeleteAt.X_DELETE_AT;
 import static org.mockito.Mockito.when;
 
 public class ObjectInformationCommandTest extends BaseCommandTest {
@@ -37,6 +37,7 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, ETAG, "cae4ebb15a282e98ba7b65402a72f57c", headers);
         prepareHeader(response, CONTENT_LENGTH, "654321", headers);
         prepareHeader(response, CONTENT_TYPE, "image/png", headers);
+        prepareHeader(response, X_DELETE_AT, "Mon, 03 Sep 2012 07:40:33 GMT", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
     }
 
@@ -57,6 +58,7 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         assertEquals("cae4ebb15a282e98ba7b65402a72f57c", info.getEtag());
         assertEquals(654321, info.getContentLength());
         assertEquals("image/png", info.getContentType());
+        assertEquals("Mon, 03 Sep 2012 07:40:33 GMT", info.getDeleteAt().getHeaderValue());
     }
 
     @Test (expected = NotFoundException.class)
