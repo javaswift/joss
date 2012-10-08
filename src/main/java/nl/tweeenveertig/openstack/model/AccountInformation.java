@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.model;
 
-import nl.tweeenveertig.openstack.command.core.AbstractInformation;
 import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
 import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
 import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;

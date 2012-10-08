@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.model;
 
-import nl.tweeenveertig.openstack.command.core.AbstractInformation;
 import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
 import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;
 import nl.tweeenveertig.openstack.headers.container.ContainerRights;

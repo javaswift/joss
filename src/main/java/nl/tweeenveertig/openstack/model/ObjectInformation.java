@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.model;
 
-import nl.tweeenveertig.openstack.command.core.AbstractInformation;
 import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;

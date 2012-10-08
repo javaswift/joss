@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.AbstractSecureCommand;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.HttpStatus;
@@ -27,7 +28,7 @@ public class AccountMetadataCommand extends AbstractSecureCommand<HttpPost, Obje
     @Override
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT), null)
+            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT))
         };
     }
 

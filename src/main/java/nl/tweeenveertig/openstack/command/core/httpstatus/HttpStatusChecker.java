@@ -3,38 +3,33 @@ package nl.tweeenveertig.openstack.command.core.httpstatus;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
-import org.apache.http.HttpStatus;
 
-public class HttpStatusChecker {
+import static nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition.AUTHORIZATION_MATCHER;
+import static nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition.FORBIDDEN_MATCHER;
+
+public abstract class HttpStatusChecker {
 
     private HttpStatusMatcher matcher;
 
-    private CommandExceptionError error;
-
-    private static final HttpStatusChecker authorizationMatcher =
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_UNAUTHORIZED), CommandExceptionError.UNAUTHORIZED);
-    private static final HttpStatusChecker forbiddenMatcher =
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_FORBIDDEN), CommandExceptionError.ACCESS_FORBIDDEN);
-
-    public HttpStatusChecker(final HttpStatusMatcher matcher, final CommandExceptionError error) {
+    public HttpStatusChecker(final HttpStatusMatcher matcher) {
         this.matcher = matcher;
-        this.error = error;
     }
+
+    public abstract boolean isError();
 
     public boolean isOk(int httpStatusCode) {
         if (matcher.matches(httpStatusCode)) {
-            if (error == null) {
-                return true; // The OK signal
-            } else {
+            if (isError()) {
                 HttpStatusToExceptionMapper.throwException(httpStatusCode);
             }
+            return true; // The OK signal
         }
         return false;
     }
 
     public static void verifyCode(HttpStatusChecker[] checkers, int httpStatusCode) {
-        authorizationMatcher.isOk(httpStatusCode);
-        forbiddenMatcher.isOk(httpStatusCode);
+        AUTHORIZATION_MATCHER.isOk(httpStatusCode);
+        FORBIDDEN_MATCHER.isOk(httpStatusCode);
         for (HttpStatusChecker checker : checkers) {
             if (checker.isOk(httpStatusCode)) {
                 return;

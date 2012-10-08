@@ -29,7 +29,7 @@ public enum HttpStatusToExceptionMapper {
         this.exceptionToThrow = exceptionToThrow;
     }
 
-    public static void throwException(int httpStatus) {
+    public static void throwException(int httpStatus) throws CommandException {
         for (HttpStatusToExceptionMapper mapper : values()) {
             if (mapper.httpStatus == httpStatus) {
                 mapper.throwExceptionForMapper();
@@ -38,7 +38,7 @@ public enum HttpStatusToExceptionMapper {
         throw new CommandException(httpStatus, CommandExceptionError.UNKNOWN);
     }
 
-    public void throwExceptionForMapper() {
+    public void throwExceptionForMapper() throws CommandException {
         if (exceptionToThrow == null) {
             throw new CommandException(httpStatus, error);
         } else {

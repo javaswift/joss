@@ -1,18 +1,11 @@
 package nl.tweeenveertig.openstack.command.core.httpstatus;
 
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
-import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
-import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusRange;
-import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.exception.NotModifiedException;
+import nl.tweeenveertig.openstack.exception.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
 
 public class HttpStatusCheckerTest {
 
@@ -21,10 +14,10 @@ public class HttpStatusCheckerTest {
     @Before
     public void setUpCheckers() {
         List<HttpStatusChecker> tempCheckers = new ArrayList<HttpStatusChecker>();
-        tempCheckers.add(new HttpStatusChecker(new HttpStatusRange(200, 299), null));
-        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(404), CommandExceptionError.ENTITY_DOES_NOT_EXIST));
-        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(304), CommandExceptionError.CONTENT_NOT_MODIFIED));
-        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(418), CommandExceptionError.UNKNOWN));
+        tempCheckers.add(new HttpStatusSuccessCondition(new HttpStatusRange(200, 299)));
+        tempCheckers.add(new HttpStatusFailCondition(new HttpStatusMatch(404)));
+        tempCheckers.add(new HttpStatusFailCondition(new HttpStatusMatch(304)));
+        tempCheckers.add(new HttpStatusFailCondition(new HttpStatusMatch(418)));
         this.checkers = tempCheckers.toArray(new HttpStatusChecker[tempCheckers.size()]);
     }
 
@@ -33,40 +26,24 @@ public class HttpStatusCheckerTest {
         HttpStatusChecker.verifyCode(checkers, 204);
     }
 
-    @Test
+    @Test (expected = NotFoundException.class)
     public void notFoundError() {
-        try {
-            HttpStatusChecker.verifyCode(checkers, 404);
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.ENTITY_DOES_NOT_EXIST, err.getError());
-        }
+        HttpStatusChecker.verifyCode(checkers, 404);
     }
 
-    @Test
+    @Test (expected = UnauthorizedException.class)
     public void unauthorizedError() {
-        try {
-            HttpStatusChecker.verifyCode(checkers, 401);
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.UNAUTHORIZED, err.getError());
-        }
+        HttpStatusChecker.verifyCode(checkers, 401);
     }
 
-    @Test
+    @Test (expected = ForbiddenException.class)
     public void accessForbiddenError() {
-        try {
-            HttpStatusChecker.verifyCode(checkers, 403);
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.ACCESS_FORBIDDEN, err.getError());
-        }
+        HttpStatusChecker.verifyCode(checkers, 403);
     }
 
-    @Test
+    @Test (expected = CommandException.class)
     public void unknownError() {
-        try {
-            HttpStatusChecker.verifyCode(checkers, 500);
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.UNKNOWN, err.getError());
-        }
+        HttpStatusChecker.verifyCode(checkers, 500);
     }
 
     @Test(expected = NotModifiedException.class)

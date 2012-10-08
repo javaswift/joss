@@ -2,9 +2,7 @@ package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
-import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
-import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusRange;
+import nl.tweeenveertig.openstack.command.core.httpstatus.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -42,8 +40,8 @@ public class ObjectInformationCommand extends AbstractObjectCommand<HttpHead, Ob
     @Override
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusChecker(new HttpStatusRange(200, 299), null),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.ENTITY_DOES_NOT_EXIST)
+            new HttpStatusSuccessCondition(new HttpStatusRange(200, 299)),
+            new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND))
         };
     }
 }

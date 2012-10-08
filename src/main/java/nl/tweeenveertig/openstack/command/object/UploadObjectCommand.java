@@ -1,6 +1,8 @@
 package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.exception.CommandException;
@@ -56,10 +58,10 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
     @Override
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_CREATED), null),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_LENGTH_REQUIRED), CommandExceptionError.MISSING_CONTENT_LENGTH_OR_TYPE),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.ENTITY_DOES_NOT_EXIST),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_UNPROCESSABLE_ENTITY), CommandExceptionError.MD5_CHECKSUM)
+            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_CREATED)),
+            new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_LENGTH_REQUIRED)),
+            new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND)),
+            new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_UNPROCESSABLE_ENTITY))
         };
     }
 

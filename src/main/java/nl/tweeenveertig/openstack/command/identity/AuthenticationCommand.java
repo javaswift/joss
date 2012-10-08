@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.command.identity;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusRange;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.command.identity.authentication.Authentication;
 import nl.tweeenveertig.openstack.exception.CommandException;
@@ -57,7 +58,7 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
     @Override
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusChecker(new HttpStatusRange(200, 299), null)
+            new HttpStatusSuccessCondition(new HttpStatusRange(200, 299))
         };
     }
 }

@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -34,8 +35,8 @@ public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Collec
     @Override
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_OK), null),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT), null)
+            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_OK)),
+            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT))
         };
     }
 
