@@ -182,7 +182,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
         assertEquals(654321, object.getContentLength());
         assertEquals("image/png", object.getContentType());
         assertEquals("cae4ebb15a282e98ba7b65402a72f57c", object.getEtag());
-        assertEquals("Mon, 11 Jun 2012 15:38:25 GMT", object.getDeleteAt());
+        assertEquals("1339429105", object.getDeleteAt());
         assertEquals(DateUtils.parseDate("Mon, 11 Jun 2012 15:38:25 GMT"), object.getDeleteAtAsDate());
     }
 

@@ -24,7 +24,7 @@ public class DeleteAt extends DateHeader {
 
     @Override
     public String getHeaderValue() {
-        return convertDateToString(getDate());
+        return Long.toString(getDate().getTime() / 1000);
     }
 
     @Override

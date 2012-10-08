@@ -103,7 +103,7 @@ public class UploadObjectCommandTest extends BaseCommandTest {
         assertEquals("image/bmp", requestArgument.getValue().getFirstHeader(ObjectContentType.CONTENT_TYPE).getValue());
         assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
         assertEquals("ebabefac", requestArgument.getValue().getFirstHeader(Etag.ETAG).getValue());
-        assertEquals("Sat, 22 Sep 2012 07:24:21 GMT", requestArgument.getValue().getFirstHeader(DeleteAt.X_DELETE_AT).getValue());
+        assertEquals("1348298661", requestArgument.getValue().getFirstHeader(DeleteAt.X_DELETE_AT).getValue());
         assertEquals("42", requestArgument.getValue().getFirstHeader(DeleteAfter.X_DELETE_AFTER).getValue());
         inputStream.close();
     }

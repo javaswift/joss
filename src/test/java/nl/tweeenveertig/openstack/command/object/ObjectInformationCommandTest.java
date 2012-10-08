@@ -58,7 +58,7 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         assertEquals("cae4ebb15a282e98ba7b65402a72f57c", info.getEtag());
         assertEquals(654321, info.getContentLength());
         assertEquals("image/png", info.getContentType());
-        assertEquals("Mon, 11 Jun 2012 15:38:25 GMT", info.getDeleteAt().getHeaderValue());
+        assertEquals("1339429105", info.getDeleteAt().getHeaderValue());
     }
 
     @Test (expected = NotFoundException.class)

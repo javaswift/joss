@@ -7,6 +7,7 @@ import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.*;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String args[]) throws IOException {
@@ -24,7 +25,7 @@ public class Main {
         Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
         Container container = account.getContainer("images");
         StoredObject object = container.getObject("joss-logo.png");
-        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/logo.png")).setDeleteAfter(new DeleteAfter(1000)));
+//        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/logo.png")).setDeleteAfter(new DeleteAfter(1000)));
 
         printObjectMetadata(object);
 
@@ -46,7 +47,7 @@ public class Main {
 //        metadata.put("department", "Some Department 2");
 //        metadata.put("description", "Some Description");
 //        object.setMetadata(metadata);
-
+//
 //        printObjectMetadata(object);
 
 //        metadata.clear();
@@ -121,7 +122,7 @@ public class Main {
         System.out.println("Etag:           "+object.getEtag());
         System.out.println("Content length: "+object.getContentLength());
         System.out.println("Content type:   "+object.getContentType());
-        System.out.println("X-Delete-At:    "+object.getDeleteAt());
+        System.out.println("X-Delete-At:    "+object.getDeleteAtAsDate());
 
         Map<String, Object>retrievedMetadata = object.getMetadata();
         for (String name : retrievedMetadata.keySet()) {
