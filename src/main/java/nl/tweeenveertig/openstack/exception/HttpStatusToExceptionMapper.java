@@ -39,18 +39,14 @@ public enum HttpStatusToExceptionMapper {
     }
 
     public void throwExceptionForMapper() throws CommandException {
-        if (exceptionToThrow == null) {
-            throw new CommandException(httpStatus, error);
-        } else {
-            try {
-                Constructor constructor = exceptionToThrow.getDeclaredConstructor(new Class[]{Integer.class, CommandExceptionError.class});
-                Object[] arguments = new Object[] { httpStatus, error };
-                throw (CommandException)constructor.newInstance(arguments);
-            } catch (Exception err) {
-                throw err instanceof CommandException ?
-                        (CommandException)err :
-                        new CommandException("Programming error - unable to throw exception for "+httpStatus+"/"+error.toString(), err);
-            }
+        try {
+            Constructor constructor = exceptionToThrow.getDeclaredConstructor(new Class[]{Integer.class, CommandExceptionError.class});
+            Object[] arguments = new Object[] { httpStatus, error };
+            throw (CommandException)constructor.newInstance(arguments);
+        } catch (Exception err) {
+            throw err instanceof CommandException ?
+                    (CommandException)err :
+                    new CommandException("Programming error - unable to throw exception for "+httpStatus+"/"+error.toString(), err);
         }
     }
 
