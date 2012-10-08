@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.command.identity.access;
 
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.util.ClasspathTemplateResource;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -50,7 +51,7 @@ public class AccessTest {
         try {
             access.getInternalURL(); // This triggers the service catalog / end point fetch
             fail("Should have thrown an exception");
-        } catch (CommandException err) {
+        } catch (NotFoundException err) {
             assertEquals(CommandExceptionError.NO_END_POINT_FOUND, err.getError());
         }
     }
@@ -61,7 +62,7 @@ public class AccessTest {
         try {
             access.getInternalURL(); // This triggers the service catalog / end point fetch
             fail("Should have thrown an exception");
-        } catch (CommandException err) {
+        } catch (NotFoundException err) {
             assertEquals(CommandExceptionError.NO_SERVICE_CATALOG_FOUND, err.getError());
         }
     }

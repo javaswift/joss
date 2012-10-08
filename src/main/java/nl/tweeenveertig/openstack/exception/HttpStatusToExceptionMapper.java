@@ -29,24 +29,29 @@ public enum HttpStatusToExceptionMapper {
         this.exceptionToThrow = exceptionToThrow;
     }
 
-    public static void throwException(int httpStatus) throws CommandException {
+    public static void throwException(int httpStatus, CommandExceptionError customError) throws CommandException {
         for (HttpStatusToExceptionMapper mapper : values()) {
             if (mapper.httpStatus == httpStatus) {
-                mapper.throwExceptionForMapper();
+                mapper.throwExceptionForMapper(customError);
             }
         }
         throw new CommandException(httpStatus, CommandExceptionError.UNKNOWN);
     }
 
-    public void throwExceptionForMapper() throws CommandException {
+    public static void throwException(int httpStatus) throws CommandException {
+        throwException(httpStatus, null);
+    }
+
+    public void throwExceptionForMapper(CommandExceptionError customError) throws CommandException {
+        CommandExceptionError showError = customError == null ? error : customError;
         try {
             Constructor constructor = exceptionToThrow.getDeclaredConstructor(new Class[]{Integer.class, CommandExceptionError.class});
-            Object[] arguments = new Object[] { httpStatus, error };
+            Object[] arguments = new Object[] { httpStatus, showError };
             throw (CommandException)constructor.newInstance(arguments);
         } catch (Exception err) {
             throw err instanceof CommandException ?
                     (CommandException)err :
-                    new CommandException("Programming error - unable to throw exception for "+httpStatus+"/"+error.toString(), err);
+                    new CommandException("Programming error - unable to throw exception for "+httpStatus+"/"+customError, err);
         }
     }
 
