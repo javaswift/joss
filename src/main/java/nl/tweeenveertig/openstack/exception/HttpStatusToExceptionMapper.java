@@ -30,26 +30,30 @@ public enum HttpStatusToExceptionMapper {
     }
 
     public static void throwException(int httpStatus, CommandExceptionError customError) throws CommandException {
-        for (HttpStatusToExceptionMapper mapper : values()) {
-            if (mapper.httpStatus == httpStatus) {
-                mapper.throwExceptionForMapper(customError);
-            }
-        }
-        throw new CommandException(httpStatus, CommandExceptionError.UNKNOWN);
+        throw getException(httpStatus, customError);
     }
 
     public static void throwException(int httpStatus) throws CommandException {
-        throwException(httpStatus, null);
+        throw getException(httpStatus, null);
     }
 
-    public void throwExceptionForMapper(CommandExceptionError customError) throws CommandException {
+    public static CommandException getException(int httpStatus, CommandExceptionError customError) {
+        for (HttpStatusToExceptionMapper mapper : values()) {
+            if (mapper.httpStatus == httpStatus) {
+                return mapper.getException(customError);
+            }
+        }
+        return new CommandException(httpStatus, CommandExceptionError.UNKNOWN);
+    }
+
+    public CommandException getException(CommandExceptionError customError) throws CommandException {
         CommandExceptionError showError = customError == null ? error : customError;
         try {
             Constructor constructor = exceptionToThrow.getDeclaredConstructor(new Class[]{Integer.class, CommandExceptionError.class});
             Object[] arguments = new Object[] { httpStatus, showError };
-            throw (CommandException)constructor.newInstance(arguments);
+            return (CommandException)constructor.newInstance(arguments);
         } catch (Exception err) {
-            throw err instanceof CommandException ?
+            return err instanceof CommandException ?
                     (CommandException)err :
                     new CommandException("Programming error - unable to throw exception for "+httpStatus+"/"+customError, err);
         }
