@@ -1,6 +1,8 @@
 package nl.tweeenveertig.openstack.command.identity;
 
 import nl.tweeenveertig.openstack.command.core.*;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusRange;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.command.identity.authentication.Authentication;
 import nl.tweeenveertig.openstack.exception.CommandException;

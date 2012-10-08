@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.core;
+package nl.tweeenveertig.openstack.command.core.httpstatus;
 
 public class HttpStatusMatch implements HttpStatusMatcher {
 

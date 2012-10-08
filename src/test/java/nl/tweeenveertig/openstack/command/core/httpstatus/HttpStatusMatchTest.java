@@ -1,5 +1,6 @@
-package nl.tweeenveertig.openstack.command.core;
+package nl.tweeenveertig.openstack.command.core.httpstatus;
 
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertFalse;

@@ -1,5 +1,9 @@
-package nl.tweeenveertig.openstack.command.core;
+package nl.tweeenveertig.openstack.command.core.httpstatus;
 
+import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusRange;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.NotModifiedException;
 import org.junit.Before;
@@ -19,8 +23,8 @@ public class HttpStatusCheckerTest {
         List<HttpStatusChecker> tempCheckers = new ArrayList<HttpStatusChecker>();
         tempCheckers.add(new HttpStatusChecker(new HttpStatusRange(200, 299), null));
         tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(404), CommandExceptionError.ENTITY_DOES_NOT_EXIST));
-        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(304), CommandExceptionError.CONTENT_NOT_MODIFIED, NotModifiedException.class));
-        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(418), CommandExceptionError.UNKNOWN, RuntimeException.class));
+        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(304), CommandExceptionError.CONTENT_NOT_MODIFIED));
+        tempCheckers.add(new HttpStatusChecker(new HttpStatusMatch(418), CommandExceptionError.UNKNOWN));
         this.checkers = tempCheckers.toArray(new HttpStatusChecker[tempCheckers.size()]);
     }
 

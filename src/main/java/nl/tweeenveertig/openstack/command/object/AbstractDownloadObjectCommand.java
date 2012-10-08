@@ -2,10 +2,9 @@ package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.command.core.*;
-import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
+import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
-import nl.tweeenveertig.openstack.exception.ModifiedException;
-import nl.tweeenveertig.openstack.exception.NotModifiedException;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
@@ -69,8 +68,8 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_OK), null),
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_PARTIAL_CONTENT), null),
             new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND), CommandExceptionError.ENTITY_DOES_NOT_EXIST),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_MODIFIED), CommandExceptionError.CONTENT_NOT_MODIFIED, NotModifiedException.class),
-            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_PRECONDITION_FAILED), CommandExceptionError.CONTENT_DIFFERENT, ModifiedException.class)
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_NOT_MODIFIED), CommandExceptionError.CONTENT_NOT_MODIFIED),
+            new HttpStatusChecker(new HttpStatusMatch(HttpStatus.SC_PRECONDITION_FAILED), CommandExceptionError.CONTENT_DIFFERENT)
         };
     }
 
