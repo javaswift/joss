@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.client.mock;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
@@ -120,7 +121,7 @@ public class StoredObjectMockTest {
         StoredObject mockObject = new StoredObjectMock(object.getContainer(), "some-object") {
             @Override
             public void getInfo() {
-                throw new CommandException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
+                throw new NotFoundException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
             }
         };
         assertFalse(mockObject.exists());

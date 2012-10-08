@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -87,7 +88,7 @@ public class ContainerMockTest {
         Container newContainer = new ContainerMock(container.getAccount(), "test") {
             @Override
             protected void checkForInfo() {
-                throw new CommandException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
+                throw new NotFoundException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
             }
         };
         assertFalse(newContainer.exists());

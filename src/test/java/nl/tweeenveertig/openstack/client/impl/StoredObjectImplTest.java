@@ -20,9 +20,8 @@ import org.junit.Test;
 import java.io.*;
 import java.util.*;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
+import static nl.tweeenveertig.openstack.headers.object.DeleteAt.X_DELETE_AT;
 import static nl.tweeenveertig.openstack.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
 import static nl.tweeenveertig.openstack.headers.object.ObjectContentLength.CONTENT_LENGTH;
 import static nl.tweeenveertig.openstack.headers.object.Etag.ETAG;
@@ -62,10 +61,11 @@ public class StoredObjectImplTest extends BaseCommandTest {
         List<Header> headers = new ArrayList<Header>();
         prepareHeader(response, X_OBJECT_META_PREFIX+ "Year", "1989", headers);
         prepareHeader(response, X_OBJECT_META_PREFIX+ "Company", "42 BV", headers);
-        prepareHeader(response, LAST_MODIFIED, "Mon, 03 Sep 2012 05:40:33 GMT");
+        prepareHeader(response, LAST_MODIFIED, "Mon, 03 Sep 2012 05:40:33 GMT", headers);
         prepareHeader(response, ETAG, "cae4ebb15a282e98ba7b65402a72f57c", headers);
         prepareHeader(response, CONTENT_LENGTH, "654321", headers);
         prepareHeader(response, CONTENT_TYPE, "image/png", headers);
+        prepareHeader(response, X_DELETE_AT, "1339429105", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
     }
 
@@ -182,7 +182,20 @@ public class StoredObjectImplTest extends BaseCommandTest {
         assertEquals(654321, object.getContentLength());
         assertEquals("image/png", object.getContentType());
         assertEquals("cae4ebb15a282e98ba7b65402a72f57c", object.getEtag());
+        assertEquals("Mon, 11 Jun 2012 15:38:25 GMT", object.getDeleteAt());
+        assertEquals(DateUtils.parseDate("Mon, 11 Jun 2012 15:38:25 GMT"), object.getDeleteAtAsDate());
     }
+
+    @Test
+    public void emptyDeleteAt() {
+        when(statusLine.getStatusCode()).thenReturn(202);
+        List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, LAST_MODIFIED, "Mon, 03 Sep 2012 05:40:33 GMT", headers);
+        when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
+        assertNull(object.getDeleteAt());
+        assertNull(object.getDeleteAtAsDate());
+    }
+
 
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
