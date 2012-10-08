@@ -42,7 +42,7 @@ public class DeleteAtTest extends HeaderTest {
     @Test
     public void noLegalDeleteAtDate() {
         List<Header> headers = new ArrayList<Header>();
-        prepareHeader(response, X_DELETE_AT, "I'm definitely not a date!", headers);
+        prepareHeader(response, X_DELETE_AT, null, headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
         assertNull(DeleteAt.fromResponse(response));
     }

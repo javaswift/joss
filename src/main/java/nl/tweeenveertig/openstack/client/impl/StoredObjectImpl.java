@@ -11,6 +11,7 @@ import org.apache.http.client.HttpClient;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Date;
 
 public class StoredObjectImpl extends AbstractStoredObject {
 

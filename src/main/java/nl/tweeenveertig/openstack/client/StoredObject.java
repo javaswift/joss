@@ -134,5 +134,7 @@ public interface StoredObject extends ObjectStoreEntity {
     public long getContentLength();
     public String getContentType();
     public String getName();
+    public Date getDeleteAtAsDate();
+    public String getDeleteAt();
 
 }

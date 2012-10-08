@@ -45,6 +45,17 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         return info.getContentType();
     }
 
+    public Date getDeleteAtAsDate() {
+        checkForInfo();
+        return info.getDeleteAt() == null ? null : info.getDeleteAt().getDate();
+    }
+
+    public String getDeleteAt() {
+        checkForInfo();
+        return info.getDeleteAt() == null ? null : info.getDeleteAt().getHeaderValue();
+    }
+
+
     public String getName() {
         return name;
     }

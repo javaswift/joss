@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack;
 
 import nl.tweeenveertig.openstack.client.*;
 import nl.tweeenveertig.openstack.client.impl.ClientImpl;
+import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.*;
@@ -23,7 +24,9 @@ public class Main {
         Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
         Container container = account.getContainer("images");
         StoredObject object = container.getObject("joss-logo.png");
-        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/joss-logo-square.png")).setContentType("image/bmp"));
+        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/logo.png")).setDeleteAfter(new DeleteAfter(1000)));
+
+        printObjectMetadata(object);
 
 //        Container container = account.getContainer("images");
 //        StoredObject object = container.getObject("dog.png");
@@ -118,6 +121,7 @@ public class Main {
         System.out.println("Etag:           "+object.getEtag());
         System.out.println("Content length: "+object.getContentLength());
         System.out.println("Content type:   "+object.getContentType());
+        System.out.println("X-Delete-At:    "+object.getDeleteAt());
 
         Map<String, Object>retrievedMetadata = object.getMetadata();
         for (String name : retrievedMetadata.keySet()) {

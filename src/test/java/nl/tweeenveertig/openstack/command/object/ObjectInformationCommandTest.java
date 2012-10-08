@@ -37,7 +37,7 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, ETAG, "cae4ebb15a282e98ba7b65402a72f57c", headers);
         prepareHeader(response, CONTENT_LENGTH, "654321", headers);
         prepareHeader(response, CONTENT_TYPE, "image/png", headers);
-        prepareHeader(response, X_DELETE_AT, "Mon, 03 Sep 2012 07:40:33 GMT", headers);
+        prepareHeader(response, X_DELETE_AT, "1339429105", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
     }
 
@@ -58,7 +58,7 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
         assertEquals("cae4ebb15a282e98ba7b65402a72f57c", info.getEtag());
         assertEquals(654321, info.getContentLength());
         assertEquals("image/png", info.getContentType());
-        assertEquals("Mon, 03 Sep 2012 07:40:33 GMT", info.getDeleteAt().getHeaderValue());
+        assertEquals("Mon, 11 Jun 2012 15:38:25 GMT", info.getDeleteAt().getHeaderValue());
     }
 
     @Test (expected = NotFoundException.class)
