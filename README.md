@@ -173,6 +173,7 @@ _On JOSS_
 * High level explanation of JOSS; http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss
 * Hands-on JOSS tutorial; http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage
 * Architecture models; http://blog.42.nl/articles/joss-architecture-approaches-integrating-with-openstack-object-storage
+* If-Modified-Since; http://blog.42.nl/articles/instruct-java-facilitate-browser-cache-if-modified-since
 * Working JOSS tutorial project; https://github.com/java-openstack/tutorial-joss-quickstart
 * Working JOSS streaming project; https://github.com/java-openstack/tutorial-joss-streaming
 
