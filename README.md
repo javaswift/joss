@@ -176,6 +176,7 @@ _On JOSS_
 * If-Modified-Since; http://blog.42.nl/articles/instruct-java-facilitate-browser-cache-if-modified-since
 * Working JOSS tutorial project; https://github.com/java-openstack/tutorial-joss-quickstart
 * Working JOSS streaming project; https://github.com/java-openstack/tutorial-joss-streaming
+* Working JOSS If-Modified-Since project; https://github.com/java-openstack/tutorial-joss-if-modified-since
 
 _On Cloud VPS Object Store_
 
