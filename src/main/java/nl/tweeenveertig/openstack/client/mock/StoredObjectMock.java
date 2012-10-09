@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
 import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
@@ -128,6 +129,7 @@ public class StoredObjectMock extends AbstractStoredObject {
             HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_FOUND);
         }
         ((ContainerMock)getContainer()).deleteObject(this);
+        this.created = false;
         invalidate();
     }
 
@@ -143,14 +145,16 @@ public class StoredObjectMock extends AbstractStoredObject {
         info.setContentType(new ObjectContentType(contentType));
     }
 
-    @Override
     public void setDeleteAfter(long seconds) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        setDeleteAt(new Date(new Date().getTime() + seconds * 1000));
     }
 
-    @Override
     public void setDeleteAt(Date date) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        ObjectDeleter objectDeleter = ((AccountMock)getContainer().getAccount()).getObjectDeleter();
+        if (objectDeleter != null) {
+            objectDeleter.scheduleForDeletion(this, date);
+
+        }
     }
 
     public String getPublicURL() {

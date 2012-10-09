@@ -18,8 +18,13 @@ public class AccountMock extends AbstractAccount {
 
     private ObjectDeleter objectDeleter;
 
-    public AccountMock() {
-        objectDeleter = new ObjectDeleter(10, 10);
+    public AccountMock setObjectDeleter(ObjectDeleter objectDeleter) {
+        this.objectDeleter = objectDeleter;
+        return this;
+    }
+
+    public ObjectDeleter getObjectDeleter() {
+        return this.objectDeleter;
     }
 
     @Override

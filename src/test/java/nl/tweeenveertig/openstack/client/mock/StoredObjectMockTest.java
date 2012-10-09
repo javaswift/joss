@@ -1,6 +1,8 @@
 package nl.tweeenveertig.openstack.client.mock;
 
+import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
@@ -13,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.ByteArrayInputStream;
@@ -25,6 +28,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import static junit.framework.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.verify;
 
 public class StoredObjectMockTest {
 
@@ -71,6 +76,23 @@ public class StoredObjectMockTest {
         object = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
         object.setContentType("text/plain");
         assertEquals("text/plain", object.getContentType());
+    }
+
+    @Test
+    public void setDeleteAfterWithNoObjectDeleter() {
+        Account account = new ClientMock().disallowObjectDeleter().allowEveryone().authenticate(null, null, null, null);
+        StoredObject object = account.getContainer("alpha").getObject("somefile.png");
+        object.setDeleteAfter(10);
+    }
+
+    @Test
+    public void setDeleteAfter() {
+        Account account = new ClientMock().disallowObjectDeleter().allowEveryone().authenticate(null, null, null, null);
+        ObjectDeleter objectDeleter = Mockito.mock(ObjectDeleter.class);
+        ((AccountMock) account).setObjectDeleter(objectDeleter);
+        StoredObject object = account.getContainer("alpha").getObject("somefile.png");
+        object.setDeleteAfter(10);
+        verify(objectDeleter).scheduleForDeletion(same(object), isA(Date.class));
     }
 
     @Test

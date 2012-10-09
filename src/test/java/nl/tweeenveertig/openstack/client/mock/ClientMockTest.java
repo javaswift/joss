@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.Account;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 
 public class ClientMockTest {
 
@@ -22,5 +23,11 @@ public class ClientMockTest {
     public void authenticateWithAllowEveryone() {
         ClientMock client = new ClientMock().allowEveryone();
         assertNotNull(client.authenticate(null, null, null, null));
+    }
+
+    @Test
+    public void noObjectDeleter() {
+        Account account = new ClientMock().disallowObjectDeleter().allowEveryone().authenticate(null, null, null, null);
+        assertNull(((AccountMock) account).getObjectDeleter());
     }
 }

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Main {
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, InterruptedException {
 
         if (args.length != 4) {
             System.out.println("Use syntax: <TENANT> <USERNAME> <PASSWORD> <URL>");
@@ -23,12 +23,22 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
+        Account account = new ClientMock().allowEveryone().authenticate(tenant, username, password, url, "AMS-1");
 //        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
-//        Container container = account.getContainer("images");
-//        StoredObject object = container.getObject("joss-logo.png");
-//        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/logo.png")).setDeleteAfter(new DeleteAfter(1000)));
+        Container container = account.getContainer("images");
+        StoredObject object = container.getObject("joss-logo.png");
+        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/logo.png")).setDeleteAfter(new DeleteAfter(1000)));
 
-//        printObjectMetadata(object);
+        System.out.println("Before X-Delete-After");
+        printObjectMetadata(object);
+
+        object.setDeleteAfter(4);
+
+        Thread.sleep(12000);
+
+        StoredObject object2 = container.getObject("joss-logo.png");
+        System.out.println("After X-Delete-After");
+        printObjectMetadata(object2);
 
 //        Container container = account.getContainer("images");
 //        StoredObject object = container.getObject("dog.png");
@@ -118,6 +128,7 @@ public class Main {
     }
 
     protected static void printObjectMetadata(StoredObject object) {
+        System.out.println("Exists?:        "+object.exists());
         System.out.println("Object:         "+object.getName());
         System.out.println("Last modified:  "+object.getLastModified());
         System.out.println("Etag:           "+object.getEtag());
