@@ -44,7 +44,7 @@ public abstract class Header {
     }
 
     public static String convertResponseHeader(HttpResponse response, String name) {
-        return response.getHeaders(name) == null ? null : response.getHeaders(name)[0].getValue();
+        return response.getHeaders(name) == null ? null : response.getHeaders(name).length == 0 ? null : response.getHeaders(name)[0].getValue();
     }
 
 }

@@ -7,6 +7,7 @@ import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.*;
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -29,15 +30,15 @@ public class Main {
         StoredObject object = container.getObject("joss-logo.png");
         object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/logo.png")).setDeleteAfter(new DeleteAfter(1000)));
 
-        System.out.println("Before X-Delete-After");
+        System.out.println("Before X-Delete-At");
         printObjectMetadata(object);
 
-        object.setDeleteAfter(4);
+        object.setDeleteAt(new Date(new Date().getTime()+1000));
 
         Thread.sleep(12000);
 
         StoredObject object2 = container.getObject("joss-logo.png");
-        System.out.println("After X-Delete-After");
+        System.out.println("After X-Delete-At");
         printObjectMetadata(object2);
 
 //        Container container = account.getContainer("images");
