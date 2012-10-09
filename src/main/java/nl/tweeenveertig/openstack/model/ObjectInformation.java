@@ -87,10 +87,9 @@ public class ObjectInformation extends AbstractInformation {
         return headers;
     }
 
-    public Collection<Header> getHeadersIncludingContentType(String contentType) {
+    public Collection<Header> getHeadersIncludingHeader(Header header) {
         Collection<Header> headers = getHeaders();
-        setContentType(new ObjectContentType(contentType));
-        addHeader(headers, getContentTypeHeader());
+        addHeader(headers, header);
         return headers;
     }
 }

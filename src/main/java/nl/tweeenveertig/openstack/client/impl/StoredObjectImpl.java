@@ -1,6 +1,9 @@
 package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
+import nl.tweeenveertig.openstack.headers.object.DeleteAt;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -69,9 +72,27 @@ public class StoredObjectImpl extends AbstractStoredObject {
 
     public void setContentType(String contentType) {
         checkForInfo();
+        info.setContentType(new ObjectContentType(contentType));
         new ObjectMetadataCommand(
                 getAccount(), getClient(), getAccess(), getContainer(),
-                this, info.getHeadersIncludingContentType(contentType)).call();
+                this, info.getHeadersIncludingHeader(info.getContentTypeHeader())).call();
+    }
+
+    public void setDeleteAfter(long seconds) {
+        checkForInfo();
+        info.setDeleteAt(null);
+        info.setDeleteAfter(new DeleteAfter(seconds));
+        new ObjectMetadataCommand(
+                getAccount(), getClient(), getAccess(), getContainer(),
+                this, info.getHeadersIncludingHeader(info.getDeleteAfter())).call();
+    }
+
+    @Override
+    public void setDeleteAt(Date date) {
+        checkForInfo();
+        info.setDeleteAt(new DeleteAt(date));
+        new ObjectMetadataCommand(
+                getAccount(), getClient(), getAccess(), getContainer(), this, info.getHeaders()).call();
     }
 
     public String getPublicURL() {

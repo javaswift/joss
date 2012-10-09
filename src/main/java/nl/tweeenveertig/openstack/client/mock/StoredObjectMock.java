@@ -143,6 +143,16 @@ public class StoredObjectMock extends AbstractStoredObject {
         info.setContentType(new ObjectContentType(contentType));
     }
 
+    @Override
+    public void setDeleteAfter(long seconds) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void setDeleteAt(Date date) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public String getPublicURL() {
         return "";
     }

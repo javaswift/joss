@@ -22,6 +22,7 @@ import java.util.*;
 
 import static junit.framework.Assert.*;
 import static nl.tweeenveertig.openstack.headers.object.DeleteAt.X_DELETE_AT;
+import static nl.tweeenveertig.openstack.headers.object.DeleteAfter.X_DELETE_AFTER;
 import static nl.tweeenveertig.openstack.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
 import static nl.tweeenveertig.openstack.headers.object.ObjectContentLength.CONTENT_LENGTH;
 import static nl.tweeenveertig.openstack.headers.object.Etag.ETAG;
@@ -136,6 +137,26 @@ public class StoredObjectImplTest extends BaseCommandTest {
         verify(httpClient, times(2)).execute(requestArgument.capture());
         assertEquals("image/bmp", requestArgument.getValue().getFirstHeader(CONTENT_TYPE).getValue());
     }
+
+    @Test
+    public void setDeleteAt() throws IOException, DateParseException {
+        when(statusLine.getStatusCode()).thenReturn(202);
+        prepareMetadata();
+        Date date = DateUtils.parseDate("Mon, 03 Sep 2001 05:40:33 GMT");
+        object.setDeleteAt(date);
+        verify(httpClient, times(2)).execute(requestArgument.capture());
+        assertEquals(Long.toString(date.getTime()/1000), requestArgument.getValue().getFirstHeader(X_DELETE_AT).getValue());
+    }
+
+    @Test
+    public void setDeleteAfter() throws IOException {
+        when(statusLine.getStatusCode()).thenReturn(202);
+        prepareMetadata();
+        object.setDeleteAfter(42);
+        verify(httpClient, times(2)).execute(requestArgument.capture());
+        assertEquals("42", requestArgument.getValue().getFirstHeader(X_DELETE_AFTER).getValue());
+        assertNull(requestArgument.getValue().getFirstHeader(X_DELETE_AT));
+   }
 
     @Test
     public void deleteObject() {

@@ -22,7 +22,7 @@ public class ObjectInformationTest {
         info.setDeleteAfter(new DeleteAfter(42));
         info.setDeleteAt(new DeleteAt(new Date()));
         info.setContentType(new ObjectContentType("text/plain"));
-        Collection<Header> headers = info.getHeadersIncludingContentType("image/png");
+        Collection<Header> headers = info.getHeadersIncludingHeader(new ObjectContentType("image/png"));
         assertEquals(5, headers.size());
         for (Header header : headers) {
             if (ObjectContentType.CONTENT_TYPE.equals(header.getHeaderName())) {

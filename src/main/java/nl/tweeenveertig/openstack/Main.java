@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack;
 
 import nl.tweeenveertig.openstack.client.*;
 import nl.tweeenveertig.openstack.client.impl.ClientImpl;
+import nl.tweeenveertig.openstack.client.mock.ClientMock;
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 
