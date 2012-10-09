@@ -20,10 +20,6 @@ public class ObjectDeleter implements Runnable {
         objectsToDelete.add(new ScheduledForDeletion(storedObject, deleteAt));
     }
 
-    public int getAmountOfScheduledDeletions() {
-        return objectsToDelete.size();
-    }
-
     @Override
     public void run() {
         Date now = new Date();

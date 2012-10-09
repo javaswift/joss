@@ -70,14 +70,14 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     @SuppressWarnings("ConstantConditions")
     public boolean equals(Object o) {
-        return o instanceof StoredObject && getName().equals(((StoredObject) o).getName());
+        return o instanceof StoredObject && compareTo((StoredObject) o) == 0;
     }
 
     @SuppressWarnings("ConstantConditions")
     public int compareTo(StoredObject o) {
         int compareValue = getName().compareTo(o.getName());
         if (compareValue == 0) {
-            compareValue = getContainer().compareTo(((AbstractStoredObject)o).getContainer());
+            compareValue = getContainer().compareTo(((AbstractStoredObject) o).getContainer());
         }
         return compareValue;
     }

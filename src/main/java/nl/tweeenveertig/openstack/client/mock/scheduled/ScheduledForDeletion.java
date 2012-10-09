@@ -27,4 +27,8 @@ public class ScheduledForDeletion {
         return o instanceof ScheduledForDeletion && storedObject.equals(((ScheduledForDeletion) o).storedObject);
     }
 
+    public int hashCode() {
+        return storedObject.hashCode();
+    }
+
 }

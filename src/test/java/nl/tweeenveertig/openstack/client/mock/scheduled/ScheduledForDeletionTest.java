@@ -2,16 +2,21 @@ package nl.tweeenveertig.openstack.client.mock.scheduled;
 
 import junit.framework.Assert;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.client.mock.ContainerMock;
+import nl.tweeenveertig.openstack.client.mock.StoredObjectMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.Date;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ScheduledForDeletionTest {
 
@@ -41,4 +46,18 @@ public class ScheduledForDeletionTest {
         assertFalse(scheduledForDeletion.deleteIf(now));
         verify(object, times(0)).delete();
     }
+
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
+    @Test
+    public void equals() {
+        ScheduledForDeletion sched1 = new ScheduledForDeletion(
+                new StoredObjectMock(new ContainerMock(null, "alpha"), "somename.png"), new Date());
+        ScheduledForDeletion sched2 = new ScheduledForDeletion(
+                new StoredObjectMock(new ContainerMock(null, "beta"), "somename.png"), new Date());
+        assertTrue(sched1.equals(sched1));
+        assertFalse(sched1.equals(sched2));
+        assertEquals(sched1.hashCode(), sched2.hashCode());
+        assertFalse(sched1.equals("bla"));
+    }
+
 }
