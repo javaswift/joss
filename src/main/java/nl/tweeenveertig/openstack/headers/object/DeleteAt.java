@@ -33,6 +33,7 @@ public class DeleteAt extends DateHeader {
     }
 
     public static DeleteAt fromResponse(HttpResponse response) {
+        // @TODO RB - I don't like this code. This must be refactored into something cleaner
         String deleteAtString = convertResponseHeader(response, X_DELETE_AT);
         if (deleteAtString == null) {
             return null;

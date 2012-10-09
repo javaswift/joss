@@ -5,7 +5,6 @@ import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
@@ -21,7 +20,7 @@ import java.util.Date;
  * does not work on a private Container.
  * @author Robert Bor
  */
-public interface StoredObject extends ObjectStoreEntity {
+public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject> {
 
     /**
     * Fetches the object in a Container in an InputStream. Note that for passing the information on, the

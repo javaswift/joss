@@ -214,6 +214,17 @@ public class StoredObjectImplTest extends BaseCommandTest {
     }
 
     @Test
+    public void compareObjectsWithSameNameInDifferentContainers() {
+        Container container1 = account.getContainer("alpha");
+        StoredObject object1 = container1.getObject("img1.png");
+        Container container2 = account.getContainer("beta");
+        StoredObject object2 = container2.getObject("img1.png");
+        assertNotSame(object1, object2);
+        assertEquals(-1, object1.compareTo(object2));
+        assertEquals(1, object2.compareTo(object1));
+    }
+
+    @Test
     public void checkWhetherANonExistingFileExists() {
         when(statusLine.getStatusCode()).thenReturn(404);
         assertFalse(object.exists());

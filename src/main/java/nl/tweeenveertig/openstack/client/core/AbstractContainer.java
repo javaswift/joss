@@ -6,7 +6,7 @@ import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
 
-public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container, Comparable<Container> {
+public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container {
 
     protected String name;
 

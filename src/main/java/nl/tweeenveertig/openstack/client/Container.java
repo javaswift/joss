@@ -15,7 +15,7 @@ import java.util.Collection;
  * Store. It just returns a handle for a StoredObject.
  * @author Robert Bor
  */
-public interface Container extends ObjectStoreEntity {
+public interface Container extends ObjectStoreEntity, Comparable<Container> {
 
     /**
     * Takes a single Container and makes it public. ALL (!) the objects in the Container are now public, so be

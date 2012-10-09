@@ -8,7 +8,7 @@ import nl.tweeenveertig.openstack.model.ObjectInformation;
 
 import java.util.Date;
 
-public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject, Comparable<StoredObject> {
+public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject {
 
     protected String name;
 
@@ -75,7 +75,11 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     @SuppressWarnings("ConstantConditions")
     public int compareTo(StoredObject o) {
-        return getName().compareTo(o.getName());
+        int compareValue = getName().compareTo(o.getName());
+        if (compareValue == 0) {
+            compareValue = getContainer().compareTo(((AbstractStoredObject)o).getContainer());
+        }
+        return compareValue;
     }
 
     protected Metadata createMetadataEntry(String name, String value) {

@@ -22,12 +22,12 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
-        Container container = account.getContainer("images");
-        StoredObject object = container.getObject("joss-logo.png");
+//        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+//        Container container = account.getContainer("images");
+//        StoredObject object = container.getObject("joss-logo.png");
 //        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/logo.png")).setDeleteAfter(new DeleteAfter(1000)));
 
-        printObjectMetadata(object);
+//        printObjectMetadata(object);
 
 //        Container container = account.getContainer("images");
 //        StoredObject object = container.getObject("dog.png");
