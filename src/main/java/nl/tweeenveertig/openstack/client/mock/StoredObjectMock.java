@@ -3,10 +3,7 @@ package nl.tweeenveertig.openstack.client.mock;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
-import nl.tweeenveertig.openstack.headers.object.Etag;
-import nl.tweeenveertig.openstack.headers.object.ObjectContentLength;
-import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
-import nl.tweeenveertig.openstack.headers.object.ObjectLastModified;
+import nl.tweeenveertig.openstack.headers.object.*;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -151,9 +148,9 @@ public class StoredObjectMock extends AbstractStoredObject {
 
     public void setDeleteAt(Date date) {
         ObjectDeleter objectDeleter = ((AccountMock)getContainer().getAccount()).getObjectDeleter();
+        this.info.setDeleteAt(new DeleteAt(date));
         if (objectDeleter != null) {
             objectDeleter.scheduleForDeletion(this, date);
-
         }
     }
 

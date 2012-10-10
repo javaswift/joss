@@ -93,6 +93,7 @@ public class StoredObjectMockTest {
         StoredObject object = account.getContainer("alpha").getObject("somefile.png");
         object.setDeleteAfter(10);
         verify(objectDeleter).scheduleForDeletion(same(object), isA(Date.class));
+        assertNotNull(object.getDeleteAt());
     }
 
     @Test
