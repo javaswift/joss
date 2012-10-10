@@ -80,14 +80,14 @@ public class StoredObjectMockTest {
 
     @Test
     public void setDeleteAfterWithNoObjectDeleter() {
-        Account account = new ClientMock().disallowObjectDeleter().allowEveryone().authenticate(null, null, null, null);
+        Account account = new ClientMock().setAllowObjectDeleter(false).setAllowEveryone(true).authenticate(null, null, null, null);
         StoredObject object = account.getContainer("alpha").getObject("somefile.png");
         object.setDeleteAfter(10);
     }
 
     @Test
     public void setDeleteAfter() {
-        Account account = new ClientMock().disallowObjectDeleter().allowEveryone().authenticate(null, null, null, null);
+        Account account = new ClientMock().setAllowObjectDeleter(false).setAllowEveryone(true).authenticate(null, null, null, null);
         ObjectDeleter objectDeleter = Mockito.mock(ObjectDeleter.class);
         ((AccountMock) account).setObjectDeleter(objectDeleter);
         StoredObject object = account.getContainer("alpha").getObject("somefile.png");

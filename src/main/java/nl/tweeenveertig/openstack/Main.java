@@ -24,7 +24,7 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        Account account = new ClientMock().allowEveryone().authenticate(tenant, username, password, url, "AMS-1");
+        Account account = new ClientMock().setAllowEveryone(true).authenticate(tenant, username, password, url, "AMS-1");
 //        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
         Container container = account.getContainer("images");
         StoredObject object = container.getObject("joss-logo.png");

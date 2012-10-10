@@ -21,13 +21,13 @@ public class ClientMockTest {
 
     @Test
     public void authenticateWithAllowEveryone() {
-        ClientMock client = new ClientMock().allowEveryone();
+        ClientMock client = new ClientMock().setAllowEveryone(true);
         assertNotNull(client.authenticate(null, null, null, null));
     }
 
     @Test
     public void noObjectDeleter() {
-        Account account = new ClientMock().disallowObjectDeleter().allowEveryone().authenticate(null, null, null, null);
+        Account account = new ClientMock().setAllowObjectDeleter(false).setAllowEveryone(true).authenticate(null, null, null, null);
         assertNull(((AccountMock) account).getObjectDeleter());
     }
 }

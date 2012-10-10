@@ -23,13 +23,13 @@ public class ClientMock implements Client {
         return new AccountMock().setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null);
     }
 
-    public ClientMock disallowObjectDeleter() {
-        this.allowObjectDeleter = false;
+    public ClientMock setAllowObjectDeleter(boolean allowObjectDeleter) {
+        this.allowObjectDeleter = allowObjectDeleter;
         return this;
     }
 
-    public ClientMock allowEveryone() {
-        this.allowEveryone = true;
+    public ClientMock setAllowEveryone(boolean allowEveryone) {
+        this.allowEveryone = allowEveryone;
         return this;
     }
 
