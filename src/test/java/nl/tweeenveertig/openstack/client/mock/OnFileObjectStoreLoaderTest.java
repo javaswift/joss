@@ -2,7 +2,6 @@ package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Client;
-import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import org.junit.Test;
 
@@ -25,17 +24,6 @@ public class OnFileObjectStoreLoaderTest {
         StoredObject object = account.getContainer("container2").getObject("logo.png");
         assertEquals(4670, object.getContentLength());
         assertEquals("image/png", object.getContentType());
-
-//        for (Container container : account.listContainers()) {
-//            System.out.println("* " + container.getName());
-//            for (StoredObject object : container.listObjects()) {
-//                System.out.println("  - "+object.getName());
-//                System.out.println("    "+object.getContentType());
-//                System.out.println("    "+object.getEtag());
-//                System.out.println("    "+object.getLastModified());
-//                System.out.println("    "+object.getContentLength());
-//            }
-//        }
     }
 
 }

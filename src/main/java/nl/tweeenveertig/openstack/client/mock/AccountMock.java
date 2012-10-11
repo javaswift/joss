@@ -20,6 +20,9 @@ public class AccountMock extends AbstractAccount {
     private ObjectDeleter objectDeleter;
 
     public AccountMock setOnFileObjectStore(String onFileObjectStore) {
+        if (onFileObjectStore == null) {
+            return this;
+        }
         OnFileObjectStoreLoader loader = new OnFileObjectStoreLoader();
         try {
             loader.createContainers(this, onFileObjectStore);
