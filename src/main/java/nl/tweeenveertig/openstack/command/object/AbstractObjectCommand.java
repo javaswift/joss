@@ -15,6 +15,6 @@ public abstract class AbstractObjectCommand<M extends HttpRequestBase, N extends
     }
 
     protected static String getObjectPath(Container container, StoredObject object) {
-        return "/" + container.getName() + "/" + object.getName();
+        return "/" + object.getPath();
     }
 }

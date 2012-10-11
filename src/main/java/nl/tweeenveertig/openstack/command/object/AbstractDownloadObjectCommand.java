@@ -1,7 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
@@ -18,6 +17,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 
 import java.io.*;
+
+import static nl.tweeenveertig.openstack.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
 
 public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends Object> extends AbstractObjectCommand<HttpGet, N> {
 
@@ -40,10 +41,13 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
 
     @Override
     protected N getReturnObject(HttpResponse response) throws IOException {
-        String expectedMd5 = response.getHeaders(ETAG)[0].getValue();
+        String expectedMd5 = response.getHeaders(ETAG)[0].getValue().replaceAll("\"", "");
+        boolean isManifest = response.getHeaders(X_OBJECT_MANIFEST) != null;
 
         handleEntity(response.getEntity());
-        if (HttpStatus.SC_PARTIAL_CONTENT != response.getStatusLine().getStatusCode()) { // etag match on partial content makes no sense)
+        if (    !isManifest &&  // Manifest files may not be checked
+                HttpStatus.SC_PARTIAL_CONTENT != response.getStatusLine().getStatusCode()) {
+                                // etag match on partial content makes no sense)
             String realMd5 = getMd5();
             if (    realMd5 != null &&
                     !expectedMd5.equals(realMd5)) { // Native Inputstreams are not checked for their MD5

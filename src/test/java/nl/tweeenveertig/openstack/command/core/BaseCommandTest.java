@@ -64,7 +64,7 @@ public abstract class BaseCommandTest {
     }
 
     protected StoredObject getObject(String name) {
-        return account.getContainer("objectName").getObject(name);
+        return account.getContainer("container").getObject(name);
     }
 
     protected void checkForError(int httpStatusCode, AbstractCommand command) throws IOException {

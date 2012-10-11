@@ -70,33 +70,36 @@ public class StoredObjectImpl extends AbstractStoredObject {
         new CopyObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, targetContainer, targetObject).call();
     }
 
-    public void setContentType(String contentType) {
+    public StoredObject setContentType(String contentType) {
         checkForInfo();
         info.setContentType(new ObjectContentType(contentType));
         new ObjectMetadataCommand(
                 getAccount(), getClient(), getAccess(), getContainer(),
                 this, info.getHeadersIncludingHeader(info.getContentTypeHeader())).call();
+        return this;
     }
 
-    public void setDeleteAfter(long seconds) {
+    public StoredObject setDeleteAfter(long seconds) {
         checkForInfo();
         info.setDeleteAt(null);
         info.setDeleteAfter(new DeleteAfter(seconds));
         new ObjectMetadataCommand(
                 getAccount(), getClient(), getAccess(), getContainer(),
                 this, info.getHeadersIncludingHeader(info.getDeleteAfter())).call();
+        return this;
     }
 
     @Override
-    public void setDeleteAt(Date date) {
+    public StoredObject setDeleteAt(Date date) {
         checkForInfo();
         info.setDeleteAt(new DeleteAt(date));
         new ObjectMetadataCommand(
                 getAccount(), getClient(), getAccess(), getContainer(), this, info.getHeaders()).call();
+        return this;
     }
 
     public String getPublicURL() {
-        return getAccess().getPublicURL() + "/" + getContainer().getName() + "/" + getName();
+        return getAccess().getPublicURL() + "/" + getPath();
     }
 
     protected AccountImpl getAccount() {

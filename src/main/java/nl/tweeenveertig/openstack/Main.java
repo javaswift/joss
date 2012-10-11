@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.*;
 import nl.tweeenveertig.openstack.client.impl.ClientImpl;
 import nl.tweeenveertig.openstack.client.mock.ClientMock;
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
+import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.*;
@@ -24,22 +25,40 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        Account account = new ClientMock().setAllowEveryone(true).authenticate(tenant, username, password, url, "AMS-1");
-//        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
         Container container = account.getContainer("images");
-        StoredObject object = container.getObject("joss-logo.png");
-        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/logo.png")).setDeleteAfter(new DeleteAfter(1000)));
+//        StoredObject segment1 = container.getObjectSegment("big-file.png", 1);
+//        segment1.uploadObject(new byte[] { 'A', 'B', 'C' });
+//        StoredObject segment2 = container.getObjectSegment("big-file.png", 2);
+//        segment2.uploadObject(new byte[] { 'D', 'E', 'F' });
+//        StoredObject segment3 = container.getObjectSegment("big-file.png", 3);
+//        segment3.uploadObject(new byte[] { 'G', 'H', 'I' });
+        StoredObject manifest = container.getObject("big-file.png");
+//        manifest.uploadObject(new UploadInstructions(new byte[] {}).setObjectManifest(new ObjectManifest(manifest.getPath())));
 
-        System.out.println("Before X-Delete-At");
-        printObjectMetadata(object);
+        byte[] result = manifest.downloadObject();
+        System.out.print("[");
+        for (byte currentByte : result) {
+            System.out.print((char)currentByte);
+        }
+        System.out.print("]");
 
-        object.setDeleteAt(new Date(new Date().getTime()+1000));
-
-        Thread.sleep(12000);
-
-        StoredObject object2 = container.getObject("joss-logo.png");
-        System.out.println("After X-Delete-At");
-        printObjectMetadata(object2);
+//        Account account = new ClientMock().setAllowEveryone(true).authenticate(tenant, username, password, url, "AMS-1");
+//        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+//        Container container = account.getContainer("images");
+//        StoredObject object = container.getObject("joss-logo.png");
+//        object.uploadObject(new UploadInstructions(new File("/Users/robertbor/Downloads/logo.png")).setDeleteAfter(new DeleteAfter(1000)));
+//
+//        System.out.println("Before X-Delete-At");
+//        printObjectMetadata(object);
+//
+//        object.setDeleteAt(new Date(new Date().getTime()+1000));
+//
+//        Thread.sleep(12000);
+//
+//        StoredObject object2 = container.getObject("joss-logo.png");
+//        System.out.println("After X-Delete-At");
+//        printObjectMetadata(object2);
 
 //        Container container = account.getContainer("images");
 //        StoredObject object = container.getObject("dog.png");

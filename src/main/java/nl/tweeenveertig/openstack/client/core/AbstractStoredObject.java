@@ -64,6 +64,10 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         return container;
     }
 
+    public String getPath() {
+        return getContainer().getName() + "/" + getName();
+    }
+
     public int hashCode() {
         return getName().hashCode();
     }

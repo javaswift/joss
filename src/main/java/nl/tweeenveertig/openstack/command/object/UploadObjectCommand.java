@@ -38,6 +38,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         HttpEntity entity = uploadInstructions.getEntity();
         addHeader(uploadInstructions.getDeleteAt());
         addHeader(uploadInstructions.getDeleteAfter());
+        addHeader(uploadInstructions.getObjectManifest());
         if (uploadInstructions.getMd5() != null) {
             addHeader(new Etag(uploadInstructions.getMd5()));
         }

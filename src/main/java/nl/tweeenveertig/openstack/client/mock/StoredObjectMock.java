@@ -138,20 +138,22 @@ public class StoredObjectMock extends AbstractStoredObject {
         targetObject.uploadObject(targetContent);
     }
 
-    public void setContentType(String contentType) {
+    public StoredObject setContentType(String contentType) {
         info.setContentType(new ObjectContentType(contentType));
+        return this;
     }
 
-    public void setDeleteAfter(long seconds) {
-        setDeleteAt(new Date(new Date().getTime() + seconds * 1000));
+    public StoredObject setDeleteAfter(long seconds) {
+        return setDeleteAt(new Date(new Date().getTime() + seconds * 1000));
     }
 
-    public void setDeleteAt(Date date) {
+    public StoredObject setDeleteAt(Date date) {
         ObjectDeleter objectDeleter = ((AccountMock)getContainer().getAccount()).getObjectDeleter();
         this.info.setDeleteAt(new DeleteAt(date));
         if (objectDeleter != null) {
             objectDeleter.scheduleForDeletion(this, date);
         }
+        return this;
     }
 
     public String getPublicURL() {

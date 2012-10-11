@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.headers.object.DeleteAt;
+import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.FileEntity;
@@ -22,6 +23,8 @@ public class UploadInstructions {
 
     private DeleteAt deleteAt;
 
+    private ObjectManifest objectManifest;
+
     public UploadInstructions(File fileToUpload) {
         this.entity = new FileEntity(fileToUpload);
     }
@@ -32,6 +35,11 @@ public class UploadInstructions {
 
     public UploadInstructions(byte[] fileToUpload) {
         this.entity = new ByteArrayEntity(fileToUpload);
+    }
+
+    public UploadInstructions setObjectManifest(ObjectManifest objectManifest) {
+        this.objectManifest = objectManifest;
+        return this;
     }
 
     public UploadInstructions setMd5(String md5) {
@@ -56,6 +64,10 @@ public class UploadInstructions {
 
     public HttpEntity getEntity() {
         return this.entity;
+    }
+
+    public ObjectManifest getObjectManifest() {
+        return this.objectManifest;
     }
 
     public String getMd5() {

@@ -112,6 +112,12 @@ public class ContainerMockTest {
         assertEquals(1, container.getMetadata().size());
     }
 
+    @Test
+    public void getObjectSegment() {
+        StoredObject object = container.getObjectSegment("alpha", 14);
+        assertEquals("alpha/0014", object.getName());
+    }
+
     protected void addObject(String name, byte[] bytes) throws IOException {
         StoredObject object = container.getObject(name);
         object.uploadObject(bytes);

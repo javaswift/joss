@@ -27,7 +27,7 @@ public class CopyObjectCommandTest extends BaseCommandTest {
         new CopyObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName"),
                 account.getContainer("containerName"), getObject("objectName")).call();
         verify(httpClient).execute(requestArgument.capture());
-        assertEquals("/containerName/objectName", requestArgument.getValue().getFirstHeader(CopyFrom.X_COPY_FROM).getValue());
+        assertEquals("/container/objectName", requestArgument.getValue().getFirstHeader(CopyFrom.X_COPY_FROM).getValue());
     }
 
     @Test (expected = NotFoundException.class)

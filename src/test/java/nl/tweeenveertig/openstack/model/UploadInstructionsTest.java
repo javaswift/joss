@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.headers.object.DeleteAt;
+import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
@@ -57,6 +58,12 @@ public class UploadInstructionsTest {
     public void deleteAfter() {
         UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setDeleteAfter(new DeleteAfter(42));
         assertNotNull(instructions.getDeleteAfter());
+    }
+
+    @Test
+    public void objectManifest() {
+        UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setObjectManifest(new ObjectManifest("images/big.dat"));
+        assertNotNull(instructions.getObjectManifest());
     }
 
 }

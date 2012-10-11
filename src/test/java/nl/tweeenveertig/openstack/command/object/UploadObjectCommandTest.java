@@ -19,10 +19,7 @@ import nl.tweeenveertig.openstack.exception.Md5ChecksumException;
 import nl.tweeenveertig.openstack.exception.MissingContentLengthOrTypeException;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.Token;
-import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
-import nl.tweeenveertig.openstack.headers.object.DeleteAt;
-import nl.tweeenveertig.openstack.headers.object.Etag;
-import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
+import nl.tweeenveertig.openstack.headers.object.*;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -98,13 +95,15 @@ public class UploadObjectCommandTest extends BaseCommandTest {
                                 new UploadInstructions(inputStream).setMd5("ebabefac")
                                         .setContentType("image/bmp")
                                         .setDeleteAt(new DeleteAt("Sat, 22 Sep 2012 07:24:21 GMT"))
-                                        .setDeleteAfter(new DeleteAfter(42))).call();
+                                        .setDeleteAfter(new DeleteAfter(42))
+                                        .setObjectManifest(new ObjectManifest(getObject("some-big-file.dat").getPath()))).call();
         verify(httpClient).execute(requestArgument.capture());
         assertEquals("image/bmp", requestArgument.getValue().getFirstHeader(ObjectContentType.CONTENT_TYPE).getValue());
         assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
         assertEquals("ebabefac", requestArgument.getValue().getFirstHeader(Etag.ETAG).getValue());
         assertEquals("1348298661", requestArgument.getValue().getFirstHeader(DeleteAt.X_DELETE_AT).getValue());
         assertEquals("42", requestArgument.getValue().getFirstHeader(DeleteAfter.X_DELETE_AFTER).getValue());
+        assertEquals("container/some-big-file.dat", requestArgument.getValue().getFirstHeader(ObjectManifest.X_OBJECT_MANIFEST).getValue());
         inputStream.close();
     }
 

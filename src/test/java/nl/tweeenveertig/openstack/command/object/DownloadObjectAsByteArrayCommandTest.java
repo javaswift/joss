@@ -6,7 +6,6 @@ import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.cookie.DateParseException;
@@ -18,6 +17,7 @@ import java.io.IOException;
 import static junit.framework.Assert.assertEquals;
 import static nl.tweeenveertig.openstack.command.object.DownloadObjectAsByteArrayCommand.CONTENT_LENGTH;
 import static nl.tweeenveertig.openstack.command.object.DownloadObjectAsByteArrayCommand.ETAG;
+import static nl.tweeenveertig.openstack.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
 import static org.mockito.Mockito.*;
 
 public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
@@ -57,6 +57,20 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
         when(statusLine.getStatusCode()).thenReturn(206);
+        DownloadObjectAsByteArrayCommand command =
+                spy(new DownloadObjectAsByteArrayCommand(
+                        this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
+                        new DownloadInstructions().setRange(new FirstPartRange(3))));
+        byte[] result = command.call();
+        assertEquals(bytes.length, result.length);
+        verify(command, never()).getMd5();
+    }
+
+    @Test
+    public void manifestDoesNotTriggerAnMd5Check() throws IOException {
+        byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
+        prepareBytes(bytes, null);
+        prepareHeader(response, X_OBJECT_MANIFEST, Long.toString(bytes.length));
         DownloadObjectAsByteArrayCommand command =
                 spy(new DownloadObjectAsByteArrayCommand(
                         this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),

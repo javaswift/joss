@@ -58,6 +58,14 @@ public interface Container extends ObjectStoreEntity, Comparable<Container> {
     */
     public StoredObject getObject(String name);
 
+    /**
+    * Returns an object that represents a segment of a single large object
+    * @param name the name of the object to create a handle for
+    * @param part the part of the large object that the segment represents
+    * @return the object handle
+    */
+    public StoredObject getObjectSegment(String name, int part);
+
     public int getObjectCount();
     public long getBytesUsed();
     public boolean isPublic();

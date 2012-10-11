@@ -2,6 +2,8 @@ package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.client.mock.StoredObjectMock;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
@@ -18,6 +20,10 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         this.info = new ContainerInformation();
     }
 
+    public StoredObject getObjectSegment(String name, int part) {
+        return getObject(name + "/" + String.format("%04d", part));
+    }
+
     public int getObjectCount() {
         checkForInfo();
         return info.getObjectCount();
@@ -27,6 +33,7 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         checkForInfo();
         return info.getBytesUsed();
     }
+
     public boolean isPublic() {
         checkForInfo();
         return info.isPublicContainer();
