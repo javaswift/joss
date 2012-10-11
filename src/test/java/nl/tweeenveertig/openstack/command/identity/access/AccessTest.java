@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.command.identity.access;
 
-import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.util.ClasspathTemplateResource;

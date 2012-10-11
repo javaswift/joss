@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
 import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
 import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
@@ -17,6 +18,16 @@ public class AccountMock extends AbstractAccount {
     public Access authenticate() { return null; /* ignore */ }
 
     private ObjectDeleter objectDeleter;
+
+    public AccountMock setOnFileObjectStore(String onFileObjectStore) {
+        OnFileObjectStoreLoader loader = new OnFileObjectStoreLoader();
+        try {
+            loader.createContainers(this, onFileObjectStore);
+        } catch (Exception err) {
+            throw new CommandException("Unable to load the object store from file: "+err.getMessage(), err);
+        }
+        return this;
+    }
 
     public AccountMock setObjectDeleter(ObjectDeleter objectDeleter) {
         this.objectDeleter = objectDeleter;

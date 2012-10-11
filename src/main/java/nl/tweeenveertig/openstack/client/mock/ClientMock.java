@@ -12,6 +12,8 @@ public class ClientMock implements Client {
 
     private boolean allowObjectDeleter = true;
 
+    private String onFileObjectStore = null;
+
     public Account authenticate(String tenant, String username, String password, String authUrl) {
         return authenticate(tenant, username, password, authUrl, null);
     }
@@ -20,7 +22,9 @@ public class ClientMock implements Client {
         if (!allowEveryone) {
             users.authenticate(username, password);
         }
-        return new AccountMock().setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null);
+        return new AccountMock()
+                .setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null)
+                .setOnFileObjectStore(onFileObjectStore);
     }
 
     public ClientMock setAllowObjectDeleter(boolean allowObjectDeleter) {
@@ -30,6 +34,11 @@ public class ClientMock implements Client {
 
     public ClientMock setAllowEveryone(boolean allowEveryone) {
         this.allowEveryone = allowEveryone;
+        return this;
+    }
+
+    public ClientMock setOnFileObjectStore(String onFileObjectStore) {
+        this.onFileObjectStore = onFileObjectStore;
         return this;
     }
 
