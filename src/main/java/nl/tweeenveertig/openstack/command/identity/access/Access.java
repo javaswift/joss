@@ -22,11 +22,8 @@ public class Access {
     @JsonIgnore
     private EndPoint currentEndPoint;
 
-    @JsonIgnore
-    private String preferredRegion;
-
     public void setPreferredRegion(String preferredRegion) {
-        this.preferredRegion = preferredRegion;
+        this.currentEndPoint = getObjectStoreCatalog().getRegion(preferredRegion);
     }
 
     public String getToken() {
@@ -48,7 +45,7 @@ public class Access {
         if (objectStoreCatalog == null) {
             HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_SERVICE_CATALOG_FOUND);
         }
-        this.currentEndPoint = objectStoreCatalog.getRegion(this.preferredRegion);
+        this.currentEndPoint = objectStoreCatalog.getRegion(null);
         if (this.currentEndPoint == null) {
             HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_END_POINT_FOUND);
         }

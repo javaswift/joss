@@ -39,9 +39,12 @@ public class AccessTest {
         endPoints.add(new EndPointBuilder().setInternalURL("http://www.somewhere.com:80").setRegion("AMS-03").getEndPoint());
         access.serviceCatalog.add(createServiceCatalog("swift", "object-store", endPoints));
         access.serviceCatalog.add(createServiceCatalog("somethat", "sharding", new ArrayList<EndPoint>()));
-        access.setPreferredRegion("AMS-03");
         access.initCurrentEndPoint();
+
+        access.setPreferredRegion("AMS-03");
         assertEquals("http://www.somewhere.com:80", access.getInternalURL());
+        access.setPreferredRegion("AMS-01");
+        assertEquals(null, access.getInternalURL());
     }
 
     @Test
@@ -65,17 +68,5 @@ public class AccessTest {
         } catch (NotFoundException err) {
             assertEquals(CommandExceptionError.NO_SERVICE_CATALOG_FOUND, err.getError());
         }
-    }
-
-    protected Access createAccessWithEndPoint() {
-        Access access = new Access().initCurrentEndPoint();
-        List<EndPoint> endPoints = new ArrayList<EndPoint>();
-        endPoints.add(new EndPointBuilder()
-                .setRegion("AMS-01")
-                .setInternalURL("https://some.internal.url")
-                .setPublicURL("https://some.public.url")
-                .getEndPoint());
-        access.serviceCatalog.add(createServiceCatalog("swift", "object-store", endPoints ));
-        return access;
     }
 }
