@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.command.identity.access;
 
-import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
 import org.apache.http.HttpStatus;
@@ -44,7 +43,7 @@ public class Access {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public void initCurrentEndPoint() {
+    public Access initCurrentEndPoint() {
         ServiceCatalog objectStoreCatalog = getObjectStoreCatalog();
         if (objectStoreCatalog == null) {
             HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_SERVICE_CATALOG_FOUND);
@@ -53,19 +52,15 @@ public class Access {
         if (this.currentEndPoint == null) {
             HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_END_POINT_FOUND);
         }
+        return this;
     }
 
     public String getInternalURL() {
-        if (this.currentEndPoint == null) {
-            initCurrentEndPoint();
-        }
         return currentEndPoint.internalURL;
     }
 
     public String getPublicURL() {
-        if (this.currentEndPoint == null) {
-            initCurrentEndPoint();
-        }
         return currentEndPoint.publicURL;
     }
+
 }

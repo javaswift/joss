@@ -22,7 +22,7 @@ public class AccessTest {
         String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-        Access access = mapper.readValue(jsonString, Access.class);
+        Access access = mapper.readValue(jsonString, Access.class).initCurrentEndPoint();
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
         assertEquals("https://og.cloudvps.com:443/v1/AUTH_bfo000024", access.getInternalURL());
         assertEquals("http://bfo000024.og.cloudvps.com:80", access.getPublicURL());
@@ -40,6 +40,7 @@ public class AccessTest {
         access.serviceCatalog.add(createServiceCatalog("swift", "object-store", endPoints));
         access.serviceCatalog.add(createServiceCatalog("somethat", "sharding", new ArrayList<EndPoint>()));
         access.setPreferredRegion("AMS-03");
+        access.initCurrentEndPoint();
         assertEquals("http://www.somewhere.com:80", access.getInternalURL());
     }
 
@@ -48,7 +49,7 @@ public class AccessTest {
         Access access = new Access();
         access.serviceCatalog.add(createServiceCatalog("swift", "object-store", new ArrayList<EndPoint>()));
         try {
-            access.getInternalURL(); // This triggers the service catalog / end point fetch
+            access.initCurrentEndPoint();
             fail("Should have thrown an exception");
         } catch (NotFoundException err) {
             assertEquals(CommandExceptionError.NO_END_POINT_FOUND, err.getError());
@@ -59,29 +60,15 @@ public class AccessTest {
     public void noCatalogs() {
         Access access = new Access();
         try {
-            access.getInternalURL(); // This triggers the service catalog / end point fetch
+            access.initCurrentEndPoint();
             fail("Should have thrown an exception");
         } catch (NotFoundException err) {
             assertEquals(CommandExceptionError.NO_SERVICE_CATALOG_FOUND, err.getError());
         }
     }
 
-    @Test
-    public void getInternalURLAndInitCurrentEndPoint() {
-        Access access = createAccessWithEndPoint();
-        assertEquals("https://some.internal.url", access.getInternalURL()); // trigger the init
-        assertEquals("https://some.internal.url", access.getInternalURL());
-    }
-
-    @Test
-    public void getPublicURLAndInitCurrentEndPoint() {
-        Access access = createAccessWithEndPoint();
-        assertEquals("https://some.public.url", access.getPublicURL()); // trigger the init
-        assertEquals("https://some.public.url", access.getPublicURL());
-    }
-
     protected Access createAccessWithEndPoint() {
-        Access access = new Access();
+        Access access = new Access().initCurrentEndPoint();
         List<EndPoint> endPoints = new ArrayList<EndPoint>();
         endPoints.add(new EndPointBuilder()
                 .setRegion("AMS-01")

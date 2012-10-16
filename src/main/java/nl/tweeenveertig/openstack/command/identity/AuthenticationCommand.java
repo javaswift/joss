@@ -39,7 +39,9 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
 
     @Override
     public Access getReturnObject(HttpResponse response) throws IOException {
-        return createObjectMapper().readValue(createSingleString(convertResponseToString(response)), Access.class);
+        return createObjectMapper()
+                .readValue(createSingleString(convertResponseToString(response)), Access.class)
+                .initCurrentEndPoint(); // If only this would exist: http://jira.codehaus.org/browse/JACKSON-645
     }
 
     protected String createSingleString(List<String> lines) {

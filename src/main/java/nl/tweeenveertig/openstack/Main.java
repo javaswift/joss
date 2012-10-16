@@ -26,22 +26,22 @@ public class Main {
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
         Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
-        Container container = account.getContainer("images");
+//        Container container = account.getContainer("images");
 //        StoredObject segment1 = container.getObjectSegment("big-file.png", 1);
 //        segment1.uploadObject(new byte[] { 'A', 'B', 'C' });
 //        StoredObject segment2 = container.getObjectSegment("big-file.png", 2);
 //        segment2.uploadObject(new byte[] { 'D', 'E', 'F' });
 //        StoredObject segment3 = container.getObjectSegment("big-file.png", 3);
 //        segment3.uploadObject(new byte[] { 'G', 'H', 'I' });
-        StoredObject manifest = container.getObject("big-file.png");
+//        StoredObject manifest = container.getObject("big-file.png");
 //        manifest.uploadObject(new UploadInstructions(new byte[] {}).setObjectManifest(new ObjectManifest(manifest.getPath())));
 
-        byte[] result = manifest.downloadObject();
-        System.out.print("[");
-        for (byte currentByte : result) {
-            System.out.print((char)currentByte);
-        }
-        System.out.print("]");
+//        byte[] result = manifest.downloadObject();
+//        System.out.print("[");
+//        for (byte currentByte : result) {
+//            System.out.print((char)currentByte);
+//        }
+//        System.out.print("]");
 
 //        Account account = new ClientMock().setAllowEveryone(true).authenticate(tenant, username, password, url, "AMS-1");
 //        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
