@@ -2,8 +2,6 @@ package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.model.AbstractInformation;
-import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.headers.Metadata;
 
 import java.util.Map;

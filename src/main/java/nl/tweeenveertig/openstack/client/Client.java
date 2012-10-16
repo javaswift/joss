@@ -11,7 +11,7 @@ package nl.tweeenveertig.openstack.client;
  * you to start operating on the Object Store.
  * @author Robert Bor
  */
-public interface Client {
+public interface Client<A extends Account> {
 
     /**
     * Calls the identity module of the OpenStack implementation to authenticate itself against. If
@@ -22,7 +22,7 @@ public interface Client {
     * @param password password of the account
     * @param authUrl URL to call the authenticate against, supplied by your OpenStack implementation vendor
     */
-    public Account authenticate(String tenant, String username, String password, String authUrl);
+    public A authenticate(String tenant, String username, String password, String authUrl);
 
     /**
      * Calls the identity module of the OpenStack implementation to authenticate itself against. If
@@ -35,6 +35,6 @@ public interface Client {
      * @param preferredRegion the end point region that is preferred. Note that this end point is not guaranteed. If
      *                        it is not available, another end point will be returned.
      */
-    public Account authenticate(String tenant, String username, String password, String authUrl, String preferredRegion);
+    public A authenticate(String tenant, String username, String password, String authUrl, String preferredRegion);
 
 }

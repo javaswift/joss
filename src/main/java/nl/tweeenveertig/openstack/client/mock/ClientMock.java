@@ -4,7 +4,7 @@ import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Client;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 
-public class ClientMock implements Client {
+public class ClientMock implements Client<AccountMock> {
 
     private MockUserStore users = new MockUserStore();
 
@@ -14,11 +14,11 @@ public class ClientMock implements Client {
 
     private String onFileObjectStore = null;
 
-    public Account authenticate(String tenant, String username, String password, String authUrl) {
+    public AccountMock authenticate(String tenant, String username, String password, String authUrl) {
         return authenticate(tenant, username, password, authUrl, null);
     }
 
-    public Account authenticate(String tenant, String username, String password, String authUrl, String preferredRegion) {
+    public AccountMock authenticate(String tenant, String username, String password, String authUrl, String preferredRegion) {
         if (!allowEveryone) {
             users.authenticate(username, password);
         }
