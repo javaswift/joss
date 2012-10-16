@@ -14,7 +14,7 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N extends
     public AbstractSecureCommand(Account account, HttpClient httpClient, String url, String token) {
         super(httpClient, url, token);
         this.account = account;
-        addToken(token);
+        setToken(token);
     }
 
     public AbstractSecureCommand(Account account, HttpClient httpClient, Access access) {
@@ -27,12 +27,12 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N extends
             return super.call();
         } catch (UnauthorizedException err) {
             Access access = account.authenticate();
-            addToken(access.getToken());
+            setToken(access.getToken());
             return super.call();
         }
     }
 
-    private void addToken(String token) {
+    private void setToken(String token) {
         setHeader(new Token(token));
     }
 
