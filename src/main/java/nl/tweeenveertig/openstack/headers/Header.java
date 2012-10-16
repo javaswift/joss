@@ -17,8 +17,8 @@ public abstract class Header {
     * the request object
     * @param request the request to which the header must be applied
     */
-    public void addHeader(HttpRequestBase request) {
-        request.addHeader(getHeaderName(), getHeaderValue());
+    public void setHeader(HttpRequestBase request) {
+        request.setHeader(getHeaderName(), getHeaderValue());
     }
 
     /**

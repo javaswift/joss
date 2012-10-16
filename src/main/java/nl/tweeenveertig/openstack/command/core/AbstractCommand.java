@@ -44,16 +44,11 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
         }
     }
 
-    public void replaceHeader(Header header) {
-        this.request.removeHeaders(header.getHeaderName());
-        addHeader(header);
-    }
-
-    protected void addHeader(Header header) {
+    protected void setHeader(Header header) {
         if (header == null) {
             return;
         }
-        header.addHeader(request);
+        header.setHeader(request);
     }
 
     public void close() throws IOException {
@@ -68,7 +63,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     protected void addHeaders(Collection<? extends Header> headers) {
         for (Header header : headers) {
-            addHeader(header);
+            setHeader(header);
         }
     }
 

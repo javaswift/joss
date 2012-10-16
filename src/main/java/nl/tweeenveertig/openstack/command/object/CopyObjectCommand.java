@@ -1,7 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
@@ -19,7 +18,7 @@ public class CopyObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
     public CopyObjectCommand(Account account, HttpClient httpClient, Access access, Container sourceContainer,
                              StoredObject sourceObject, Container targetContainer, StoredObject targetObject) {
         super(account, httpClient, access, targetContainer, targetObject);
-        addHeader(new CopyFrom(getObjectPath(sourceContainer, sourceObject)));
+        setHeader(new CopyFrom(getObjectPath(sourceContainer, sourceObject)));
     }
 
     @Override

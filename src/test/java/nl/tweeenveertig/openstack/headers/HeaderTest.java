@@ -14,7 +14,7 @@ public abstract class HeaderTest {
     private HttpRequestBase request;
 
     protected void testHeader(Header header) {
-        header.addHeader(request);
-        verify(request).addHeader(header.getHeaderName(), header.getHeaderValue());
+        header.setHeader(request);
+        verify(request).setHeader(header.getHeaderName(), header.getHeaderValue());
     }
 }

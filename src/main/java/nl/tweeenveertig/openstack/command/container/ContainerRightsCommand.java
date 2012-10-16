@@ -16,7 +16,7 @@ public class ContainerRightsCommand extends AbstractContainerCommand<HttpPut, St
 
     public ContainerRightsCommand(Account account, HttpClient httpClient, Access access, Container container, boolean publicContainer) {
         super(account, httpClient, access, container);
-        addHeader(new ContainerRights(publicContainer));
+        setHeader(new ContainerRights(publicContainer));
     }
 
     @Override

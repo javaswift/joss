@@ -6,7 +6,6 @@ import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondi
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
@@ -36,17 +35,17 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
 
     protected void prepareUpload(UploadInstructions uploadInstructions) throws IOException {
         HttpEntity entity = uploadInstructions.getEntity();
-        addHeader(uploadInstructions.getDeleteAt());
-        addHeader(uploadInstructions.getDeleteAfter());
-        addHeader(uploadInstructions.getObjectManifest());
+        setHeader(uploadInstructions.getDeleteAt());
+        setHeader(uploadInstructions.getDeleteAfter());
+        setHeader(uploadInstructions.getObjectManifest());
         if (uploadInstructions.getMd5() != null) {
-            addHeader(new Etag(uploadInstructions.getMd5()));
+            setHeader(new Etag(uploadInstructions.getMd5()));
         }
         if (uploadInstructions.getContentType() != null) {
-            addHeader(new ObjectContentType(uploadInstructions.getContentType()));
+            setHeader(new ObjectContentType(uploadInstructions.getContentType()));
         }
         else if (!(entity instanceof InputStreamEntity)) { // reading an InputStream is not a smart idea
-            addHeader(new Etag(entity.getContent()));
+            setHeader(new Etag(entity.getContent()));
         }
         request.setEntity(entity);
     }
