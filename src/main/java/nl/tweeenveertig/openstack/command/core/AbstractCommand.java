@@ -44,8 +44,9 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
         }
     }
 
-    protected void removeHeaders(String headerName) {
-        this.request.removeHeaders(headerName);
+    public void replaceHeader(Header header) {
+        this.request.removeHeaders(header.getHeaderName());
+        addHeader(header);
     }
 
     protected void addHeader(Header header) {

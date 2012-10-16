@@ -28,8 +28,7 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N extends
             return super.call();
         } catch (UnauthorizedException err) {
             Access access = account.authenticate();
-            removeHeaders(Token.X_AUTH_TOKEN);
-            addToken(access.getToken());
+            replaceHeader(new Token(access.getToken()));
             return super.call();
         }
     }
