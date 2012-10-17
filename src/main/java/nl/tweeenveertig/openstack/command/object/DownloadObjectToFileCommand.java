@@ -28,20 +28,28 @@ public class DownloadObjectToFileCommand extends AbstractDownloadObjectCommand<H
         OutputStream output = null;
         try {
             output = new FileOutputStream(targetFile);
-            IOUtils.copy(entity.getContent(), new FileOutputStream(targetFile));
+            IOUtils.copy(entity.getContent(), output);
         } finally {
-            if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
+            if (output != null) {
+                try {
+                    output.close();
+                } catch (IOException logOrIgnore) { }
+            }
         }
     }
 
     @Override
     protected String getMd5() throws IOException {
-        FileInputStream input = null;
+        InputStream input = null;
         try {
             input = new FileInputStream(targetFile);
             return DigestUtils.md5Hex(input);
         } finally {
-            if (input != null) try { input.close(); } catch (IOException logOrIgnore) {}
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException logOrIgnore) {}
+            }
         }
     }
 
