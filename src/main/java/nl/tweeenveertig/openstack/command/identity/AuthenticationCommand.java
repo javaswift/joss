@@ -29,6 +29,7 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
         try {
             Authentication auth = new Authentication(tenant, username, password);
             String jsonString = createObjectMapper().writeValueAsString(auth);
+            System.out.println(jsonString);
             StringEntity input = new StringEntity(jsonString);
             input.setContentType("application/json");
             request.setEntity(input);

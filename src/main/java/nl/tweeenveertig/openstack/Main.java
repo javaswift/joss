@@ -8,6 +8,7 @@ import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
@@ -26,7 +27,13 @@ public class Main {
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
         Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
-//        Container container = account.getContainer("images");
+        Container container = account.getContainer("images");
+        Collection<StoredObject> storedObjects = container.listObjects();
+        for (StoredObject object : storedObjects) {
+            System.out.println(object.getName());
+            System.out.println("  -> type: "+object.getContentType()+", length: "+object.getContentLength());
+        }
+
 //        StoredObject segment1 = container.getObjectSegment("big-file.png", 1);
 //        segment1.uploadObject(new byte[] { 'A', 'B', 'C' });
 //        StoredObject segment2 = container.getObjectSegment("big-file.png", 2);
