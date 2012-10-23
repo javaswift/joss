@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.command.identity.access;
 
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
+import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import org.apache.http.HttpStatus;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -43,11 +43,11 @@ public class Access {
     public Access initCurrentEndPoint() {
         ServiceCatalog objectStoreCatalog = getObjectStoreCatalog();
         if (objectStoreCatalog == null) {
-            HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_SERVICE_CATALOG_FOUND);
+            HttpStatusExceptionUtil.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_SERVICE_CATALOG_FOUND);
         }
         this.currentEndPoint = objectStoreCatalog.getRegion(null);
         if (this.currentEndPoint == null) {
-            HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_END_POINT_FOUND);
+            HttpStatusExceptionUtil.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_END_POINT_FOUND);
         }
         return this;
     }

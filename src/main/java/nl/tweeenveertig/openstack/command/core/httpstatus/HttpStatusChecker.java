@@ -2,7 +2,7 @@ package nl.tweeenveertig.openstack.command.core.httpstatus;
 
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
+import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 
 import static nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition.AUTHORIZATION_MATCHER;
 import static nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition.FORBIDDEN_MATCHER;
@@ -20,7 +20,7 @@ public abstract class HttpStatusChecker {
     public boolean isOk(int httpStatusCode) {
         if (matcher.matches(httpStatusCode)) {
             if (isError()) {
-                HttpStatusToExceptionMapper.throwException(httpStatusCode);
+                HttpStatusExceptionUtil.throwException(httpStatusCode);
             }
             return true; // The OK signal
         }

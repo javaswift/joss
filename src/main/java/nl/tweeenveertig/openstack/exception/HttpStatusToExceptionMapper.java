@@ -17,11 +17,11 @@ public enum HttpStatusToExceptionMapper {
     _412 (HttpStatus.SC_PRECONDITION_FAILED, CommandExceptionError.CONTENT_DIFFERENT, ModifiedException.class),
     _422 (HttpStatus.SC_UNPROCESSABLE_ENTITY, CommandExceptionError.MD5_CHECKSUM, Md5ChecksumException.class);
 
-    private int httpStatus;
+    private final int httpStatus;
 
-    private CommandExceptionError error;
+    private final CommandExceptionError error;
 
-    private Class<? extends CommandException> exceptionToThrow;
+    protected Class<? extends CommandException> exceptionToThrow;
 
     private HttpStatusToExceptionMapper(int httpStatus, CommandExceptionError error, Class<? extends CommandException> exceptionToThrow) {
         this.httpStatus = httpStatus;
@@ -29,33 +29,26 @@ public enum HttpStatusToExceptionMapper {
         this.exceptionToThrow = exceptionToThrow;
     }
 
-    public static void throwException(int httpStatus, CommandExceptionError customError) throws CommandException {
-        throw getException(httpStatus, customError);
+    public int getHttpStatus() {
+        return this.httpStatus;
     }
 
-    public static void throwException(int httpStatus) throws CommandException {
-        throw getException(httpStatus, null);
+    public Class<? extends CommandException> getExceptionToThrow() {
+        return this.exceptionToThrow;
     }
 
-    public static CommandException getException(int httpStatus, CommandExceptionError customError) {
-        for (HttpStatusToExceptionMapper mapper : values()) {
-            if (mapper.httpStatus == httpStatus) {
-                return mapper.getException(customError);
-            }
-        }
-        return new CommandException(httpStatus, CommandExceptionError.UNKNOWN);
+    public CommandExceptionError getError() {
+        return this.error;
     }
 
     public CommandException getException(CommandExceptionError customError) throws CommandException {
-        CommandExceptionError showError = customError == null ? error : customError;
+        CommandExceptionError showError = customError == null ? getError() : customError;
         try {
-            Constructor constructor = exceptionToThrow.getDeclaredConstructor(new Class[]{Integer.class, CommandExceptionError.class});
-            Object[] arguments = new Object[] { httpStatus, showError };
+            Constructor constructor = getExceptionToThrow().getDeclaredConstructor(new Class[]{Integer.class, CommandExceptionError.class});
+            Object[] arguments = new Object[] { getHttpStatus(), showError };
             return (CommandException)constructor.newInstance(arguments);
         } catch (Exception err) {
-            return err instanceof CommandException ?
-                    (CommandException)err :
-                    new CommandException("Programming error - unable to throw exception for "+httpStatus+"/"+customError, err);
+            return new CommandException("Programming error - unable to throw exception for "+getHttpStatus()+"/"+customError, err);
         }
     }
 

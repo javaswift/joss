@@ -3,9 +3,7 @@ package nl.tweeenveertig.openstack.client.mock;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
-import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
+import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
 import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;
 import nl.tweeenveertig.openstack.headers.container.ContainerRights;
@@ -51,7 +49,7 @@ public class ContainerMock extends AbstractContainer {
 
     public void create() {
         if (this.created) {
-            HttpStatusToExceptionMapper.throwException(HttpStatus.SC_ACCEPTED);
+            HttpStatusExceptionUtil.throwException(HttpStatus.SC_ACCEPTED);
         }
         ((AccountMock)getAccount()).createContainer(this);
         this.created = true;
@@ -61,10 +59,10 @@ public class ContainerMock extends AbstractContainer {
     public void delete() {
 
         if (!this.created) {
-            HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_FOUND);
+            HttpStatusExceptionUtil.throwException(HttpStatus.SC_NOT_FOUND);
         }
         if (this.objects.size() > 0) {
-            HttpStatusToExceptionMapper.throwException(HttpStatus.SC_CONFLICT);
+            HttpStatusExceptionUtil.throwException(HttpStatus.SC_CONFLICT);
         }
         this.created = false;
         ((AccountMock)getAccount()).deleteContainer(this);

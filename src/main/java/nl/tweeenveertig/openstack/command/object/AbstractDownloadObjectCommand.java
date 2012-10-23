@@ -5,7 +5,7 @@ import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
-import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
+import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
@@ -51,7 +51,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
             String realMd5 = getMd5();
             if (    realMd5 != null &&
                     !expectedMd5.equals(realMd5)) { // Native Inputstreams are not checked for their MD5
-                HttpStatusToExceptionMapper.throwException(HttpStatus.SC_UNPROCESSABLE_ENTITY);
+                HttpStatusExceptionUtil.throwException(HttpStatus.SC_UNPROCESSABLE_ENTITY);
             }
         }
         return getObjectAsReturnObject();

@@ -2,14 +2,13 @@ package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
-import nl.tweeenveertig.openstack.exception.HttpStatusToExceptionMapper;
+import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import nl.tweeenveertig.openstack.headers.object.*;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
@@ -123,7 +122,7 @@ public class StoredObjectMock extends AbstractStoredObject {
     public void delete() {
 
         if (!this.created) {
-            HttpStatusToExceptionMapper.throwException(HttpStatus.SC_NOT_FOUND);
+            HttpStatusExceptionUtil.throwException(HttpStatus.SC_NOT_FOUND);
         }
         ((ContainerMock)getContainer()).deleteObject(this);
         this.created = false;
