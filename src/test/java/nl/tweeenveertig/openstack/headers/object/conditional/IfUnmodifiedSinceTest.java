@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.headers.object.conditional;
 
 import nl.tweeenveertig.openstack.exception.ModifiedException;
-import nl.tweeenveertig.openstack.headers.HeaderTest;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import java.util.Date;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
-public class IfUnmodifiedSinceTest extends HeaderTest {
+public class IfUnmodifiedSinceTest extends AbstractHeaderTest {
 
     public static final String olderDate          = "Tue, 1 Jan 2009 11:29:02 GMT";
 

@@ -1,10 +1,9 @@
 package nl.tweeenveertig.openstack.headers.container;
 
-import nl.tweeenveertig.openstack.headers.HeaderTest;
-import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.junit.Test;
 
-public class ContainerObjectCountTest extends HeaderTest {
+public class ContainerObjectCountTest extends AbstractHeaderTest {
 
     @Test
     public void addHeader() {

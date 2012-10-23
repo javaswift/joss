@@ -1,13 +1,13 @@
 package nl.tweeenveertig.openstack.headers.object.conditional;
 
 import nl.tweeenveertig.openstack.exception.NotModifiedException;
-import nl.tweeenveertig.openstack.headers.HeaderTest;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
-public class IfNoneMatchTest extends HeaderTest{
+public class IfNoneMatchTest extends AbstractHeaderTest {
 
     @Test
     public void addHeader() {

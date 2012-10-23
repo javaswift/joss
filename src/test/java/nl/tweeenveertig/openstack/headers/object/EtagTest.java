@@ -1,7 +1,6 @@
 package nl.tweeenveertig.openstack.headers.object;
 
-import nl.tweeenveertig.openstack.headers.HeaderTest;
-import nl.tweeenveertig.openstack.headers.object.Etag;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
@@ -12,7 +11,7 @@ import java.io.InputStream;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
-public class EtagTest extends HeaderTest {
+public class EtagTest extends AbstractHeaderTest {
 
     @Test
     public void testMd5() throws IOException {

@@ -1,10 +1,9 @@
 package nl.tweeenveertig.openstack.headers.object;
 
-import nl.tweeenveertig.openstack.headers.HeaderTest;
-import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.junit.Test;
 
-public class ObjectContentLengthTest extends HeaderTest {
+public class ObjectContentLengthTest extends AbstractHeaderTest {
 
     @Test
     public void addHeader() {

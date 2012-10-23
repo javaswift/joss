@@ -1,11 +1,11 @@
 package nl.tweeenveertig.openstack.headers.object;
 
-import nl.tweeenveertig.openstack.headers.HeaderTest;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
 import org.junit.Test;
 
-public class ObjectLastModifiedTest extends HeaderTest {
+public class ObjectLastModifiedTest extends AbstractHeaderTest {
 
     @Test
     public void addHeader() throws DateParseException {

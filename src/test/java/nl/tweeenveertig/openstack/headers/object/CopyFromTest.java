@@ -1,10 +1,9 @@
 package nl.tweeenveertig.openstack.headers.object;
 
-import nl.tweeenveertig.openstack.headers.HeaderTest;
-import nl.tweeenveertig.openstack.headers.object.CopyFrom;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.junit.Test;
 
-public class CopyFromTest extends HeaderTest {
+public class CopyFromTest extends AbstractHeaderTest {
 
     @Test
     public void addHeader() {

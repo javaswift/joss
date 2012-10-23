@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.headers.object;
 
-import nl.tweeenveertig.openstack.headers.HeaderTest;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.cookie.DateParseException;
@@ -19,7 +19,7 @@ import static nl.tweeenveertig.openstack.headers.object.DeleteAt.X_DELETE_AT;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DeleteAtTest extends HeaderTest {
+public class DeleteAtTest extends AbstractHeaderTest {
 
     @Mock
     private HttpResponse response;

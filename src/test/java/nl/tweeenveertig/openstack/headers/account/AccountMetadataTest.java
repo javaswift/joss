@@ -1,10 +1,9 @@
 package nl.tweeenveertig.openstack.headers.account;
 
-import nl.tweeenveertig.openstack.headers.HeaderTest;
-import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.junit.Test;
 
-public class AccountMetadataTest extends HeaderTest {
+public class AccountMetadataTest extends AbstractHeaderTest {
 
     @Test
     public void addHeader() {

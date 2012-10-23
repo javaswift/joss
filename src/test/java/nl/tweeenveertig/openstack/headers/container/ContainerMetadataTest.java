@@ -1,10 +1,9 @@
 package nl.tweeenveertig.openstack.headers.container;
 
-import nl.tweeenveertig.openstack.headers.HeaderTest;
-import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.junit.Test;
 
-public class ContainerMetadataTest extends HeaderTest {
+public class ContainerMetadataTest extends AbstractHeaderTest {
 
     @Test
     public void addHeader() {

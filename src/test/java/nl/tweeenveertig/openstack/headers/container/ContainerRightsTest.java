@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.headers.container;
 
-import nl.tweeenveertig.openstack.headers.HeaderTest;
+import nl.tweeenveertig.openstack.headers.AbstractHeaderTest;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import static junit.framework.Assert.assertTrue;
 import static nl.tweeenveertig.openstack.command.core.BaseCommandTest.prepareHeader;
 import static org.mockito.Mockito.when;
 
-public class ContainerRightsTest extends HeaderTest {
+public class ContainerRightsTest extends AbstractHeaderTest {
 
     @Mock
     private HttpResponse response;
