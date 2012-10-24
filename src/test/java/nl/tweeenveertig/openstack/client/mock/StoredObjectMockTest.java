@@ -11,17 +11,19 @@ import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.headers.object.range.*;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import javax.activation.MimetypesFileTypeMap;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
@@ -30,7 +32,11 @@ import java.util.TreeMap;
 import static junit.framework.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ StoredObjectMock.class, IOUtils.class })
 public class StoredObjectMockTest {
 
     private StoredObjectMock object;
@@ -241,4 +247,59 @@ public class StoredObjectMockTest {
         assertEquals("video/x-f4v", new MimetypesFileTypeMap().getContentType("somefile.f4v"));
         assertEquals("test/42", new MimetypesFileTypeMap().getContentType("somefile.42")); // added fake format to test reading of mime.types file
     }
+
+    @Test(expected = CommandException.class)
+    public void downloadObjectThrowsIOException() throws Exception {
+        final ByteArrayInputStream inputStream = mock(ByteArrayInputStream.class);
+        whenNew(ByteArrayInputStream.class).withArguments(null).thenReturn(inputStream);
+        final FileOutputStream outputStream = mock(FileOutputStream.class);
+        whenNew(FileOutputStream.class).withArguments(downloadedFile).thenReturn(outputStream);
+        PowerMockito.mockStatic(IOUtils.class);
+        Mockito.when(IOUtils.copy(any(InputStream.class), any(OutputStream.class))).thenThrow(new IOException());
+        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
+        storedObject.downloadObject(null, new DownloadInstructions());
+    }
+
+    @Test(expected = CommandException.class)
+    public void downloadObjectThrowsIOExceptionNoStreamsToClose() throws Exception {
+        whenNew(ByteArrayInputStream.class).withArguments(null).thenThrow(new IOException());
+        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
+        storedObject.downloadObject(null, new DownloadInstructions());
+    }
+
+    @Test(expected = CommandException.class)
+    public void uploadObjectWithInstructionsThrowsIOException() throws Exception {
+        PowerMockito.mockStatic(IOUtils.class);
+        Mockito.when(IOUtils.toByteArray((any(InputStream.class)))).thenThrow(new IOException());
+        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
+        storedObject.uploadObject(new UploadInstructions(new byte[] { }));
+    }
+
+    @Test(expected = CommandException.class)
+    public void uploadObjectWithInputStreamThrowsIOException() throws Exception {
+        PowerMockito.mockStatic(IOUtils.class);
+        Mockito.when(IOUtils.toByteArray((any(InputStream.class)))).thenThrow(new IOException());
+        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
+        storedObject.uploadObject(new ByteArrayInputStream(new byte[] { }));
+    }
+
+    @Test(expected = CommandException.class)
+    public void uploadObjectWithFileThrowsIOException() throws Exception {
+        final FileInputStream outputStream = mock(FileInputStream.class);
+        whenNew(FileInputStream.class).withArguments(downloadedFile).thenReturn(outputStream);
+        final ByteArrayOutputStream inputStream = mock(ByteArrayOutputStream.class);
+        whenNew(ByteArrayOutputStream.class).withNoArguments().thenReturn(inputStream);
+        PowerMockito.mockStatic(IOUtils.class);
+        Mockito.when(IOUtils.copy(any(InputStream.class), any(OutputStream.class))).thenThrow(new IOException());
+        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
+        storedObject.uploadObject(downloadedFile);
+    }
+
+    @Test(expected = CommandException.class)
+    public void uploadObjectWithFileThrowsIOExceptionNoStreamsToClose() throws Exception {
+        whenNew(FileInputStream.class).withArguments(downloadedFile).thenThrow(new IOException());
+        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
+        storedObject.uploadObject(downloadedFile);
+    }
+
 }
