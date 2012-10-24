@@ -6,13 +6,22 @@ import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
 import static junit.framework.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.powermock.api.mockito.PowerMockito.*;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ AccountMock.class })
 public class AccountMockTest {
 
     @Test
@@ -131,6 +140,14 @@ public class AccountMockTest {
         container1.create();
         Container container2 = account.getContainer("Alpha");
         assertEquals(container1, container2);
+    }
+
+    @Test(expected = CommandException.class)
+    public void setOnFileObjectStore() throws Exception {
+        OnFileObjectStoreLoader loader = mock(OnFileObjectStoreLoader.class);
+        whenNew(OnFileObjectStoreLoader.class).withNoArguments().thenReturn(loader);
+        doThrow(new IOException()).when(loader).createContainers(any(Account.class), anyString());
+        new AccountMock().setOnFileObjectStore("test");
     }
 
 }
