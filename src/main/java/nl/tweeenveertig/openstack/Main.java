@@ -27,11 +27,17 @@ public class Main {
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
         Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
-        Container container = account.getContainer("images");
+//        Collection<Container> containers = account.listContainers();
+//        for (Container container : containers) {
+//            System.out.println(container.getName());
+//        }
+        Container container = account.getContainer("private-K01");
+        System.out.println("PUBLIC: "+container.isPublic());
         Collection<StoredObject> storedObjects = container.listObjects();
         for (StoredObject object : storedObjects) {
             System.out.println(object.getName());
             System.out.println("  -> type: "+object.getContentType()+", length: "+object.getContentLength());
+            System.out.println("  "+object.getPublicURL());
         }
 
 //        StoredObject segment1 = container.getObjectSegment("big-file.png", 1);

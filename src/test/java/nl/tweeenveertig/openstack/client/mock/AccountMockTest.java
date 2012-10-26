@@ -16,7 +16,6 @@ import java.util.TreeMap;
 
 import static junit.framework.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.powermock.api.mockito.PowerMockito.*;
 

@@ -2,20 +2,35 @@ package nl.tweeenveertig.openstack.client.factory;
 
 import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.client.impl.ClientImpl;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Matchers.anyString;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.when;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(AccountFactory.class)
 public class AccountFactoryTest {
+
+    @Mock
+    private ClientImpl mockedClient;
+
+    @Before
+    public void setup() throws Exception {
+        mockedClient = mock(ClientImpl.class);
+        whenNew(ClientImpl.class).withNoArguments().thenReturn(mockedClient);
+        when(mockedClient.authenticate(anyString(), anyString(), anyString(), anyString())).thenReturn(new AccountImpl(null, null, null));
+    }
 
     @Test
     public void constructMock() {
@@ -28,6 +43,20 @@ public class AccountFactoryTest {
 
     @Test
     public void constructImpl() throws Exception {
+        AccountFactory factory = construct(null);
+        assertNotNull(factory.createAccount());
+        verify(mockedClient, never()).setHttpClient(null);
+    }
+
+    @Test
+    public void constructImplWithCustomHttpClient() throws Exception {
+        HttpClient httpClient = new DefaultHttpClient();
+        AccountFactory factory = construct(httpClient);
+        assertNotNull(factory.createAccount());
+        verify(mockedClient, times(1)).setHttpClient(httpClient);
+    }
+
+    protected AccountFactory construct(HttpClient httpClient) throws Exception {
         AccountFactory factory = new AccountFactory();
         AccountConfig config = new AccountConfig();
         config.setAuthUrl(null);
@@ -35,10 +64,8 @@ public class AccountFactoryTest {
         config.setTenant(null);
         config.setUsername(null);
         factory.setConfig(config);
-        final ClientImpl mockedClient = mock(ClientImpl.class);
-        whenNew(ClientImpl.class).withNoArguments().thenReturn(mockedClient);
-        when(mockedClient.authenticate(anyString(), anyString(), anyString(), anyString())).thenReturn(new AccountImpl(null, null, null));
-        assertNotNull(factory.createAccount());
+        factory.setHttpClient(httpClient);
+        return factory;
     }
 
 }
