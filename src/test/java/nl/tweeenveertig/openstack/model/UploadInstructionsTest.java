@@ -50,7 +50,7 @@ public class UploadInstructionsTest {
     @Test
     public void contentType() {
         UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setContentType("image/png");
-        assertEquals("image/png", instructions.getContentType());
+        assertEquals("image/png", instructions.getContentType().getHeaderValue());
     }
 
     @Test

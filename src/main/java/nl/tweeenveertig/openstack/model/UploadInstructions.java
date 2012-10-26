@@ -2,10 +2,13 @@ package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.headers.object.DeleteAt;
+import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
+import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import org.apache.http.HttpEntity;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class UploadInstructions {
@@ -14,7 +17,7 @@ public class UploadInstructions {
 
     private String md5;
 
-    private String contentType;
+    private ObjectContentType contentType;
 
     private DeleteAfter deleteAfter;
 
@@ -51,6 +54,10 @@ public class UploadInstructions {
     }
 
     public UploadInstructions setContentType(String contentType) {
+        return setContentType(new ObjectContentType(contentType));
+    }
+
+    public UploadInstructions setContentType(ObjectContentType contentType) {
         this.contentType = contentType;
         return this;
     }
@@ -74,15 +81,23 @@ public class UploadInstructions {
         return this.uploadPayload.getEntity();
     }
 
-    public ObjectManifest getObjectManifest() {
-        return this.objectManifest;
+    public Long getSegmentationSize() {
+        return this.segmentationSize;
     }
 
     public String getMd5() {
         return this.md5;
     }
 
-    public String getContentType() {
+    public Etag getEtag() throws IOException {
+        return getMd5() == null ? this.uploadPayload.getEtag() : new Etag(getMd5());
+    }
+
+    public ObjectManifest getObjectManifest() {
+        return this.objectManifest;
+    }
+
+    public ObjectContentType getContentType() {
         return this.contentType;
     }
 
@@ -92,10 +107,6 @@ public class UploadInstructions {
 
     public DeleteAfter getDeleteAfter() {
         return this.deleteAfter;
-    }
-
-    public Long getSegmentationSize() {
-        return this.segmentationSize;
     }
 
 }

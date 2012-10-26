@@ -4,9 +4,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,7 +25,10 @@ import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.params.CoreProtocolPNames;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
+@RunWith(MockitoJUnitRunner.class)
 public class UploadObjectCommandTest extends BaseCommandTest {
 
     @Before
@@ -43,25 +44,14 @@ public class UploadObjectCommandTest extends BaseCommandTest {
                                 new UploadInstructions(new byte[]{ })).call();
     }
 
-    @Test
+    @Test(expected = CommandException.class)
     public void failReadingTheEntity() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
         byte[] bytes = new byte[]{ 0x01, 0x02, 0x03 };
-        final HttpEntity mockedEntity = mock(HttpEntity.class);
-        when(mockedEntity.getContent()).thenThrow(new IOException("some error"));
-        UploadInstructions instructions = new UploadInstructions(bytes) {
-            @Override
-            public HttpEntity getEntity() {
-
-                return mockedEntity;
-            }
-        };
-        try {
-            new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), instructions)
-                    .call();
-            fail("Should have thrown an exception");
-        } catch (CommandException err) {
-        }
+        UploadInstructions instructions = spy(new UploadInstructions(bytes));
+        when(instructions.getEtag()).thenThrow(new IOException());
+        new UploadObjectCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), instructions)
+                .call();
     }
 
     @Test

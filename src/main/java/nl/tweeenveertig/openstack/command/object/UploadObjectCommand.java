@@ -11,12 +11,10 @@ import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
-import nl.tweeenveertig.openstack.headers.object.Etag;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.params.CoreProtocolPNames;
 
 import java.io.IOException;
@@ -38,15 +36,8 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
         setHeader(uploadInstructions.getDeleteAt());
         setHeader(uploadInstructions.getDeleteAfter());
         setHeader(uploadInstructions.getObjectManifest());
-        if (uploadInstructions.getMd5() != null) {
-            setHeader(new Etag(uploadInstructions.getMd5()));
-        }
-        if (uploadInstructions.getContentType() != null) {
-            setHeader(new ObjectContentType(uploadInstructions.getContentType()));
-        }
-        else if (!(entity instanceof InputStreamEntity)) { // reading an InputStream is not a smart idea
-            setHeader(new Etag(entity.getContent()));
-        }
+        setHeader(uploadInstructions.getEtag());
+        setHeader(uploadInstructions.getContentType());
         request.setEntity(entity);
     }
 

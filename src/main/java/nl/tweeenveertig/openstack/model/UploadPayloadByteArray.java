@@ -1,7 +1,10 @@
 package nl.tweeenveertig.openstack.model;
 
+import nl.tweeenveertig.openstack.headers.object.Etag;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
+
+import java.io.IOException;
 
 public class UploadPayloadByteArray extends UploadPayload {
 
@@ -11,6 +14,7 @@ public class UploadPayloadByteArray extends UploadPayload {
         this.bytes = bytes;
     }
 
+    @Override
     public HttpEntity getEntity() {
         return new ByteArrayEntity(this.bytes);
     }
@@ -18,6 +22,11 @@ public class UploadPayloadByteArray extends UploadPayload {
     @Override
     public boolean mustBeSegmented(Long segmentationSize) {
         return this.bytes.length > segmentationSize;
+    }
+
+    @Override
+    public Etag getEtag() throws IOException {
+        return new Etag(getEntity().getContent());
     }
 
 }
