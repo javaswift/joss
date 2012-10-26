@@ -7,6 +7,8 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -15,7 +17,10 @@ import java.util.Date;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class UploadInstructionsTest {
 
     @Test
@@ -64,6 +69,20 @@ public class UploadInstructionsTest {
     public void objectManifest() {
         UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setObjectManifest(new ObjectManifest("images/big.dat"));
         assertNotNull(instructions.getObjectManifest());
+    }
+
+    @Test
+    public void segmentationSize() {
+        UploadInstructions instructions = new UploadInstructions(new File("/tmp")).setSegmentationSize(4000000000L);
+        assertEquals((Long)4000000000L, instructions.getSegmentationSize());
+    }
+
+    @Test
+    public void requiresSegmentation() {
+        File fileToUpload = mock(File.class);
+        when(fileToUpload.length()).thenReturn(12L);
+        UploadInstructions instructions = new UploadInstructions(fileToUpload).setSegmentationSize(9L);
+        assertTrue(instructions.requiresSegmentation());
     }
 
 }
