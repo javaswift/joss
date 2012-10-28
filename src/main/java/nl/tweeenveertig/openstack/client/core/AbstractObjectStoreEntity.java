@@ -35,7 +35,7 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
     }
 
     protected void checkForInfo() {
-        if (!infoRetrieved) {
+        if (!isInfoRetrieved()) {
             getInfo();
             setInfoRetrieved();
         }
@@ -56,6 +56,10 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
 
     public void invalidate() {
         this.infoRetrieved = false;
+    }
+
+    public boolean isInfoRetrieved() {
+        return this.infoRetrieved;
     }
 
     protected abstract void getInfo();

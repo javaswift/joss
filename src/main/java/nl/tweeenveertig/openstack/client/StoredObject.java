@@ -143,6 +143,12 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject
     */
     public boolean exists();
 
+    /**
+    * Returns whether the metadata of the object has been retrieved
+    * @return true if the metadata has been retrieved
+    */
+    public boolean isInfoRetrieved();
+
     public Date getLastModifiedAsDate();
     public String getLastModified();
     public String getEtag();
