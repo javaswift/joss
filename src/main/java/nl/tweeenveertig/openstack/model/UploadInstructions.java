@@ -13,6 +13,8 @@ import java.io.InputStream;
 
 public class UploadInstructions {
 
+    public static Long MAX_SEGMENTATION_SIZE = 5368709120L; // 5 GB, max object size
+
     private UploadPayload uploadPayload;
 
     private String md5;
@@ -25,7 +27,7 @@ public class UploadInstructions {
 
     private ObjectManifest objectManifest;
 
-    private Long segmentationSize = 5368709120L; // 5 GB, max object size
+    private Long segmentationSize = MAX_SEGMENTATION_SIZE;
 
     public UploadInstructions(File fileToUpload) {
         this.uploadPayload = new UploadPayloadFile(fileToUpload);

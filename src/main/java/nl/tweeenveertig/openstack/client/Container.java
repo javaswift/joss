@@ -66,6 +66,12 @@ public interface Container extends ObjectStoreEntity, Comparable<Container> {
     */
     public StoredObject getObjectSegment(String name, int part);
 
+    /**
+    * Returns whether the metadata of the container has been retrieved
+    * @return true if the metadata has been retrieved
+    */
+    public boolean isInfoRetrieved();
+
     public int getObjectCount();
     public long getBytesUsed();
     public boolean isPublic();
