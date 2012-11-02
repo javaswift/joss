@@ -11,6 +11,7 @@ import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.headers.object.range.*;
+import nl.tweeenveertig.openstack.model.SegmentationPlan;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
@@ -32,6 +33,7 @@ import java.util.TreeMap;
 import static junit.framework.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
@@ -246,6 +248,29 @@ public class StoredObjectMockTest {
         assertEquals("application/andrew-inset", new MimetypesFileTypeMap().getContentType("somefile.ez"));
         assertEquals("video/x-f4v", new MimetypesFileTypeMap().getContentType("somefile.f4v"));
         assertEquals("test/42", new MimetypesFileTypeMap().getContentType("somefile.42")); // added fake format to test reading of mime.types file
+    }
+
+    @Test
+    public void uploadObjectToBeSegmented() {
+        object.uploadObject(new UploadInstructions(uploadBytes).setSegmentationSize(3L));
+        Container container = object.getContainer();
+        assertEquals(4, container.listObjects().size());
+        assertTrue(container.getObjectSegment("someObject", 1).exists());
+        assertTrue(container.getObjectSegment("someObject", 2).exists());
+        assertTrue(container.getObjectSegment("someObject", 3).exists());
+        StoredObject manifest = container.getObject("someObject");
+        assertTrue(manifest.exists());
+        assertEquals(0, manifest.getContentLength());
+    }
+
+    @Test(expected = CommandException.class)
+    public void uploadSegmentedObjectsThrowsException() throws IOException {
+        UploadInstructions instruction = mock(UploadInstructions.class);
+        when(instruction.requiresSegmentation()).thenReturn(true);
+        SegmentationPlan plan = mock(SegmentationPlan.class);
+        when(plan.getNextSegment()).thenThrow(new IOException());
+        when(instruction.getSegmentationPlan()).thenReturn(plan);
+        object.uploadObject(instruction);
     }
 
     @Test(expected = CommandException.class)
