@@ -4,7 +4,15 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static junit.framework.Assert.assertEquals;
+
 public class SegmentationPlanByteArrayTest extends SegmentationPlanTest {
+
+    @Test
+    public void getSegmentNumber() throws IOException {
+        SegmentationPlan plan = new SegmentationPlanByteArray(new byte[] {}, 10);
+        assertEquals(Long.valueOf(0L), plan.getSegmentNumber());
+    }
 
     @Test
     public void readItAll() throws IOException {

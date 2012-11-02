@@ -13,6 +13,10 @@ public abstract class SegmentationPlan {
 
     protected Long currentSegment = 0L;
 
+    public Long getSegmentNumber() {
+        return this.currentSegment;
+    }
+
     public SegmentationPlan(Long segmentationSize) {
         this.segmentationSize = segmentationSize;
     }

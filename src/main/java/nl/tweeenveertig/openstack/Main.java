@@ -27,22 +27,25 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-//        RandomAccessFile file = new RandomAccessFile("/Users/robertbor/Downloads/sample.txt", "r");
-//        long length = file.length();
-//        int segmentationSize = 10;
-//        for (int segment = 0; segment < length / segmentationSize + 1; segment++) {
-//            InputStream inputStream = new FixedLengthInputStream(Channels.newInputStream(file.getChannel().position(segment * segmentationSize)), segmentationSize);
-//            int readChar = inputStream.read();
-//            while (readChar != -1) {
-//                System.out.print((char)readChar);
-//                readChar = inputStream.read();
-//            }
-//            System.out.println();
-//            inputStream.close();
-//        }
-//        file.close();
+        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+        Container container = account.getContainer("segments");
+//        byte[] bytes = "This is the text that will be saved in the cloud".getBytes();
+//        StoredObject uploadObject = container.getObject("test.txt");
+//        uploadObject.uploadObject(new UploadInstructions(bytes).setSegmentationSize(10L));
 
-//        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+        Collection<StoredObject> storedObjects = container.listObjects();
+        for (StoredObject object : storedObjects) {
+            System.out.println(object.getName());
+            System.out.println("  -> type: "+object.getContentType()+", length: "+object.getContentLength());
+            System.out.println("  "+object.getPublicURL());
+        }
+
+//        StoredObject uploadObject = container.getObject("test.txt");
+//        byte[] result = uploadObject.downloadObject();
+//        for (byte readByte : result) {
+//            System.out.print((char)readByte);
+//        }
+
 //        Collection<Container> containers = account.listContainers();
 //        for (Container container : containers) {
 //            System.out.println(container.getName());

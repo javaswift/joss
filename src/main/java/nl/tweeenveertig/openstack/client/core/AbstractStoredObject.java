@@ -2,9 +2,11 @@ package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.command.object.UploadObjectCommand;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.util.Date;
 
@@ -55,7 +57,6 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         return info.getDeleteAt() == null ? null : info.getDeleteAt().getHeaderValue();
     }
 
-
     public String getName() {
         return name;
     }
@@ -71,6 +72,16 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     public int hashCode() {
         return getName().hashCode();
     }
+
+    public void uploadObject(UploadInstructions uploadInstructions) {
+        if (uploadInstructions.requiresSegmentation()) {
+            ((AbstractContainer)getContainer()).uploadSegmentedObjects(getName(), uploadInstructions);
+        } else {
+            directlyUploadObject(uploadInstructions);
+        }
+    }
+
+    protected abstract void directlyUploadObject(UploadInstructions uploadInstructions);
 
     @SuppressWarnings("ConstantConditions")
     public boolean equals(Object o) {

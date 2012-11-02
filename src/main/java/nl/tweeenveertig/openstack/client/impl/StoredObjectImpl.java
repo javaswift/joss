@@ -47,12 +47,8 @@ public class StoredObjectImpl extends AbstractStoredObject {
         new DownloadObjectToFileCommand(getAccount(), getClient(), getAccess(), getContainer(), this, downloadInstructions, targetFile).call();
     }
 
-    public void uploadObject(UploadInstructions uploadInstructions) {
-        if (uploadInstructions.requiresSegmentation()) {
-            getContainer().uploadSegmentedObjects(uploadInstructions);
-        } else {
-            new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, uploadInstructions).call();
-        }
+    public void directlyUploadObject(UploadInstructions uploadInstructions) {
+        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, uploadInstructions).call();
     }
 
     public void uploadObject(InputStream inputStream) {

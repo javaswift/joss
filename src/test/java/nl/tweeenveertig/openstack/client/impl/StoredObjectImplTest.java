@@ -264,9 +264,9 @@ public class StoredObjectImplTest extends BaseCommandTest {
         UploadInstructions instruction = mock(UploadInstructions.class);
         when(instruction.requiresSegmentation()).thenReturn(true);
         AbstractContainer container1 = (AbstractContainer)spy(account.getContainer("alpha"));
-        doNothing().when(container1).uploadSegmentedObjects(instruction);
+        doNothing().when(container1).uploadSegmentedObjects("alpha", instruction);
         StoredObject object = container1.getObject("alpha");
         object.uploadObject(instruction);
-        verify(container1).uploadSegmentedObjects(instruction);
+        verify(container1).uploadSegmentedObjects("alpha", instruction);
     }
 }

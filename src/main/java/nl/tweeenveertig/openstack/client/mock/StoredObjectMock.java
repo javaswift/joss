@@ -78,7 +78,7 @@ public class StoredObjectMock extends AbstractStoredObject {
         }
     }
 
-    public void uploadObject(UploadInstructions uploadInstructions) {
+    public void directlyUploadObject(UploadInstructions uploadInstructions) {
         if (!this.created) {
             ((ContainerMock)getContainer()).createObject(this);
             this.created = true;

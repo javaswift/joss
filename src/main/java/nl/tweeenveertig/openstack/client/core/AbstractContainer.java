@@ -4,11 +4,16 @@ import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.mock.StoredObjectMock;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
 import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
+import nl.tweeenveertig.openstack.model.SegmentationPlan;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container {
 
@@ -67,19 +72,25 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         return new ContainerMetadata(name, value);
     }
 
-    public void uploadSegmentedObjects(UploadInstructions uploadInstructions) {
+    public void uploadSegmentedObjects(String name, UploadInstructions uploadInstructions) {
 
-        // 1. Ask upload instructions to return the segments
+        try {
+            SegmentationPlan plan = uploadInstructions.getSegmentationPlan();
+            InputStream segmentStream = plan.getNextSegment();
+            while (segmentStream != null) {
+                StoredObject segment = getObjectSegment(name, plan.getSegmentNumber().intValue());
+                segment.uploadObject(segmentStream);
+                segmentStream.close();
+                segmentStream = plan.getNextSegment();
+            }
+        } catch (IOException err) {
+            throw new CommandException("Unable to upload segments", err);
+        }
 
-        // 2. Upload every individual segment
-//        for () {
-//
-//        }
-
-        // 3. Upload the manifest file
+        StoredObject manifestFile = getObject(name);
         UploadInstructions manifest = new UploadInstructions(new byte[] {})
-                .setObjectManifest(new ObjectManifest(getName()));
-        getObject(getName()).uploadObject(manifest);
+                .setObjectManifest(new ObjectManifest(manifestFile.getPath()));
+        manifestFile.uploadObject(manifest);
     }
 
 }
