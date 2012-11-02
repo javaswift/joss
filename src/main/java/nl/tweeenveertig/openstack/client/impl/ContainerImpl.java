@@ -1,11 +1,14 @@
 package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
 import nl.tweeenveertig.openstack.command.container.*;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.headers.Header;
+import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.http.client.HttpClient;
 
 import java.util.ArrayList;
@@ -52,6 +55,22 @@ public class ContainerImpl extends AbstractContainer {
 
     protected Access getAccess() {
         return ((AccountImpl)getAccount()).getAccess();
+    }
+
+    // TODO - abstract this one to AbstractContainer? Gives same benefits to Impl and Mock
+    protected void uploadSegmentedObjects(UploadInstructions uploadInstructions) {
+
+        // 1. Ask upload instructions to return the segments
+
+        // 2. Upload every individual segment
+//        for () {
+//
+//        }
+
+        // 3. Upload the manifest file
+        UploadInstructions manifest = new UploadInstructions(new byte[] {})
+                .setObjectManifest(new ObjectManifest(getName()));
+        getObject(getName()).uploadObject(manifest);
     }
 
     @Override

@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.headers.object.DeleteAt;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
+import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import nl.tweeenveertig.openstack.client.StoredObject;
@@ -47,7 +48,11 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public void uploadObject(UploadInstructions uploadInstructions) {
-        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, uploadInstructions).call();
+        if (uploadInstructions.requiresSegmentation()) {
+            getContainer().uploadSegmentedObjects(uploadInstructions);
+        } else {
+            new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, uploadInstructions).call();
+        }
     }
 
     public void uploadObject(InputStream inputStream) {

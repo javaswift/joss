@@ -115,7 +115,7 @@ public class ContainerMockTest {
     @Test
     public void getObjectSegment() {
         StoredObject object = container.getObjectSegment("alpha", 14);
-        assertEquals("alpha/0014", object.getName());
+        assertEquals("alpha/00000014", object.getName());
     }
 
     protected void addObject(String name, byte[] bytes) throws IOException {

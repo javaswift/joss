@@ -5,9 +5,10 @@ import nl.tweeenveertig.openstack.client.impl.ClientImpl;
 import nl.tweeenveertig.openstack.client.mock.ClientMock;
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
-import nl.tweeenveertig.openstack.model.UploadInstructions;
+import nl.tweeenveertig.openstack.model.*;
 
 import java.io.*;
+import java.nio.channels.Channels;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -26,19 +27,34 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+//        RandomAccessFile file = new RandomAccessFile("/Users/robertbor/Downloads/sample.txt", "r");
+//        long length = file.length();
+//        int segmentationSize = 10;
+//        for (int segment = 0; segment < length / segmentationSize + 1; segment++) {
+//            InputStream inputStream = new FixedLengthInputStream(Channels.newInputStream(file.getChannel().position(segment * segmentationSize)), segmentationSize);
+//            int readChar = inputStream.read();
+//            while (readChar != -1) {
+//                System.out.print((char)readChar);
+//                readChar = inputStream.read();
+//            }
+//            System.out.println();
+//            inputStream.close();
+//        }
+//        file.close();
+
+//        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
 //        Collection<Container> containers = account.listContainers();
 //        for (Container container : containers) {
 //            System.out.println(container.getName());
 //        }
-        Container container = account.getContainer("private-K01");
-        System.out.println("PUBLIC: "+container.isPublic());
-        Collection<StoredObject> storedObjects = container.listObjects();
-        for (StoredObject object : storedObjects) {
-            System.out.println(object.getName());
-            System.out.println("  -> type: "+object.getContentType()+", length: "+object.getContentLength());
-            System.out.println("  "+object.getPublicURL());
-        }
+//        Container container = account.getContainer("private-K01");
+//        System.out.println("PUBLIC: "+container.isPublic());
+//        Collection<StoredObject> storedObjects = container.listObjects();
+//        for (StoredObject object : storedObjects) {
+//            System.out.println(object.getName());
+//            System.out.println("  -> type: "+object.getContentType()+", length: "+object.getContentLength());
+//            System.out.println("  "+object.getPublicURL());
+//        }
 
 //        StoredObject segment1 = container.getObjectSegment("big-file.png", 1);
 //        segment1.uploadObject(new byte[] { 'A', 'B', 'C' });

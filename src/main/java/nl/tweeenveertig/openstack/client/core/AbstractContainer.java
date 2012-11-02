@@ -21,7 +21,7 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     }
 
     public StoredObject getObjectSegment(String name, int part) {
-        return getObject(name + "/" + String.format("%04d", part));
+        return getObject(name + "/" + String.format("%08d", part));
     }
 
     public int getObjectCount() {
