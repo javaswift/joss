@@ -32,4 +32,11 @@ public abstract class UploadPayload {
     */
     public abstract Etag getEtag() throws IOException;
 
+    /**
+    * Sets up the plan to upload the payload in segments
+    * @param segmentationSize the size of an individual segment
+    * @return the segmentation plan
+    */
+    public abstract SegmentationPlan getSegmentationPlan(Long segmentationSize) throws IOException;
+
 }

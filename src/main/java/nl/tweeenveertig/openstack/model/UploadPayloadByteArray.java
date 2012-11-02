@@ -29,4 +29,9 @@ public class UploadPayloadByteArray extends UploadPayload {
         return new Etag(getEntity().getContent());
     }
 
+    @Override
+    public SegmentationPlan getSegmentationPlan(Long segmentationSize) throws IOException {
+        return new SegmentationPlanByteArray(this.bytes, segmentationSize);
+    }
+
 }

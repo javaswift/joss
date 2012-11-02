@@ -30,4 +30,9 @@ public class UploadPayloadFile extends UploadPayload {
         return new Etag(getEntity().getContent());
     }
 
+    @Override
+    public SegmentationPlan getSegmentationPlan(Long segmentationSize) throws IOException {
+        return new SegmentationPlanFile(this.file, segmentationSize);
+    }
+
 }

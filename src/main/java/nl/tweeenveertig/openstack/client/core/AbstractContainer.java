@@ -6,7 +6,9 @@ import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.mock.StoredObjectMock;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
+import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.model.ContainerInformation;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container {
 
@@ -64,4 +66,20 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     protected Metadata createMetadataEntry(String name, String value) {
         return new ContainerMetadata(name, value);
     }
+
+    public void uploadSegmentedObjects(UploadInstructions uploadInstructions) {
+
+        // 1. Ask upload instructions to return the segments
+
+        // 2. Upload every individual segment
+//        for () {
+//
+//        }
+
+        // 3. Upload the manifest file
+        UploadInstructions manifest = new UploadInstructions(new byte[] {})
+                .setObjectManifest(new ObjectManifest(getName()));
+        getObject(getName()).uploadObject(manifest);
+    }
+
 }

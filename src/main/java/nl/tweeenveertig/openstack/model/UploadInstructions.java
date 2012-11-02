@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.model;
 
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.headers.object.DeleteAt;
 import nl.tweeenveertig.openstack.headers.object.Etag;
@@ -43,6 +44,14 @@ public class UploadInstructions {
 
     public boolean requiresSegmentation() {
         return this.uploadPayload.mustBeSegmented(this.segmentationSize);
+    }
+
+    public SegmentationPlan getSegmentationPlan() {
+        try {
+            return this.uploadPayload.getSegmentationPlan(this.segmentationSize);
+        } catch (IOException err) {
+            throw new CommandException("Unable to set up segmentation plan", err);
+        }
     }
 
     public UploadInstructions setObjectManifest(ObjectManifest objectManifest) {

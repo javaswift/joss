@@ -57,22 +57,6 @@ public class ContainerImpl extends AbstractContainer {
         return ((AccountImpl)getAccount()).getAccess();
     }
 
-    // TODO - abstract this one to AbstractContainer? Gives same benefits to Impl and Mock
-    protected void uploadSegmentedObjects(UploadInstructions uploadInstructions) {
-
-        // 1. Ask upload instructions to return the segments
-
-        // 2. Upload every individual segment
-//        for () {
-//
-//        }
-
-        // 3. Upload the manifest file
-        UploadInstructions manifest = new UploadInstructions(new byte[] {})
-                .setObjectManifest(new ObjectManifest(getName()));
-        getObject(getName()).uploadObject(manifest);
-    }
-
     @Override
     protected void saveMetadata() {
         new ContainerMetadataCommand(getAccount(), getClient(), getAccess(), this, info.getMetadata()).call();

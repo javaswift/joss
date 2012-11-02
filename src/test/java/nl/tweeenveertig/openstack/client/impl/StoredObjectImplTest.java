@@ -2,10 +2,12 @@ package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.client.core.AbstractContainer;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.object.AbstractDownloadObjectCommand;
 import nl.tweeenveertig.openstack.headers.object.CopyFrom;
+import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
@@ -16,6 +18,8 @@ import org.apache.http.impl.cookie.DateUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.*;
 import java.util.*;
@@ -28,11 +32,9 @@ import static nl.tweeenveertig.openstack.headers.object.ObjectContentLength.CONT
 import static nl.tweeenveertig.openstack.headers.object.Etag.ETAG;
 import static nl.tweeenveertig.openstack.headers.object.ObjectContentType.CONTENT_TYPE;
 import static nl.tweeenveertig.openstack.headers.object.ObjectLastModified.LAST_MODIFIED;
+import static org.mockito.Mockito.*;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+@RunWith(MockitoJUnitRunner.class)
 public class StoredObjectImplTest extends BaseCommandTest {
 
     private StoredObject object;
@@ -255,5 +257,16 @@ public class StoredObjectImplTest extends BaseCommandTest {
     public void checkWhetherANonExistingFileExistsButThrowAnotherError() {
         when(statusLine.getStatusCode()).thenReturn(500);
         object.exists();
+    }
+
+    @Test
+    public void requiresSegmentation() {
+        UploadInstructions instruction = mock(UploadInstructions.class);
+        when(instruction.requiresSegmentation()).thenReturn(true);
+        AbstractContainer container1 = (AbstractContainer)spy(account.getContainer("alpha"));
+        doNothing().when(container1).uploadSegmentedObjects(instruction);
+        StoredObject object = container1.getObject("alpha");
+        object.uploadObject(instruction);
+        verify(container1).uploadSegmentedObjects(instruction);
     }
 }

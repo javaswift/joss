@@ -30,4 +30,9 @@ public class UploadPayloadInputStream extends UploadPayload {
         return null;
     }
 
+    @Override
+    public SegmentationPlan getSegmentationPlan(Long segmentationSize) throws IOException {
+        throw new UnsupportedOperationException("This operation is not support for InputStream");
+    }
+
 }

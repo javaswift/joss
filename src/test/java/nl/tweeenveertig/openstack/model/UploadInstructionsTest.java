@@ -1,5 +1,8 @@
 package nl.tweeenveertig.openstack.model;
 
+import nl.tweeenveertig.openstack.client.factory.AccountFactory;
+import nl.tweeenveertig.openstack.client.impl.AccountImpl;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.headers.object.DeleteAt;
 import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
@@ -9,18 +12,26 @@ import org.apache.http.entity.InputStreamEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest( { UploadInstructions.class, UploadPayloadFile.class } )
 public class UploadInstructionsTest {
 
     @Test
@@ -83,6 +94,15 @@ public class UploadInstructionsTest {
         when(fileToUpload.length()).thenReturn(12L);
         UploadInstructions instructions = new UploadInstructions(fileToUpload).setSegmentationSize(9L);
         assertTrue(instructions.requiresSegmentation());
+    }
+
+    @Test (expected = CommandException.class )
+    public void getSegmentationPlanThrowsIOException() throws Exception {
+        UploadPayloadFile uploadPayload = mock(UploadPayloadFile.class);
+        whenNew(UploadPayloadFile.class).withArguments(null).thenReturn(uploadPayload);
+        when(uploadPayload.getSegmentationPlan(anyLong())).thenThrow(new IOException());
+        UploadInstructions instructions = new UploadInstructions((File)null);
+        instructions.getSegmentationPlan();
     }
 
 }
