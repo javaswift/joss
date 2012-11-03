@@ -3,6 +3,7 @@ package nl.tweeenveertig.openstack.client.impl;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
+import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.object.AbstractDownloadObjectCommand;
@@ -264,9 +265,9 @@ public class StoredObjectImplTest extends BaseCommandTest {
         UploadInstructions instruction = mock(UploadInstructions.class);
         when(instruction.requiresSegmentation()).thenReturn(true);
         AbstractContainer container1 = (AbstractContainer)spy(account.getContainer("alpha"));
-        doNothing().when(container1).uploadSegmentedObjects("alpha", instruction);
-        StoredObject object = container1.getObject("alpha");
+        AbstractStoredObject object = (AbstractStoredObject)spy(container1.getObject("alpha"));
+        doNothing().when(object).uploadObjectAsSegments(instruction);
         object.uploadObject(instruction);
-        verify(container1).uploadSegmentedObjects("alpha", instruction);
+        verify(object).uploadObjectAsSegments(instruction);
     }
 }

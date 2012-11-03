@@ -15,6 +15,9 @@ import org.apache.http.HttpStatus;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 public class StoredObjectMock extends AbstractStoredObject {
@@ -22,6 +25,8 @@ public class StoredObjectMock extends AbstractStoredObject {
     private boolean created = false;
 
     private byte[] object;
+
+    private ObjectManifest objectManifest;
 
     public StoredObjectMock(Container container, String name) {
         super(container, name);
@@ -46,7 +51,31 @@ public class StoredObjectMock extends AbstractStoredObject {
         return downloadObject(new DownloadInstructions());
     }
 
+    protected byte[] mergeSegmentedObjects() {
+        Container segmentFolder = getContainer().getAccount().getContainer(this.objectManifest.getContainerName());
+        String objectPrefix = this.objectManifest.getObjectPrefix();
+        Collection<StoredObject> segments = new ArrayList<StoredObject>();
+        int byteCount = 0;
+        for (StoredObject storedObject : segmentFolder.listObjects()) {
+            if (storedObject.getName().startsWith(objectPrefix) && ! storedObject.getName().equals(objectPrefix)) {
+                segments.add(storedObject);
+                byteCount += storedObject.getContentLength();
+            }
+        }
+        byte[] mergedObject = new byte[byteCount];
+        int offset = 0;
+        for (StoredObject segment : segments) {
+            System.arraycopy(segment.downloadObject(), 0, mergedObject, offset, (int)segment.getContentLength());
+            offset += segment.getContentLength();
+        }
+        return mergedObject;
+    }
+
     public byte[] downloadObject(DownloadInstructions downloadInstructions) {
+        byte[] object = this.object;
+        if (this.objectManifest != null) {
+            object = mergeSegmentedObjects();
+        }
         if (downloadInstructions.getRange() != null) {
             return downloadInstructions.getRange().copy(object);
         }
@@ -79,6 +108,7 @@ public class StoredObjectMock extends AbstractStoredObject {
     }
 
     public void directlyUploadObject(UploadInstructions uploadInstructions) {
+        this.objectManifest = uploadInstructions.getObjectManifest();
         if (!this.created) {
             ((ContainerMock)getContainer()).createObject(this);
             this.created = true;

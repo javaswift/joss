@@ -27,11 +27,13 @@ public class Main {
         String url = args[3];
         System.out.println("Executing with "+username+"/"+password+"@"+url);
 
-        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+//        Account account = new ClientImpl().authenticate(tenant, username, password, url, "AMS-1");
+        Account account = new ClientMock().setAllowEveryone(true).authenticate(tenant, username, password, url, "AMS-1");
         Container container = account.getContainer("segments");
-//        byte[] bytes = "This is the text that will be saved in the cloud".getBytes();
-//        StoredObject uploadObject = container.getObject("test.txt");
-//        uploadObject.uploadObject(new UploadInstructions(bytes).setSegmentationSize(10L));
+        container.create();
+        byte[] bytes = "This is the text that will be saved in the cloud".getBytes();
+        StoredObject uploadObject = container.getObject("test2.txt");
+        uploadObject.uploadObject(new UploadInstructions(bytes).setSegmentationSize(10L));
 
         Collection<StoredObject> storedObjects = container.listObjects();
         for (StoredObject object : storedObjects) {
@@ -40,7 +42,7 @@ public class Main {
             System.out.println("  "+object.getPublicURL());
         }
 
-//        StoredObject uploadObject = container.getObject("test.txt");
+//        StoredObject uploadObject = container.getObject("test2.txt");
 //        byte[] result = uploadObject.downloadObject();
 //        for (byte readByte : result) {
 //            System.out.print((char)readByte);

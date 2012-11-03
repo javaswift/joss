@@ -86,11 +86,6 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         } catch (IOException err) {
             throw new CommandException("Unable to upload segments", err);
         }
-
-        StoredObject manifestFile = getObject(name);
-        UploadInstructions manifest = new UploadInstructions(new byte[] {})
-                .setObjectManifest(new ObjectManifest(manifestFile.getPath()));
-        manifestFile.uploadObject(manifest);
     }
 
 }

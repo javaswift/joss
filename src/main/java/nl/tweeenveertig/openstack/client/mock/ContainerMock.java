@@ -80,6 +80,9 @@ public class ContainerMock extends AbstractContainer {
     }
 
     public void createObject(StoredObject object) {
+        if (!this.created) {
+            create();
+        }
         this.objects.put(object.getName(), object);
         getInfo();
     }

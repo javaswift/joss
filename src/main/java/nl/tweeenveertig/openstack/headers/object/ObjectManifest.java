@@ -15,4 +15,12 @@ public class ObjectManifest extends SimpleHeader {
         return X_OBJECT_MANIFEST;
     }
 
+    public String getContainerName() {
+        return this.getHeaderValue().substring(0, this.getHeaderValue().indexOf("/"));
+    }
+
+    public String getObjectPrefix() {
+        return this.getHeaderValue().substring(this.getHeaderValue().indexOf("/") + 1);
+    }
+
 }

@@ -4,6 +4,7 @@ import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.command.object.UploadObjectCommand;
 import nl.tweeenveertig.openstack.headers.Metadata;
+import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
 import nl.tweeenveertig.openstack.model.ObjectInformation;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
@@ -75,10 +76,18 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     public void uploadObject(UploadInstructions uploadInstructions) {
         if (uploadInstructions.requiresSegmentation()) {
-            ((AbstractContainer)getContainer()).uploadSegmentedObjects(getName(), uploadInstructions);
+            uploadObjectAsSegments(uploadInstructions);
         } else {
             directlyUploadObject(uploadInstructions);
         }
+    }
+
+    public void uploadObjectAsSegments(UploadInstructions uploadInstructions) {
+        ((AbstractContainer)getContainer()).uploadSegmentedObjects(getName(), uploadInstructions);
+        // The manifest file is the handle which allows the ObjectStore to piece the segments together as one file
+        UploadInstructions manifest = new UploadInstructions(new byte[] {})
+                .setObjectManifest(new ObjectManifest(getPath()));
+        uploadObject(manifest);
     }
 
     protected abstract void directlyUploadObject(UploadInstructions uploadInstructions);

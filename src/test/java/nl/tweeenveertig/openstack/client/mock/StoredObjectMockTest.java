@@ -6,6 +6,7 @@ import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
+import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.model.DownloadInstructions;
@@ -15,6 +16,7 @@ import nl.tweeenveertig.openstack.model.SegmentationPlan;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -261,6 +263,33 @@ public class StoredObjectMockTest {
         StoredObject manifest = container.getObject("someObject");
         assertTrue(manifest.exists());
         assertEquals(0, manifest.getContentLength());
+    }
+
+    @Test
+    public void downloadSegmentedObject() {
+        Account account = new AccountMock();
+        Container container = account.getContainer("segment_container");
+        StoredObject someOtherObject = container.getObject("ignore-this");
+        someOtherObject.uploadObject(uploadBytes);
+        StoredObject object = container.getObject("segmented_object");
+        object.uploadObject(new UploadInstructions(uploadBytes).setSegmentationSize(3L));
+        Assert.assertArrayEquals(uploadBytes, object.downloadObject());
+    }
+
+    @Test
+    public void downloadSegmentedObjectSplitOverVariousFolders() {
+        // Upload the segments and the manifest into separate containers
+        Account account = new AccountMock();
+        Container segments = account.getContainer("segments");
+        StoredObject object1 = segments.getObjectSegment("segment", 1);
+        object1.uploadObject(new byte[] { 0x01, 0x02, 0x03 } );
+        StoredObject object2 = segments.getObjectSegment("segment", 2);
+        object2.uploadObject(new byte[] { 0x04, 0x05 } );
+        Container manifests = account.getContainer("manifests");
+        StoredObject manifest = manifests.getObject("manifest");
+        manifest.uploadObject(new UploadInstructions(new byte[] {} ).setObjectManifest(new ObjectManifest("segments/segment")));
+
+        Assert.assertArrayEquals(new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 }, manifest.downloadObject());
     }
 
     @Test(expected = CommandException.class)
