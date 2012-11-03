@@ -38,7 +38,7 @@ public interface Container extends ObjectStoreEntity, Comparable<Container> {
     /**
     * Creates a Container in the Account.
     */
-    public void create();
+    public Container create();
 
     /**
     * Deletes a Container from the Account. Note that the Container must be empty in order to be deleted.

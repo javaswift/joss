@@ -23,6 +23,7 @@ public class ContainerMockTest {
     @Before
     public void setup() {
         this.container = new ContainerMock(new AccountMock(), "someContainer");
+        this.container.create();
         this.object = this.container.getObject("someObject");
     }
 
@@ -82,6 +83,7 @@ public class ContainerMockTest {
 
     @Test
     public void existence() {
+        Container container = new AccountMock().getContainer("someContainer");
         assertFalse(container.exists());
         container.create();
         assertTrue(container.exists());

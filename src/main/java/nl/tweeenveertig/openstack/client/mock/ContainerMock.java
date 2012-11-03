@@ -1,8 +1,11 @@
 package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
+import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
 import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;
@@ -47,13 +50,14 @@ public class ContainerMock extends AbstractContainer {
         return objects.values();
     }
 
-    public void create() {
+    public Container create() {
         if (this.created) {
             HttpStatusExceptionUtil.throwException(HttpStatus.SC_ACCEPTED);
         }
         ((AccountMock)getAccount()).createContainer(this);
         this.created = true;
         invalidate();
+        return this;
     }
 
     public void delete() {
@@ -81,7 +85,7 @@ public class ContainerMock extends AbstractContainer {
 
     public void createObject(StoredObject object) {
         if (!this.created) {
-            create();
+            HttpStatusExceptionUtil.throwException(HttpStatus.SC_NOT_FOUND);
         }
         this.objects.put(object.getName(), object);
         getInfo();

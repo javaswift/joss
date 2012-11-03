@@ -37,8 +37,9 @@ public class ContainerImpl extends AbstractContainer {
         return objects;
     }
 
-    public void create() {
+    public Container create() {
         new CreateContainerCommand(getAccount(), getClient(), getAccess(), this).call();
+        return this;
     }
 
     public void delete() {
