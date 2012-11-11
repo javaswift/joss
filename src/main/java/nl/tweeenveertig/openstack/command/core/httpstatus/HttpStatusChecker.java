@@ -3,11 +3,14 @@ package nl.tweeenveertig.openstack.command.core.httpstatus;
 import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
-
-import static nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition.AUTHORIZATION_MATCHER;
-import static nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition.FORBIDDEN_MATCHER;
+import org.apache.http.HttpStatus;
 
 public abstract class HttpStatusChecker {
+
+    public static final HttpStatusChecker AUTHORIZATION_MATCHER =
+            new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_UNAUTHORIZED));
+    public  static final HttpStatusChecker FORBIDDEN_MATCHER =
+            new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_FORBIDDEN));
 
     private HttpStatusMatcher matcher;
 
