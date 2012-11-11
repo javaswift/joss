@@ -1,9 +1,10 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.information;
 
 import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
 import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
 import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
+import nl.tweeenveertig.openstack.information.AccountInformation;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

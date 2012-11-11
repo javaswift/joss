@@ -2,11 +2,10 @@ package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
-import nl.tweeenveertig.openstack.command.object.UploadObjectCommand;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
-import nl.tweeenveertig.openstack.model.ObjectInformation;
+import nl.tweeenveertig.openstack.information.ObjectInformation;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.util.Date;

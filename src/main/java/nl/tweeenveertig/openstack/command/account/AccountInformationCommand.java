@@ -10,7 +10,7 @@ import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
 import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
 import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
-import nl.tweeenveertig.openstack.model.AccountInformation;
+import nl.tweeenveertig.openstack.information.AccountInformation;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;

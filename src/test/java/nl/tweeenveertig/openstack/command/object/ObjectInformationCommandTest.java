@@ -3,7 +3,7 @@ package nl.tweeenveertig.openstack.command.object;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
-import nl.tweeenveertig.openstack.model.ObjectInformation;
+import nl.tweeenveertig.openstack.information.ObjectInformation;
 import org.apache.http.Header;
 import org.junit.Before;
 import org.junit.Test;

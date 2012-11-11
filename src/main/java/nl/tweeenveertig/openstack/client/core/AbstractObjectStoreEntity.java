@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.exception.NotFoundException;
-import nl.tweeenveertig.openstack.model.AbstractInformation;
+import nl.tweeenveertig.openstack.information.AbstractInformation;
 import nl.tweeenveertig.openstack.headers.Metadata;
 
 import java.util.Map;

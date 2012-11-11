@@ -1,10 +1,11 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.information;
 
 import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.headers.object.DeleteAt;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
+import nl.tweeenveertig.openstack.information.ObjectInformation;
 import org.junit.Test;
 
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.information;
 
 import nl.tweeenveertig.openstack.headers.Header;
 import nl.tweeenveertig.openstack.headers.object.*;

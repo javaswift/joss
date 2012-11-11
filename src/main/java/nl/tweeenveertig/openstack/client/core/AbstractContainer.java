@@ -3,12 +3,10 @@ package nl.tweeenveertig.openstack.client.core;
 import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
-import nl.tweeenveertig.openstack.client.mock.StoredObjectMock;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
-import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
-import nl.tweeenveertig.openstack.model.ContainerInformation;
+import nl.tweeenveertig.openstack.information.ContainerInformation;
 import nl.tweeenveertig.openstack.model.SegmentationPlan;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
 

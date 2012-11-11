@@ -6,7 +6,7 @@ import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.headers.object.*;
-import nl.tweeenveertig.openstack.model.ObjectInformation;
+import nl.tweeenveertig.openstack.information.ObjectInformation;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;

@@ -3,7 +3,7 @@ package nl.tweeenveertig.openstack.command.account;
 import nl.tweeenveertig.openstack.command.container.ContainerInformationCommand;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.model.AccountInformation;
+import nl.tweeenveertig.openstack.information.AccountInformation;
 import org.apache.http.Header;
 import org.junit.Before;
 import org.junit.Test;
