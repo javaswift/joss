@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.exception;
 
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import org.junit.Test;
 
 import static junit.framework.Assert.*;

@@ -4,7 +4,7 @@ import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;

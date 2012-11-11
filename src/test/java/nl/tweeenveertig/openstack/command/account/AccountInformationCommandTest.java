@@ -2,9 +2,7 @@ package nl.tweeenveertig.openstack.command.account;
 
 import nl.tweeenveertig.openstack.command.container.ContainerInformationCommand;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.headers.Token;
 import nl.tweeenveertig.openstack.model.AccountInformation;
 import org.apache.http.Header;
 import org.junit.Before;

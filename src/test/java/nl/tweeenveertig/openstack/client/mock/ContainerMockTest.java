@@ -3,7 +3,7 @@ package nl.tweeenveertig.openstack.client.mock;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;

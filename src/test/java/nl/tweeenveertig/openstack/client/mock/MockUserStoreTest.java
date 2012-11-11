@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandExceptionError;
 import org.junit.Before;
 import org.junit.Test;
 

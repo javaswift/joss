@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.identity.access;
 
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import org.apache.http.HttpStatus;
 import org.codehaus.jackson.annotate.JsonIgnore;

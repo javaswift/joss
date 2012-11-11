@@ -4,8 +4,6 @@ import nl.tweeenveertig.openstack.client.Account;
 import nl.tweeenveertig.openstack.client.Container;
 import nl.tweeenveertig.openstack.client.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
-import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
 import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;

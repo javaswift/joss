@@ -12,14 +12,12 @@ import java.io.InputStream;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.Md5ChecksumException;
 import nl.tweeenveertig.openstack.exception.MissingContentLengthOrTypeException;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.Token;
 import nl.tweeenveertig.openstack.headers.object.*;
 import nl.tweeenveertig.openstack.model.UploadInstructions;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.params.CoreProtocolPNames;

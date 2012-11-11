@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.core;
+package nl.tweeenveertig.openstack.exception;
 
 public enum CommandExceptionError {
     UNKNOWN,

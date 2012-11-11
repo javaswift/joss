@@ -1,7 +1,6 @@
 package nl.tweeenveertig.openstack.command.container;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.AlreadyExistsException;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import org.junit.Before;

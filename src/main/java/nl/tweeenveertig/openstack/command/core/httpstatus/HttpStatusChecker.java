@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.core.httpstatus;
 
-import nl.tweeenveertig.openstack.command.core.CommandExceptionError;
+import nl.tweeenveertig.openstack.exception.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import org.apache.http.HttpStatus;
