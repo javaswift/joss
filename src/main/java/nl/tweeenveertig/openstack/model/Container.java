@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.client;
+package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
 

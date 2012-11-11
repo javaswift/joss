@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.client.mock.scheduled;
 
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.model.StoredObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

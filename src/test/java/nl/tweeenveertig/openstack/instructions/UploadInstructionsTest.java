@@ -1,23 +1,21 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.instructions;
 
-import nl.tweeenveertig.openstack.client.factory.AccountFactory;
-import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.object.DeleteAfter;
 import nl.tweeenveertig.openstack.headers.object.DeleteAt;
 import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
+import nl.tweeenveertig.openstack.instructions.UploadInstructions;
+import nl.tweeenveertig.openstack.instructions.UploadPayloadFile;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 

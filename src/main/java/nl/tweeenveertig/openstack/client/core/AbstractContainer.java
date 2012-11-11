@@ -1,14 +1,14 @@
 package nl.tweeenveertig.openstack.client.core;
 
-import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.client.Container;
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.instructions.SegmentationPlan;
+import nl.tweeenveertig.openstack.instructions.UploadInstructions;
+import nl.tweeenveertig.openstack.model.Account;
+import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
 import nl.tweeenveertig.openstack.information.ContainerInformation;
-import nl.tweeenveertig.openstack.model.SegmentationPlan;
-import nl.tweeenveertig.openstack.model.UploadInstructions;
 
 import java.io.IOException;
 import java.io.InputStream;

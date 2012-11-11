@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.core;
 
-import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.exception.UnauthorizedException;
 import nl.tweeenveertig.openstack.headers.Token;

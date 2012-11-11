@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.client.mock.scheduled;
 
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.model.StoredObject;
 
 import java.util.*;
 import java.util.concurrent.Executors;

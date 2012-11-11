@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.client.impl;
 
-import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.util.ClasspathTemplateResource;
 import org.apache.commons.io.IOUtils;

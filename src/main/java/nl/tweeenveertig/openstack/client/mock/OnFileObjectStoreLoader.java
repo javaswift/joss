@@ -1,8 +1,8 @@
 package nl.tweeenveertig.openstack.client.mock;
 
-import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.client.Container;
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.model.Account;
+import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.StoredObject;
 
 import java.io.File;
 import java.io.IOException;

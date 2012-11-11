@@ -1,5 +1,7 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.instructions;
 
+import nl.tweeenveertig.openstack.instructions.UploadPayload;
+import nl.tweeenveertig.openstack.instructions.UploadPayloadFile;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

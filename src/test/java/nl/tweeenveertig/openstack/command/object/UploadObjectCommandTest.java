@@ -17,7 +17,7 @@ import nl.tweeenveertig.openstack.exception.MissingContentLengthOrTypeException;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.Token;
 import nl.tweeenveertig.openstack.headers.object.*;
-import nl.tweeenveertig.openstack.model.UploadInstructions;
+import nl.tweeenveertig.openstack.instructions.UploadInstructions;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.params.CoreProtocolPNames;

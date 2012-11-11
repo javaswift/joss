@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.account;
 
-import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.AbstractSecureCommand;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;

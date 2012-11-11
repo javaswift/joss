@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.instructions;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.client.impl;
 
-import nl.tweeenveertig.openstack.client.Client;
+import nl.tweeenveertig.openstack.model.Client;
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import org.apache.http.client.HttpClient;

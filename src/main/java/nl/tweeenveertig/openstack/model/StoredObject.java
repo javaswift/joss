@@ -1,8 +1,8 @@
-package nl.tweeenveertig.openstack.client;
+package nl.tweeenveertig.openstack.model;
 
 import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
-import nl.tweeenveertig.openstack.model.DownloadInstructions;
-import nl.tweeenveertig.openstack.model.UploadInstructions;
+import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
+import nl.tweeenveertig.openstack.instructions.UploadInstructions;
 
 import java.io.File;
 import java.io.InputStream;

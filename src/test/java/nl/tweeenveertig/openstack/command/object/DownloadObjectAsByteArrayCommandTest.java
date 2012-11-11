@@ -4,7 +4,7 @@ import nl.tweeenveertig.openstack.exception.*;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;
-import nl.tweeenveertig.openstack.model.DownloadInstructions;
+import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.entity.ByteArrayEntity;

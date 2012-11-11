@@ -1,14 +1,14 @@
 package nl.tweeenveertig.openstack.client.impl;
 
-import nl.tweeenveertig.openstack.client.Container;
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.instructions.UploadInstructions;
+import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractContainer;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.object.AbstractDownloadObjectCommand;
 import nl.tweeenveertig.openstack.headers.object.CopyFrom;
-import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;

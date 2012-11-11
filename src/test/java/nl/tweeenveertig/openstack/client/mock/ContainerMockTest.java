@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.client.mock;
 
-import nl.tweeenveertig.openstack.client.Container;
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.NotFoundException;

@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.instructions;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.After;

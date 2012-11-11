@@ -1,7 +1,10 @@
 package nl.tweeenveertig.openstack.client.mock;
 
-import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
+import nl.tweeenveertig.openstack.instructions.SegmentationPlan;
+import nl.tweeenveertig.openstack.instructions.UploadInstructions;
+import nl.tweeenveertig.openstack.model.*;
+import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.CommandExceptionError;
@@ -9,11 +12,8 @@ import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
-import nl.tweeenveertig.openstack.model.DownloadInstructions;
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.headers.object.range.*;
-import nl.tweeenveertig.openstack.model.SegmentationPlan;
-import nl.tweeenveertig.openstack.model.UploadInstructions;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Assert;

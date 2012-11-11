@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.client.impl;
 
-import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;

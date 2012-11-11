@@ -1,12 +1,12 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
 import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;

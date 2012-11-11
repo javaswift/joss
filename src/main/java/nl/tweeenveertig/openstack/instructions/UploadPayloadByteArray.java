@@ -1,28 +1,27 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.instructions;
 
 import nl.tweeenveertig.openstack.headers.object.Etag;
 import org.apache.http.HttpEntity;
-import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.ByteArrayEntity;
 
-import java.io.File;
 import java.io.IOException;
 
-public class UploadPayloadFile extends UploadPayload {
+public class UploadPayloadByteArray extends UploadPayload {
 
-    private File file;
+    private byte[] bytes;
 
-    public UploadPayloadFile(final File file) {
-        this.file = file;
+    public UploadPayloadByteArray(final byte[] bytes) {
+        this.bytes = bytes;
     }
 
     @Override
     public HttpEntity getEntity() {
-        return new FileEntity(this.file);
+        return new ByteArrayEntity(this.bytes);
     }
 
     @Override
     public boolean mustBeSegmented(Long segmentationSize) {
-        return this.file.length() > segmentationSize;
+        return this.bytes.length > segmentationSize;
     }
 
     @Override
@@ -32,7 +31,7 @@ public class UploadPayloadFile extends UploadPayload {
 
     @Override
     public SegmentationPlan getSegmentationPlan(Long segmentationSize) throws IOException {
-        return new SegmentationPlanFile(this.file, segmentationSize);
+        return new SegmentationPlanByteArray(this.bytes, segmentationSize);
     }
 
 }

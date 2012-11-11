@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.client.mock;
 
-import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.model.Account;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNotNull;

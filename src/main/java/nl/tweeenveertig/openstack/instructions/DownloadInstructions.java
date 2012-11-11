@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.instructions;
 
 import nl.tweeenveertig.openstack.headers.object.conditional.AbstractIfMatch;
 import nl.tweeenveertig.openstack.headers.object.conditional.AbstractIfSince;

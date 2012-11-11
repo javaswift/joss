@@ -1,8 +1,9 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.instructions;
 
 import nl.tweeenveertig.openstack.headers.object.conditional.IfModifiedSince;
 import nl.tweeenveertig.openstack.headers.object.conditional.IfNoneMatch;
 import nl.tweeenveertig.openstack.headers.object.range.FirstPartRange;
+import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
 import org.apache.http.impl.cookie.DateParseException;
 import org.junit.Test;
 

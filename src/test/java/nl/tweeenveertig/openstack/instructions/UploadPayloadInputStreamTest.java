@@ -1,5 +1,6 @@
-package nl.tweeenveertig.openstack.model;
+package nl.tweeenveertig.openstack.instructions;
 
+import nl.tweeenveertig.openstack.instructions.UploadPayloadInputStream;
 import org.junit.Test;
 
 import java.io.IOException;

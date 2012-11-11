@@ -1,12 +1,12 @@
 package nl.tweeenveertig.openstack.client.mock;
 
-import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
+import nl.tweeenveertig.openstack.instructions.UploadInstructions;
+import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import nl.tweeenveertig.openstack.headers.object.*;
-import nl.tweeenveertig.openstack.model.DownloadInstructions;
-import nl.tweeenveertig.openstack.model.UploadInstructions;
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import org.apache.commons.codec.digest.DigestUtils;

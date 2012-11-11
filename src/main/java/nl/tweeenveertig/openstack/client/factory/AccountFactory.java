@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.client.factory;
 
-import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.client.Client;
+import nl.tweeenveertig.openstack.model.Account;
+import nl.tweeenveertig.openstack.model.Client;
 import nl.tweeenveertig.openstack.client.impl.ClientImpl;
 import nl.tweeenveertig.openstack.client.mock.ClientMock;
 import org.apache.http.client.HttpClient;

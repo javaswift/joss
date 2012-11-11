@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.client.mock;
 
-import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
 import nl.tweeenveertig.openstack.command.identity.access.Access;

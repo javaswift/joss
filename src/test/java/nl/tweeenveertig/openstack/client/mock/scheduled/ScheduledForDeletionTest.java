@@ -1,7 +1,6 @@
 package nl.tweeenveertig.openstack.client.mock.scheduled;
 
-import junit.framework.Assert;
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.client.mock.ContainerMock;
 import nl.tweeenveertig.openstack.client.mock.StoredObjectMock;
 import org.junit.Before;
@@ -16,7 +15,6 @@ import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class ScheduledForDeletionTest {
 

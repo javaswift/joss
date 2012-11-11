@@ -1,10 +1,10 @@
 package nl.tweeenveertig.openstack.command.object;
 
-import nl.tweeenveertig.openstack.client.Account;
-import nl.tweeenveertig.openstack.model.DownloadInstructions;
+import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
+import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.client.Container;
-import nl.tweeenveertig.openstack.client.StoredObject;
+import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.StoredObject;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;

@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.client.core;
 
-import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import nl.tweeenveertig.openstack.information.AccountInformation;

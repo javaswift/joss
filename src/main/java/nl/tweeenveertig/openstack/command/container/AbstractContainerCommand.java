@@ -1,9 +1,9 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.client.Account;
+import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.AbstractSecureCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.client.Container;
+import nl.tweeenveertig.openstack.model.Container;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 

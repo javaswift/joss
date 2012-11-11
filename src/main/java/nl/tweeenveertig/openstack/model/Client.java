@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.client;
+package nl.tweeenveertig.openstack.model;
 
 /**
  * The authenticate call creates a new Account object, which allows you to interact with the Object Store.
