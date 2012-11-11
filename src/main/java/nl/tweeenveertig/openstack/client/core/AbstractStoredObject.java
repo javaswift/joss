@@ -86,7 +86,8 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         ((AbstractContainer)getContainer()).uploadSegmentedObjects(getName(), uploadInstructions);
         // The manifest file is the handle which allows the ObjectStore to piece the segments together as one file
         UploadInstructions manifest = new UploadInstructions(new byte[] {})
-                .setObjectManifest(new ObjectManifest(getPath()));
+                .setObjectManifest(new ObjectManifest(getPath()))
+                .setContentType(uploadInstructions.getContentType());
         uploadObject(manifest);
     }
 

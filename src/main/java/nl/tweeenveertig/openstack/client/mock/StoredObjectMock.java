@@ -33,8 +33,6 @@ public class StoredObjectMock extends AbstractStoredObject {
 
     @Override
     protected void getInfo() {
-        this.info.setEtag(new Etag(object == null ? "" : DigestUtils.md5Hex(object)));
-        this.info.setContentType(new ObjectContentType(new MimetypesFileTypeMap().getContentType(getName())));
         this.info.setContentLength(new ObjectContentLength(Long.toString(object == null ? 0 : object.length)));
     }
 
@@ -107,13 +105,25 @@ public class StoredObjectMock extends AbstractStoredObject {
     }
 
     public void directlyUploadObject(UploadInstructions uploadInstructions) {
-        this.objectManifest = uploadInstructions.getObjectManifest();
         if (!this.created) {
             ((ContainerMock)getContainer()).createObject(this);
             this.created = true;
         }
         try {
             saveObject(IOUtils.toByteArray(uploadInstructions.getEntity().getContent()));
+            this.objectManifest = uploadInstructions.getObjectManifest();
+            // Set Etag
+            this.info.setEtag(
+                    new Etag(uploadInstructions.getMd5() != null ?
+                        uploadInstructions.getMd5() :
+                        DigestUtils.md5Hex(object))
+            );
+            // Set Content-Type
+            this.info.setContentType(
+                    uploadInstructions.getContentType() != null ?
+                        uploadInstructions.getContentType() :
+                        new ObjectContentType(new MimetypesFileTypeMap().getContentType(getName()))
+            );
         } catch (IOException err) {
             throw new CommandException(err.getMessage());
         }

@@ -254,6 +254,39 @@ public class StoredObjectMockTest {
     }
 
     @Test
+    public void headersThatMustBeSetOnAnObject() {
+        Container container = this.object.getContainer();
+        StoredObject object = container.getObject("someObject");
+        object.uploadObject(new UploadInstructions(uploadBytes)
+                .setMd5("cafebabe")
+                .setContentType("image/jpeg")
+        );
+
+        // Etag may not be passed to the manifest, as this will result in a 422, aka checksum failure
+        assertEquals("cafebabe", object.getEtag());
+
+        // Content-Type must be adopted
+        assertEquals("image/jpeg", object.getContentType());
+    }
+
+    @Test
+    public void headersThatMustBeSetOnManifest() {
+        Container container = this.object.getContainer();
+        StoredObject object = container.getObject("someObject");
+        object.uploadObject(new UploadInstructions(uploadBytes)
+                .setSegmentationSize(3L)
+                .setMd5("cafebabe")
+                .setContentType("image/jpeg")
+        );
+
+        // Etag may not be passed to the manifest, as this will result in a 422, aka checksum failure
+        assertNotSame("cafebabe", object.getEtag());
+
+        // Content-Type must be adopted
+        assertEquals("image/jpeg", object.getContentType());
+    }
+
+    @Test
     public void uploadObjectToBeSegmented() {
         object.uploadObject(new UploadInstructions(uploadBytes).setSegmentationSize(3L));
         Container container = object.getContainer();
