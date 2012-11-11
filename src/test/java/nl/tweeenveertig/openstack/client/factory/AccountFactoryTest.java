@@ -12,6 +12,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static junit.framework.Assert.assertNotNull;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -25,11 +26,14 @@ public class AccountFactoryTest {
     @Mock
     private ClientImpl mockedClient;
 
+    @Mock
+    private AccountImpl mockedAccount;
+
     @Before
     public void setup() throws Exception {
-        mockedClient = mock(ClientImpl.class);
         whenNew(ClientImpl.class).withNoArguments().thenReturn(mockedClient);
-        when(mockedClient.authenticate(anyString(), anyString(), anyString(), anyString())).thenReturn(new AccountImpl(null, null, null));
+        when(mockedClient.authenticate(anyString(), anyString(), anyString(), anyString())).thenReturn(mockedAccount);
+        when(mockedAccount.setAllowReauthenticate(anyBoolean())).thenReturn(mockedAccount);
     }
 
     @Test
@@ -54,6 +58,15 @@ public class AccountFactoryTest {
         AccountFactory factory = construct(httpClient);
         assertNotNull(factory.createAccount());
         verify(mockedClient, times(1)).setHttpClient(httpClient);
+    }
+
+    @Test
+    public void constructImplDisallowingReauthenticate() throws Exception {
+        HttpClient httpClient = new DefaultHttpClient();
+        AccountFactory factory = construct(httpClient);
+        factory.setAllowReauthenticate(false);
+        assertNotNull(factory.createAccount());
+        verify(mockedAccount, times(1)).setAllowReauthenticate(false);
     }
 
     protected AccountFactory construct(HttpClient httpClient) throws Exception {

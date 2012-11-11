@@ -7,8 +7,19 @@ import nl.tweeenveertig.openstack.model.AccountInformation;
 
 public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountInformation> implements Account {
 
+    private boolean allowReauthenticate = true;
+
     public AbstractAccount() {
         this.info = new AccountInformation();
+    }
+
+    public AbstractAccount setAllowReauthenticate(boolean allowReauthenticate) {
+        this.allowReauthenticate = allowReauthenticate;
+        return this;
+    }
+
+    public boolean isAllowReauthenticate() {
+        return this.allowReauthenticate;
     }
 
     public int getContainerCount() {

@@ -5,6 +5,7 @@ import nl.tweeenveertig.openstack.command.container.CreateContainerCommand;
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
 import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.exception.UnauthorizedException;
 import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.http.Header;
 import org.junit.Before;
@@ -14,7 +15,7 @@ import org.mockito.Mock;
 import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class AbstractSecureCommandTest extends BaseCommandTest {
 
@@ -29,7 +30,8 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
     @Test
     public void checkAuthenticationToken() {
         when(statusLine.getStatusCode()).thenReturn(201);
-        CreateContainerCommand command = new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"));
+        CreateContainerCommand command =
+            new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"));
         Header[] xAuth = command.request.getHeaders(Token.X_AUTH_TOKEN);
         assertEquals(1, xAuth.length);
         assertEquals("cafebabe", xAuth[0].getValue());
@@ -43,15 +45,18 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
         new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 
-    @Test
+    @Test(expected = UnauthorizedException.class)
+    public void reauthenticateNotAllowed() {
+        when(statusLine.getStatusCode()).thenReturn(401);
+        this.account.setAllowReauthenticate(false);
+        new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
+    }
+
+    @Test(expected = UnauthorizedException.class)
     public void reauthenticateFailTwice() {
         when(statusLine.getStatusCode()).thenReturn(401);
         when(authCommand.call()).thenReturn(new Access());
         this.account = new AccountImpl(authCommand, httpClient, defaultAccess);
-        try {
-            new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
-        } catch(CommandException err) {
-            assertEquals(CommandExceptionError.UNAUTHORIZED, err.getError());
-        }
+        new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 }

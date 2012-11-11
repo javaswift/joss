@@ -15,7 +15,6 @@ import org.apache.http.HttpStatus;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;

@@ -26,6 +26,9 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N extends
         try {
             return super.call();
         } catch (UnauthorizedException err) {
+            if (!account.isAllowReauthenticate()) {
+                throw err;
+            }
             Access access = account.authenticate();
             setToken(access.getToken());
             return super.call();
