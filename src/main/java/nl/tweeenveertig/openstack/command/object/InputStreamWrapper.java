@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.client.impl;
+package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.command.core.AbstractCommand;
 

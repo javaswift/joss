@@ -1,7 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
-import nl.tweeenveertig.openstack.client.impl.InputStreamWrapper;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -11,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
@@ -37,7 +37,7 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     public void downloadSuccess() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
-        InputStreamWrapper result = new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()).call();
+        InputStream result = new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()).call();
         byte[] downloaded = IOUtils.toByteArray(result);
         result.close();
         assertEquals(bytes.length, downloaded.length);

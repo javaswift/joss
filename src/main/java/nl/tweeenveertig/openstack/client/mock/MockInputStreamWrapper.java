@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.client.mock;
 
-import nl.tweeenveertig.openstack.client.impl.InputStreamWrapper;
+import nl.tweeenveertig.openstack.command.object.InputStreamWrapper;
 
 import java.io.IOException;
 import java.io.InputStream;

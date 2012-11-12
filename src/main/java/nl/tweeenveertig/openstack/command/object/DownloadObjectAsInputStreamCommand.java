@@ -3,7 +3,6 @@ package nl.tweeenveertig.openstack.command.object;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
-import nl.tweeenveertig.openstack.client.impl.InputStreamWrapper;
 import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import org.apache.http.HttpEntity;
@@ -11,10 +10,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 
 import java.io.IOException;
+import java.io.InputStream;
 
-public class DownloadObjectAsInputStreamCommand extends AbstractDownloadObjectCommand<HttpGet, InputStreamWrapper> {
+public class DownloadObjectAsInputStreamCommand extends AbstractDownloadObjectCommand<HttpGet, InputStream> {
 
-    private InputStreamWrapper inputStream;
+    private InputStream inputStream;
 
     public DownloadObjectAsInputStreamCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
                                               StoredObject object, DownloadInstructions downloadInstructions) {
@@ -32,7 +32,7 @@ public class DownloadObjectAsInputStreamCommand extends AbstractDownloadObjectCo
     }
 
     @Override
-    protected InputStreamWrapper getObjectAsReturnObject() {
+    protected InputStream getObjectAsReturnObject() {
         return inputStream;
     }
 
