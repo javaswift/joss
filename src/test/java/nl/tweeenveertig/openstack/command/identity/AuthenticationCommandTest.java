@@ -1,7 +1,7 @@
 package nl.tweeenveertig.openstack.command.identity;
 
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.UnauthorizedException;
 import nl.tweeenveertig.openstack.util.ClasspathTemplateResource;
@@ -37,7 +37,7 @@ public class AuthenticationCommandTest extends BaseCommandTest {
 
     @Test
     public void authenticateSuccessful() throws IOException {
-        Access access = new AuthenticationCommand(httpClient, "someurl", "sometenant", "user", "pwd").call();
+        AccessImpl access = new AuthenticationCommand(httpClient, "someurl", "sometenant", "user", "pwd").call();
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
     }
 

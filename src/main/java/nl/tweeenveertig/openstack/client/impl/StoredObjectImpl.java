@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.client.impl;
 
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
 import nl.tweeenveertig.openstack.instructions.UploadInstructions;
 import nl.tweeenveertig.openstack.model.Container;
@@ -8,7 +9,6 @@ import nl.tweeenveertig.openstack.headers.object.DeleteAt;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.client.core.AbstractStoredObject;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.command.object.*;
 import org.apache.http.client.HttpClient;
 
@@ -115,7 +115,7 @@ public class StoredObjectImpl extends AbstractStoredObject {
         return getContainer().getClient();
     }
 
-    protected Access getAccess() {
+    protected AccessImpl getAccess() {
         return getContainer().getAccess();
     }
 

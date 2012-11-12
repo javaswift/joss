@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.command.identity.access;
 
 import nl.tweeenveertig.openstack.exception.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
+import nl.tweeenveertig.openstack.model.Access;
 import org.apache.http.HttpStatus;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonRootName(value="access")
-public class Access {
+public class AccessImpl implements Access {
 
     public static final String SERVICE_CATALOG_OBJECT_STORE = "object-store";
     public Token token;
@@ -40,7 +41,7 @@ public class Access {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public Access initCurrentEndPoint() {
+    public AccessImpl initCurrentEndPoint() {
         ServiceCatalog objectStoreCatalog = getObjectStoreCatalog();
         if (objectStoreCatalog == null) {
             HttpStatusExceptionUtil.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_SERVICE_CATALOG_FOUND);

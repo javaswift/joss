@@ -1,11 +1,11 @@
 package nl.tweeenveertig.openstack.command.container;
 
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.HttpStatus;
@@ -16,7 +16,7 @@ import java.util.Collection;
 
 public class ContainerMetadataCommand extends AbstractContainerCommand<HttpPost, Object> {
 
-    public ContainerMetadataCommand(Account account, HttpClient httpClient, Access access, Container container, Collection<? extends Header> headers) {
+    public ContainerMetadataCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, Collection<? extends Header> headers) {
         super(account, httpClient, access, container);
         addHeaders(headers);
     }

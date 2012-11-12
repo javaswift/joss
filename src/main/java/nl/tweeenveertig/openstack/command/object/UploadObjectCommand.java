@@ -8,7 +8,7 @@ import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
 
-    public UploadObjectCommand(Account account, HttpClient httpClient, Access access, Container container,
+    public UploadObjectCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
                                StoredObject target, UploadInstructions uploadInstructions) {
         super(account, httpClient, access, container, target);
         try {

@@ -3,7 +3,7 @@ package nl.tweeenveertig.openstack.client.mock;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
 import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
@@ -15,7 +15,7 @@ public class AccountMock extends AbstractAccount {
 
     private Map<String, Container> containers = new TreeMap<String, Container>();
 
-    public Access authenticate() { return null; /* ignore */ }
+    public AccessImpl authenticate() { return null; /* ignore */ }
 
     private ObjectDeleter objectDeleter;
 

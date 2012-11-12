@@ -1,8 +1,5 @@
 package nl.tweeenveertig.openstack.model;
 
-import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
-
 import java.util.Collection;
 
 /**

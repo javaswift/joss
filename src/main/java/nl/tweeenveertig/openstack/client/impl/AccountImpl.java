@@ -1,12 +1,12 @@
 package nl.tweeenveertig.openstack.client.impl;
 
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
 import nl.tweeenveertig.openstack.command.account.AccountInformationCommand;
 import nl.tweeenveertig.openstack.command.account.AccountMetadataCommand;
 import nl.tweeenveertig.openstack.command.account.ListContainersCommand;
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
 import org.apache.http.client.HttpClient;
 
 import java.util.ArrayList;
@@ -16,13 +16,13 @@ public class AccountImpl extends AbstractAccount {
 
     private AuthenticationCommand command;
     private HttpClient httpClient;
-    private Access access;
+    private AccessImpl access;
 
-    public Access authenticate() {
+    public AccessImpl authenticate() {
         return access = command.call();
     }
 
-    public AccountImpl(AuthenticationCommand command, HttpClient httpClient, Access access) {
+    public AccountImpl(AuthenticationCommand command, HttpClient httpClient, AccessImpl access) {
         this.command = command;
         this.httpClient = httpClient;
         this.access = access;
@@ -55,7 +55,7 @@ public class AccountImpl extends AbstractAccount {
         return httpClient;
     }
 
-    public Access getAccess() {
+    public AccessImpl getAccess() {
         return access;
     }
 }

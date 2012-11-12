@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.object;
 
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
@@ -7,7 +8,6 @@ import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailConditio
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
 import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import org.apache.http.HttpEntity;
@@ -27,7 +27,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N extends
 
     private DownloadInstructions downloadInstructions;
 
-    public AbstractDownloadObjectCommand(Account account, HttpClient httpClient, Access access, Container container,
+    public AbstractDownloadObjectCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
                                          StoredObject object, DownloadInstructions downloadInstructions) {
         super(account, httpClient, access, container, object);
         processDownloadInstructions(downloadInstructions);

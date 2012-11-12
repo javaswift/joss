@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.client.core;
+package nl.tweeenveertig.openstack.model;
 
 import java.util.Map;
 

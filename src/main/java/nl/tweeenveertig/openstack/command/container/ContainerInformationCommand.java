@@ -1,11 +1,11 @@
 package nl.tweeenveertig.openstack.command.container;
 
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
@@ -21,7 +21,7 @@ import java.io.IOException;
 
 public class ContainerInformationCommand extends AbstractContainerCommand<HttpHead, ContainerInformation> {
 
-    public ContainerInformationCommand(Account account, HttpClient httpClient, Access access, Container container) {
+    public ContainerInformationCommand(Account account, HttpClient httpClient, AccessImpl access, Container container) {
         super(account, httpClient, access, container);
     }
 

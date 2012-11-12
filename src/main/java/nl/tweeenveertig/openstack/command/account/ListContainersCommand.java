@@ -5,7 +5,7 @@ import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -18,7 +18,7 @@ import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertRespons
 
 public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Collection<String>> {
 
-    public ListContainersCommand(Account account, HttpClient httpClient, Access access) {
+    public ListContainersCommand(Account account, HttpClient httpClient, AccessImpl access) {
         super(account, httpClient, access);
     }
 

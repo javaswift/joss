@@ -4,7 +4,7 @@ import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusRange;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.command.identity.authentication.Authentication;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import org.apache.http.HttpResponse;
@@ -18,7 +18,7 @@ import java.util.List;
 import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertResponseToString;
 import static nl.tweeenveertig.openstack.command.core.CommandUtil.createObjectMapper;
 
-public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
+public class AuthenticationCommand extends AbstractCommand<HttpPost, AccessImpl> {
 
     public AuthenticationCommand(HttpClient httpClient, String url, String tenant, String username, String password) {
         super(httpClient, url);
@@ -38,9 +38,9 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, Access> {
     }
 
     @Override
-    public Access getReturnObject(HttpResponse response) throws IOException {
+    public AccessImpl getReturnObject(HttpResponse response) throws IOException {
         return createObjectMapper()
-                .readValue(createSingleString(convertResponseToString(response)), Access.class)
+                .readValue(createSingleString(convertResponseToString(response)), AccessImpl.class)
                 .initCurrentEndPoint(); // If only this would exist: http://jira.codehaus.org/browse/JACKSON-645
     }
 

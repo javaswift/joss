@@ -5,7 +5,7 @@ import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import org.apache.http.HttpStatus;
@@ -14,7 +14,7 @@ import org.apache.http.client.methods.HttpDelete;
 
 public class DeleteObjectCommand extends AbstractObjectCommand<HttpDelete, Object> {
 
-    public DeleteObjectCommand(Account account, HttpClient httpClient, Access access, Container container, StoredObject target) {
+    public DeleteObjectCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, StoredObject target) {
         super(account, httpClient, access, container, target);
     }
 

@@ -1,7 +1,5 @@
 package nl.tweeenveertig.openstack.model;
 
-import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
-
 import java.util.Collection;
 
 /**

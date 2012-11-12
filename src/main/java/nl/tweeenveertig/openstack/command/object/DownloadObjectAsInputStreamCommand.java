@@ -4,7 +4,7 @@ import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
 import nl.tweeenveertig.openstack.client.impl.InputStreamWrapper;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
@@ -16,7 +16,7 @@ public class DownloadObjectAsInputStreamCommand extends AbstractDownloadObjectCo
 
     private InputStreamWrapper inputStream;
 
-    public DownloadObjectAsInputStreamCommand(Account account, HttpClient httpClient, Access access, Container container,
+    public DownloadObjectAsInputStreamCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
                                               StoredObject object, DownloadInstructions downloadInstructions) {
         super(account, httpClient, access, container, object, downloadInstructions);
     }

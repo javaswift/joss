@@ -5,7 +5,7 @@ import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
 import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
 import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class AccountInformationCommand extends AbstractSecureCommand<HttpHead, AccountInformation> {
 
-    public AccountInformationCommand(Account account, HttpClient httpClient, Access access) {
+    public AccountInformationCommand(Account account, HttpClient httpClient, AccessImpl access) {
         super(account, httpClient, access);
     }
 

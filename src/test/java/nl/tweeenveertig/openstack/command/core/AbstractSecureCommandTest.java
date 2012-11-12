@@ -3,8 +3,7 @@ package nl.tweeenveertig.openstack.command.core;
 import nl.tweeenveertig.openstack.client.impl.AccountImpl;
 import nl.tweeenveertig.openstack.command.container.CreateContainerCommand;
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
-import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.exception.UnauthorizedException;
 import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.http.Header;
@@ -40,7 +39,7 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
     @Test
     public void reauthenticateSuccess() {
         when(statusLine.getStatusCode()).thenReturn(401).thenReturn(201);
-        when(authCommand.call()).thenReturn(new Access());
+        when(authCommand.call()).thenReturn(new AccessImpl());
         this.account = new AccountImpl(authCommand, httpClient, defaultAccess);
         new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
@@ -55,7 +54,7 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
     @Test(expected = UnauthorizedException.class)
     public void reauthenticateFailTwice() {
         when(statusLine.getStatusCode()).thenReturn(401);
-        when(authCommand.call()).thenReturn(new Access());
+        when(authCommand.call()).thenReturn(new AccessImpl());
         this.account = new AccountImpl(authCommand, httpClient, defaultAccess);
         new CreateContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }

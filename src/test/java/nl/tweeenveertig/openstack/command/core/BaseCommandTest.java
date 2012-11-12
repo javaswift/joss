@@ -2,7 +2,7 @@ package nl.tweeenveertig.openstack.command.core;
 
 import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.client.impl.AccountImpl;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
@@ -33,7 +33,7 @@ public abstract class BaseCommandTest {
     protected AccountImpl account;
 
     @Mock
-    protected Access defaultAccess;
+    protected AccessImpl defaultAccess;
 
     @Mock
     protected HttpClient httpClient;

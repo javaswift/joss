@@ -22,7 +22,7 @@ public class AccessTest {
         String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-        Access access = mapper.readValue(jsonString, Access.class).initCurrentEndPoint();
+        AccessImpl access = mapper.readValue(jsonString, AccessImpl.class).initCurrentEndPoint();
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
         assertEquals("https://og.cloudvps.com:443/v1/AUTH_bfo000024", access.getInternalURL());
         assertEquals("http://bfo000024.og.cloudvps.com:80", access.getPublicURL());
@@ -30,7 +30,7 @@ public class AccessTest {
 
     @Test
     public void searchCatalogType() {
-        Access access = new Access();
+        AccessImpl access = new AccessImpl();
         access.serviceCatalog.add(createServiceCatalog("keystone", "identity", new ArrayList<EndPoint>()));
         access.serviceCatalog.add(createServiceCatalog("somethis", "clustering", new ArrayList<EndPoint>()));
         List<EndPoint> endPoints = new ArrayList<EndPoint>();
@@ -49,7 +49,7 @@ public class AccessTest {
 
     @Test
     public void noEndPoints() {
-        Access access = new Access();
+        AccessImpl access = new AccessImpl();
         access.serviceCatalog.add(createServiceCatalog("swift", "object-store", new ArrayList<EndPoint>()));
         try {
             access.initCurrentEndPoint();
@@ -61,7 +61,7 @@ public class AccessTest {
 
     @Test
     public void noCatalogs() {
-        Access access = new Access();
+        AccessImpl access = new AccessImpl();
         try {
             access.initCurrentEndPoint();
             fail("Should have thrown an exception");

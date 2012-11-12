@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.model;
 
-import nl.tweeenveertig.openstack.client.core.ObjectStoreEntity;
 import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
 import nl.tweeenveertig.openstack.instructions.UploadInstructions;
 

@@ -1,7 +1,8 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
+import nl.tweeenveertig.openstack.model.Access;
 import nl.tweeenveertig.openstack.model.Account;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
 import nl.tweeenveertig.openstack.exception.UnauthorizedException;
 import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.http.client.HttpClient;
@@ -17,7 +18,7 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N extends
         setToken(token);
     }
 
-    public AbstractSecureCommand(Account account, HttpClient httpClient, Access access) {
+    public AbstractSecureCommand(Account account, HttpClient httpClient, AccessImpl access) {
         this(account, httpClient, access.getInternalURL(), access.getToken());
     }
 

@@ -2,7 +2,7 @@ package nl.tweeenveertig.openstack.command.object;
 
 import nl.tweeenveertig.openstack.instructions.DownloadInstructions;
 import nl.tweeenveertig.openstack.model.Account;
-import nl.tweeenveertig.openstack.command.identity.access.Access;
+import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -17,7 +17,7 @@ public class DownloadObjectToFileCommand extends AbstractDownloadObjectCommand<H
 
     private File targetFile;
 
-    public DownloadObjectToFileCommand(Account account, HttpClient httpClient, Access access, Container container,
+    public DownloadObjectToFileCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
                                        StoredObject object, DownloadInstructions downloadInstructions, File targetFile) {
         super(account, httpClient, access, container, object, downloadInstructions);
         this.targetFile = targetFile;
