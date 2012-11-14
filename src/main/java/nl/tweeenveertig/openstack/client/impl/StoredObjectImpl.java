@@ -93,8 +93,7 @@ public class StoredObjectImpl extends AbstractStoredObject {
     public StoredObject setDeleteAt(Date date) {
         checkForInfo();
         info.setDeleteAt(new DeleteAt(date));
-        new ObjectMetadataCommand(
-                getAccount(), getClient(), getAccess(), getContainer(), this, info.getHeaders()).call();
+        saveMetadata();
         return this;
     }
 

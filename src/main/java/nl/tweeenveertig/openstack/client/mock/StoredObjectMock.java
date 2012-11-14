@@ -99,8 +99,7 @@ public class StoredObjectMock extends AbstractStoredObject {
         } catch (IOException err) {
             throw new CommandException("IO Failure", err);
         } finally {
-            if (os != null) try { os.close(); } catch (IOException logOrIgnore) {}
-            if (is != null) try { is.close(); } catch (IOException logOrIgnore) {}
+            closeStreams(is, os);
         }
     }
 
@@ -153,8 +152,7 @@ public class StoredObjectMock extends AbstractStoredObject {
         } catch (IOException err) {
             throw new CommandException("IO Failure", err);
         } finally {
-            if (os != null) try { os.close(); } catch (IOException logOrIgnore) {}
-            if (is != null) try { is.close(); } catch (IOException logOrIgnore) {}
+            closeStreams(is, os);
         }
     }
 
@@ -215,5 +213,11 @@ public class StoredObjectMock extends AbstractStoredObject {
     @Override
     public boolean exists() {
         return super.exists() && created;
+    }
+
+    @SuppressWarnings("EmptyCatchBlock")
+    protected void closeStreams(InputStream is, OutputStream os) {
+        if (os != null) try { os.close(); } catch (IOException logOrIgnore) {}
+        if (is != null) try { is.close(); } catch (IOException logOrIgnore) {}
     }
 }
