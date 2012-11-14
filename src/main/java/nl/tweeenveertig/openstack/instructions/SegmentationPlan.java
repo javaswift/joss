@@ -22,7 +22,7 @@ public abstract class SegmentationPlan {
     }
 
     public InputStream getNextSegment() throws IOException {
-        if (!segmentAvailable()) {
+        if (done()) {
             return null;
         }
         InputStream segment = createSegment();
@@ -31,10 +31,18 @@ public abstract class SegmentationPlan {
     }
 
     /**
-    * Checks whether the current segment actually exists
+    * Checks whether all segments have been done
     * @return true if the segment can be read
     */
-    protected abstract boolean segmentAvailable();
+    protected boolean done() {
+        return currentSegment * segmentationSize > getFileLength();
+    }
+
+    /**
+    * Returns the file length of the object
+    * @return file length of the object
+    */
+    protected abstract Long getFileLength();
 
     /**
     * Creates an InputStream from the current segment

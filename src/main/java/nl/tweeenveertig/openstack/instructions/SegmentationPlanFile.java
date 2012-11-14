@@ -16,8 +16,8 @@ public class SegmentationPlanFile extends SegmentationPlan {
     }
 
     @Override
-    protected boolean segmentAvailable() {
-        return currentSegment * segmentationSize <= fileLength;
+    protected Long getFileLength() {
+        return this.fileLength;
     }
 
     @Override

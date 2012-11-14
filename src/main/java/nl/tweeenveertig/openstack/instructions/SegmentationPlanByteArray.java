@@ -15,8 +15,8 @@ public class SegmentationPlanByteArray extends SegmentationPlan {
     }
 
     @Override
-    protected boolean segmentAvailable() {
-        return currentSegment * segmentationSize <= fileLength;
+    protected Long getFileLength() {
+        return (long)this.fileLength;
     }
 
     @Override
