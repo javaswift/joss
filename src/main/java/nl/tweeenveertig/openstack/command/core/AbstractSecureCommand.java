@@ -7,12 +7,12 @@ import nl.tweeenveertig.openstack.headers.Token;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 
-public abstract class AbstractSecureCommand<M extends HttpRequestBase, N extends Object> extends AbstractCommand<M, N> {
+public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extends AbstractCommand<M, N> {
 
     private Account account;
 
     public AbstractSecureCommand(Account account, HttpClient httpClient, String url, String token) {
-        super(httpClient, url, token);
+        super(httpClient, url);
         this.account = account;
         setToken(token);
     }

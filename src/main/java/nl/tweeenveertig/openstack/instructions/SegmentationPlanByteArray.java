@@ -8,7 +8,7 @@ public class SegmentationPlanByteArray extends SegmentationPlan {
 
     private int fileLength;
 
-    public SegmentationPlanByteArray(byte[] data, long segmentationSize) throws IOException {
+    public SegmentationPlanByteArray(byte[] data, long segmentationSize) {
         super(segmentationSize);
         this.data = data;
         this.fileLength = this.data.length;

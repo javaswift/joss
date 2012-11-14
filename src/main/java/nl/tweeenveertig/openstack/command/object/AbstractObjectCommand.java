@@ -8,7 +8,7 @@ import nl.tweeenveertig.openstack.model.StoredObject;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 
-public abstract class AbstractObjectCommand<M extends HttpRequestBase, N extends Object> extends AbstractSecureCommand<M, N> {
+public abstract class AbstractObjectCommand<M extends HttpRequestBase, N> extends AbstractSecureCommand<M, N> {
 
     public AbstractObjectCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, StoredObject object) {
         super(account, httpClient, access.getInternalURL() + getObjectPath(container, object), access.getToken());

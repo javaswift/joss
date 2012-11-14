@@ -13,7 +13,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
 
-public abstract class AbstractCommand<M extends HttpRequestBase, N extends Object> implements Callable<N>, Closeable {
+public abstract class AbstractCommand<M extends HttpRequestBase, N> implements Callable<N>, Closeable {
 
     private HttpClient httpClient;
 
@@ -21,13 +21,9 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N extends Objec
 
     protected HttpResponse response;
 
-    public AbstractCommand(HttpClient httpClient, String url, String token) {
+    public AbstractCommand(HttpClient httpClient, String url) {
         this.httpClient = httpClient;
         this.request = createRequest(url);
-    }
-
-    public AbstractCommand(HttpClient httpClient, String url) {
-        this(httpClient, url, null);
     }
 
     public N call() {

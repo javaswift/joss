@@ -45,8 +45,6 @@ public abstract class AbstractRange extends Header {
     public abstract int getTo(int byteArrayLength);
 
     public byte[] copy(byte[] original) {
-        int from = getFrom(original.length);
-        int to = getTo(original.length);
         return Arrays.copyOfRange(original, getFrom(original.length), getTo(original.length));
     }
 }
