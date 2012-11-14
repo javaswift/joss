@@ -67,7 +67,7 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public void copyObject(Container targetContainer, StoredObject targetObject) {
-        new CopyObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, targetContainer, targetObject).call();
+        new CopyObjectCommand(getAccount(), getClient(), getAccess(), this, targetContainer, targetObject).call();
     }
 
     public StoredObject setContentType(String contentType) {

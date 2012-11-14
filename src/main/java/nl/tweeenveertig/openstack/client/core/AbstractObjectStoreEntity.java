@@ -12,7 +12,7 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
 
     protected I info;
 
-    private boolean infoRetrieved = false;
+    private boolean stale = true;
 
     public void setMetadata(Map<String, Object> metadata) {
         info.clear();
@@ -36,14 +36,14 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
     }
 
     protected void checkForInfo() {
-        if (!isInfoRetrieved()) {
+        if (isStale()) {
             getInfo();
             setInfoRetrieved();
         }
     }
 
     protected void setInfoRetrieved() {
-        this.infoRetrieved = true;
+        this.stale = false;
     }
 
     public boolean exists() {
@@ -56,11 +56,19 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
     }
 
     public void invalidate() {
-        this.infoRetrieved = false;
+        this.stale = true;
     }
 
+    public boolean isStale() {
+        return this.stale;
+    }
+
+    /**
+    * Included for backwards portability reasons
+    * @return true if the metadata has been retrieved
+    */
     public boolean isInfoRetrieved() {
-        return this.infoRetrieved;
+        return !this.stale;
     }
 
     protected abstract void getInfo();
