@@ -17,7 +17,7 @@ public class CopyObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
 
     public CopyObjectCommand(Account account, HttpClient httpClient, AccessImpl access,
                              StoredObject sourceObject, Container targetContainer, StoredObject targetObject) {
-        super(account, httpClient, access, targetContainer, targetObject);
+        super(account, httpClient, access, targetObject);
         setHeader(new CopyFrom(getObjectPath(sourceObject)));
     }
 

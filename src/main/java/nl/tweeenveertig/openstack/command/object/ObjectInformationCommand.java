@@ -17,7 +17,7 @@ import java.io.IOException;
 public class ObjectInformationCommand extends AbstractObjectCommand<HttpHead, ObjectInformation> {
 
     public ObjectInformationCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, StoredObject object) {
-        super(account, httpClient, access, container, object);
+        super(account, httpClient, access, object);
     }
 
     @Override

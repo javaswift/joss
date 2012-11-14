@@ -15,7 +15,7 @@ import org.apache.http.client.methods.HttpDelete;
 public class DeleteObjectCommand extends AbstractObjectCommand<HttpDelete, Object> {
 
     public DeleteObjectCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, StoredObject target) {
-        super(account, httpClient, access, container, target);
+        super(account, httpClient, access, target);
     }
 
     @Override

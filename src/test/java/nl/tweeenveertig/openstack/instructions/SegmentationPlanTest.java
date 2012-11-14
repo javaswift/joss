@@ -1,7 +1,5 @@
 package nl.tweeenveertig.openstack.instructions;
 
-import nl.tweeenveertig.openstack.instructions.SegmentationPlan;
-
 import java.io.IOException;
 import java.io.InputStream;
 

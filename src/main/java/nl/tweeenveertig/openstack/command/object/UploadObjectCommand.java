@@ -22,7 +22,7 @@ public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> 
 
     public UploadObjectCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
                                StoredObject target, UploadInstructions uploadInstructions) {
-        super(account, httpClient, access, container, target);
+        super(account, httpClient, access, target);
         try {
             prepareUpload(uploadInstructions);
         } catch (IOException err) {
