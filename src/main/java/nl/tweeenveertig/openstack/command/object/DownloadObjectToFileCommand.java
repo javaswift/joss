@@ -17,9 +17,9 @@ public class DownloadObjectToFileCommand extends AbstractDownloadObjectCommand<H
 
     private File targetFile;
 
-    public DownloadObjectToFileCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
+    public DownloadObjectToFileCommand(Account account, HttpClient httpClient, AccessImpl access,
                                        StoredObject object, DownloadInstructions downloadInstructions, File targetFile) {
-        super(account, httpClient, access, container, object, downloadInstructions);
+        super(account, httpClient, access, object, downloadInstructions);
         this.targetFile = targetFile;
     }
 

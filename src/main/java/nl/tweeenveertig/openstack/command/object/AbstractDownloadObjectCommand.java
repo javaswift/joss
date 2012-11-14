@@ -27,7 +27,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
 
     private DownloadInstructions downloadInstructions;
 
-    public AbstractDownloadObjectCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
+    public AbstractDownloadObjectCommand(Account account, HttpClient httpClient, AccessImpl access,
                                          StoredObject object, DownloadInstructions downloadInstructions) {
         super(account, httpClient, access, object);
         processDownloadInstructions(downloadInstructions);

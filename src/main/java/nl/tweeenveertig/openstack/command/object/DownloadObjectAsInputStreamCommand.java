@@ -16,9 +16,9 @@ public class DownloadObjectAsInputStreamCommand extends AbstractDownloadObjectCo
 
     private InputStream inputStream;
 
-    public DownloadObjectAsInputStreamCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
+    public DownloadObjectAsInputStreamCommand(Account account, HttpClient httpClient, AccessImpl access,
                                               StoredObject object, DownloadInstructions downloadInstructions) {
-        super(account, httpClient, access, container, object, downloadInstructions);
+        super(account, httpClient, access, object, downloadInstructions);
     }
 
     @Override

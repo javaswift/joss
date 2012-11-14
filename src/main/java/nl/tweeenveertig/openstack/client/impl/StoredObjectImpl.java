@@ -27,7 +27,7 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public InputStream downloadObjectAsInputStream(DownloadInstructions downloadInstructions) {
-        return new DownloadObjectAsInputStreamCommand(getAccount(), getClient(), getAccess(), getContainer(), this, downloadInstructions).call();
+        return new DownloadObjectAsInputStreamCommand(getAccount(), getClient(), getAccess(), this, downloadInstructions).call();
     }
 
     public byte[] downloadObject() {
@@ -35,7 +35,7 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public byte[] downloadObject(DownloadInstructions downloadInstructions) {
-        return new DownloadObjectAsByteArrayCommand(getAccount(), getClient(), getAccess(), getContainer(), this, downloadInstructions).call();
+        return new DownloadObjectAsByteArrayCommand(getAccount(), getClient(), getAccess(), this, downloadInstructions).call();
     }
 
     public void downloadObject(File targetFile) {
@@ -43,11 +43,11 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public void downloadObject(File targetFile, DownloadInstructions downloadInstructions) {
-        new DownloadObjectToFileCommand(getAccount(), getClient(), getAccess(), getContainer(), this, downloadInstructions, targetFile).call();
+        new DownloadObjectToFileCommand(getAccount(), getClient(), getAccess(), this, downloadInstructions, targetFile).call();
     }
 
     public void directlyUploadObject(UploadInstructions uploadInstructions) {
-        new UploadObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this, uploadInstructions).call();
+        new UploadObjectCommand(getAccount(), getClient(), getAccess(), this, uploadInstructions).call();
     }
 
     public void uploadObject(InputStream inputStream) {
@@ -63,19 +63,19 @@ public class StoredObjectImpl extends AbstractStoredObject {
     }
 
     public void delete() {
-        new DeleteObjectCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
+        new DeleteObjectCommand(getAccount(), getClient(), getAccess(), this).call();
     }
 
     public void copyObject(Container targetContainer, StoredObject targetObject) {
-        new CopyObjectCommand(getAccount(), getClient(), getAccess(), this, targetContainer, targetObject).call();
+        new CopyObjectCommand(getAccount(), getClient(), getAccess(), this, targetObject).call();
     }
 
     public StoredObject setContentType(String contentType) {
         checkForInfo();
         info.setContentType(new ObjectContentType(contentType));
         new ObjectMetadataCommand(
-                getAccount(), getClient(), getAccess(), getContainer(),
-                this, info.getHeadersIncludingHeader(info.getContentTypeHeader())).call();
+                getAccount(), getClient(), getAccess(), this,
+                info.getHeadersIncludingHeader(info.getContentTypeHeader())).call();
         return this;
     }
 
@@ -84,8 +84,8 @@ public class StoredObjectImpl extends AbstractStoredObject {
         info.setDeleteAt(null);
         info.setDeleteAfter(new DeleteAfter(seconds));
         new ObjectMetadataCommand(
-                getAccount(), getClient(), getAccess(), getContainer(),
-                this, info.getHeadersIncludingHeader(info.getDeleteAfter())).call();
+                getAccount(), getClient(), getAccess(), this,
+                info.getHeadersIncludingHeader(info.getDeleteAfter())).call();
         return this;
     }
 
@@ -120,11 +120,11 @@ public class StoredObjectImpl extends AbstractStoredObject {
 
     @Override
     protected void saveMetadata() {
-        new ObjectMetadataCommand(getAccount(), getClient(), getAccess(), getContainer(), this, info.getHeaders()).call();
+        new ObjectMetadataCommand(getAccount(), getClient(), getAccess(), this, info.getHeaders()).call();
     }
 
     protected void getInfo() {
-        this.info = new ObjectInformationCommand(getAccount(), getClient(), getAccess(), getContainer(), this).call();
+        this.info = new ObjectInformationCommand(getAccount(), getClient(), getAccess(), this).call();
         this.setInfoRetrieved();
     }
 

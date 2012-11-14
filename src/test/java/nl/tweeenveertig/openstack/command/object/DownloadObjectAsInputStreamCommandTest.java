@@ -37,7 +37,7 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     public void downloadSuccess() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
-        InputStream result = new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()).call();
+        InputStream result = new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()).call();
         byte[] downloaded = IOUtils.toByteArray(result);
         result.close();
         assertEquals(bytes.length, downloaded.length);
@@ -47,7 +47,7 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     public void md5Mismatch() throws IOException {
         prepareBytes(new byte[] { 0x01}, "cafebabe"); // non-matching MD5
         try {
-            new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions());
+            new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions());
         } catch (CommandException err) {
             fail("Downloading as an inputstream does not check for the MD5 checksum, so therefore should not throw an error");
         }
@@ -57,6 +57,6 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     public void isSecure() throws IOException {
         prepareBytes(new byte[] { 0x01, 0x02, 0x03}, null);
         isSecure(new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess,
-                account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
+                getObject("objectname"), new DownloadInstructions()));
     }
 }

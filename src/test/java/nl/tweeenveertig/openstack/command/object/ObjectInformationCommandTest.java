@@ -45,13 +45,13 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
     public void illegalDate() {
         prepareHeader(response, LAST_MODIFIED, "I'm not a date!");
         when(statusLine.getStatusCode()).thenReturn(200);
-        new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")).call();
+        new ObjectInformationCommand(this.account, httpClient, defaultAccess, getObject("objectName")).call();
     }
 
     @Test
     public void getInfoSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(200);
-        ObjectInformation info = new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")).call();
+        ObjectInformation info = new ObjectInformationCommand(this.account, httpClient, defaultAccess, getObject("objectName")).call();
         assertEquals("Photo album", info.getMetadata("Description"));
         assertEquals("1984", info.getMetadata("Year"));
         assertEquals("Mon, 03 Sep 2012 05:40:33 GMT", info.getLastModified());
@@ -63,18 +63,17 @@ public class ObjectInformationCommandTest extends BaseCommandTest {
 
     @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")));
+        checkForError(404, new ObjectInformationCommand(this.account, httpClient, defaultAccess, getObject("objectName")));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ObjectInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectName")));
+        checkForError(500, new ObjectInformationCommand(this.account, httpClient, defaultAccess, getObject("objectName")));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new ObjectInformationCommand(this.account, httpClient, defaultAccess,
-                account.getContainer("containerName"), getObject("objectName")));
+        isSecure(new ObjectInformationCommand(this.account, httpClient, defaultAccess, getObject("objectName")));
     }
 
 }

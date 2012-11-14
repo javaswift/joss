@@ -24,7 +24,7 @@ public class CopyObjectCommandTest extends BaseCommandTest {
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
         new CopyObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName"),
-                account.getContainer("containerName"), getObject("objectName")).call();
+                getObject("objectName")).call();
         verify(httpClient).execute(requestArgument.capture());
         assertEquals("/container/objectName", requestArgument.getValue().getFirstHeader(CopyFrom.X_COPY_FROM).getValue());
     }
@@ -32,18 +32,18 @@ public class CopyObjectCommandTest extends BaseCommandTest {
     @Test (expected = NotFoundException.class)
     public void deleteContainerDoesNotExist() throws IOException {
         checkForError(404, new CopyObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName"),
-                account.getContainer("containerName"), getObject("objectName")));
+                getObject("objectName")));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
         checkForError(500, new CopyObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName"),
-                account.getContainer("containerName"), getObject("objectName")));
+                getObject("objectName")));
     }
 
     @Test
     public void isSecure() throws IOException {
         isSecure(new CopyObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName"),
-                account.getContainer("containerName"), getObject("objectName")), 201);
+                getObject("objectName")), 201);
     }
 }

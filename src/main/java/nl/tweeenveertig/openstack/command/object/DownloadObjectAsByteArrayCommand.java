@@ -17,9 +17,9 @@ public class DownloadObjectAsByteArrayCommand extends AbstractDownloadObjectComm
 
     private byte[] result;
 
-    public DownloadObjectAsByteArrayCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
+    public DownloadObjectAsByteArrayCommand(Account account, HttpClient httpClient, AccessImpl access,
                                             StoredObject object, DownloadInstructions downloadInstructions) {
-        super(account, httpClient, access, container, object, downloadInstructions);
+        super(account, httpClient, access, object, downloadInstructions);
     }
 
     @Override

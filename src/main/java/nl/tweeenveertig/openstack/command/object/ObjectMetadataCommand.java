@@ -17,7 +17,7 @@ import java.util.Collection;
 
 public class ObjectMetadataCommand extends AbstractObjectCommand<HttpPost, Object> {
 
-    public ObjectMetadataCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, StoredObject object, Collection<? extends Header> headers) {
+    public ObjectMetadataCommand(Account account, HttpClient httpClient, AccessImpl access, StoredObject object, Collection<? extends Header> headers) {
         super(account, httpClient, access, object);
         addHeaders(headers);
     }

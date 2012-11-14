@@ -41,7 +41,7 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
         prepareBytes(bytes, null);
         when(statusLine.getStatusCode()).thenReturn(200);
         new DownloadObjectAsByteArrayCommand(
-                this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
+                this.account, httpClient, defaultAccess, getObject("objectname"),
                 new DownloadInstructions()
                         .setRange(new FirstPartRange(3))
                         .setMatchConditional(new IfNoneMatch("cafebabe"))
@@ -59,7 +59,7 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
         when(statusLine.getStatusCode()).thenReturn(206);
         DownloadObjectAsByteArrayCommand command =
                 spy(new DownloadObjectAsByteArrayCommand(
-                        this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
+                        this.account, httpClient, defaultAccess, getObject("objectname"),
                         new DownloadInstructions().setRange(new FirstPartRange(3))));
         byte[] result = command.call();
         assertEquals(bytes.length, result.length);
@@ -73,7 +73,7 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
         prepareHeader(response, X_OBJECT_MANIFEST, Long.toString(bytes.length));
         DownloadObjectAsByteArrayCommand command =
                 spy(new DownloadObjectAsByteArrayCommand(
-                        this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"),
+                        this.account, httpClient, defaultAccess, getObject("objectname"),
                         new DownloadInstructions().setRange(new FirstPartRange(3))));
         byte[] result = command.call();
         assertEquals(bytes.length, result.length);
@@ -84,40 +84,40 @@ public class DownloadObjectAsByteArrayCommandTest extends BaseCommandTest {
     public void downloadSuccess() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
-        byte[] result = new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()).call();
+        byte[] result = new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()).call();
         assertEquals(bytes.length, result.length);
     }
 
     @Test (expected = Md5ChecksumException.class)
     public void md5Mismatch() throws IOException {
         prepareBytes(new byte[] { 0x01}, "cafebabe"); // non-matching MD5
-        checkForError(200, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
+        checkForError(200, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()));
     }
 
     @Test (expected = NotFoundException.class)
     public void objectNotFound() throws IOException {
-        checkForError(404, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
+        checkForError(404, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
+        checkForError(500, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()));
     }
 
     @Test(expected = NotModifiedException.class)
     public void contentNotModified() throws IOException {
-        checkForError(304, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
+        checkForError(304, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()));
     }
 
     @Test(expected = ModifiedException.class)
     public void contentModified() throws IOException {
-        checkForError(412, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
+        checkForError(412, new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()));
     }
 
     @Test
     public void isSecure() throws IOException {
         prepareBytes(new byte[] { 0x01, 0x02, 0x03}, null);
         isSecure(new DownloadObjectAsByteArrayCommand(this.account, httpClient, defaultAccess,
-                account.getContainer("containerName"), getObject("objectname"), new DownloadInstructions()));
+                getObject("objectname"), new DownloadInstructions()));
     }
 }

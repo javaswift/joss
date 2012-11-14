@@ -61,8 +61,7 @@ public class DownloadObjectToFileCommandTest extends BaseCommandTest {
     @Test
     public void testDownloadedFileExists() throws IOException {
         prepareMetadata();
-        new DownloadObjectToFileCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
-                getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
+        new DownloadObjectToFileCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
         assertTrue(downloadedFile.exists());
     }
 
@@ -92,7 +91,7 @@ public class DownloadObjectToFileCommandTest extends BaseCommandTest {
         PowerMockito.mockStatic(IOUtils.class);
         Mockito.when(IOUtils.copy(any(InputStream.class), any(OutputStream.class))).thenThrow(new NullPointerException());
         try {
-            new DownloadObjectToFileCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
+            new DownloadObjectToFileCommand(this.account, httpClient, defaultAccess,
                     getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
         } catch (NullPointerException err) {
             if (outputStream != null) {
@@ -127,7 +126,7 @@ public class DownloadObjectToFileCommandTest extends BaseCommandTest {
         PowerMockito.mockStatic(DigestUtils.class);
         Mockito.when(DigestUtils.md5Hex(any(InputStream.class))).thenThrow(new NullPointerException());
         try {
-            new DownloadObjectToFileCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
+            new DownloadObjectToFileCommand(this.account, httpClient, defaultAccess,
                     getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
         } catch (NullPointerException err) {
             if (inputStream != null) {

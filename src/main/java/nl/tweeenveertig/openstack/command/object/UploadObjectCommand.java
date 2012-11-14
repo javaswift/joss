@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
 
-    public UploadObjectCommand(Account account, HttpClient httpClient, AccessImpl access, Container container,
+    public UploadObjectCommand(Account account, HttpClient httpClient, AccessImpl access,
                                StoredObject target, UploadInstructions uploadInstructions) {
         super(account, httpClient, access, target);
         try {

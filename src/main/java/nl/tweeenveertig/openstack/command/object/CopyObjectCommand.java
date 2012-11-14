@@ -16,7 +16,7 @@ import org.apache.http.client.methods.HttpPut;
 public class CopyObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
 
     public CopyObjectCommand(Account account, HttpClient httpClient, AccessImpl access,
-                             StoredObject sourceObject, Container targetContainer, StoredObject targetObject) {
+                             StoredObject sourceObject, StoredObject targetObject) {
         super(account, httpClient, access, targetObject);
         setHeader(new CopyFrom(getObjectPath(sourceObject)));
     }
