@@ -20,10 +20,13 @@ import nl.tweeenveertig.openstack.headers.object.range.AbstractRange;
  */
 public class DownloadInstructions {
 
+    /** Determines what part of the object must be downloaded */
     private AbstractRange range;
 
+    /** Determines under what conditions the object must be returned -- compares to etag */
     private AbstractIfMatch ifMatch;
 
+    /** Determines under what conditions the object must be returned -- compares to last modification date */
     private AbstractIfSince ifSince;
 
     /**
