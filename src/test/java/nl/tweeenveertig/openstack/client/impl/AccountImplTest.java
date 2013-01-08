@@ -12,10 +12,13 @@ import java.io.InputStream;
 import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static nl.tweeenveertig.openstack.headers.account.AccountBytesUsed.X_ACCOUNT_BYTES_USED;
 import static nl.tweeenveertig.openstack.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
 import static nl.tweeenveertig.openstack.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
 import static nl.tweeenveertig.openstack.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -74,6 +77,26 @@ public class AccountImplTest extends BaseCommandTest {
     @Test
     public void getPublicURL() {
         assertEquals("http://someurl.public", account.getPublicURL());
+    }
+
+    @Test
+    public void isAllowCaching() throws IOException {
+        account = new AccountImpl(null, httpClient, defaultAccess, false); // Caching is turned off
+        when(statusLine.getStatusCode()).thenReturn(204);
+        prepareMetadata();
+        account.getContainerCount();
+        account.getContainerCount();
+        // Because caching is turned off, the call must be made twice
+        verify(httpClient, times(2)).execute(requestArgument.capture());
+    }
+
+    @Test
+    public void isInfoRetrieved() throws IOException {
+        assertFalse(account.isInfoRetrieved());
+        when(statusLine.getStatusCode()).thenReturn(204);
+        prepareMetadata();
+        account.getContainerCount();
+        assertTrue(account.isInfoRetrieved());
     }
 
 }

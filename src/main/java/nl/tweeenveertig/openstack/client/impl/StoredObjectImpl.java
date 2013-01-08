@@ -18,8 +18,8 @@ import java.util.Date;
 
 public class StoredObjectImpl extends AbstractStoredObject {
 
-    public StoredObjectImpl(Container container, String name) {
-        super(container, name);
+    public StoredObjectImpl(Container container, String name, boolean allowCaching) {
+        super(container, name, allowCaching);
     }
 
     public InputStream downloadObjectAsInputStream() {

@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
@@ -24,6 +25,7 @@ public class ClientImplTest extends BaseCommandTest {
         super.setup();
         client = new ClientImpl();
         client.setHttpClient(httpClient);
+        client.setAllowCaching(false);
     }
 
     @Test
@@ -33,6 +35,7 @@ public class ClientImplTest extends BaseCommandTest {
         when(httpEntity.getContent()).thenReturn(inputStream);
         Account account = client.authenticate("sometenant", "superuser", "somepwd", "someregion");
         assertNotNull(account);
+        assertFalse(((AccountImpl)account).isAllowCaching());
     }
 
 }

@@ -19,6 +19,10 @@ public class AccountMock extends AbstractAccount {
 
     private ObjectDeleter objectDeleter;
 
+    public AccountMock() {
+        super(ALLOW_CACHING);
+    }
+
     public AccountMock setOnFileObjectStore(String onFileObjectStore) {
         if (onFileObjectStore == null) {
             return this;

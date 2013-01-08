@@ -13,8 +13,8 @@ import java.util.Collection;
 
 public class ContainerImpl extends AbstractContainer {
 
-    public ContainerImpl(Account account, String name) {
-        super(account, name);
+    public ContainerImpl(Account account, String name, boolean allowCaching) {
+        super(account, name, allowCaching);
     }
 
     public void makePublic() {
@@ -44,7 +44,7 @@ public class ContainerImpl extends AbstractContainer {
     }
 
     public StoredObject getObject(String objectName) {
-        return new StoredObjectImpl(this, objectName);
+        return new StoredObjectImpl(this, objectName, isAllowCaching());
     }
 
     protected HttpClient getClient() {

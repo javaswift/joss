@@ -28,7 +28,7 @@ public class StoredObjectMock extends AbstractStoredObject {
     private ObjectManifest objectManifest;
 
     public StoredObjectMock(Container container, String name) {
-        super(container, name);
+        super(container, name, ALLOW_CACHING);
     }
 
     @Override

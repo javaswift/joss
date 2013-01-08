@@ -9,7 +9,8 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private boolean allowReauthenticate = true;
 
-    public AbstractAccount() {
+    public AbstractAccount(boolean allowCaching) {
+        super(allowCaching);
         this.info = new AccountInformation();
     }
 

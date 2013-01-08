@@ -11,6 +11,8 @@ public class ClientImpl implements Client<AccountImpl> {
 
     private HttpClient httpClient;
 
+    private boolean allowCaching = true;
+
     public ClientImpl() {
         initHttpClient();
     }
@@ -30,10 +32,15 @@ public class ClientImpl implements Client<AccountImpl> {
         AuthenticationCommand command = new AuthenticationCommand(httpClient, authUrl, tenant, username, password);
         AccessImpl access = command.call();
         access.setPreferredRegion(preferredRegion);
-        return new AccountImpl(command, httpClient, access);
+        return new AccountImpl(command, httpClient, access, allowCaching);
     }
 
     public void setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
     }
+
+    public void setAllowCaching(boolean allowCaching) {
+        this.allowCaching = allowCaching;
+    }
+
 }

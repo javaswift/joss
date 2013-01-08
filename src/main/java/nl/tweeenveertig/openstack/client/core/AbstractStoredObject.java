@@ -16,7 +16,8 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     private Container container;
 
-    public AbstractStoredObject(Container container, String name) {
+    public AbstractStoredObject(Container container, String name, boolean allowCaching) {
+        super(allowCaching);
         this.container = container;
         this.name = name;
         this.info = new ObjectInformation();

@@ -10,9 +10,17 @@ import java.util.TreeMap;
 
 public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> implements ObjectStoreEntity {
 
+    protected static final boolean ALLOW_CACHING = true;
+
     protected I info;
 
     private boolean stale = true;
+
+    private boolean allowCaching = ALLOW_CACHING;
+
+    public AbstractObjectStoreEntity(boolean allowCaching) {
+        this.allowCaching = allowCaching;
+    }
 
     public void setMetadata(Map<String, Object> metadata) {
         info.clear();
@@ -60,7 +68,11 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
     }
 
     public boolean isStale() {
-        return this.stale;
+        return !isAllowCaching() || this.stale;
+    }
+
+    public boolean isAllowCaching() {
+        return this.allowCaching;
     }
 
     /**

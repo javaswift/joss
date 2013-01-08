@@ -20,7 +20,7 @@ public class ContainerMock extends AbstractContainer {
     private boolean created = false;
 
     public ContainerMock(Account account, String name) {
-        super(account, name);
+        super(account, name, ALLOW_CACHING);
         this.info = new ContainerInformation();
     }
 

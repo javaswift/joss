@@ -19,7 +19,8 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
 
     private Account account;
 
-    public AbstractContainer(Account account, String name) {
+    public AbstractContainer(Account account, String name, boolean allowCaching) {
+        super(allowCaching);
         this.name = name;
         this.account = account;
         this.info = new ContainerInformation();

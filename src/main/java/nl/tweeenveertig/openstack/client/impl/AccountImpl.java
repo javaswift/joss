@@ -22,7 +22,8 @@ public class AccountImpl extends AbstractAccount {
         return access = command.call();
     }
 
-    public AccountImpl(AuthenticationCommand command, HttpClient httpClient, AccessImpl access) {
+    public AccountImpl(AuthenticationCommand command, HttpClient httpClient, AccessImpl access, boolean allowCaching) {
+        super(allowCaching);
         this.command = command;
         this.httpClient = httpClient;
         this.access = access;
@@ -38,7 +39,7 @@ public class AccountImpl extends AbstractAccount {
     }
 
     public Container getContainer(String containerName) {
-        return new ContainerImpl(this, containerName);
+        return new ContainerImpl(this, containerName, isAllowCaching());
     }
 
     @Override
