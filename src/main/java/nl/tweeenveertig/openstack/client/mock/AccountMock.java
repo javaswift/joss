@@ -76,4 +76,9 @@ public class AccountMock extends AbstractAccount {
     public void deleteContainer(Container container) {
         this.containers.remove(container.getName());
     }
+
+    public String getPublicURL() {
+        return "";
+    }
+
 }

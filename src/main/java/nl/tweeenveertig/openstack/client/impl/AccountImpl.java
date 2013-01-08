@@ -58,4 +58,8 @@ public class AccountImpl extends AbstractAccount {
     public AccessImpl getAccess() {
         return access;
     }
+
+    public String getPublicURL() {
+        return access.getPublicURL();
+    }
 }

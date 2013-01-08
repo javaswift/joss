@@ -35,6 +35,12 @@ public interface Account extends ObjectStoreEntity {
     */
     public Access authenticate();
 
+    /**
+    * Returns the public URL which is used for the underlying stored objects
+    * @return the public URL of the underlying stored objects
+    */
+    public String getPublicURL();
+
     public int getContainerCount();
     public long getBytesUsed();
     public int getObjectCount();

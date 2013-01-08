@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.powermock.api.mockito.PowerMockito.*;
@@ -147,6 +148,11 @@ public class AccountMockTest {
         whenNew(OnFileObjectStoreLoader.class).withNoArguments().thenReturn(loader);
         doThrow(new IOException()).when(loader).createContainers(any(Account.class), anyString());
         new AccountMock().setOnFileObjectStore("test");
+    }
+
+    @Test
+    public void eliminateFluff() { // Pick out the items which are not useful in mock mode
+        assertEquals("", new AccountMock().getPublicURL());
     }
 
 }

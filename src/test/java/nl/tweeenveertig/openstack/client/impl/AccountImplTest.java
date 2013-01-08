@@ -71,4 +71,9 @@ public class AccountImplTest extends BaseCommandTest {
         assertEquals(654321, account.getBytesUsed());
     }
 
+    @Test
+    public void getPublicURL() {
+        assertEquals("http://someurl.public", account.getPublicURL());
+    }
+
 }
