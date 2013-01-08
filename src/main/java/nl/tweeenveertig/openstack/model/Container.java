@@ -70,6 +70,11 @@ public interface Container extends ObjectStoreEntity, Comparable<Container> {
     */
     public boolean isInfoRetrieved();
 
+    /**
+    * Force the Account to reload its metadata
+    */
+    public void reload();
+
     public int getObjectCount();
     public long getBytesUsed();
     public boolean isPublic();

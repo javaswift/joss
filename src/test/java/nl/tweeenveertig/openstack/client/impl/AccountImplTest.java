@@ -99,4 +99,13 @@ public class AccountImplTest extends BaseCommandTest {
         assertTrue(account.isInfoRetrieved());
     }
 
+    @Test
+    public void reload() throws IOException {
+        when(statusLine.getStatusCode()).thenReturn(204);
+        prepareMetadata();
+        account.getContainerCount();
+        account.reload();
+        verify(httpClient, times(2)).execute(requestArgument.capture());
+    }
+
 }

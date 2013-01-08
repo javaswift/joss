@@ -75,6 +75,11 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
         return this.allowCaching;
     }
 
+    public void reload() {
+        invalidate();
+        checkForInfo();
+    }
+
     /**
     * Included for backwards portability reasons
     * @return true if the metadata has been retrieved

@@ -41,6 +41,11 @@ public interface Account extends ObjectStoreEntity {
     */
     public String getPublicURL();
 
+    /**
+    * Force the Account to reload its metadata
+    */
+    public void reload();
+
     public int getContainerCount();
     public long getBytesUsed();
     public int getObjectCount();

@@ -148,6 +148,11 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject
     */
     public boolean isInfoRetrieved();
 
+    /**
+    * Force the Account to reload its metadata
+    */
+    public void reload();
+
     public Date getLastModifiedAsDate();
     public String getLastModified();
     public String getEtag();
