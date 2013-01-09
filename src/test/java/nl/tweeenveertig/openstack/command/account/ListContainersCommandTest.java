@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ListContainersCommandTest extends BaseCommandTest {
@@ -36,4 +38,15 @@ public class ListContainersCommandTest extends BaseCommandTest {
     public void isSecure() throws IOException {
         isSecure(new ListContainersCommand(this.account, httpClient, defaultAccess, null, 10));
     }
+
+    @Test
+    public void queryParameters() throws IOException {
+        when(statusLine.getStatusCode()).thenReturn(204);
+        new ListContainersCommand(this.account, httpClient, defaultAccess, "dogs", 10).call();
+        verify(httpClient).execute(requestArgument.capture());
+        String assertQueryParameters = "?marker=dogs&limit=10";
+        String uri = requestArgument.getValue().getURI().toString();
+        assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
+    }
+
 }

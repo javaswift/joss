@@ -76,10 +76,6 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
 
     protected void modifyURI(QueryParameters queryParameters) {
         String url = request.getURI().toString() + queryParameters.getQuery();
-        try {
-            request.setURI(new URI(url));
-        } catch (URISyntaxException err) {
-            throw new CommandException("Unable to set a URL with query parameters", err);
-        }
+        request.setURI(URI.create(url));
     }
 }
