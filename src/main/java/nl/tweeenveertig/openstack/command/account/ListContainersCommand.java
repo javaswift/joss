@@ -18,8 +18,14 @@ import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertRespons
 
 public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Collection<String>> {
 
-    public ListContainersCommand(Account account, HttpClient httpClient, AccessImpl access) {
+    public static final int MAX_PAGE_SIZE = 9999; // http://docs.openstack.org/api/openstack-object-storage/1.0/content/list-objects.html
+
+    public ListContainersCommand(Account account, HttpClient httpClient, AccessImpl access, String marker, int pageSize) {
         super(account, httpClient, access);
+        modifyURI(new QueryParameters(new QueryParameter[] {
+            new QueryParameter("marker", marker),
+            new QueryParameter("limit", pageSize)
+        }));
     }
 
     @Override

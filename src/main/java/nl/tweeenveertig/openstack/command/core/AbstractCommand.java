@@ -2,6 +2,8 @@ package nl.tweeenveertig.openstack.command.core;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 
@@ -9,6 +11,7 @@ import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
@@ -69,5 +72,14 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
 
     protected N getReturnObject(HttpResponse response) throws IOException {
         return null; // returns null by default
+    }
+
+    protected void modifyURI(QueryParameters queryParameters) {
+        String url = request.getURI().toString() + queryParameters.getQuery();
+        try {
+            request.setURI(new URI(url));
+        } catch (URISyntaxException err) {
+            throw new CommandException("Unable to set a URL with query parameters", err);
+        }
     }
 }

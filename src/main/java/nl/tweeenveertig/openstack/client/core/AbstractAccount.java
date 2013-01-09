@@ -4,10 +4,18 @@ import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
 import nl.tweeenveertig.openstack.information.AccountInformation;
+import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.PaginationMap;
+
+import java.util.Collection;
 
 public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountInformation> implements Account {
 
     private boolean allowReauthenticate = true;
+
+    public Collection<Container> listContainers(PaginationMap paginationMap, int page, int pageSize) {
+        return listContainers(paginationMap.getMarker(page), pageSize);
+    }
 
     public AbstractAccount(boolean allowCaching) {
         super(allowCaching);

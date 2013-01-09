@@ -8,6 +8,7 @@ import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
 import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
 import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
+import nl.tweeenveertig.openstack.model.PaginationMap;
 
 import java.util.*;
 
@@ -66,6 +67,18 @@ public class AccountMock extends AbstractAccount {
 
     public Collection<Container> listContainers() {
         return containers.values();
+    }
+
+    @Override
+    public Collection<Container> listContainers(String marker, int pageSize) {
+        // TBD
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public PaginationMap getPaginationMap(int pageSize) {
+        // TBD
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public Container getContainer(String name) {

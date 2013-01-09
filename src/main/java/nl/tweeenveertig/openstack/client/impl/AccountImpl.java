@@ -7,6 +7,7 @@ import nl.tweeenveertig.openstack.command.account.AccountInformationCommand;
 import nl.tweeenveertig.openstack.command.account.AccountMetadataCommand;
 import nl.tweeenveertig.openstack.command.account.ListContainersCommand;
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
+import nl.tweeenveertig.openstack.model.PaginationMap;
 import org.apache.http.client.HttpClient;
 
 import java.util.ArrayList;
@@ -30,7 +31,17 @@ public class AccountImpl extends AbstractAccount {
     }
 
     public Collection<Container> listContainers() {
-        Collection<String> containerNames = new ListContainersCommand(this, httpClient, access).call();
+        return listContainers(null, ListContainersCommand.MAX_PAGE_SIZE);
+    }
+
+    @Override
+    public PaginationMap getPaginationMap(int pageSize) {
+        // TBD
+        return null;
+    }
+
+    public Collection<Container> listContainers(String marker, int pageSize) {
+        Collection<String> containerNames = new ListContainersCommand(this, httpClient, access, marker, pageSize).call();
         Collection<Container> containers = new ArrayList<Container>();
         for (String containerName : containerNames) {
             containers.add(this.getContainer(containerName));

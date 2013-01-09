@@ -18,22 +18,22 @@ public class ListContainersCommandTest extends BaseCommandTest {
 
     @Test
     public void listContainers() throws IOException {
-        new ListContainersCommand(this.account, httpClient, defaultAccess).call();
+        new ListContainersCommand(this.account, httpClient, defaultAccess, null, 10).call();
     }
 
     @Test
     public void listContainersWithNoneThere() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        new ListContainersCommand(this.account, httpClient, defaultAccess).call();
+        new ListContainersCommand(this.account, httpClient, defaultAccess, null, 10).call();
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ListContainersCommand(this.account, httpClient, defaultAccess));
+        checkForError(500, new ListContainersCommand(this.account, httpClient, defaultAccess, null, 10));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new ListContainersCommand(this.account, httpClient, defaultAccess));
+        isSecure(new ListContainersCommand(this.account, httpClient, defaultAccess, null, 10));
     }
 }
