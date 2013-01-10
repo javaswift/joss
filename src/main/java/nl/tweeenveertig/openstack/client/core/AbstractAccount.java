@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.client.core;
 
-import nl.tweeenveertig.openstack.client.impl.AbstractPaginationMap;
 import nl.tweeenveertig.openstack.client.impl.AccountPaginationMap;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.headers.Metadata;
@@ -18,15 +17,19 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     private boolean allowReauthenticate = true;
 
     public Collection<Container> list() {
-        return list((String) null, getMaxPageSize());
+        return list(null, null, getMaxPageSize());
     }
 
     public Collection<Container> list(PaginationMap paginationMap, int page) {
-        return list(paginationMap.getMarker(page), paginationMap.getPageSize());
+        return list(paginationMap.getPrefix(), paginationMap.getMarker(page), paginationMap.getPageSize());
+    }
+
+    public PaginationMap getPaginationMap(String prefix, int pageSize) {
+        return new AccountPaginationMap(this, prefix, pageSize).buildMap();
     }
 
     public PaginationMap getPaginationMap(int pageSize) {
-        return new AccountPaginationMap(this, pageSize).buildMap();
+        return getPaginationMap(null, pageSize);
     }
 
     public AbstractAccount(boolean allowCaching) {

@@ -5,8 +5,8 @@ import nl.tweeenveertig.openstack.model.StoredObject;
 
 public class ContainerPaginationMap extends AbstractPaginationMap<StoredObject> {
 
-    public ContainerPaginationMap(Container container, Integer pageSize) {
-        super(container, pageSize);
+    public ContainerPaginationMap(Container container, String prefix, Integer pageSize) {
+        super(container, prefix, pageSize);
     }
 
 }

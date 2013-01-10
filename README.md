@@ -43,7 +43,7 @@ A container is private by default, so you will have to explicitly set it to publ
 To check whether the creation succeeded, list the containers.
 
 ```java
-    Collection<Container> containers = account.listContainers();
+    Collection<Container> containers = account.list();
     for (Container currentContainer : containers) {
         System.out.println(currentContainer.getName());
     }
@@ -67,7 +67,7 @@ You can also check whether the upload succeeded by listing the objects in a cont
     System.out.println("Content type:   "+object.getContentType());
     System.out.println("Content length: "+object.getContentLength());
 
-    Collection<StoredObject> objects = container.listObjects();
+    Collection<StoredObject> objects = container.list();
     for (StoredObject currentObject : objects) {
         System.out.println(currentObject.getName());
     }

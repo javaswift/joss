@@ -29,4 +29,10 @@ public interface PaginationMap {
     */
     public Integer getNumberOfRecords();
 
+    /**
+    * Returns the prefix which is used to search the records
+    * @return the prefix
+    */
+    public String getPrefix();
+
 }

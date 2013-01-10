@@ -5,8 +5,8 @@ import nl.tweeenveertig.openstack.model.Container;
 
 public class AccountPaginationMap extends AbstractPaginationMap<Container> {
 
-    public AccountPaginationMap(Account account, Integer pageSize) {
-        super(account, pageSize);
+    public AccountPaginationMap(Account account, String prefix, Integer pageSize) {
+        super(account, prefix, pageSize);
     }
 
 }

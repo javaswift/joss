@@ -19,7 +19,7 @@ public class PaginationMapImplTest extends BaseCommandTest {
         account = mock(AccountImpl.class);
         when(account.getCount()).thenReturn(9);
         // Note that no containers are returned here, let's say they're quickly deleted
-        AbstractPaginationMap paginationMap = new AccountPaginationMap(account, 4)
+        AbstractPaginationMap paginationMap = new AccountPaginationMap(account, null, 4)
                 .setBlockSize(2)
                 .buildMap();
         assertEquals((Integer)4, paginationMap.getPageSize());
@@ -29,12 +29,12 @@ public class PaginationMapImplTest extends BaseCommandTest {
     public void buildMap() {
         account = mock(AccountImpl.class);
         when(account.getCount()).thenReturn(9);
-        when(account.list((String) null, 2)).thenReturn(createContainerCollection(new String[]{ "A", "B" }));
-        when(account.list("B", 2)).thenReturn(createContainerCollection(new String[]          { "C", "D"}));
-        when(account.list("D", 2)).thenReturn(createContainerCollection(new String[]          { "E", "F" }));
-        when(account.list("F", 2)).thenReturn(createContainerCollection(new String[]          { "G", "H" }));
-        when(account.list("H", 2)).thenReturn(createContainerCollection(new String[]          { "I" }));
-        AbstractPaginationMap paginationMap = new AccountPaginationMap(account, 4)
+        when(account.list(null, null, 2)).thenReturn(createContainerCollection(new String[]{ "A", "B" }));
+        when(account.list(null, "B", 2)).thenReturn(createContainerCollection(new String[] { "C", "D"}));
+        when(account.list(null, "D", 2)).thenReturn(createContainerCollection(new String[] { "E", "F" }));
+        when(account.list(null, "F", 2)).thenReturn(createContainerCollection(new String[] { "G", "H" }));
+        when(account.list(null, "H", 2)).thenReturn(createContainerCollection(new String[] { "I" }));
+        AbstractPaginationMap paginationMap = new AccountPaginationMap(account, null, 4)
                 .setBlockSize(2)
                 .buildMap();
         assertEquals((Integer)4, paginationMap.getPageSize());

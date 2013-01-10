@@ -32,15 +32,19 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     }
 
     public Collection<StoredObject> list() {
-        return list((String) null, getMaxPageSize());
+        return list(null, null, getMaxPageSize());
     }
 
     public Collection<StoredObject> list(PaginationMap paginationMap, int page) {
-        return list(paginationMap.getMarker(page), paginationMap.getPageSize());
+        return list(paginationMap.getPrefix(), paginationMap.getMarker(page), paginationMap.getPageSize());
+    }
+
+    public PaginationMap getPaginationMap(String prefix, int pageSize) {
+        return new ContainerPaginationMap(this, prefix, pageSize).buildMap();
     }
 
     public PaginationMap getPaginationMap(int pageSize) {
-        return new ContainerPaginationMap(this, pageSize).buildMap();
+        return getPaginationMap(null, pageSize);
     }
 
     public StoredObject getObjectSegment(String name, int part) {

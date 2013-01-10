@@ -48,9 +48,9 @@ public class ListContainersCommandTest extends BaseCommandTest {
     public void queryParameters() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
         new ListContainersCommand(this.account, httpClient, defaultAccess,
-                new ListInstructions().setMarker("dogs").setLimit(10)).call();
+                new ListInstructions().setPrefix("tst-").setMarker("dogs").setLimit(10)).call();
         verify(httpClient).execute(requestArgument.capture());
-        String assertQueryParameters = "?marker=dogs&limit=10";
+        String assertQueryParameters = "?prefix=tst-&marker=dogs&limit=10";
         String uri = requestArgument.getValue().getURI().toString();
         assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
     }

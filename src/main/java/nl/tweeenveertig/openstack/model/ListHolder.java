@@ -18,7 +18,7 @@ public interface ListHolder<Child extends ListSubject> {
     * @param pageSize the number of elements to return
     * @return page of Containers in an Account with a total of pageSize elements
     */
-    public Collection<Child> list(String marker, int pageSize);
+    public Collection<Child> list(String prefix, String marker, int pageSize);
 
     /**
     * Returns a number equal to pageSize of Container elements, starting with the first element
@@ -38,6 +38,17 @@ public interface ListHolder<Child extends ListSubject> {
     * @return the pagination map for all the Container elements in Account
     */
     public PaginationMap getPaginationMap(int pageSize);
+
+    /**
+    * Returns a PaginationMap of a listing of Containers. The map can be used to supply the OpenStack
+    * API with a marker (ie, last record on the previous page) and a limit (ie, page size).
+    * BE AWARE: this method iterates over ALL Container names to draw up the map, therefore it must
+    * be considered an expensive call.
+    * @param prefix the names must start with the prefix or else will be filtered out
+    * @param pageSize number of elements on a single page
+    * @return the pagination map for all the Container elements in Account
+    */
+    public PaginationMap getPaginationMap(String prefix, int pageSize);
 
     public int getCount();
 

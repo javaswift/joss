@@ -18,9 +18,12 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
 
     private Integer numberOfRecords = 0;
 
-    public AbstractPaginationMap(ListHolder listHolder, Integer pageSize) {
+    private String prefix;
+
+    public AbstractPaginationMap(ListHolder<Child> listHolder, String prefix, Integer pageSize) {
         this.listHolder = listHolder;
         this.blockSize = listHolder.getMaxPageSize();
+        this.prefix = prefix;
         this.pageSize = pageSize;
     }
 
@@ -31,7 +34,7 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
         Integer locationInPage = 0;
         pageToMarker.put(page++, null); // First marker is always null
         while (recordsToGo > 0) {
-            Collection<Child> children = listHolder.list(marker, blockSize);
+            Collection<Child> children = listHolder.list(prefix, marker, blockSize);
             for (Child child : children) {
                 marker = child.getName();
                 numberOfRecords++;
@@ -60,6 +63,10 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
 
     public Integer getNumberOfRecords() {
         return this.numberOfRecords;
+    }
+
+    public String getPrefix() {
+        return this.prefix;
     }
 
     public AbstractPaginationMap setBlockSize(Integer blockSize) {

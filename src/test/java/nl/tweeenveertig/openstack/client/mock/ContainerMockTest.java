@@ -106,7 +106,7 @@ public class ContainerMockTest {
         object3.uploadObject(new byte[]{});
         StoredObject object4 = container.getObject("D");
         object4.uploadObject(new byte[]{});
-        Collection<StoredObject> objects = container.list("B", 2);
+        Collection<StoredObject> objects = container.list(null, "B", 2);
         assertEquals(2, objects.size());
         objects.contains(object3);
         objects.contains(object4);

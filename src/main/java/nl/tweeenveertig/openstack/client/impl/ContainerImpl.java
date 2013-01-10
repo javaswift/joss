@@ -26,8 +26,9 @@ public class ContainerImpl extends AbstractContainer {
         new ContainerRightsCommand(getAccount(), getClient(), getAccess(), this, false).call();
     }
 
-    public Collection<StoredObject> list(String marker, int pageSize) {
+    public Collection<StoredObject> list(String prefix, String marker, int pageSize) {
         ListInstructions listInstructions = new ListInstructions()
+                .setPrefix(prefix)
                 .setMarker(marker)
                 .setLimit(pageSize);
         Collection<String> objectNames = new ListObjectsCommand(getAccount(), getClient(), getAccess(),

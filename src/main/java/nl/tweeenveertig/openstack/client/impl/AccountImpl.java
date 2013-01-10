@@ -31,8 +31,9 @@ public class AccountImpl extends AbstractAccount {
         this.access = access;
     }
 
-    public Collection<Container> list(String marker, int pageSize) {
+    public Collection<Container> list(String prefix, String marker, int pageSize) {
         ListInstructions listInstructions = new ListInstructions()
+                .setPrefix(prefix)
                 .setMarker(marker)
                 .setLimit(pageSize);
         Collection<String> containerNames = new ListContainersCommand(this, httpClient, access, listInstructions).call();

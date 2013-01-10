@@ -103,7 +103,7 @@ public class ContainerMock extends AbstractContainer {
     }
 
     @Override
-    public Collection<StoredObject> list(String marker, int pageSize) {
+    public Collection<StoredObject> list(String prefix, String marker, int pageSize) {
         return new PageServer<StoredObject>().createPage(objects.values(), marker, pageSize);
     }
 
