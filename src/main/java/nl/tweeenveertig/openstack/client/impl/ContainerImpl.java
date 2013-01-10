@@ -30,7 +30,8 @@ public class ContainerImpl extends AbstractContainer {
         ListInstructions listInstructions = new ListInstructions()
                 .setMarker(marker)
                 .setLimit(pageSize);
-        Collection<String> objectNames = new ListObjectsCommand(getAccount(), getClient(), getAccess(), this).call();
+        Collection<String> objectNames = new ListObjectsCommand(getAccount(), getClient(), getAccess(),
+                this, listInstructions).call();
         Collection<StoredObject> objects = new ArrayList<StoredObject>();
         for (String objectName : objectNames) {
             objects.add(getObject(objectName));

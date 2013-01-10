@@ -19,8 +19,6 @@ import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertRespons
 
 public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Collection<String>> {
 
-    public static final int MAX_PAGE_SIZE = 9999; // http://docs.openstack.org/api/openstack-object-storage/1.0/content/list-objects.html
-
     public ListContainersCommand(Account account, HttpClient httpClient, AccessImpl access, ListInstructions listInstructions) {
         super(account, httpClient, access);
         modifyURI(listInstructions.getQueryParameters());

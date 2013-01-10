@@ -125,7 +125,6 @@ public class ContainerMockTest {
         assertEquals(2, objects.size());
         objects.contains(object3);
         objects.contains(object4);
-
     }
 
     @Test

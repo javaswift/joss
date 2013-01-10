@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.container;
 
+import nl.tweeenveertig.openstack.instructions.ListInstructions;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusFailCondition;
@@ -19,8 +20,9 @@ import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertRespons
 
 public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collection<String>> {
 
-    public ListObjectsCommand(Account account, HttpClient httpClient, AccessImpl access, Container container) {
+    public ListObjectsCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, ListInstructions listInstructions) {
         super(account, httpClient, access, container);
+        modifyURI(listInstructions.getQueryParameters());
     }
 
     @Override
