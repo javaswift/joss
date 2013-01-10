@@ -66,7 +66,7 @@ public class AccountMock extends AbstractAccount {
 
     @Override
     public Collection<Container> list(String prefix, String marker, int pageSize) {
-        return new PageServer<Container>().createPage(containers.values(), marker, pageSize);
+        return new PageServer<Container>().createPage(containers.values(), prefix, marker, pageSize);
     }
 
     public Container getContainer(String name) {
