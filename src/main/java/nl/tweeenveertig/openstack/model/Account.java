@@ -78,6 +78,7 @@ public interface Account extends ObjectStoreEntity {
     public int getContainerCount();
     public long getBytesUsed();
     public int getObjectCount();
+    public int getMaxPageSize();
 
     public Account setAllowReauthenticate(boolean allowReauthenticate);
     public boolean isAllowReauthenticate();

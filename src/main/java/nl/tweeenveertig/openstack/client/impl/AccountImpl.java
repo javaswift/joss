@@ -31,10 +31,6 @@ public class AccountImpl extends AbstractAccount {
         this.access = access;
     }
 
-    public Collection<Container> listContainers() {
-        return listContainers((String)null, ListContainersCommand.MAX_PAGE_SIZE);
-    }
-
     public Collection<Container> listContainers(String marker, int pageSize) {
         ListInstructions listInstructions = new ListInstructions()
                 .setMarker(marker)
@@ -45,13 +41,6 @@ public class AccountImpl extends AbstractAccount {
             containers.add(this.getContainer(containerName));
         }
         return containers;
-    }
-
-    @Override
-    public PaginationMap getPaginationMap(int pageSize) {
-        return new PaginationMapImpl(this, pageSize)
-                .setBlockSize(7)
-                .buildMap();
     }
 
     public Container getContainer(String containerName) {

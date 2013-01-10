@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.client.core;
 
+import nl.tweeenveertig.openstack.client.impl.PaginationMapImpl;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
@@ -11,10 +12,20 @@ import java.util.Collection;
 
 public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountInformation> implements Account {
 
+    private static final Integer MAX_PAGE_SIZE = 9999;
+
     private boolean allowReauthenticate = true;
+
+    public Collection<Container> listContainers() {
+        return listContainers((String)null, getMaxPageSize());
+    }
 
     public Collection<Container> listContainers(PaginationMap paginationMap, int page) {
         return listContainers(paginationMap.getMarker(page), paginationMap.getPageSize());
+    }
+
+    public PaginationMap getPaginationMap(int pageSize) {
+        return new PaginationMapImpl(this, pageSize).buildMap();
     }
 
     public AbstractAccount(boolean allowCaching) {
@@ -48,5 +59,9 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     protected Metadata createMetadataEntry(String name, String value) {
         return new AccountMetadata(name, value);
+    }
+
+    public int getMaxPageSize() {
+        return MAX_PAGE_SIZE;
     }
 }

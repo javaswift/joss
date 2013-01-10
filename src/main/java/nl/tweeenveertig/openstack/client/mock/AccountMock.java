@@ -65,20 +65,25 @@ public class AccountMock extends AbstractAccount {
         this.info.setBytesUsed(new AccountBytesUsed(Long.toString(bytesUsed)));
     }
 
-    public Collection<Container> listContainers() {
-        return containers.values();
-    }
-
     @Override
     public Collection<Container> listContainers(String marker, int pageSize) {
-        // TBD
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public PaginationMap getPaginationMap(int pageSize) {
-        // TBD
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<Container> containerPage = new ArrayList<Container>();
+        boolean foundMarker = marker == null ? true : false;
+        int containersOnPage = 0;
+        for (Container container : containers.values()) {
+            if (foundMarker) {
+                containerPage.add(container);
+                containersOnPage++;
+            }
+            if (containersOnPage == pageSize) {
+                break;
+            }
+            // Do this as the last action, because it only starts working on the next element
+            if (!foundMarker && container.getName().equals(marker)) {
+                foundMarker = true;
+            }
+        }
+        return containerPage;
     }
 
     public Container getContainer(String name) {

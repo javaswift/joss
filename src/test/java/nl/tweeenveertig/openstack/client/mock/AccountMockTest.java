@@ -11,6 +11,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -104,6 +105,21 @@ public class AccountMockTest {
         account.getContainer("town2").create();
         account.getContainer("town3").create();
         assertEquals(3, account.listContainers().size());
+    }
+
+    @Test
+    public void listContainersPaged() {
+        Account account = new AccountMock();
+        account.getContainer("town1").create();
+        account.getContainer("town2").create();
+        account.getContainer("town3").create();
+        Container town4 = account.getContainer("town4").create();
+        Container town5 = account.getContainer("town5").create();
+        account.getContainer("town6").create();
+        Collection<Container> towns = account.listContainers("town3", 2);
+        assertEquals(2, towns.size());
+        towns.contains(town4);
+        towns.contains(town5);
     }
 
     @Test

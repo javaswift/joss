@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
+import nl.tweeenveertig.openstack.model.PaginationMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.junit.Before;
@@ -49,6 +50,24 @@ public class AccountImplTest extends BaseCommandTest {
         when(httpEntity.getContent()).thenReturn(inputStream);
         Collection<Container> containers = account.listContainers();
         assertEquals(3, containers.size());
+    }
+
+    @Test
+    public void paginationMap() throws IOException {
+        InputStream inputStream = IOUtils.toInputStream(
+                "Alpha\n"+
+                "Beta\n" +
+                "Gamma");
+        List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "3", headers);
+        when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
+        when(statusLine.getStatusCode()).thenReturn(204);
+        when(httpEntity.getContent()).thenReturn(inputStream);
+        PaginationMap paginationMap = account.getPaginationMap(2);
+        assertEquals((Integer)2, paginationMap.getPageSize());
+        assertEquals((Integer)2, paginationMap.getNumberOfPages());
+        assertEquals(null, paginationMap.getMarker(0));
+        assertEquals("Beta", paginationMap.getMarker(1));
     }
 
     @Test

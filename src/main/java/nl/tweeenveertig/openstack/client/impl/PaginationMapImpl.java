@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.client.impl;
 
-import nl.tweeenveertig.openstack.command.account.ListContainersCommand;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.model.PaginationMap;
@@ -17,10 +16,11 @@ public class PaginationMapImpl implements PaginationMap {
 
     private Map<Integer, String> pageToMarker = new TreeMap<Integer, String>();
 
-    private Integer blockSize = ListContainersCommand.MAX_PAGE_SIZE;
+    private Integer blockSize;
 
     public PaginationMapImpl(Account account, Integer pageSize) {
         this.account = account;
+        this.blockSize = account.getMaxPageSize();
         this.pageSize = pageSize;
     }
 
