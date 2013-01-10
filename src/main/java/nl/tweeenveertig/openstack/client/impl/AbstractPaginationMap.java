@@ -10,17 +10,17 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
 
     private ListHolder<Child> listHolder;
 
-    private Integer pageSize;
+    private int pageSize;
 
     private Map<Integer, String> pageToMarker = new TreeMap<Integer, String>();
 
-    private Integer blockSize;
+    private int blockSize;
 
-    private Integer numberOfRecords = 0;
+    private int numberOfRecords = 0;
 
     private String prefix;
 
-    public AbstractPaginationMap(ListHolder<Child> listHolder, String prefix, Integer pageSize) {
+    public AbstractPaginationMap(ListHolder<Child> listHolder, String prefix, int pageSize) {
         this.listHolder = listHolder;
         this.blockSize = listHolder.getMaxPageSize();
         this.prefix = prefix;
@@ -28,10 +28,10 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
     }
 
     public AbstractPaginationMap buildMap() {
-        Integer recordsToGo = listHolder.getCount();
+        int recordsToGo = listHolder.getCount();
         String marker = null;
-        Integer page = 0;
-        Integer locationInPage = 0;
+        int page = 0;
+        int locationInPage = 0;
         pageToMarker.put(page++, null); // First marker is always null
         while (recordsToGo > 0) {
             Collection<Child> children = listHolder.list(prefix, marker, blockSize);
@@ -53,15 +53,15 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
         return pageToMarker.get(page);
     }
 
-    public Integer getNumberOfPages() {
+    public int getNumberOfPages() {
         return pageToMarker.size();
     }
 
-    public Integer getPageSize() {
+    public int getPageSize() {
         return this.pageSize;
     }
 
-    public Integer getNumberOfRecords() {
+    public int getNumberOfRecords() {
         return this.numberOfRecords;
     }
 
@@ -69,7 +69,7 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
         return this.prefix;
     }
 
-    public AbstractPaginationMap setBlockSize(Integer blockSize) {
+    public AbstractPaginationMap setBlockSize(int blockSize) {
         this.blockSize = blockSize;
         return this;
     }

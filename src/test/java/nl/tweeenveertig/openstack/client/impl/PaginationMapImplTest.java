@@ -22,7 +22,7 @@ public class PaginationMapImplTest extends BaseCommandTest {
         AbstractPaginationMap paginationMap = new AccountPaginationMap(account, null, 4)
                 .setBlockSize(2)
                 .buildMap();
-        assertEquals((Integer)4, paginationMap.getPageSize());
+        assertEquals(4, paginationMap.getPageSize());
     }
 
     @Test
@@ -37,8 +37,8 @@ public class PaginationMapImplTest extends BaseCommandTest {
         AbstractPaginationMap paginationMap = new AccountPaginationMap(account, null, 4)
                 .setBlockSize(2)
                 .buildMap();
-        assertEquals((Integer)4, paginationMap.getPageSize());
-        assertEquals((Integer)3, paginationMap.getNumberOfPages());
+        assertEquals(4, paginationMap.getPageSize());
+        assertEquals(3, paginationMap.getNumberOfPages());
         assertEquals(null, paginationMap.getMarker(0));
         assertEquals("D", paginationMap.getMarker(1));
         assertEquals("H", paginationMap.getMarker(2));

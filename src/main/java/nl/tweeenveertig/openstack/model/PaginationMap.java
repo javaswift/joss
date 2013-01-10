@@ -15,19 +15,19 @@ public interface PaginationMap {
     * Returns the number of pages
     * @return number of pages
     */
-    public Integer getNumberOfPages();
+    public int getNumberOfPages();
 
     /**
     * Returns the page size
     * @return page size
     */
-    public Integer getPageSize();
+    public int getPageSize();
 
     /**
     * Returns the number of records
     * @return the number of records
     */
-    public Integer getNumberOfRecords();
+    public int getNumberOfRecords();
 
     /**
     * Returns the prefix which is used to search the records

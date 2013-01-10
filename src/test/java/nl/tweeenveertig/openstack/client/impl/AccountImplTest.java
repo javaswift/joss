@@ -64,9 +64,9 @@ public class AccountImplTest extends BaseCommandTest {
         when(statusLine.getStatusCode()).thenReturn(204);
         when(httpEntity.getContent()).thenReturn(inputStream);
         PaginationMap paginationMap = account.getPaginationMap(2);
-        assertEquals((Integer)2, paginationMap.getPageSize());
-        assertEquals((Integer)2, paginationMap.getNumberOfPages());
-        assertEquals((Integer)3, paginationMap.getNumberOfRecords());
+        assertEquals(2, paginationMap.getPageSize());
+        assertEquals(2, paginationMap.getNumberOfPages());
+        assertEquals(3, paginationMap.getNumberOfRecords());
         assertEquals(null, paginationMap.getMarker(0));
         assertEquals("Beta", paginationMap.getMarker(1));
     }

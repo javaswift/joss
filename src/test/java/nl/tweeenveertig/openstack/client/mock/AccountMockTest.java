@@ -131,8 +131,8 @@ public class AccountMockTest {
         Container town4 = account.getContainer("town4").create();
         account.getContainer("town5").create();
         PaginationMap paginationMap = account.getPaginationMap(2);
-        assertEquals((Integer)3, paginationMap.getNumberOfPages());
-        assertEquals((Integer)5, paginationMap.getNumberOfRecords());
+        assertEquals(3, paginationMap.getNumberOfPages());
+        assertEquals(5, paginationMap.getNumberOfRecords());
         Collection<Container> towns = account.list(paginationMap, 1);
         assertEquals(2, towns.size());
         towns.contains(town3);
