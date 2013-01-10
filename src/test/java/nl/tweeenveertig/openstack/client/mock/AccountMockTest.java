@@ -2,6 +2,7 @@ package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.PaginationMap;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.CommandExceptionError;
@@ -112,14 +113,30 @@ public class AccountMockTest {
         Account account = new AccountMock();
         account.getContainer("town1").create();
         account.getContainer("town2").create();
-        account.getContainer("town3").create();
+        Container town3 = account.getContainer("town3").create();
         Container town4 = account.getContainer("town4").create();
-        Container town5 = account.getContainer("town5").create();
-        account.getContainer("town6").create();
-        Collection<Container> towns = account.listContainers("town3", 2);
+        account.getContainer("town5").create();
+        Collection<Container> towns = account.listContainers("town2", 2);
         assertEquals(2, towns.size());
+        towns.contains(town3);
         towns.contains(town4);
-        towns.contains(town5);
+    }
+
+    @Test
+    public void listContainersUsePaginationMap() {
+        Account account = new AccountMock();
+        account.getContainer("town1").create();
+        account.getContainer("town2").create();
+        Container town3 = account.getContainer("town3").create();
+        Container town4 = account.getContainer("town4").create();
+        account.getContainer("town5").create();
+        PaginationMap paginationMap = account.getPaginationMap(2);
+        assertEquals((Integer)3, paginationMap.getNumberOfPages());
+        assertEquals((Integer)5, paginationMap.getNumberOfRecords());
+        Collection<Container> towns = account.listContainers(paginationMap, 1);
+        assertEquals(2, towns.size());
+        towns.contains(town3);
+        towns.contains(town4);
     }
 
     @Test

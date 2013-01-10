@@ -66,6 +66,7 @@ public class AccountImplTest extends BaseCommandTest {
         PaginationMap paginationMap = account.getPaginationMap(2);
         assertEquals((Integer)2, paginationMap.getPageSize());
         assertEquals((Integer)2, paginationMap.getNumberOfPages());
+        assertEquals((Integer)3, paginationMap.getNumberOfRecords());
         assertEquals(null, paginationMap.getMarker(0));
         assertEquals("Beta", paginationMap.getMarker(1));
     }

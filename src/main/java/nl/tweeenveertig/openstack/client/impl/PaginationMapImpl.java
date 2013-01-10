@@ -18,6 +18,8 @@ public class PaginationMapImpl implements PaginationMap {
 
     private Integer blockSize;
 
+    private Integer numberOfRecords = 0;
+
     public PaginationMapImpl(Account account, Integer pageSize) {
         this.account = account;
         this.blockSize = account.getMaxPageSize();
@@ -34,6 +36,7 @@ public class PaginationMapImpl implements PaginationMap {
             Collection<Container> containers = account.listContainers(marker, blockSize);
             for (Container container : containers) {
                 marker = container.getName();
+                numberOfRecords++;
                 if (++locationInPage == getPageSize()) {
                     pageToMarker.put(page++, marker);
                     locationInPage = 0;
@@ -55,6 +58,10 @@ public class PaginationMapImpl implements PaginationMap {
 
     public Integer getPageSize() {
         return this.pageSize;
+    }
+
+    public Integer getNumberOfRecords() {
+        return this.numberOfRecords;
     }
 
     public PaginationMapImpl setBlockSize(Integer blockSize) {

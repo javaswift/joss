@@ -23,4 +23,10 @@ public interface PaginationMap {
     */
     public Integer getPageSize();
 
+    /**
+    * Returns the number of records
+    * @return the number of records
+    */
+    public Integer getNumberOfRecords();
+
 }
