@@ -39,7 +39,7 @@ public class PaginationMapImpl implements PaginationMap {
                     locationInPage = 0;
                 }
             }
-            containersToGo -= containers.size() < blockSize ? containers.size() : blockSize;
+            containersToGo -= containers.size() == 0 ? containersToGo : (containers.size() < blockSize ? containers.size() : blockSize);
         }
         return this;
     }
