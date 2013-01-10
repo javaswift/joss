@@ -101,5 +101,11 @@ public class ContainerMock extends AbstractContainer {
     public boolean exists() {
         return super.exists() && created;
     }
+
+    @Override
+    public Collection<StoredObject> list(String marker, int pageSize) {
+        return new PageServer<StoredObject>().createPage(objects.values(), marker, pageSize);
+    }
+
 }
 

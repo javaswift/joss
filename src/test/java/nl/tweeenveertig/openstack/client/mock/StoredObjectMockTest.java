@@ -290,7 +290,7 @@ public class StoredObjectMockTest {
     public void uploadObjectToBeSegmented() {
         object.uploadObject(new UploadInstructions(uploadBytes).setSegmentationSize(3L));
         Container container = object.getContainer();
-        assertEquals(4, container.listObjects().size());
+        assertEquals(4, container.list().size());
         assertTrue(container.getObjectSegment("someObject", 1).exists());
         assertTrue(container.getObjectSegment("someObject", 2).exists());
         assertTrue(container.getObjectSegment("someObject", 3).exists());

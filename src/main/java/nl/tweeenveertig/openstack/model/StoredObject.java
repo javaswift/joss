@@ -19,7 +19,7 @@ import java.util.Date;
  * does not work on a private Container.
  * @author Robert Bor
  */
-public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject> {
+public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject>, ListSubject {
 
     /**
     * Fetches the object in a Container in an InputStream. Note that for passing the information on, the
@@ -158,7 +158,6 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject
     public String getEtag();
     public long getContentLength();
     public String getContentType();
-    public String getName();
     public Date getDeleteAtAsDate();
     public String getDeleteAt();
     public String getPath();

@@ -1,9 +1,11 @@
 package nl.tweeenveertig.openstack.client.core;
 
+import nl.tweeenveertig.openstack.client.impl.ContainerPaginationMap;
 import nl.tweeenveertig.openstack.instructions.SegmentationPlan;
 import nl.tweeenveertig.openstack.instructions.UploadInstructions;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.PaginationMap;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Metadata;
@@ -12,8 +14,11 @@ import nl.tweeenveertig.openstack.information.ContainerInformation;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 
 public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container {
+
+    private static final Integer MAX_PAGE_SIZE = 9999;
 
     protected String name;
 
@@ -26,11 +31,23 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         this.info = new ContainerInformation();
     }
 
+    public Collection<StoredObject> list() {
+        return list((String) null, getMaxPageSize());
+    }
+
+    public Collection<StoredObject> list(PaginationMap paginationMap, int page) {
+        return list(paginationMap.getMarker(page), paginationMap.getPageSize());
+    }
+
+    public PaginationMap getPaginationMap(int pageSize) {
+        return new ContainerPaginationMap(this, pageSize).buildMap();
+    }
+
     public StoredObject getObjectSegment(String name, int part) {
         return getObject(name + "/" + String.format("%08d", part));
     }
 
-    public int getObjectCount() {
+    public int getCount() {
         checkForInfo();
         return info.getObjectCount();
     }
@@ -87,4 +104,7 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         }
     }
 
+    public int getMaxPageSize() {
+        return MAX_PAGE_SIZE;
+    }
 }

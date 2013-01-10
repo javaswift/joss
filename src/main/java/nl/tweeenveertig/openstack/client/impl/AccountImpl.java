@@ -31,7 +31,7 @@ public class AccountImpl extends AbstractAccount {
         this.access = access;
     }
 
-    public Collection<Container> listContainers(String marker, int pageSize) {
+    public Collection<Container> list(String marker, int pageSize) {
         ListInstructions listInstructions = new ListInstructions()
                 .setMarker(marker)
                 .setLimit(pageSize);

@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.client.core;
 
-import nl.tweeenveertig.openstack.client.impl.PaginationMapImpl;
+import nl.tweeenveertig.openstack.client.impl.AbstractPaginationMap;
+import nl.tweeenveertig.openstack.client.impl.AccountPaginationMap;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.account.AccountMetadata;
@@ -16,16 +17,16 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private boolean allowReauthenticate = true;
 
-    public Collection<Container> listContainers() {
-        return listContainers((String)null, getMaxPageSize());
+    public Collection<Container> list() {
+        return list((String) null, getMaxPageSize());
     }
 
-    public Collection<Container> listContainers(PaginationMap paginationMap, int page) {
-        return listContainers(paginationMap.getMarker(page), paginationMap.getPageSize());
+    public Collection<Container> list(PaginationMap paginationMap, int page) {
+        return list(paginationMap.getMarker(page), paginationMap.getPageSize());
     }
 
     public PaginationMap getPaginationMap(int pageSize) {
-        return new PaginationMapImpl(this, pageSize).buildMap();
+        return new AccountPaginationMap(this, pageSize).buildMap();
     }
 
     public AbstractAccount(boolean allowCaching) {
@@ -42,7 +43,7 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return this.allowReauthenticate;
     }
 
-    public int getContainerCount() {
+    public int getCount() {
         checkForInfo();
         return info.getContainerCount();
     }

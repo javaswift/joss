@@ -17,9 +17,9 @@ public class PaginationMapImplTest extends BaseCommandTest {
     @Test
     public void buildMapButContainersAreGone() {
         account = mock(AccountImpl.class);
-        when(account.getContainerCount()).thenReturn(9);
+        when(account.getCount()).thenReturn(9);
         // Note that no containers are returned here, let's say they're quickly deleted
-        PaginationMapImpl paginationMap = new PaginationMapImpl(account, 4)
+        AbstractPaginationMap paginationMap = new AccountPaginationMap(account, 4)
                 .setBlockSize(2)
                 .buildMap();
         assertEquals((Integer)4, paginationMap.getPageSize());
@@ -28,13 +28,13 @@ public class PaginationMapImplTest extends BaseCommandTest {
     @Test
     public void buildMap() {
         account = mock(AccountImpl.class);
-        when(account.getContainerCount()).thenReturn(9);
-        when(account.listContainers((String) null, 2)).thenReturn(createContainerCollection(new String[]{ "A", "B" }));
-        when(account.listContainers("B", 2)).thenReturn(createContainerCollection(new String[]          { "C", "D"}));
-        when(account.listContainers("D", 2)).thenReturn(createContainerCollection(new String[]          { "E", "F" }));
-        when(account.listContainers("F", 2)).thenReturn(createContainerCollection(new String[]          { "G", "H" }));
-        when(account.listContainers("H", 2)).thenReturn(createContainerCollection(new String[]          { "I" }));
-        PaginationMapImpl paginationMap = new PaginationMapImpl(account, 4)
+        when(account.getCount()).thenReturn(9);
+        when(account.list((String) null, 2)).thenReturn(createContainerCollection(new String[]{ "A", "B" }));
+        when(account.list("B", 2)).thenReturn(createContainerCollection(new String[]          { "C", "D"}));
+        when(account.list("D", 2)).thenReturn(createContainerCollection(new String[]          { "E", "F" }));
+        when(account.list("F", 2)).thenReturn(createContainerCollection(new String[]          { "G", "H" }));
+        when(account.list("H", 2)).thenReturn(createContainerCollection(new String[]          { "I" }));
+        AbstractPaginationMap paginationMap = new AccountPaginationMap(account, 4)
                 .setBlockSize(2)
                 .buildMap();
         assertEquals((Integer)4, paginationMap.getPageSize());

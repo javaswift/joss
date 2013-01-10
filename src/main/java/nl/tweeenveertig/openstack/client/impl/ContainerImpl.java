@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.client.impl;
 
+import nl.tweeenveertig.openstack.instructions.ListInstructions;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.model.StoredObject;
@@ -25,7 +26,10 @@ public class ContainerImpl extends AbstractContainer {
         new ContainerRightsCommand(getAccount(), getClient(), getAccess(), this, false).call();
     }
 
-    public Collection<StoredObject> listObjects() {
+    public Collection<StoredObject> list(String marker, int pageSize) {
+        ListInstructions listInstructions = new ListInstructions()
+                .setMarker(marker)
+                .setLimit(pageSize);
         Collection<String> objectNames = new ListObjectsCommand(getAccount(), getClient(), getAccess(), this).call();
         Collection<StoredObject> objects = new ArrayList<StoredObject>();
         for (String objectName : objectNames) {

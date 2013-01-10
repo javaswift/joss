@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.PaginationMap;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.CommandExceptionError;
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -55,7 +57,7 @@ public class ContainerMockTest {
     @Test
     public void numberOfObjects() throws IOException {
         addObjects(3);
-        assertEquals(3, container.getObjectCount());
+        assertEquals(3, container.getCount());
     }
 
     @Test
@@ -67,9 +69,9 @@ public class ContainerMockTest {
     @Test
     public void deleteObject() throws IOException {
         object.uploadObject(new byte[]{});
-        assertEquals(1, container.getObjectCount());
+        assertEquals(1, container.getCount());
         object.delete();
-        assertEquals(0, container.getObjectCount());
+        assertEquals(0, container.getCount());
     }
 
     @Test
@@ -78,7 +80,7 @@ public class ContainerMockTest {
         addObject("object2", new byte[] { 0x01, 0x02 } );
         addObject("object3", new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 } );
         assertEquals(10, container.getBytesUsed());
-        assertEquals(3, container.getObjectCount());
+        assertEquals(3, container.getCount());
     }
 
     @Test
@@ -94,6 +96,36 @@ public class ContainerMockTest {
             }
         };
         assertFalse(newContainer.exists());
+    }
+
+    @Test
+    public void listObjectsPaged() {
+        container.getObject("A").uploadObject(new byte[]{});
+        container.getObject("B").uploadObject(new byte[]{});
+        StoredObject object3 = container.getObject("C");
+        object3.uploadObject(new byte[]{});
+        StoredObject object4 = container.getObject("D");
+        object4.uploadObject(new byte[]{});
+        Collection<StoredObject> objects = container.list("B", 2);
+        assertEquals(2, objects.size());
+        objects.contains(object3);
+        objects.contains(object4);
+    }
+
+    @Test
+    public void listContainersUsePaginationMap() {
+        container.getObject("A").uploadObject(new byte[]{});
+        container.getObject("B").uploadObject(new byte[]{});
+        StoredObject object3 = container.getObject("C");
+        object3.uploadObject(new byte[]{});
+        StoredObject object4 = container.getObject("D");
+        object4.uploadObject(new byte[]{});
+        PaginationMap paginationMap = container.getPaginationMap(2);
+        Collection<StoredObject> objects = container.list(paginationMap, 1);
+        assertEquals(2, objects.size());
+        objects.contains(object3);
+        objects.contains(object4);
+
     }
 
     @Test

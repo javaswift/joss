@@ -51,7 +51,7 @@ public class ContainerImplTest extends BaseCommandTest {
                 "beta.png\n" +
                 "gamma.docx");
         when(httpEntity.getContent()).thenReturn(inputStream);
-        Collection<StoredObject> objects = container.listObjects();
+        Collection<StoredObject> objects = container.list();
         assertEquals(3, objects.size());
     }
 
@@ -94,7 +94,7 @@ public class ContainerImplTest extends BaseCommandTest {
         assertEquals("1989", container.getMetadata().get("Year"));
         assertEquals("42 BV", container.getMetadata().get("Company"));
         assertTrue(container.isPublic());
-        assertEquals(123, container.getObjectCount());
+        assertEquals(123, container.getCount());
         assertEquals(654321, container.getBytesUsed());
     }
 

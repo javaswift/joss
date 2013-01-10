@@ -13,7 +13,7 @@ import java.util.Collection;
  * Store. It just returns a handle for a StoredObject.
  * @author Robert Bor
  */
-public interface Container extends ObjectStoreEntity, Comparable<Container> {
+public interface Container extends ObjectStoreEntity, Comparable<Container>, ListHolder<StoredObject>, ListSubject {
 
     /**
     * Takes a single Container and makes it public. ALL (!) the objects in the Container are now public, so be
@@ -26,12 +26,6 @@ public interface Container extends ObjectStoreEntity, Comparable<Container> {
     * no longer be accessed through the public URL.
     */
     public void makePrivate();
-
-    /**
-    * Lists all the objects in a Container
-    * @return the objects in the Container
-    */
-    public Collection<StoredObject> listObjects();
 
     /**
     * Creates a Container in the Account.
@@ -75,10 +69,9 @@ public interface Container extends ObjectStoreEntity, Comparable<Container> {
     */
     public void reload();
 
-    public int getObjectCount();
+    public int getCount();
     public long getBytesUsed();
     public boolean isPublic();
-    public String getName();
 
     public abstract Account getAccount();
 

@@ -1,16 +1,14 @@
 package nl.tweeenveertig.openstack.client.impl;
 
-import nl.tweeenveertig.openstack.model.Account;
-import nl.tweeenveertig.openstack.model.Container;
-import nl.tweeenveertig.openstack.model.PaginationMap;
+import nl.tweeenveertig.openstack.model.*;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PaginationMapImpl implements PaginationMap {
+public abstract class AbstractPaginationMap<Child extends ListSubject> implements PaginationMap {
 
-    private Account account;
+    private ListHolder<Child> listHolder;
 
     private Integer pageSize;
 
@@ -20,29 +18,29 @@ public class PaginationMapImpl implements PaginationMap {
 
     private Integer numberOfRecords = 0;
 
-    public PaginationMapImpl(Account account, Integer pageSize) {
-        this.account = account;
-        this.blockSize = account.getMaxPageSize();
+    public AbstractPaginationMap(ListHolder listHolder, Integer pageSize) {
+        this.listHolder = listHolder;
+        this.blockSize = listHolder.getMaxPageSize();
         this.pageSize = pageSize;
     }
 
-    public PaginationMapImpl buildMap() {
-        Integer containersToGo = account.getContainerCount();
+    public AbstractPaginationMap buildMap() {
+        Integer recordsToGo = listHolder.getCount();
         String marker = null;
         Integer page = 0;
         Integer locationInPage = 0;
         pageToMarker.put(page++, null); // First marker is always null
-        while (containersToGo > 0) {
-            Collection<Container> containers = account.listContainers(marker, blockSize);
-            for (Container container : containers) {
-                marker = container.getName();
+        while (recordsToGo > 0) {
+            Collection<Child> children = listHolder.list(marker, blockSize);
+            for (Child child : children) {
+                marker = child.getName();
                 numberOfRecords++;
                 if (++locationInPage == getPageSize()) {
                     pageToMarker.put(page++, marker);
                     locationInPage = 0;
                 }
             }
-            containersToGo -= containers.size() == 0 ? containersToGo : (containers.size() < blockSize ? containers.size() : blockSize);
+            recordsToGo -= children.size() == 0 ? recordsToGo : (children.size() < blockSize ? children.size() : blockSize);
         }
         return this;
     }
@@ -64,7 +62,7 @@ public class PaginationMapImpl implements PaginationMap {
         return this.numberOfRecords;
     }
 
-    public PaginationMapImpl setBlockSize(Integer blockSize) {
+    public AbstractPaginationMap setBlockSize(Integer blockSize) {
         this.blockSize = blockSize;
         return this;
     }

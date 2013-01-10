@@ -105,7 +105,7 @@ public class AccountMockTest {
         account.getContainer("town1").create();
         account.getContainer("town2").create();
         account.getContainer("town3").create();
-        assertEquals(3, account.listContainers().size());
+        assertEquals(3, account.list().size());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class AccountMockTest {
         Container town3 = account.getContainer("town3").create();
         Container town4 = account.getContainer("town4").create();
         account.getContainer("town5").create();
-        Collection<Container> towns = account.listContainers("town2", 2);
+        Collection<Container> towns = account.list("town2", 2);
         assertEquals(2, towns.size());
         towns.contains(town3);
         towns.contains(town4);
@@ -133,7 +133,7 @@ public class AccountMockTest {
         PaginationMap paginationMap = account.getPaginationMap(2);
         assertEquals((Integer)3, paginationMap.getNumberOfPages());
         assertEquals((Integer)5, paginationMap.getNumberOfRecords());
-        Collection<Container> towns = account.listContainers(paginationMap, 1);
+        Collection<Container> towns = account.list(paginationMap, 1);
         assertEquals(2, towns.size());
         towns.contains(town3);
         towns.contains(town4);
@@ -162,7 +162,7 @@ public class AccountMockTest {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
         object.uploadObject(bytes);
         assertEquals(3 , account.getBytesUsed());
-        assertEquals(1, account.getContainerCount());
+        assertEquals(1, account.getCount());
         assertEquals(1, account.getObjectCount());
     }
 

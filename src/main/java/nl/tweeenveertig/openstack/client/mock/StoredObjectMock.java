@@ -53,7 +53,7 @@ public class StoredObjectMock extends AbstractStoredObject {
         String objectPrefix = this.objectManifest.getObjectPrefix();
         Collection<StoredObject> segments = new ArrayList<StoredObject>();
         int byteCount = 0;
-        for (StoredObject storedObject : segmentFolder.listObjects()) {
+        for (StoredObject storedObject : segmentFolder.list()) {
             if (storedObject.getName().startsWith(objectPrefix) && ! storedObject.getName().equals(objectPrefix)) {
                 segments.add(storedObject);
                 byteCount += storedObject.getContentLength();

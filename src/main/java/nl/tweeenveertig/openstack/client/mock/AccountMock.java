@@ -8,7 +8,6 @@ import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.account.AccountBytesUsed;
 import nl.tweeenveertig.openstack.headers.account.AccountContainerCount;
 import nl.tweeenveertig.openstack.headers.account.AccountObjectCount;
-import nl.tweeenveertig.openstack.model.PaginationMap;
 
 import java.util.*;
 
@@ -57,7 +56,7 @@ public class AccountMock extends AbstractAccount {
         long bytesUsed = 0;
         for (Container container : containers.values()) {
             containerCount++;
-            objectCount += container.getObjectCount();
+            objectCount += container.getCount();
             bytesUsed += container.getBytesUsed();
         }
         this.info.setContainerCount(new AccountContainerCount(Integer.toString(containerCount)));
@@ -66,24 +65,8 @@ public class AccountMock extends AbstractAccount {
     }
 
     @Override
-    public Collection<Container> listContainers(String marker, int pageSize) {
-        List<Container> containerPage = new ArrayList<Container>();
-        boolean foundMarker = marker == null ? true : false;
-        int containersOnPage = 0;
-        for (Container container : containers.values()) {
-            if (foundMarker) {
-                containerPage.add(container);
-                containersOnPage++;
-            }
-            if (containersOnPage == pageSize) {
-                break;
-            }
-            // Do this as the last action, because it only starts working on the next element
-            if (!foundMarker && container.getName().equals(marker)) {
-                foundMarker = true;
-            }
-        }
-        return containerPage;
+    public Collection<Container> list(String marker, int pageSize) {
+        return new PageServer<Container>().createPage(containers.values(), marker, pageSize);
     }
 
     public Container getContainer(String name) {

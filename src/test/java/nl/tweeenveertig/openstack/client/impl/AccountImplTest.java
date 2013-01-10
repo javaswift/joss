@@ -48,7 +48,7 @@ public class AccountImplTest extends BaseCommandTest {
                 "Beta\n" +
                 "Gamma");
         when(httpEntity.getContent()).thenReturn(inputStream);
-        Collection<Container> containers = account.listContainers();
+        Collection<Container> containers = account.list();
         assertEquals(3, containers.size());
     }
 
@@ -89,7 +89,7 @@ public class AccountImplTest extends BaseCommandTest {
         prepareMetadata();
         assertEquals("1989", account.getMetadata().get("Year"));
         assertEquals("42 BV", account.getMetadata().get("Company"));
-        assertEquals(7, account.getContainerCount());
+        assertEquals(7, account.getCount());
         assertEquals(123, account.getObjectCount());
         assertEquals(654321, account.getBytesUsed());
     }
@@ -104,8 +104,8 @@ public class AccountImplTest extends BaseCommandTest {
         account = new AccountImpl(null, httpClient, defaultAccess, false); // Caching is turned off
         when(statusLine.getStatusCode()).thenReturn(204);
         prepareMetadata();
-        account.getContainerCount();
-        account.getContainerCount();
+        account.getCount();
+        account.getCount();
         // Because caching is turned off, the HTTP call must be made twice
         verify(httpClient, times(2)).execute(requestArgument.capture());
     }
@@ -115,7 +115,7 @@ public class AccountImplTest extends BaseCommandTest {
         assertFalse(account.isInfoRetrieved());
         when(statusLine.getStatusCode()).thenReturn(204);
         prepareMetadata();
-        account.getContainerCount();
+        account.getCount();
         assertTrue(account.isInfoRetrieved());
     }
 
@@ -123,7 +123,7 @@ public class AccountImplTest extends BaseCommandTest {
     public void reload() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
         prepareMetadata();
-        account.getContainerCount();
+        account.getCount();
         account.reload();
         verify(httpClient, times(2)).execute(requestArgument.capture());
     }
