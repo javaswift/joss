@@ -69,6 +69,15 @@ public class AccountFactoryTest {
         verify(mockedAccount, times(1)).setAllowReauthenticate(false);
     }
 
+    @Test
+    public void constructImplDisallowingCaching() throws Exception {
+        HttpClient httpClient = new DefaultHttpClient();
+        AccountFactory factory = construct(httpClient);
+        factory.setAllowCaching(false);
+        assertNotNull(factory.createAccount());
+        verify(mockedClient, times(1)).setAllowCaching(false);
+    }
+
     protected AccountFactory construct(HttpClient httpClient) throws Exception {
         AccountFactory factory = new AccountFactory();
         AccountConfig config = new AccountConfig();

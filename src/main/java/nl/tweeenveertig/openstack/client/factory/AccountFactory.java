@@ -14,6 +14,8 @@ public class AccountFactory {
 
     private boolean allowReauthenticate = true; // Default behaviour is to allow re-authentication
 
+    private boolean allowCaching = true;
+
     public void setConfig(AccountConfig config) {
         this.config = config;
     }
@@ -24,6 +26,10 @@ public class AccountFactory {
 
     public void setAllowReauthenticate(boolean allowReauthenticate) {
         this.allowReauthenticate = allowReauthenticate;
+    }
+
+    public void setAllowCaching(boolean allowCaching) {
+        this.allowCaching = allowCaching;
     }
 
     public Account createAccount() {
@@ -43,6 +49,7 @@ public class AccountFactory {
         if (this.httpClient != null) {
             client.setHttpClient(this.httpClient);
         }
+        client.setAllowCaching(this.allowCaching);
         return client;
     }
 }
