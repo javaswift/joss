@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import nl.tweeenveertig.openstack.instructions.QueryParameter;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.account;
 
+import nl.tweeenveertig.openstack.instructions.ListInstructions;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.*;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
@@ -20,12 +21,9 @@ public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Collec
 
     public static final int MAX_PAGE_SIZE = 9999; // http://docs.openstack.org/api/openstack-object-storage/1.0/content/list-objects.html
 
-    public ListContainersCommand(Account account, HttpClient httpClient, AccessImpl access, String marker, int pageSize) {
+    public ListContainersCommand(Account account, HttpClient httpClient, AccessImpl access, ListInstructions listInstructions) {
         super(account, httpClient, access);
-        modifyURI(new QueryParameters(new QueryParameter[] {
-            new QueryParameter("marker", marker),
-            new QueryParameter("limit", pageSize)
-        }));
+        modifyURI(listInstructions.getQueryParameters());
     }
 
     @Override

@@ -86,7 +86,7 @@ public class AccountImplTest extends BaseCommandTest {
         prepareMetadata();
         account.getContainerCount();
         account.getContainerCount();
-        // Because caching is turned off, the call must be made twice
+        // Because caching is turned off, the HTTP call must be made twice
         verify(httpClient, times(2)).execute(requestArgument.capture());
     }
 

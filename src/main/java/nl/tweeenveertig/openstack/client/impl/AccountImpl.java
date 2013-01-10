@@ -1,6 +1,7 @@
 package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
+import nl.tweeenveertig.openstack.instructions.ListInstructions;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.client.core.AbstractAccount;
 import nl.tweeenveertig.openstack.command.account.AccountInformationCommand;
@@ -31,22 +32,26 @@ public class AccountImpl extends AbstractAccount {
     }
 
     public Collection<Container> listContainers() {
-        return listContainers(null, ListContainersCommand.MAX_PAGE_SIZE);
-    }
-
-    @Override
-    public PaginationMap getPaginationMap(int pageSize) {
-        // TBD
-        return null;
+        return listContainers((String)null, ListContainersCommand.MAX_PAGE_SIZE);
     }
 
     public Collection<Container> listContainers(String marker, int pageSize) {
-        Collection<String> containerNames = new ListContainersCommand(this, httpClient, access, marker, pageSize).call();
+        ListInstructions listInstructions = new ListInstructions()
+                .setMarker(marker)
+                .setLimit(pageSize);
+        Collection<String> containerNames = new ListContainersCommand(this, httpClient, access, listInstructions).call();
         Collection<Container> containers = new ArrayList<Container>();
         for (String containerName : containerNames) {
             containers.add(this.getContainer(containerName));
         }
         return containers;
+    }
+
+    @Override
+    public PaginationMap getPaginationMap(int pageSize) {
+        return new PaginationMapImpl(this, pageSize)
+                .setBlockSize(7)
+                .buildMap();
     }
 
     public Container getContainer(String containerName) {

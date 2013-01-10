@@ -10,6 +10,7 @@ import java.util.concurrent.Callable;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Header;
+import nl.tweeenveertig.openstack.instructions.QueryParameters;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -75,7 +76,6 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
     }
 
     protected void modifyURI(QueryParameters queryParameters) {
-        String url = request.getURI().toString() + queryParameters.getQuery();
-        request.setURI(URI.create(url));
+        request.setURI(URI.create(queryParameters.createUrl(request.getURI().toString())));
     }
 }

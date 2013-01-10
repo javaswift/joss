@@ -13,8 +13,8 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private boolean allowReauthenticate = true;
 
-    public Collection<Container> listContainers(PaginationMap paginationMap, int page, int pageSize) {
-        return listContainers(paginationMap.getMarker(page), pageSize);
+    public Collection<Container> listContainers(PaginationMap paginationMap, int page) {
+        return listContainers(paginationMap.getMarker(page), paginationMap.getPageSize());
     }
 
     public AbstractAccount(boolean allowCaching) {

@@ -1,5 +1,7 @@
 package nl.tweeenveertig.openstack.command.core;
 
+import nl.tweeenveertig.openstack.instructions.QueryParameter;
+import nl.tweeenveertig.openstack.instructions.QueryParameters;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -25,6 +27,16 @@ public class QueryParametersTest {
                 new QueryParameter("epsilon", 5)
         });
         assertEquals("?alpha=1&beta=2&gamma=3&delta=4&epsilon=5", queryParameters.getQuery());
+    }
+
+    @Test
+    public void getUrl() {
+        QueryParameters queryParameters = new QueryParameters(new QueryParameter[] {
+                new QueryParameter("marker", "dog"),
+                new QueryParameter("limit", 10)
+        });
+        String url = "http://www.nowhere.not";
+        assertEquals(url+"?marker=dog&limit=10", queryParameters.createUrl(url));
     }
 
 }

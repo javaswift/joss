@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.core;
+package nl.tweeenveertig.openstack.instructions;
 
 public class QueryParameters {
 
@@ -22,5 +22,9 @@ public class QueryParameters {
             }
         }
         return completeQuery.toString();
+    }
+
+    public String createUrl(String urlPath) {
+        return urlPath + getQuery();
     }
 }

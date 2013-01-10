@@ -34,10 +34,9 @@ public interface Account extends ObjectStoreEntity {
     * after the Container named the same as marker.
     * @param paginationMap the map that is fetched with getPaginationMap and maps from page to marker
     * @param page the page to return the Containers for
-    * @param pageSize the number of elements to return
     * @return page of Containers in an Account with a total of pageSize elements
     */
-    public Collection<Container> listContainers(PaginationMap paginationMap, int page, int pageSize);
+    public Collection<Container> listContainers(PaginationMap paginationMap, int page);
 
     /**
     * Returns a PaginationMap of a listing of Containers. The map can be used to supply the OpenStack

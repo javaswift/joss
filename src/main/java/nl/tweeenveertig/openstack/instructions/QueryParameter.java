@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.core;
+package nl.tweeenveertig.openstack.instructions;
 
 import org.apache.http.NameValuePair;
 
