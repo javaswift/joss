@@ -13,6 +13,8 @@ public class ClientMock implements Client<AccountMock> {
 
     private String onFileObjectStore = null;
 
+    private String publicUrl = null;
+
     public AccountMock authenticate(String tenant, String username, String password, String authUrl) {
         return authenticate(tenant, username, password, authUrl, null);
     }
@@ -38,6 +40,11 @@ public class ClientMock implements Client<AccountMock> {
 
     public ClientMock setOnFileObjectStore(String onFileObjectStore) {
         this.onFileObjectStore = onFileObjectStore;
+        return this;
+    }
+
+    public ClientMock setPublicUrl(String publicUrl) {
+        this.publicUrl = publicUrl;
         return this;
     }
 

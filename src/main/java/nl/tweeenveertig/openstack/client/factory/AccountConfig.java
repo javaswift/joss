@@ -7,6 +7,7 @@ public class AccountConfig {
     private String password;
     private String authUrl;
     private boolean mock;
+    private String mockPublicUrl;
 
     public void setTenant(String tenant) {
         this.tenant = tenant;
@@ -48,4 +49,11 @@ public class AccountConfig {
         return mock;
     }
 
+    public String getMockPublicUrl() {
+        return mockPublicUrl;
+    }
+
+    public void setMockPublicUrl(String mockPublicUrl) {
+        this.mockPublicUrl = mockPublicUrl;
+    }
 }

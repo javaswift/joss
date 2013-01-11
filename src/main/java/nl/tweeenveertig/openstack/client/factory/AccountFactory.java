@@ -35,7 +35,9 @@ public class AccountFactory {
     public Account createAccount() {
         Client client;
         if (config.isMock()) {
-            client = new ClientMock().setAllowEveryone(true);
+            client = new ClientMock()
+                    .setAllowEveryone(true)
+                    .setPublicUrl(config.getMockPublicUrl());
         } else {
             client = createClientImpl();
         }

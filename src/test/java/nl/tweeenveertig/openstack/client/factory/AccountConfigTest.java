@@ -15,10 +15,12 @@ public class AccountConfigTest {
         config.setTenant("tenant");
         config.setUsername("user");
         config.setMock(true);
+        config.setMockPublicUrl("http://localhost:8080/mock");
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
         assertEquals("tenant", config.getTenant());
         assertEquals("user", config.getUsername());
         assertTrue(config.isMock());
+        assertEquals("http://localhost:8080/mock", config.getMockPublicUrl());
     }
 }

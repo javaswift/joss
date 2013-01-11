@@ -184,8 +184,11 @@ public class AccountMockTest {
     }
 
     @Test
-    public void eliminateFluff() { // Pick out the items which are not useful in mock mode
+    public void getPublicUrl() {
         assertEquals("", new AccountMock().getPublicURL());
+        AccountMock account = new AccountMock()
+                .setPublicUrl("http://localhost:8080/mock");
+        assertEquals("http://localhost:8080/mock", account.getPublicURL());
     }
 
 }

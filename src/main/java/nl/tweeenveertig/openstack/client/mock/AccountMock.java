@@ -19,6 +19,8 @@ public class AccountMock extends AbstractAccount {
 
     private ObjectDeleter objectDeleter;
 
+    private String publicUrl;
+
     public AccountMock() {
         super(ALLOW_CACHING);
     }
@@ -38,6 +40,11 @@ public class AccountMock extends AbstractAccount {
 
     public AccountMock setObjectDeleter(ObjectDeleter objectDeleter) {
         this.objectDeleter = objectDeleter;
+        return this;
+    }
+
+    public AccountMock setPublicUrl(String publicUrl) {
+        this.publicUrl = publicUrl;
         return this;
     }
 
@@ -83,7 +90,7 @@ public class AccountMock extends AbstractAccount {
     }
 
     public String getPublicURL() {
-        return "";
+        return this.publicUrl == null ? "" : this.publicUrl;
     }
 
 }
