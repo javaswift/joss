@@ -74,4 +74,18 @@ public class ListContainersCommandTest extends BaseCommandTest {
         assertEquals(48, container.getCount());
     }
 
+    @Test
+    public void checkThatHeaderFieldsDoNotCostAnExtraCall() throws IOException {
+        when(httpEntity.getContent()).thenReturn(
+                IOUtils.toInputStream(new ClasspathTemplateResource("/sample-container-list.json").loadTemplate()));
+        when(statusLine.getStatusCode()).thenReturn(204);
+        Collection<Container> containers =
+                new ListContainersCommand(this.account, httpClient, defaultAccess, listInstructions).call();
+        assertEquals(1, account.getNumberOfCalls());
+        Container container = containers.iterator().next();
+        container.getBytesUsed();
+        container.getCount();
+        assertEquals(1, account.getNumberOfCalls());
+    }
+
 }

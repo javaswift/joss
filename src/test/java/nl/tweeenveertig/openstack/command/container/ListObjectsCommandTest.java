@@ -84,4 +84,20 @@ public class ListObjectsCommandTest extends BaseCommandTest {
         assertEquals(22979, object.getContentLength());
     }
 
+    @Test
+    public void checkThatHeaderFieldsDoNotCostAnExtraCall() throws IOException {
+        when(httpEntity.getContent()).thenReturn(
+                IOUtils.toInputStream(new ClasspathTemplateResource("/sample-object-list.json").loadTemplate()));
+        when(statusLine.getStatusCode()).thenReturn(204);
+        Collection<StoredObject> objects =
+                new ListObjectsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), listInstructions).call();
+        assertEquals(1, account.getNumberOfCalls());
+        StoredObject object = objects.iterator().next();
+        object.getContentType();
+        object.getContentLength();
+        object.getEtag();
+        object.getLastModified();
+        assertEquals(1, account.getNumberOfCalls());
+    }
+
 }
