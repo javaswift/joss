@@ -47,9 +47,9 @@ public class ContainerImplTest extends BaseCommandTest {
     public void listObjects() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(200);
         InputStream inputStream = IOUtils.toInputStream(
-                "[{\"name\":\"alpha\",\"count\":48,\"bytes\":1028296},"+
-                "{\"name\":\"beta\",\"count\":0,\"bytes\":0}," +
-                "{\"name\":\"gamma\",\"count\":3,\"bytes\":26934}]");
+                "[{\"name\":\"alpha\",\"hash\":\"c8fc5698c0b3ca145f2c98937cbd9ff2\",\"bytes\":22979,\"content_type\":\"image/jpeg\", \"last_modified\":\"2012-12-05T14:57:00.165930\"},"+
+                "{\"name\":\"beta\",\"hash\":\"c8fc5698c0b3ca145f2c98937cbd9ff2\",\"bytes\":22979,\"content_type\":\"image/jpeg\", \"last_modified\":\"2012-12-05T14:57:00.165930\"},"+
+                "{\"name\":\"gamma\",\"hash\":\"c8fc5698c0b3ca145f2c98937cbd9ff2\",\"bytes\":22979,\"content_type\":\"image/jpeg\", \"last_modified\":\"2012-12-05T14:57:00.165930\"}]");
         when(httpEntity.getContent()).thenReturn(inputStream);
         Collection<StoredObject> objects = container.list();
         assertEquals(3, objects.size());

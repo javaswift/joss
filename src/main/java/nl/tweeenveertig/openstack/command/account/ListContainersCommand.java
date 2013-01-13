@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.command.account;
 
-import nl.tweeenveertig.openstack.command.ObjectStoreListElement;
 import nl.tweeenveertig.openstack.instructions.ListInstructions;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.*;
@@ -31,10 +30,10 @@ public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Collec
 
     @Override
     protected Collection<Container> getReturnObject(HttpResponse response) throws IOException {
-        ObjectStoreListElement[] list = createObjectMapper(false)
-                .readValue(response.getEntity().getContent(), ObjectStoreListElement[].class);
+        ContainerListElement[] list = createObjectMapper(false)
+                .readValue(response.getEntity().getContent(), ContainerListElement[].class);
         List<Container> containers = new ArrayList<Container>();
-        for (ObjectStoreListElement containerHeader : list) {
+        for (ContainerListElement containerHeader : list) {
             containers.add(account.getContainer(containerHeader.name));
         }
         return containers;

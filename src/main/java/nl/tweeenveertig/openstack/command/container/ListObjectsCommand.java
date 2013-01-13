@@ -1,6 +1,6 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.command.ObjectStoreListElement;
+import nl.tweeenveertig.openstack.command.account.ContainerListElement;
 import nl.tweeenveertig.openstack.instructions.ListInstructions;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
@@ -32,10 +32,10 @@ public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collec
 
     @Override
     protected Collection<StoredObject> getReturnObject(HttpResponse response) throws IOException {
-        ObjectStoreListElement[] list = createObjectMapper(false)
-                .readValue(response.getEntity().getContent(), ObjectStoreListElement[].class);
+        StoredObjectListElement[] list = createObjectMapper(false)
+                .readValue(response.getEntity().getContent(), StoredObjectListElement[].class);
         List<StoredObject> objects = new ArrayList<StoredObject>();
-        for (ObjectStoreListElement header : list) {
+        for (StoredObjectListElement header : list) {
             objects.add(container.getObject(header.name));
         }
         return objects;
