@@ -45,6 +45,9 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
             }
             recordsToGo -= children.size() == 0 ? recordsToGo : (children.size() < blockSize ? children.size() : blockSize);
         }
+        if (locationInPage == 0) { // Remove last page if no elements follow it
+            pageToMarker.remove(pageToMarker.size() - 1);
+        }
         return this;
     }
 

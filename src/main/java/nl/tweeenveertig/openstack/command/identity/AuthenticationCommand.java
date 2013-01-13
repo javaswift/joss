@@ -13,10 +13,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 
 import java.io.IOException;
-import java.util.List;
-
-import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertResponseToString;
-import static nl.tweeenveertig.openstack.command.core.CommandUtil.createObjectMapper;
 
 public class AuthenticationCommand extends AbstractCommand<HttpPost, AccessImpl> {
 
@@ -28,7 +24,7 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, AccessImpl>
     private void setAuthenticationHeader(String tenant, String username, String password) {
         try {
             Authentication auth = new Authentication(tenant, username, password);
-            String jsonString = createObjectMapper().writeValueAsString(auth);
+            String jsonString = createObjectMapper(true).writeValueAsString(auth);
             StringEntity input = new StringEntity(jsonString);
             input.setContentType("application/json");
             request.setEntity(input);
@@ -39,17 +35,9 @@ public class AuthenticationCommand extends AbstractCommand<HttpPost, AccessImpl>
 
     @Override
     public AccessImpl getReturnObject(HttpResponse response) throws IOException {
-        return createObjectMapper()
-                .readValue(createSingleString(convertResponseToString(response)), AccessImpl.class)
+        return createObjectMapper(true)
+                .readValue(response.getEntity().getContent(), AccessImpl.class)
                 .initCurrentEndPoint(); // If only this would exist: http://jira.codehaus.org/browse/JACKSON-645
-    }
-
-    protected String createSingleString(List<String> lines) {
-        StringBuilder oneString = new StringBuilder();
-        for (String line : lines) {
-            oneString.append(line);
-        }
-        return oneString.toString();
     }
 
     @Override

@@ -44,31 +44,33 @@ public class AccountImplTest extends BaseCommandTest {
     @Test
     public void listContainers() throws IOException {
         InputStream inputStream = IOUtils.toInputStream(
-                "Alpha\n"+
-                "Beta\n" +
-                "Gamma");
+            "[{\"name\":\"Amersfoort\",\"count\":48,\"bytes\":1028296},"+
+            "{\"name\":\"Arnhem\",\"count\":0,\"bytes\":0}," +
+            "{\"name\":\"Breda\",\"count\":0,\"bytes\":0}," +
+            "{\"name\":\"Eindhoven\",\"count\":3,\"bytes\":26934}]");
         when(httpEntity.getContent()).thenReturn(inputStream);
         Collection<Container> containers = account.list();
-        assertEquals(3, containers.size());
+        assertEquals(4, containers.size());
     }
 
     @Test
     public void paginationMap() throws IOException {
         InputStream inputStream = IOUtils.toInputStream(
-                "Alpha\n"+
-                "Beta\n" +
-                "Gamma");
+            "[{\"name\":\"Amersfoort\",\"count\":48,\"bytes\":1028296},"+
+            "{\"name\":\"Arnhem\",\"count\":0,\"bytes\":0}," +
+            "{\"name\":\"Breda\",\"count\":0,\"bytes\":0}," +
+            "{\"name\":\"Eindhoven\",\"count\":3,\"bytes\":26934}]");
         List<Header> headers = new ArrayList<Header>();
-        prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "3", headers);
+        prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "4", headers);
         when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
         when(statusLine.getStatusCode()).thenReturn(204);
         when(httpEntity.getContent()).thenReturn(inputStream);
         PaginationMap paginationMap = account.getPaginationMap(2);
         assertEquals(2, paginationMap.getPageSize());
         assertEquals(2, paginationMap.getNumberOfPages());
-        assertEquals(3, paginationMap.getNumberOfRecords());
+        assertEquals(4, paginationMap.getNumberOfRecords());
         assertEquals(null, paginationMap.getMarker(0));
-        assertEquals("Beta", paginationMap.getMarker(1));
+        assertEquals("Arnhem", paginationMap.getMarker(1));
     }
 
     @Test

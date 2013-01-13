@@ -1,4 +1,4 @@
-package nl.tweeenveertig.openstack.command.core;
+package nl.tweeenveertig.openstack.instructions;
 
 import nl.tweeenveertig.openstack.instructions.QueryParameter;
 import nl.tweeenveertig.openstack.instructions.QueryParameters;

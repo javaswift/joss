@@ -16,6 +16,9 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 
 public abstract class AbstractCommand<M extends HttpRequestBase, N> implements Callable<N>, Closeable {
 
@@ -78,4 +81,14 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
     protected void modifyURI(QueryParameters queryParameters) {
         request.setURI(URI.create(queryParameters.createUrl(request.getURI().toString())));
     }
+
+    protected ObjectMapper createObjectMapper(boolean dealWithRootValue) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (dealWithRootValue) {
+            objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
+            objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+        }
+        return objectMapper;
+    }
+
 }

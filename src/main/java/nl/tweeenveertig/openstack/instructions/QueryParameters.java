@@ -1,11 +1,16 @@
 package nl.tweeenveertig.openstack.instructions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class QueryParameters {
 
-    private QueryParameter[] queryParameters;
+    protected List<QueryParameter> queryParameters = new ArrayList<QueryParameter>();
 
     public QueryParameters(QueryParameter[] queryParameters) {
-        this.queryParameters = queryParameters;
+        for (QueryParameter queryParameter : queryParameters) {
+            this.queryParameters.add(queryParameter);
+        }
     }
 
     public String getQuery() {

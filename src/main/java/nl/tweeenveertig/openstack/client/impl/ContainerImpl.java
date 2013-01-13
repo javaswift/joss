@@ -9,7 +9,6 @@ import nl.tweeenveertig.openstack.command.container.*;
 import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import org.apache.http.client.HttpClient;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class ContainerImpl extends AbstractContainer {
@@ -31,13 +30,7 @@ public class ContainerImpl extends AbstractContainer {
                 .setPrefix(prefix)
                 .setMarker(marker)
                 .setLimit(pageSize);
-        Collection<String> objectNames = new ListObjectsCommand(getAccount(), getClient(), getAccess(),
-                this, listInstructions).call();
-        Collection<StoredObject> objects = new ArrayList<StoredObject>();
-        for (String objectName : objectNames) {
-            objects.add(getObject(objectName));
-        }
-        return objects;
+        return new ListObjectsCommand(getAccount(), getClient(), getAccess(), this, listInstructions).call();
     }
 
     public Container create() {

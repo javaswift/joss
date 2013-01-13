@@ -47,9 +47,9 @@ public class ContainerImplTest extends BaseCommandTest {
     public void listObjects() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(200);
         InputStream inputStream = IOUtils.toInputStream(
-                "alpha.jpg\n" +
-                "beta.png\n" +
-                "gamma.docx");
+                "[{\"name\":\"alpha\",\"count\":48,\"bytes\":1028296},"+
+                "{\"name\":\"beta\",\"count\":0,\"bytes\":0}," +
+                "{\"name\":\"gamma\",\"count\":3,\"bytes\":26934}]");
         when(httpEntity.getContent()).thenReturn(inputStream);
         Collection<StoredObject> objects = container.list();
         assertEquals(3, objects.size());

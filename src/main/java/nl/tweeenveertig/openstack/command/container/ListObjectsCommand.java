@@ -1,5 +1,6 @@
 package nl.tweeenveertig.openstack.command.container;
 
+import nl.tweeenveertig.openstack.command.ObjectStoreListElement;
 import nl.tweeenveertig.openstack.instructions.ListInstructions;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
@@ -8,26 +9,36 @@ import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusMatch;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusSuccessCondition;
 import nl.tweeenveertig.openstack.command.identity.access.AccessImpl;
 import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.model.StoredObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-import static nl.tweeenveertig.openstack.command.core.CommandUtil.convertResponseToString;
+public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collection<StoredObject>> {
 
-public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collection<String>> {
+    protected Container container;
 
     public ListObjectsCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, ListInstructions listInstructions) {
         super(account, httpClient, access, container);
+        this.container = container;
         modifyURI(listInstructions.getQueryParameters());
     }
 
     @Override
-    protected Collection<String> getReturnObject(HttpResponse response) throws IOException {
-        return convertResponseToString(response);
+    protected Collection<StoredObject> getReturnObject(HttpResponse response) throws IOException {
+        ObjectStoreListElement[] list = createObjectMapper(false)
+                .readValue(response.getEntity().getContent(), ObjectStoreListElement[].class);
+        List<StoredObject> objects = new ArrayList<StoredObject>();
+        for (ObjectStoreListElement header : list) {
+            objects.add(container.getObject(header.name));
+        }
+        return objects;
     }
 
     @Override

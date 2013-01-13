@@ -30,7 +30,7 @@ public class ListInstructions {
     }
 
     public QueryParameters getQueryParameters() {
-        return new QueryParameters(new QueryParameter[] {
+        return new ListQueryParameters(new QueryParameter[] {
             new QueryParameter(PREFIX_NAME, getPrefix()),
             new QueryParameter(MARKER_NAME, getMarker()),
             new QueryParameter(LIMIT_NAME, getLimit())

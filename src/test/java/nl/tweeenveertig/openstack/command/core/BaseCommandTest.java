@@ -50,7 +50,7 @@ public abstract class BaseCommandTest {
     protected ArgumentCaptor<HttpRequestBase> requestArgument;
 
     public void setup() throws IOException {
-        InputStream inputStream = IOUtils.toInputStream("");
+        InputStream inputStream = IOUtils.toInputStream("[]");
         when(defaultAccess.getInternalURL()).thenReturn("http://someurl.nowhere");
         when(defaultAccess.getPublicURL()).thenReturn("http://someurl.public");
         when(defaultAccess.getToken()).thenReturn("cafebabe");

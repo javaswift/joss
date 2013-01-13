@@ -36,12 +36,7 @@ public class AccountImpl extends AbstractAccount {
                 .setPrefix(prefix)
                 .setMarker(marker)
                 .setLimit(pageSize);
-        Collection<String> containerNames = new ListContainersCommand(this, httpClient, access, listInstructions).call();
-        Collection<Container> containers = new ArrayList<Container>();
-        for (String containerName : containerNames) {
-            containers.add(this.getContainer(containerName));
-        }
-        return containers;
+        return new ListContainersCommand(this, httpClient, access, listInstructions).call();
     }
 
     public Container getContainer(String containerName) {

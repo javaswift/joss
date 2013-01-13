@@ -193,7 +193,7 @@ Keep up to date on the library development by joining the Java OpenStack Storage
 
 or follow us on [Twitter](http://twitter.com/JavaOSS)
 
-Special thanks to Oscar Westra van Holthe - Kind for premium advice and support.
+Special thanks to Oscar Westra van Holthe - Kind and Erik Hooijmeijer for premium advice and support.
 
 Sponsor
 -------
