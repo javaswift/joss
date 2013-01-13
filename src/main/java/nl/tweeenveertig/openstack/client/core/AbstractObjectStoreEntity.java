@@ -14,11 +14,11 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
 
     protected I info;
 
-    private boolean stale = true;
-
     private boolean allowCaching = ALLOW_CACHING;
 
-    private boolean metadataSetFromHeaders = false;
+    private boolean stale = true;
+
+    protected boolean staleHeaders = true;
 
     public AbstractObjectStoreEntity(boolean allowCaching) {
         this.allowCaching = allowCaching;
@@ -45,10 +45,6 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
         return metadataValues;
     }
 
-    public void metadataSetFromHeaders() {
-        this.metadataSetFromHeaders = true;
-    }
-
     protected void checkForInfoAndAllowHeaderSet() {
         checkForInfo(true);
     }
@@ -57,8 +53,8 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
         checkForInfo(false);
     }
 
-    protected void checkForInfo(boolean allowHeaderSet) {
-        if (isStale() && !(allowHeaderSet && metadataSetFromHeaders)) {
+    protected void checkForInfo(boolean readHeader) {
+        if (isStale(readHeader)) {
             getInfo();
             setInfoRetrieved();
         }
@@ -79,11 +75,17 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
 
     public void invalidate() {
         this.stale = true;
-        this.metadataSetFromHeaders = false;
+        this.staleHeaders = true;
     }
 
-    public boolean isStale() {
-        return !isAllowCaching() || this.stale;
+    public boolean isStale(boolean readHeader) {
+        if (!isAllowCaching()) {
+            return true;
+        }
+        if (readHeader) {
+            return this.stale && this.staleHeaders;
+        }
+        return this.stale;
     }
 
     public boolean isAllowCaching() {

@@ -33,6 +33,10 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         this.info = new ContainerInformation();
     }
 
+    public void metadataSetFromHeaders() {
+        this.staleHeaders = false;
+    }
+
     public Collection<StoredObject> list() {
         return list(null, null, getMaxPageSize());
     }

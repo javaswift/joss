@@ -7,7 +7,6 @@ import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.information.ObjectInformation;
-import org.apache.http.impl.cookie.DateParseException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +23,10 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         this.container = container;
         this.name = name;
         this.info = new ObjectInformation();
+    }
+
+    public void metadataSetFromHeaders() {
+        this.staleHeaders = false;
     }
 
     public Date getLastModifiedAsDate() {
