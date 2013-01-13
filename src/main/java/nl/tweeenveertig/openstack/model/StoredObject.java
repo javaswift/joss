@@ -153,12 +153,53 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject
     */
     public void reload();
 
+    /**
+    * The last modified date of the StoredObject. If the Container was read by Container.list, this
+    * value will not be refetched from the server, unless caching is disabled.
+    * @return last modified date
+    */
     public Date getLastModifiedAsDate();
+
+    /**
+    * The last modified date of the StoredObject. If the Container was read by Container.list, this
+    * value will not be refetched from the server, unless caching is disabled.
+    * @return last modified date
+    */
     public String getLastModified();
+
+    /**
+    * The etag (or hash) of the StoredObject. If the Container was read by Container.list, this
+    * value will not be refetched from the server, unless caching is disabled.
+    * @return etag or hash of the StoredObject
+    */
     public String getEtag();
+
+    /**
+    * The number of the bytes used by the StoredObject. If the Container was read by Container.list, this
+    * value will not be refetched from the server, unless caching is disabled.
+    * @return number of bytes used
+    */
     public long getContentLength();
+
+    /**
+    * The content type of the StoredObject. If the Container was read by Container.list, this
+    * value will not be refetched from the server, unless caching is disabled.
+    * @return content type
+    */
     public String getContentType();
+
+    /**
+    * The date when the object will be deleted. Note that this value is never passed in Container.list and
+    * therefore always costs an extra HTTP call to the server.
+    * @return date when the StoredObject will be deleted (as a java.util.Date)
+    */
     public Date getDeleteAtAsDate();
+
+    /**
+    * The date when the object will be deleted. Note that this value is never passed in Container.list and
+    * therefore always costs an extra HTTP call to the server.
+    * @return date when the StoredObject will be deleted (as a String)
+    */
     public String getDeleteAt();
     public String getPath();
 
