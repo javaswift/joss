@@ -1,8 +1,8 @@
 package nl.tweeenveertig.openstack.command.container;
 
-public class StoredObjectListElement {
+import org.codehaus.jackson.annotate.JsonProperty;
 
-    // {"name":"41-koraalrood-te-hoogland-medium.jpg","hash":"c8fc5698c0b3ca145f2c98937cbd9ff2","bytes":22979,"content_type":"image/jpeg", "last_modified":"2012-12-05T14:57:00.165930"}
+public class StoredObjectListElement {
 
     public String name;
 
@@ -10,8 +10,10 @@ public class StoredObjectListElement {
 
     public long bytes;
 
-    public String content_type;
+    @JsonProperty(value="content_type")
+    public String contentType;
 
-    public String last_modified;
+    @JsonProperty(value="last_modified")
+    public String lastModified;
 
 }

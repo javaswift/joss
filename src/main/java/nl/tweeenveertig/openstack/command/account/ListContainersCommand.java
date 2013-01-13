@@ -34,7 +34,11 @@ public class ListContainersCommand extends AbstractSecureCommand<HttpGet, Collec
                 .readValue(response.getEntity().getContent(), ContainerListElement[].class);
         List<Container> containers = new ArrayList<Container>();
         for (ContainerListElement containerHeader : list) {
-            containers.add(account.getContainer(containerHeader.name));
+            Container container = account.getContainer(containerHeader.name);
+            container.setCount(containerHeader.count);
+            container.setBytesUsed(containerHeader.bytes);
+            container.metadataSetFromHeaders();
+            containers.add(container);
         }
         return containers;
     }

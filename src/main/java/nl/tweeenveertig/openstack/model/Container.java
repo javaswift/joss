@@ -73,6 +73,9 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
     public long getBytesUsed();
     public boolean isPublic();
 
+    public void setCount(int count);
+    public void setBytesUsed(long bytesUsed);
+
     public abstract Account getAccount();
 
 }

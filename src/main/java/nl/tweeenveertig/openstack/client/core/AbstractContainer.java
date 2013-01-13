@@ -1,6 +1,8 @@
 package nl.tweeenveertig.openstack.client.core;
 
 import nl.tweeenveertig.openstack.client.impl.ContainerPaginationMap;
+import nl.tweeenveertig.openstack.headers.container.ContainerBytesUsed;
+import nl.tweeenveertig.openstack.headers.container.ContainerObjectCount;
 import nl.tweeenveertig.openstack.instructions.SegmentationPlan;
 import nl.tweeenveertig.openstack.instructions.UploadInstructions;
 import nl.tweeenveertig.openstack.model.Account;
@@ -52,13 +54,21 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     }
 
     public int getCount() {
-        checkForInfo();
+        checkForInfoAndAllowHeaderSet();
         return info.getObjectCount();
     }
 
     public long getBytesUsed() {
-        checkForInfo();
+        checkForInfoAndAllowHeaderSet();
         return info.getBytesUsed();
+    }
+
+    public void setCount(int count) {
+        info.setObjectCount(new ContainerObjectCount(Integer.toString(count)));
+    }
+
+    public void setBytesUsed(long bytesUsed) {
+        info.setBytesUsed(new ContainerBytesUsed(Long.toString(bytesUsed)));
     }
 
     public boolean isPublic() {

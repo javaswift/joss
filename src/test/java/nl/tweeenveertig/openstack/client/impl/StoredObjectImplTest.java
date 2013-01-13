@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static junit.framework.Assert.*;
@@ -270,4 +271,23 @@ public class StoredObjectImplTest extends BaseCommandTest {
         object.uploadObject(instruction);
         verify(object).uploadObjectAsSegments(instruction);
     }
+
+    @Test
+    public void setLastModified() {
+        String dateText = "2012-12-05T14:57:00.165930";
+        StoredObject object = new StoredObjectImpl(null, "alpha", true);
+        object.setLastModified(dateText);
+        object.metadataSetFromHeaders();
+        Date date = object.getLastModifiedAsDate();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        assertEquals("2012-12-05T14:57:00", formatter.format(date));
+    }
+
+    @Test(expected = CommandException.class)
+    public void setLastModifiedFalseDate() {
+        String dateText = "2012/12/05";
+        StoredObject object = new StoredObjectImpl(null, "alpha", true);
+        object.setLastModified(dateText);
+    }
+
 }

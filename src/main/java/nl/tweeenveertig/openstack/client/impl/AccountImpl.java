@@ -8,10 +8,8 @@ import nl.tweeenveertig.openstack.command.account.AccountInformationCommand;
 import nl.tweeenveertig.openstack.command.account.AccountMetadataCommand;
 import nl.tweeenveertig.openstack.command.account.ListContainersCommand;
 import nl.tweeenveertig.openstack.command.identity.AuthenticationCommand;
-import nl.tweeenveertig.openstack.model.PaginationMap;
 import org.apache.http.client.HttpClient;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class AccountImpl extends AbstractAccount {

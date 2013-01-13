@@ -18,6 +18,8 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
 
     private boolean allowCaching = ALLOW_CACHING;
 
+    private boolean metadataSetFromHeaders = false;
+
     public AbstractObjectStoreEntity(boolean allowCaching) {
         this.allowCaching = allowCaching;
     }
@@ -43,8 +45,20 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
         return metadataValues;
     }
 
+    public void metadataSetFromHeaders() {
+        this.metadataSetFromHeaders = true;
+    }
+
+    protected void checkForInfoAndAllowHeaderSet() {
+        checkForInfo(true);
+    }
+
     protected void checkForInfo() {
-        if (isStale()) {
+        checkForInfo(false);
+    }
+
+    protected void checkForInfo(boolean allowHeaderSet) {
+        if (isStale() && !(allowHeaderSet && metadataSetFromHeaders)) {
             getInfo();
             setInfoRetrieved();
         }
@@ -65,6 +79,7 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
 
     public void invalidate() {
         this.stale = true;
+        this.metadataSetFromHeaders = false;
     }
 
     public boolean isStale() {

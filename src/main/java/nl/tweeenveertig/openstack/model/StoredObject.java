@@ -162,4 +162,9 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject
     public String getDeleteAt();
     public String getPath();
 
+    public void setLastModified(String date);
+    public void setEtag(String etag);
+    public void setContentLength(long contentLength);
+    public void setContentTypeWithoutSaving(String contentType);
+
 }

@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.headers;
 
-import nl.tweeenveertig.openstack.exception.CommandException;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
 

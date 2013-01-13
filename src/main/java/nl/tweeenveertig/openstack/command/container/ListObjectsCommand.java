@@ -1,6 +1,5 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.command.account.ContainerListElement;
 import nl.tweeenveertig.openstack.instructions.ListInstructions;
 import nl.tweeenveertig.openstack.model.Account;
 import nl.tweeenveertig.openstack.command.core.httpstatus.HttpStatusChecker;
@@ -36,7 +35,13 @@ public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collec
                 .readValue(response.getEntity().getContent(), StoredObjectListElement[].class);
         List<StoredObject> objects = new ArrayList<StoredObject>();
         for (StoredObjectListElement header : list) {
-            objects.add(container.getObject(header.name));
+            StoredObject object = container.getObject(header.name);
+            object.setContentLength(header.bytes);
+            object.setContentTypeWithoutSaving(header.contentType);
+            object.setEtag(header.hash);
+            object.setLastModified(header.lastModified);
+            object.metadataSetFromHeaders();
+            objects.add(object);
         }
         return objects;
     }

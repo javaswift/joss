@@ -4,7 +4,7 @@ public class ContainerListElement {
 
     public String name;
 
-    public long count;
+    public int count;
 
     public long bytes;
 

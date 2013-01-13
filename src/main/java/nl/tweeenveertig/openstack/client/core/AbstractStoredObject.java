@@ -1,13 +1,16 @@
 package nl.tweeenveertig.openstack.client.core;
 
+import nl.tweeenveertig.openstack.exception.CommandException;
+import nl.tweeenveertig.openstack.headers.object.*;
 import nl.tweeenveertig.openstack.instructions.UploadInstructions;
 import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.headers.Metadata;
-import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
-import nl.tweeenveertig.openstack.headers.object.ObjectMetadata;
 import nl.tweeenveertig.openstack.information.ObjectInformation;
+import org.apache.http.impl.cookie.DateParseException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject {
@@ -24,27 +27,27 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     }
 
     public Date getLastModifiedAsDate() {
-        checkForInfo();
+        checkForInfoAndAllowHeaderSet();
         return info.getLastModifiedAsDate();
     }
 
     public String getLastModified() {
-        checkForInfo();
+        checkForInfoAndAllowHeaderSet();
         return info.getLastModified();
     }
 
     public String getEtag() {
-        checkForInfo();
+        checkForInfoAndAllowHeaderSet();
         return info.getEtag();
     }
 
     public long getContentLength() {
-        checkForInfo();
+        checkForInfoAndAllowHeaderSet();
         return info.getContentLength();
     }
 
     public String getContentType() {
-        checkForInfo();
+        checkForInfoAndAllowHeaderSet();
         return info.getContentType();
     }
 
@@ -68,6 +71,28 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     public String getPath() {
         return getContainer().getName() + "/" + getName();
+    }
+
+    public void setLastModified(String date) {
+        try {
+            // The LastModified date in the JSON body differs from that in the response header
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            this.info.setLastModified(new ObjectLastModified(formatter.parse(date)));
+        } catch (ParseException e) {
+            throw new CommandException("Unable to convert date string: "+date, e);
+        }
+    }
+
+    public void setEtag(String etag) {
+        this.info.setEtag(new Etag(etag));
+    }
+
+    public void setContentLength(long contentLength) {
+        this.info.setContentLength(new ObjectContentLength(Long.toString(contentLength)));
+    }
+
+    public void setContentTypeWithoutSaving(String contentType) {
+        this.info.setContentType(new ObjectContentType(contentType));
     }
 
     public int hashCode() {
