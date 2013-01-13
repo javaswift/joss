@@ -3,11 +3,17 @@ package nl.tweeenveertig.openstack.command.account;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.instructions.ListInstructions;
+import nl.tweeenveertig.openstack.model.Container;
+import nl.tweeenveertig.openstack.util.ClasspathTemplateResource;
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,6 +59,19 @@ public class ListContainersCommandTest extends BaseCommandTest {
         String assertQueryParameters = "?prefix=tst-&marker=dogs&limit=10";
         String uri = requestArgument.getValue().getURI().toString();
         assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
+    }
+
+    @Test
+    public void setHeaderValues() throws IOException {
+        when(httpEntity.getContent()).thenReturn(
+                IOUtils.toInputStream(new ClasspathTemplateResource("/sample-container-list.json").loadTemplate()));
+        when(statusLine.getStatusCode()).thenReturn(204);
+        Collection<Container> containers =
+                new ListContainersCommand(this.account, httpClient, defaultAccess, listInstructions).call();
+        assertEquals(4, containers.size());
+        Container container = containers.iterator().next();
+        assertEquals(1028296, container.getBytesUsed());
+        assertEquals(48, container.getCount());
     }
 
 }
