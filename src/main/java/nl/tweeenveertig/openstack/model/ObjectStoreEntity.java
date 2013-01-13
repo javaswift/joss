@@ -2,6 +2,10 @@ package nl.tweeenveertig.openstack.model;
 
 import java.util.Map;
 
+/**
+* Top-level entity for all entities in the ObjectStore. The sharing characteristic of the entities
+* is custom metadata.
+*/
 public interface ObjectStoreEntity {
 
     /**

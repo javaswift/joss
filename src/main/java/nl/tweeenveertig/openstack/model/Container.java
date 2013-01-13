@@ -69,8 +69,20 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
     */
     public void reload();
 
+    /**
+    * The number of StoredObjects in the Container. If the Container was read by Account.list, this
+    * value will not be refetched from the server, unless caching is disabled.
+    * @return number of StoredObjects
+    */
     public int getCount();
+
+    /**
+    * The number of bytes stored by the StoredObjects in the Container. If the Container was read by
+    * Account.list, this value will not be refetched from the server, unless caching is disabled.
+    * @return number of bytes
+    */
     public long getBytesUsed();
+
     public boolean isPublic();
 
     public void setCount(int count);

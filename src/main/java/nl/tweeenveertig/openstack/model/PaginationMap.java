@@ -1,5 +1,11 @@
 package nl.tweeenveertig.openstack.model;
 
+/**
+* Map for a ListHolder on a list of ListSubject. The map holds a mapping for a page number to a marker,
+* which is used by the interface of the OpenStack API for pagination purposes. The PaginationMap is drawn
+* up in one go, which -- regrettably -- is a necessity because of the marker-mechanism. When the underlying
+* data changes and this needs to be reflected by the client, a new map must be generated.
+*/
 public interface PaginationMap {
 
     /**

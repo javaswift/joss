@@ -2,6 +2,11 @@ package nl.tweeenveertig.openstack.model;
 
 import java.util.Collection;
 
+/**
+* ListHolder instances hold lists of child entities. In the current model, only Account and Container
+* are ListHolders.
+* @param <Child> the entity that is held by the ListHolder
+*/
 public interface ListHolder<Child extends ListSubject> {
 
     /**
@@ -50,8 +55,17 @@ public interface ListHolder<Child extends ListSubject> {
     */
     public PaginationMap getPaginationMap(String prefix, int pageSize);
 
+    /**
+    * The number of child entities (ListSubjects) that are being held by the ListHolder
+    * @return number of child entities
+    */
     public int getCount();
 
+    /**
+    * The ObjectStore server will force a maximum page size. This value helps to determine blocks
+    * that must be read, which is used internally for setting up a pagination map.
+    * @return maximum page size for the child entity
+    */
     public int getMaxPageSize();
 
 }
