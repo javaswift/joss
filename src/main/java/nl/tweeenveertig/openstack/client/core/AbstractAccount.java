@@ -16,6 +16,8 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private boolean allowReauthenticate = true;
 
+    private int numberOfCalls = 0;
+
     public Collection<Container> list() {
         return list(null, null, getMaxPageSize());
     }
@@ -68,4 +70,13 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     public int getMaxPageSize() {
         return MAX_PAGE_SIZE;
     }
+
+    public void increaseCallCounter() {
+        numberOfCalls++;
+    }
+
+    public int getNumberOfCalls() {
+        return numberOfCalls;
+    }
+
 }

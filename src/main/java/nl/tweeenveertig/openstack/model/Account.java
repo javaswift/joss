@@ -45,4 +45,7 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
 
     public Account setAllowReauthenticate(boolean allowReauthenticate);
     public boolean isAllowReauthenticate();
+
+    public void increaseCallCounter();
+    public int getNumberOfCalls();
 }

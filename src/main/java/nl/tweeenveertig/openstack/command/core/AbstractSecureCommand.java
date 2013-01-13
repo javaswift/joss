@@ -23,6 +23,7 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
 
     @Override
     public N call() {
+        account.increaseCallCounter();
         try {
             return super.call();
         } catch (UnauthorizedException err) {

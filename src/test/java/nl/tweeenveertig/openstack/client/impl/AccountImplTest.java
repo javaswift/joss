@@ -130,4 +130,9 @@ public class AccountImplTest extends BaseCommandTest {
         verify(httpClient, times(2)).execute(requestArgument.capture());
     }
 
+    @Test
+    public void callCounter() {
+        account.increaseCallCounter();
+        assertEquals(1, account.getNumberOfCalls());
+    }
 }
