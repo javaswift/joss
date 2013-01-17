@@ -36,7 +36,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
     }
 
     public N call() {
-        LOG.info("JOSS / Sending HTTP "+request.getMethod()+" call "+request.getURI().toString());
+        LOG.debug("JOSS / Sending HTTP "+request.getMethod()+" call "+request.getURI().toString());
         try {
             response = httpClient.execute(request);
             HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
