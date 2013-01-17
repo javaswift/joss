@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
 
 import static junit.framework.Assert.assertEquals;

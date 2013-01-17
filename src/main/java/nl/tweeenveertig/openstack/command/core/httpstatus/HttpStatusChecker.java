@@ -4,8 +4,12 @@ import nl.tweeenveertig.openstack.exception.CommandExceptionError;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.HttpStatusExceptionUtil;
 import org.apache.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class HttpStatusChecker {
+
+    public static final Logger LOG = LoggerFactory.getLogger(HttpStatusChecker.class);
 
     public static final HttpStatusChecker AUTHORIZATION_MATCHER =
             new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_UNAUTHORIZED));

@@ -1,11 +1,9 @@
 package nl.tweeenveertig.openstack.command.container;
 
-import nl.tweeenveertig.openstack.command.account.ListContainersCommand;
 import nl.tweeenveertig.openstack.command.core.BaseCommandTest;
 import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.exception.NotFoundException;
 import nl.tweeenveertig.openstack.instructions.ListInstructions;
-import nl.tweeenveertig.openstack.model.Container;
 import nl.tweeenveertig.openstack.model.StoredObject;
 import nl.tweeenveertig.openstack.util.ClasspathTemplateResource;
 import org.apache.commons.io.IOUtils;
@@ -13,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
 
 import static junit.framework.Assert.assertEquals;

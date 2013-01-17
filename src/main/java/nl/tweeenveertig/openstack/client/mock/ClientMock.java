@@ -2,8 +2,12 @@ package nl.tweeenveertig.openstack.client.mock;
 
 import nl.tweeenveertig.openstack.model.Client;
 import nl.tweeenveertig.openstack.client.mock.scheduled.ObjectDeleter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClientMock implements Client<AccountMock> {
+
+    public static final Logger LOG = LoggerFactory.getLogger(ClientMock.class);
 
     private MockUserStore users = new MockUserStore();
 
@@ -20,12 +24,19 @@ public class ClientMock implements Client<AccountMock> {
     }
 
     public AccountMock authenticate(String tenant, String username, String password, String authUrl, String preferredRegion) {
+        LOG.info("JOSS / MOCK mode");
         if (!allowEveryone) {
+            LOG.info("JOSS / Attempting authentication with tenant: "+tenant+", username: "+username+", Auth URL: "+authUrl);
             users.authenticate(username, password);
         }
+        LOG.info("JOSS / Creating mock account instance");
+        LOG.info("JOSS / * Allow objectdeleter: "+allowObjectDeleter);
+        LOG.info("JOSS / * Use onFileObjectStore: "+onFileObjectStore);
+        LOG.info("JOSS / * Use public URL: "+publicUrl);
         return new AccountMock()
                 .setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null)
-                .setOnFileObjectStore(onFileObjectStore);
+                .setOnFileObjectStore(onFileObjectStore)
+                .setPublicUrl(publicUrl);
     }
 
     public ClientMock setAllowObjectDeleter(boolean allowObjectDeleter) {
