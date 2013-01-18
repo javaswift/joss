@@ -20,12 +20,18 @@ public class AbstractCommandTest extends BaseCommandTest {
         super.setup();
     }
 
-    @Test
+    @Test(expected = CommandException.class)
     public void httpClientThrowsAnException() throws IOException {
         when(httpClient.execute(any(HttpRequestBase.class))).thenThrow(new IOException("Mocked HTTP client error"));
-        try {
-            new AuthenticationCommand(httpClient, "http://some.url", "some-tenant", "some-user", "some-pwd").call();
-            fail("should have thrown an exception");
-        } catch (CommandException err) {}
+        new AuthenticationCommand(httpClient, "http://some.url", "some-tenant", "some-user", "some-pwd").call();
     }
+
+    @Test(expected = CommandException.class)
+    public void httpClientThrowsAnExceptionWithRootCause() throws IOException {
+        IOException exc = new IOException("Mocked HTTP client error");
+
+        when(httpClient.execute(any(HttpRequestBase.class))).thenThrow(new CommandException("Something went wrong", exc));
+        new AuthenticationCommand(httpClient, "http://some.url", "some-tenant", "some-user", "some-pwd").call();
+    }
+
 }

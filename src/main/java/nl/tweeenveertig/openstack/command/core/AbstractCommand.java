@@ -49,6 +49,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
                     (err.getError() == null ? "" : ", Error "+err.getError())+
                     (err.getMessage() == null ? "" : ", Message '"+err.getMessage()+"'")+
                     (err.getCause() == null ? "" : ", Cause "+err.getCause().getClass().getSimpleName()));
+
             for (org.apache.http.Header header : request.getAllHeaders()) {
                 LOG.error(header.getName()+"="+header.getValue());
             }
