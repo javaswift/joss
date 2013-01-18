@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -33,9 +34,21 @@ public class ClientImplTest extends BaseCommandTest {
         String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
         InputStream inputStream = IOUtils.toInputStream(jsonString);
         when(httpEntity.getContent()).thenReturn(inputStream);
-        Account account = client.authenticate("sometenant", "superuser", "somepwd", "someregion");
+        Account account = client.authenticate("sometenant", "superuser", "somepwd", "http://auth-url");
         assertNotNull(account);
         assertFalse(((AccountImpl)account).isAllowCaching());
+        assertEquals("http://bfo000024.og.cloudvps.com:80", account.getPublicURL());
+    }
+
+    @Test
+    public void authenticateWithAPreferredRegion() throws IOException {
+        String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
+        InputStream inputStream = IOUtils.toInputStream(jsonString);
+        when(httpEntity.getContent()).thenReturn(inputStream);
+        Account account = client.authenticate("sometenant", "superuser", "somepwd", "http://auth-url", "AMS-02");
+        assertNotNull(account);
+        assertEquals("http://some-other-url", account.getPublicURL());
     }
 
 }
+

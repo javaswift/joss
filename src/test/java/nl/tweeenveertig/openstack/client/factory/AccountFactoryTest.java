@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyString;
@@ -76,6 +77,16 @@ public class AccountFactoryTest {
         factory.setAllowCaching(false);
         assertNotNull(factory.createAccount());
         verify(mockedClient, times(1)).setAllowCaching(false);
+    }
+
+    @Test
+    public void getPublicUrl() {
+        AccountFactory factory = new AccountFactory();
+        AccountConfig config = new AccountConfig();
+        config.setMock(true);
+        config.setMockPublicUrl("http://find.me");
+        factory.setConfig(config);
+        assertEquals("http://find.me", factory.createAccount().getPublicURL());
     }
 
     protected AccountFactory construct(HttpClient httpClient) throws Exception {

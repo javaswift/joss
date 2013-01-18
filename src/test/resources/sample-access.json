@@ -15,6 +15,12 @@
                 "region": "AMS-01",
                 "internalURL": "https://og.cloudvps.com:443/v1/AUTH_bfo000024",
                 "publicURL": "http://bfo000024.og.cloudvps.com:80"
+            },
+            {
+                "adminURL": "https://og.cloudvps.com/",
+                "region": "AMS-02",
+                "internalURL": "https://og.cloudvps.com:443/v1/AUTH_bfo000024",
+                "publicURL": "http://some-other-url"
             }],
             "endpoints_links": [],
             "type": "object-store",
