@@ -1,12 +1,16 @@
 package nl.tweeenveertig.openstack.client.impl;
 
 import nl.tweeenveertig.openstack.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
 public abstract class AbstractPaginationMap<Child extends ListSubject> implements PaginationMap {
+
+    public static final Logger LOG = LoggerFactory.getLogger(AbstractPaginationMap.class);
 
     private ListHolder<Child> listHolder;
 
@@ -48,6 +52,7 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
         if (locationInPage == 0) { // Remove last page if no elements follow it
             pageToMarker.remove(pageToMarker.size() - 1);
         }
+        LOG.warn("JOSS / Created PaginationMap with "+pageToMarker.size()+" pages for a total of "+numberOfRecords+" records");
         return this;
     }
 

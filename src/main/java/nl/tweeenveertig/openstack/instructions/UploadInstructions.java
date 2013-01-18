@@ -7,6 +7,8 @@ import nl.tweeenveertig.openstack.headers.object.Etag;
 import nl.tweeenveertig.openstack.headers.object.ObjectManifest;
 import nl.tweeenveertig.openstack.headers.object.ObjectContentType;
 import org.apache.http.HttpEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;

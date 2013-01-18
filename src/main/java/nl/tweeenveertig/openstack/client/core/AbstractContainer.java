@@ -13,12 +13,16 @@ import nl.tweeenveertig.openstack.exception.CommandException;
 import nl.tweeenveertig.openstack.headers.Metadata;
 import nl.tweeenveertig.openstack.headers.container.ContainerMetadata;
 import nl.tweeenveertig.openstack.information.ContainerInformation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
 public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container {
+
+    public static final Logger LOG = LoggerFactory.getLogger(UploadInstructions.class);
 
     private static final Integer MAX_PAGE_SIZE = 9999;
 
@@ -107,17 +111,20 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     }
 
     public void uploadSegmentedObjects(String name, UploadInstructions uploadInstructions) {
-
+        String path = getName()+"/"+name;
         try {
+            LOG.info("JOSS / Setting up a segmentation plan for "+path);
             SegmentationPlan plan = uploadInstructions.getSegmentationPlan();
             InputStream segmentStream = plan.getNextSegment();
             while (segmentStream != null) {
+                LOG.info("JOSS / Uploading segment "+plan.getSegmentNumber());
                 StoredObject segment = getObjectSegment(name, plan.getSegmentNumber().intValue());
                 segment.uploadObject(segmentStream);
                 segmentStream.close();
                 segmentStream = plan.getNextSegment();
             }
         } catch (IOException err) {
+            LOG.error("JOSS / Failed to set up a segmentation plan for "+path+": "+err.getMessage());
             throw new CommandException("Unable to upload segments", err);
         }
     }

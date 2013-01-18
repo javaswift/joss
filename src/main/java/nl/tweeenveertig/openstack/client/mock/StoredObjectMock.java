@@ -12,6 +12,8 @@ import nl.tweeenveertig.openstack.exception.CommandException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
@@ -20,6 +22,8 @@ import java.util.Collection;
 import java.util.Date;
 
 public class StoredObjectMock extends AbstractStoredObject {
+
+    public static final Logger LOG = LoggerFactory.getLogger(StoredObjectMock.class);
 
     private boolean created = false;
 
@@ -124,6 +128,7 @@ public class StoredObjectMock extends AbstractStoredObject {
                         new ObjectContentType(new MimetypesFileTypeMap().getContentType(getName()))
             );
         } catch (IOException err) {
+            LOG.error("JOSS / Failed to upload content: "+err.getMessage());
             throw new CommandException(err.getMessage());
         }
     }
