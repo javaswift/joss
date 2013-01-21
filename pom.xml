@@ -30,8 +30,8 @@
     </licenses>
 
     <scm>
-        <url>scm:git://github.com/java-openstack/joss.git/tags/joss-0.5.1</url>
-        <connection>scm:git:https://github.com/java-openstack/joss.git/tags/joss-0.5.1</connection>
+        <url>scm:git://github.com/java-openstack/joss.git/tags/joss-0.7.0</url>
+        <connection>scm:git:https://github.com/java-openstack/joss.git/tags/joss-0.7.0</connection>
     </scm>
 
     <developers>
