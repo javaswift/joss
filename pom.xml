@@ -49,7 +49,7 @@
         <junit.version>4.10</junit.version>
         <mockito.version>1.9.0</mockito.version>
         <powermock.version>1.4.12</powermock.version>
-        <slf4j.version>1.6.6</slf4j.version>
+        <slf4j.version>1.7.2</slf4j.version>
         <!-- Reporting -->
         <maven.cobertura.version>2.5.2</maven.cobertura.version>
         <maven.javadoc.version>2.8</maven.javadoc.version>
@@ -71,6 +71,12 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpcomponents.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Used for loading test resources and converting a File to byte[] -->
@@ -122,7 +128,14 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>
