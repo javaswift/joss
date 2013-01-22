@@ -1,3 +1,6 @@
+.project
+.classpath
+.settings
 .idea
 joss.iml
 target
