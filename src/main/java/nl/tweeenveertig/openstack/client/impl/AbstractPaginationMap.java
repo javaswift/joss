@@ -52,7 +52,7 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
         if (locationInPage == 0) { // Remove last page if no elements follow it
             pageToMarker.remove(pageToMarker.size() - 1);
         }
-        LOG.warn("JOSS / Created PaginationMap with "+pageToMarker.size()+" pages for a total of "+numberOfRecords+" records");
+        LOG.info("JOSS / Created PaginationMap with "+pageToMarker.size()+" pages for a total of "+numberOfRecords+" records");
         return this;
     }
 
