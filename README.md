@@ -6,7 +6,7 @@ In order to use JOSS in your project, simply add the following dependency:
 
 ```xml
         <dependency>
-            <groupId>nl.tweeenveertig.openstack</groupId>
+            <groupId>org.javaswift.joss</groupId>
             <artifactId>joss</artifactId>
             <version>0.7.0</version>
         </dependency>
