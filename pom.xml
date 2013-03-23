@@ -3,12 +3,12 @@
 
     <groupId>org.javaswift</groupId>
     <artifactId>joss</artifactId>
-    <version>0.7.1</version>
+    <version>0.8.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Java OpenStack Storage</name>
     <description>Java Client library for OpenStack Storage (Swift)</description>
     <inceptionYear>2012</inceptionYear>
-    <url>https://github.com/java-openstack/joss</url>
+    <url>https://github.com/javaswift/joss</url>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -30,8 +30,8 @@
     </licenses>
 
     <scm>
-        <url>scm:git://github.com/java-openstack/joss.git/tags/joss-0.7.0</url>
-        <connection>scm:git:https://github.com/java-openstack/joss.git/tags/joss-0.7.0</connection>
+        <url>scm:git://github.com/javaswift/joss.git</url>
+        <connection>scm:git:https://github.com/javaswift/joss.git</connection>
     </scm>
 
     <developers>
@@ -162,7 +162,7 @@
                 <configuration>
                     <instrumentation>
                         <excludes>
-                            <exclude>nl/tweeenveertig/openstack/*.class</exclude>
+                            <exclude>org/javaswift/*.class</exclude>
                         </excludes>
                     </instrumentation>
                     <check />
