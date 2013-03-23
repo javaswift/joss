@@ -178,6 +178,22 @@ public class StoredObjectImplTest extends BaseCommandTest {
         assertEquals("/alpha/image.png", requestArgument.getValue().getFirstHeader(CopyFrom.X_COPY_FROM).getValue());
     }
 
+    @Test(expected = CommandException.class)
+    public void getPublicUrlThrowsException() {
+        Container container = account.getContainer("alpha");
+        object = container.getObject(null);
+        when(defaultAccess.getPublicURL()).thenReturn("http://static.resource.com");
+        assertEquals("http://static.resource.com/alpha/a+n%C3%A4m%C3%BC+with+spaces.png", object.getPublicURL());
+    }
+
+    @Test
+    public void getPublicUrlEncoded() {
+        Container container = account.getContainer("alpha");
+        object = container.getObject("a nämü with spaces.png");
+        when(defaultAccess.getPublicURL()).thenReturn("http://static.resource.com");
+        assertEquals("http://static.resource.com/alpha/a+n%C3%A4m%C3%BC+with+spaces.png", object.getPublicURL());
+    }
+
     @Test
     public void getPublicUrl() {
         when(defaultAccess.getPublicURL()).thenReturn("http://static.resource.com");

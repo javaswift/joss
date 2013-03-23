@@ -8,6 +8,8 @@ import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.information.ObjectInformation;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -73,7 +75,11 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     }
 
     public String getPath() {
-        return getContainer().getName() + "/" + getName();
+        try {
+            return URLEncoder.encode(getContainer().getName(), "UTF-8") + "/" + URLEncoder.encode(getName(), "UTF-8");
+        } catch (Exception e) {
+            throw new CommandException("Unable to encode the object path: "+getContainer().getName()+"/"+getName());
+        }
     }
 
     public void setLastModified(String date) {
