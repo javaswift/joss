@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/joss.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>JOSS / Tutorials / Wiring to Spring</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>JOSS</h1>
+        <h2>Java library for OpenStack Storage, aka Swift</h2>
+        <a href="https://github.com/javaswift/joss" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+
+            <h1>Wiring to Spring</h1>
+
+            <p>In your Spring application context (ie, probably application-context.xml), you need the following beans:</p>
+
+            <div class="highlight"><pre>  <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"cloudConfig"</span> <span class="na">class=</span><span class="s">"nl.tweeenveertig.openstack.client.factory.AccountConfig"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"tenant"</span> <span class="na">value=</span><span class="s">"name-of-your-tenant"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">value=</span><span class="s">"username"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"password"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"authUrl"</span> <span class="na">value=</span><span class="s">"http://url.where.you.authenticate"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"mock"</span> <span class="na">value=</span><span class="s">"false"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"mockPublicUrl"</span> <span class="na">value=</span><span class="s">"http://localhost:8080/images"</span><span class="nt">/&gt;</span> <span class="c">&lt;!-- v0.7.0+ --&gt;</span>
+  <span class="nt">&lt;/bean&gt;</span>
+
+  <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"cloudFactory"</span> <span class="na">class=</span><span class="s">"nl.tweeenveertig.openstack.client.factory.AccountFactory"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"config"</span> <span class="na">ref=</span><span class="s">"cloudConfig"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/bean&gt;</span>
+
+  <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"cloudAccount"</span> <span class="na">factory-bean=</span><span class="s">"cloudFactory"</span> <span class="na">factory-method=</span><span class="s">"createAccount"</span><span class="nt">/&gt;</span>
+</pre></div>
+
+            <p>The <strong>AccountConfig</strong> contains all the information needed to authenticate against the ObjectStore. JOSS will use username, password and tenant to authenticate against the authentication URL. On success, it will gain access to the authentication token and the URLs to send requests to. </p>
+
+            <p>The <strong>mock</strong> parameter determines whether the real implementation (ie, actual access to the ObjectStore) or the mock implementation (ie, in-memory simulated ObjectStore) will be used. If you mock JOSS, you can also pass your own public URL. This URL will be used as the prefix to your content. One usage for this could be that you set up your own controller to access content in mock mode.</p>
+
+            <p><strong>AccountFactory</strong> is the bean that will create the Account instance. Its method <code>createAccount</code> will be called to actually do that.</p>
+
+            <h2>
+                <a name="using-jndi" class="anchor" href="#using-jndi"><span class="mini-icon mini-icon-link"></span></a>Using JNDI</h2>
+
+            <p>Of course, it's also possible to wire your config bean using JNDI:</p>
+
+            <div class="highlight"><pre><span class="nt">&lt;jee:jndi-lookup</span> <span class="na">id=</span><span class="s">"cloudConfig"</span> <span class="na">jndi-name=</span><span class="s">"some-path/cloud-config"</span>
+    <span class="na">expected-type=</span><span class="s">"nl.tweeenveertig.openstack.client.factory.AccountConfig"</span> <span class="nt">/&gt;</span>
+</pre></div>
+
+            <p>This is especially sensible if you have multiple environments where you deploy your application.</p>
+
+            <h2>
+                <a name="calling-account" class="anchor" href="#calling-account"><span class="mini-icon mini-icon-link"></span></a>Calling account</h2>
+
+            <p>In your code, you just make sure you have access to the "cloudAccount" bean. You could use @Autowired, for example.</p>
+
+            <div class="highlight"><pre> <span class="nd">@Autowired</span>
+ <span class="kd">private</span> <span class="n">Account</span> <span class="n">account</span><span class="o">;</span>
+</pre></div>
+
+            <p>The account bean is meant for long-living web applications. The bean will make use of the same token for as long as possible. When the authentication token expires, it is capable of automatically re-authenticating itself.</p>
+
+            <h2>
+                <a name="your-own-http-client" class="anchor" href="#your-own-http-client"><span class="mini-icon mini-icon-link"></span></a>Your own HTTP client</h2>
+
+            <p>If you do not want to use the standard HttpClient implementation that JOSS instantiates, you can roll your own.</p>
+
+            <div class="highlight"><pre>  <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"httpClient"</span> <span class="na">class=</span><span class="s">"org.apache.http.impl.client.DefaultHttpClient"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;constructor-arg&gt;</span>
+          <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"org.apache.http.impl.conn.PoolingClientConnectionManager"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"maxTotal"</span> <span class="na">value=</span><span class="s">"50"</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"defaultMaxPerRoute"</span> <span class="na">value=</span><span class="s">"25"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/bean&gt;</span>
+      <span class="nt">&lt;/constructor-arg&gt;</span>
+  <span class="nt">&lt;/bean&gt;</span>
+
+  <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"cloudFactory"</span> <span class="na">class=</span><span class="s">"nl.tweeenveertig.openstack.client.factory.AccountFactory"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"config"</span> <span class="na">ref=</span><span class="s">"cloudConfig"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"httpClient"</span> <span class="na">ref=</span><span class="s">"httpClient"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/bean&gt;</span>
+</pre></div>
+
+            <h2>
+                <a name="reauthentication" class="anchor" href="#reauthentication"><span class="mini-icon mini-icon-link"></span></a>Reauthentication</h2>
+
+            <p>It is possible to turn off the automatic reauthentication in case you want to be in control of that proces.</p>
+
+            <div class="highlight"><pre>  <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"cloudFactory"</span> <span class="na">class=</span><span class="s">"nl.tweeenveertig.openstack.client.factory.AccountFactory"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"config"</span> <span class="na">ref=</span><span class="s">"cloudConfig"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"allowReauthenticate"</span> <span class="na">value=</span><span class="s">"false"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/bean&gt;</span>
+</pre></div>
+
+            <h2>
+                <a name="caching-v070" class="anchor" href="#caching-v070"><span class="mini-icon mini-icon-link"></span></a>Caching (v0.7.0+)</h2>
+
+            <p>Account, Container and StoredObject all lazy-load their metadata and stick to that metadata once it has been loaded. Though it is possible to force a refresh through the <code>reload</code> method, you can also disable caching entirely.</p>
+
+            <div class="highlight"><pre>  <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"cloudFactory"</span> <span class="na">class=</span><span class="s">"nl.tweeenveertig.openstack.client.factory.AccountFactory"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"config"</span> <span class="na">ref=</span><span class="s">"cloudConfig"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"allowCaching"</span> <span class="na">value=</span><span class="s">"false"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/bean&gt;</span>
+</pre></div>
+
+            <p>The consequence of this operation is that for every getter call on an entity, a HTTP HEAD call is made to the ObjectStore. It's your call.</p>
+        </section>
+
+        <aside id="sidebar">
+
+            <p class="site-link"><a href="index.html">Home</a></p>
+            <p class="site-link">Tutorials</p>
+            <p class="site-link-sub"><a href="pagination.html">Pagination</a></p>
+            <p class="site-link-sub"><a href="spring.html">Wiring to Spring</a></p>
+            <p class="site-link-sub"><a href="economy.html">Economy of server calls</a></p>
+            <p class="site-link">Roadmap</p>
+            <p class="site-link-sub"><a href="release-notes.html">Release notes</a></p>
+            <p class="site-link-sub"><a href="future-features.html">Future features</a></p>
+
+            <hr>
+
+            <a href="https://github.com/javaswift/joss/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/javaswift/joss/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/javaswift/joss"></a> is maintained by <a href="https://github.com/javaswift">javaswift</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-39343905-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>

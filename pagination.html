@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/joss.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>JOSS / Tutorials / Pagination</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>JOSS</h1>
+        <h2>Java library for OpenStack Storage, aka Swift</h2>
+        <a href="https://github.com/javaswift/joss" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+
+            <h1>Pagination</h1>
+
+            <p>Let us presume you have a list of 5 containers, like this:</p>
+
+            <div class="highlight"><pre>
+  alpha
+  beta
+  gamma
+  delta
+  epsilon
+</pre></div>
+
+            <p>The most basic form of pagination is the way the OpenStack API implemented it. You have to pass the point from where to continue and a page size.</p>
+
+            <div class="highlight"><pre>  <span class="n">Collection</span><span class="o">&lt;</span><span class="n">Container</span><span class="o">&gt;</span> <span class="n">containers</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="na">list</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"beta"</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+</pre></div>
+
+            <p>In this case, the next element after "beta" will be the starting point and a maximum of 2 elements will be added to the page. So the result will be:</p>
+
+            <div class="highlight"><pre>  gamma
+  delta
+</pre></div>
+
+            <h2>
+                <a name="using-a-paginationmap" class="anchor" href="#using-a-paginationmap"><span class="mini-icon mini-icon-link"></span></a>Using a PaginationMap</h2>
+
+            <p>Although the OpenStack API allows pagination, it is done in a strange way. You have to pass the <em>last record on the previous page</em> plus the page size. Normally, you would expect to be able to pass a page and a page size. If you have to have knowledge of the previous page, you can hardly do things like showing the last page, unless you pass all the pages before it first.</p>
+
+            <p>JOSS has functionality with which you can simulate the page/page size way of pagination.</p>
+
+            <p>Let's presume you have an account, then you can build up a map based on a page size of 10 like so:</p>
+
+            <div class="highlight"><pre>  <span class="n">PaginationMap</span> <span class="n">paginationMap</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="na">getPaginationMap</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+</pre></div>
+
+            <p>You will get a map which is capable of converting a page to a marker, like described above. </p>
+
+            <p>If you want to go through all pages, it looks like this:</p>
+
+            <div class="highlight"><pre>  <span class="k">for</span> <span class="o">(</span><span class="n">Integer</span> <span class="n">page</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">page</span> <span class="o">&lt;</span> <span class="n">paginationMap</span><span class="o">.</span><span class="na">getNumberOfPages</span><span class="o">();</span> <span class="n">page</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"PAGE: "</span><span class="o">+</span><span class="n">page</span><span class="o">);</span>
+      <span class="k">for</span> <span class="o">(</span><span class="n">Container</span> <span class="n">container</span> <span class="o">:</span> <span class="n">account</span><span class="o">.</span><span class="na">list</span><span class="o">(</span><span class="n">paginationMap</span><span class="o">,</span> <span class="n">page</span><span class="o">))</span> <span class="o">{</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">container</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</pre></div>
+            This approach also works on StoredObject listings.
+
+            <p>Note that the map is created once and NOT automatically refreshed, so if the underlying containers are added or deleted, this will not be shown. You will have to generate a new map to reflect the changed situation.</p>
+
+            <h2>
+                <a name="filtering" class="anchor" href="#filtering"><span class="mini-icon mini-icon-link"></span></a>Filtering</h2>
+
+            <p>You have a number of containers (or objects), but you only want to show the ones starting with a certain prefix. Let's suppose these are the container names you have:</p>
+
+            <div class="highlight"><pre>
+  alpha
+  prod-alpha
+  beta
+  prod-beta
+  gamma
+  prod-gamma
+  delta
+  prod-delta
+  epsilon
+  prod-epsilon
+</pre></div>
+
+            <p>If you only want to page over the items starting with "prod-" this is what you do with the PaginationMap:</p>
+
+            <div class="highlight"><pre>  <span class="n">PaginationMap</span> <span class="n">paginationMap</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="na">getPaginationMap</span><span class="o">(</span><span class="s">"prod-"</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+</pre></div>
+
+            <p>From there on, it works in the same way. So if you would be running the print loop shown in the section before this on, this would be your output:</p>
+
+            <div class="highlight"><pre>
+    PAGE 0
+    prod-alpha
+    prod-beta
+    PAGE 1
+    prod-gamma
+    prod-delta
+    PAGE 2
+    prod-epsilon
+</pre></div>
+
+        </section>
+
+        <aside id="sidebar">
+
+            <p class="site-link"><a href="index.html">Home</a></p>
+            <p class="site-link">Tutorials</p>
+            <p class="site-link-sub"><a href="pagination.html">Pagination</a></p>
+            <p class="site-link-sub"><a href="spring.html">Wiring to Spring</a></p>
+            <p class="site-link-sub"><a href="economy.html">Economy of server calls</a></p>
+            <p class="site-link">Roadmap</p>
+            <p class="site-link-sub"><a href="release-notes.html">Release notes</a></p>
+            <p class="site-link-sub"><a href="future-features.html">Future features</a></p>
+
+            <hr>
+
+            <a href="https://github.com/javaswift/joss/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/javaswift/joss/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/javaswift/joss"></a> is maintained by <a href="https://github.com/javaswift">javaswift</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-39343905-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>

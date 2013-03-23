@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/joss.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>JOSS / Roadmap / Future features</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>JOSS</h1>
+        <h2>Java library for OpenStack Storage, aka Swift</h2>
+        <a href="https://github.com/javaswift/joss" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+
+            <h1>Future features</h1>
+
+            <h2>
+                <a name="object-storage-swift-api-related-functionality" class="anchor" href="#object-storage-swift-api-related-functionality"><span class="mini-icon mini-icon-link"></span></a>Object Storage Swift API related functionality</h2>
+
+            <ul>
+                <li>chunking -&gt; <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/chunked-transfer-encoding.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/chunked-transfer-encoding.html</a>
+                </li>
+                <li>CORS -&gt; <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/assigning-cors-headers-to-requests.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/assigning-cors-headers-to-requests.html</a>
+                </li>
+                <li>Content encoding -&gt; <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/enabling-file-compression-with-content-encoding-header.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/enabling-file-compression-with-content-encoding-header.html</a>
+                </li>
+                <li>Content disposition (ie, bypassing content handling in the browser, and forcing file save) -&gt; <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/enabling-browser-bypass-with-content-disposition-header.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/enabling-browser-bypass-with-content-disposition-header.html</a>
+                </li>
+                <li>Versioning -&gt; <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/Object_Versioning-e1e3230.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/Object_Versioning-e1e3230.html</a>, better yet Folsom's object versioning -&gt; <a href="http://docs.openstack.org/developer/swift/overview_object_versioning.html">http://docs.openstack.org/developer/swift/overview_object_versioning.html</a>
+                </li>
+                <li>Fine-grained authorization on containers -&gt; <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/special-metadata-acls.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/special-metadata-acls.html</a>
+                </li>
+                <li>Pseudo-hierarchies (to emulate directory structures) -&gt; specifically, example 4.36/4.37 (path and delimiter) in <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/folders-directories.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/folders-directories.html</a>
+                </li>
+                <li>Automatically apply Swift convention for large objects, which is to store segmented objects separate from the manifests into a "_segments"-postfixed container: <a href="http://docs.openstack.org/developer/swift/overview_large_objects.html">http://docs.openstack.org/developer/swift/overview_large_objects.html</a>
+                </li>
+            </ul><h2>
+            <a name="wishlist-for-joss-separate-from-object-storage-functionality" class="anchor" href="#wishlist-for-joss-separate-from-object-storage-functionality"><span class="mini-icon mini-icon-link"></span></a>Wishlist for JOSS separate from Object Storage functionality</h2>
+
+            <ul>
+                <li>Content-sniffing; make content-sniffing (as opposed to file extension matching) a part of JOSS</li>
+                <li>Persistable in-memory Object Store; useful if a server is running on in-memory object store and wants to persist its state after a server restart</li>
+                <li>Method for asking whether an object's metadata has been read</li>
+            </ul>
+
+        </section>
+
+          <aside id="sidebar">
+
+              <p class="site-link"><a href="index.html">Home</a></p>
+              <p class="site-link">Tutorials</p>
+              <p class="site-link-sub"><a href="pagination.html">Pagination</a></p>
+              <p class="site-link-sub"><a href="spring.html">Wiring to Spring</a></p>
+              <p class="site-link-sub"><a href="economy.html">Economy of server calls</a></p>
+              <p class="site-link">Roadmap</p>
+              <p class="site-link-sub"><a href="release-notes.html">Release notes</a></p>
+              <p class="site-link-sub"><a href="future-features.html">Future features</a></p>
+
+              <hr>
+
+              <a href="https://github.com/javaswift/joss/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/javaswift/joss/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/javaswift/joss"></a> is maintained by <a href="https://github.com/javaswift">javaswift</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-39343905-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/joss.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>JOSS / Roadmap / Release Notes</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>JOSS</h1>
+        <h2>Java library for OpenStack Storage, aka Swift</h2>
+        <a href="https://github.com/javaswift/joss" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+
+            <h1>Release notes</h1>
+
+            <p>Theme: <em>polishing for v1.0</em></p>
+
+            <ul>
+                <li>
+                    <strong>Refactoring AccountConfig</strong>; TBD</li>
+            </ul><h2>
+            <a name="v070" class="anchor" href="#v070"><span class="mini-icon mini-icon-link"></span></a>v0.7.0</h2>
+
+            <p>Theme: <em>plug'n'play for the convenience user and power for the power user</em></p>
+
+            <ul>
+                <li>
+                    <strong>Paging lists of containers and objects</strong>; OpenStack paging can now be accessed either in the original form (using the last entry's name on the previous page as a marker), or with a page. Note that the list methods have change from <code>listX</code> to just <code>list</code>
+                </li>
+                <li>
+                    <strong>Listing only containers and objects with a prefix</strong>; containers and objects can have their lists filtered on name prefixes</li>
+                <li>
+                    <strong>Public URL for mock implementation</strong>; a placeholder URL can be passed to the mock implementation. This URL will be prefixed to the container/object. In this way you can set up your own controllers that access content and still have it work in mock mode</li>
+                <li>
+                    <strong>Serialized output for containers</strong>; when containers and stored objects are listed, use is made of the JSON objects instead of the plain text lines</li>
+                <li>
+                    <strong>Reuse the header information from container/object listing for metadata</strong>; specific header fields passed by the Account/Container <code>list</code> operation are now stored and do not automatically lead to a refetch when queried (unless caching is turned off)</li>
+                <li>Minor changes/refactorings:
+
+                    <ul>
+                        <li>
+                            <strong>Check your calls to the ObjectStore</strong>; Account can let you know how many HTTP calls to the ObjectStore have been made so far</li>
+                        <li>
+                            <strong>Logging critical information</strong>; various logging statements added (INFO, WARN and ERROR level), for configuration, critical components and exceptions</li>
+                    </ul>
+                </li>
+            </ul><h2>
+            <a name="v061" class="anchor" href="#v061"><span class="mini-icon mini-icon-link"></span></a>v0.6.1</h2>
+
+            <p>Theme: <em>First usage in the 42 project and feedback from the team</em></p>
+
+            <ul>
+                <li>
+                    <strong>Large Object Creation</strong>; Segmented files and manifests can be uploaded. Files and byte array are automatically segmented if the segmentation size is exceeded.
+                    <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/large-object-creation.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/large-object-creation.html</a>
+                </li>
+                <li>
+                    <strong>Factories</strong>; factories that can be used in Spring to get a self-reauthenticating account singleton </li>
+                <li>
+                    <strong>OnFileObjectLoader</strong>; you can set up a folder with a layer of subfolders (ie, containers) and files (ie, objects). The ClientMock can be instructed to load this entire folder structure and convert it into an in-memory ObjectStore. </li>
+                <li>
+                    <strong>Thread safety</strong>; a number of routines have been made thread-safe so that the usage of a connection pool of accounts is not necessary, but a single Account can be instantiated in a Spring context</li>
+                <li>
+                    <strong>Other HTTP client</strong>; the default HTTP client now has a different connection manager (PoolingClientConnectionManager) than the default single-threaded one (BasicClientConnectionManager). You can still bring your own if this one is not good enough.</li>
+                <li>
+                    <strong>Caching on/off</strong>; JOSS lazy-reads the metadata on an instance and then never again. It is possible to turn off this caching mechanism, so that metadata is always loaded for every get call on account/container/object instance.</li>
+                <li>
+                    <strong>Entity reload</strong>; Account, Container and StoredObject can be forced to reload their metadata.</li>
+                <li>Minor changes/refactorings:
+
+                    <ul>
+                        <li>
+                            <strong>100% Test coverage</strong>; all JOSS code is now covered by tests</li>
+                        <li>
+                            <strong>Cyclic dependencies</strong>; eliminated all relevant cyclic dependencies from the code base</li>
+                        <li>
+                            <strong>Public URL exposed by Account</strong>; Account now returns the public URL configured in the Object Store for the Account</li>
+                        <li>
+                            <strong>Package refactoring</strong>; core Swift classes moved to model, original model classes moved to instructions and information</li>
+                    </ul>
+                </li>
+            </ul><h2>
+            <a name="v050" class="anchor" href="#v050"><span class="mini-icon mini-icon-link"></span></a>v0.5.0</h2>
+
+            <p>Theme: <em>Working down the list of unsupported Object Storage features: <a href="https://github.com/java-openstack/joss/wiki/Future-features">https://github.com/java-openstack/joss/wiki/Future-features</a></em></p>
+
+            <ul>
+                <li>
+                    <strong>X-Delete-After / X-Delete-At</strong>; with X-Delete-At, the ObjectStore can be instructed to remove an object at the specified date/time. With X-Delete-After, the ObjectStore is instructed to remove the object x seconds after the current date/time. </li>
+                <li>
+                    <strong>If-*Modified-Since headers</strong>; these headers instruct the ObjectStore to check against the last modification date. In the case of If-Modified-Since, the content will be returned if changes have taken place. In the case of If-Unmodified-Since, the content will be returned if changes have NOT taken place. See also, the Openstack API: <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html</a>
+                </li>
+                <li>
+                    <strong>If-Match / If-None-Match</strong>; these headers instruct the ObjectStore to check against the passed value. In the case of If-None-Match, the content will only be returned if the value does not match (ie, content is modified). In the case of If-Match, the content will only be returned if the value matches (ie, content is unmodified). </li>
+                <li>
+                    <strong>Exception hierarchy</strong>; CommandException subclasses to prevent the need to compare exception content on catching. Every fail condition resulting from a HTTP status now translates to a corresponding exception.</li>
+                <li>Minor changes/refactorings:
+
+                    <ul>
+                        <li>Removed all IOExceptions from StoredObject interface</li>
+                        <li>Ability to add Content-Type as part of the upload, not only afterwards</li>
+                        <li>Removed dependency on commons.lang</li>
+                    </ul>
+                </li>
+            </ul><h2>
+            <a name="v040" class="anchor" href="#v040"><span class="mini-icon mini-icon-link"></span></a>v0.4.0</h2>
+
+            <p>Theme: <em>More functionality of Object Store in the client</em></p>
+
+            <ul>
+                <li>
+                    <strong>download partial content</strong>; added Range that allow downloads of partials, see <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html</a>
+                </li>
+                <li>
+                    <strong>supply your own etag</strong>; added possibility to upload your own Etag, in case you use an inputstream but still require a server-side comparison of MD5 hashes</li>
+                <li>
+                    <strong>facilitate content sniffing</strong>; added option to change Content-Type of an object. Useful when you do not wish to rely on the default Object Store file extension matcher to determine Content-Type, eg when you have your own content-sniffing algorithm</li>
+                <li>
+                    <strong>better test coverage</strong>; 98%+ JUnit test coverage achieved</li>
+            </ul><h2>
+            <a name="v030" class="anchor" href="#v030"><span class="mini-icon mini-icon-link"></span></a>v0.3.0</h2>
+
+            <p>Theme: <em>CloudVPS feedback incorporated</em></p>
+
+            <ul>
+                <li>added auto-reconnect after token expiration implemented</li>
+                <li>added auto-discovery of object-store Catalogs</li>
+                <li>added end point selection based on region preference</li>
+                <li>added tenant support</li>
+            </ul><h2>
+            <a name="v020" class="anchor" href="#v020"><span class="mini-icon mini-icon-link"></span></a>v0.2.0</h2>
+
+            <p>Theme: <em>Subjected to internal 42 review</em></p>
+
+            <ul>
+                <li>converted InputStreamWrapper to InputStream subclass</li>
+                <li>return Containers and StoredObject as List instead of array[]</li>
+                <li>implements Callable interface for all AbstractCommand</li>
+                <li>use Closeable for AbstractCommand (added bonus: works for try-with-resources in Java 7 as well)</li>
+                <li>refactored client interface from Facade to ActiveRecord pattern</li>
+            </ul><h2>
+            <a name="v010" class="anchor" href="#v010"><span class="mini-icon mini-icon-link"></span></a>v0.1.0</h2>
+
+            <p>First release with the basic authentication, account and object access</p>
+        </section>
+
+        <aside id="sidebar">
+
+            <p class="site-link"><a href="index.html">Home</a></p>
+            <p class="site-link">Tutorials</p>
+            <p class="site-link-sub"><a href="pagination.html">Pagination</a></p>
+            <p class="site-link-sub"><a href="spring.html">Wiring to Spring</a></p>
+            <p class="site-link-sub"><a href="economy.html">Economy of server calls</a></p>
+            <p class="site-link">Roadmap</p>
+            <p class="site-link-sub"><a href="release-notes.html">Release notes</a></p>
+            <p class="site-link-sub"><a href="future-features.html">Future features</a></p>
+
+            <hr>
+
+            <a href="https://github.com/javaswift/joss/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/javaswift/joss/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/javaswift/joss"></a> is maintained by <a href="https://github.com/javaswift">javaswift</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-39343905-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
