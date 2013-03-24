@@ -197,10 +197,6 @@ public class StoredObjectMock extends AbstractStoredObject {
         return this;
     }
 
-    public String getPublicURL() {
-        return "";
-    }
-
     protected void saveObject(byte[] object) {
         this.object = object;
         this.info.setLastModified(new ObjectLastModified(new Date()));

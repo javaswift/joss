@@ -97,10 +97,6 @@ public class StoredObjectImpl extends AbstractStoredObject {
         return this;
     }
 
-    public String getPublicURL() {
-        return getAccess().getPublicURL() + "/" + getPath();
-    }
-
     protected AccountImpl getAccount() {
         return (AccountImpl)getContainer().getAccount();
     }

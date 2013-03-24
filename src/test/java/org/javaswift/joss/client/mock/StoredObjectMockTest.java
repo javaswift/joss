@@ -66,6 +66,14 @@ public class StoredObjectMockTest {
     }
 
     @Test
+    public void mockUrl() {
+        AccountMock account = new AccountMock();
+        account.setPublicUrl("http://127.0.0.1");
+        StoredObject object = account.getContainer("someContainer").getObject("someObject");
+        assertEquals("http://127.0.0.1/someContainer/someObject", object.getPublicURL());
+    }
+
+    @Test
     public void saveObject() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
         object.uploadObject(bytes);

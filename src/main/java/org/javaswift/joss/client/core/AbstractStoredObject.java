@@ -74,6 +74,11 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         return container;
     }
 
+    @Override
+    public String getPublicURL() {
+        return getContainer().getAccount().getPublicURL() + "/" + getPath();
+    }
+
     public String getPath() {
         try {
             return URLEncoder.encode(getContainer().getName(), "UTF-8") + "/" + URLEncoder.encode(getName(), "UTF-8");
