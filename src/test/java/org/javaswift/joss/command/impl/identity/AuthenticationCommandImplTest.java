@@ -22,8 +22,8 @@ import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ AuthenticationCommand.class })
-public class AuthenticationCommandTest extends BaseCommandTest {
+@PrepareForTest({ AuthenticationCommandImpl.class })
+public class AuthenticationCommandImplTest extends BaseCommandTest {
 
     private String jsonString;
 
@@ -37,23 +37,23 @@ public class AuthenticationCommandTest extends BaseCommandTest {
 
     @Test
     public void authenticateSuccessful() throws IOException {
-        AccessImpl access = new AuthenticationCommand(httpClient, "someurl", "sometenant", "user", "pwd").call();
+        AccessImpl access = new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "user", "pwd").call();
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
     }
 
     @Test (expected = UnauthorizedException.class)
     public void authenticateFail() throws IOException {
-        checkForError(401, new AuthenticationCommand(httpClient, "someurl", "sometenant", "user", "pwd"));
+        checkForError(401, new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "user", "pwd"));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new AuthenticationCommand(httpClient, "someurl", "sometenant", "user", "pwd"));
+        checkForError(500, new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "user", "pwd"));
     }
 
     @Test(expected = CommandException.class)
     public void ioException() throws Exception {
         whenNew(StringEntity.class).withArguments(anyString()).thenThrow(new IOException());
-        new AuthenticationCommand(httpClient, "someurl", "sometenant", "user", "pwd");
+        new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "user", "pwd");
     }
 }

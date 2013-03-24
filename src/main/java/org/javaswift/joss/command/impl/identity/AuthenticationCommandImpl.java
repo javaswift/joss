@@ -6,6 +6,7 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.impl.identity.access.AccessImpl;
 import org.javaswift.joss.command.impl.identity.authentication.Authentication;
+import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.exception.CommandException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -14,9 +15,9 @@ import org.apache.http.entity.StringEntity;
 
 import java.io.IOException;
 
-public class AuthenticationCommand extends AbstractCommand<HttpPost, AccessImpl> {
+public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, AccessImpl> implements AuthenticationCommand {
 
-    public AuthenticationCommand(HttpClient httpClient, String url, String tenant, String username, String password) {
+    public AuthenticationCommandImpl(HttpClient httpClient, String url, String tenant, String username, String password) {
         super(httpClient, url);
         setAuthenticationHeader(tenant, username, password);
     }

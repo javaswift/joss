@@ -3,10 +3,10 @@ package org.javaswift.joss.client.impl;
 import org.javaswift.joss.command.impl.factory.AccountCommandFactoryImpl;
 import org.javaswift.joss.command.impl.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
+import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.client.core.AbstractAccount;
-import org.javaswift.joss.command.impl.identity.AuthenticationCommand;
 import org.apache.http.client.HttpClient;
 
 import java.util.Collection;

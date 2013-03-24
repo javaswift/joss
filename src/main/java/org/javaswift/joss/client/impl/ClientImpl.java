@@ -1,8 +1,10 @@
 package org.javaswift.joss.client.impl;
 
+import org.javaswift.joss.command.impl.factory.AuthenticationCommandFactoryImpl;
 import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
+import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.model.Client;
-import org.javaswift.joss.command.impl.identity.AuthenticationCommand;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
@@ -16,6 +18,8 @@ public class ClientImpl implements Client<AccountImpl> {
     private HttpClient httpClient;
 
     private boolean allowCaching = true;
+
+    private AuthenticationCommandFactory commandFactory = new AuthenticationCommandFactoryImpl();
 
     public ClientImpl() {
         initHttpClient();
@@ -34,7 +38,7 @@ public class ClientImpl implements Client<AccountImpl> {
 
     public AccountImpl authenticate(String tenant, String username, String password, String authUrl, String preferredRegion) {
         LOG.info("JOSS / Attempting authentication with tenant: "+tenant+", username: "+username+", Auth URL: "+authUrl);
-        AuthenticationCommand command = new AuthenticationCommand(httpClient, authUrl, tenant, username, password);
+        AuthenticationCommand command = commandFactory.createAuthenticationCommand(httpClient, authUrl, tenant, username, password);
         AccessImpl access = command.call();
         LOG.info("JOSS / Successfully authenticated");
         access.setPreferredRegion(preferredRegion);

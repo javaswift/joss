@@ -2,7 +2,7 @@ package org.javaswift.joss.command.impl.core;
 
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.command.impl.container.CreateContainerCommandImpl;
-import org.javaswift.joss.command.impl.identity.AuthenticationCommand;
+import org.javaswift.joss.command.impl.identity.AuthenticationCommandImpl;
 import org.javaswift.joss.command.impl.identity.access.AccessImpl;
 import org.javaswift.joss.exception.UnauthorizedException;
 import org.javaswift.joss.headers.Token;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 public class AbstractSecureCommandTest extends BaseCommandTest {
 
     @Mock
-    AuthenticationCommand authCommand;
+    AuthenticationCommandImpl authCommand;
 
     @Before
     public void setup() throws IOException {
