@@ -1,33 +1,33 @@
 package org.javaswift.joss.command.impl.container;
 
+import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.container.CreateContainerCommand;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
-import org.javaswift.joss.command.impl.identity.access.AccessImpl;
 import org.javaswift.joss.model.Container;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPut;
 
-public class DeleteContainerCommand extends AbstractContainerCommand<HttpDelete, String[]> {
+public class CreateContainerCommandImpl extends AbstractContainerCommand<HttpPut, Object> implements CreateContainerCommand {
 
-    public DeleteContainerCommand(Account account, HttpClient httpClient, AccessImpl access, Container container) {
+    public CreateContainerCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Container container) {
         super(account, httpClient, access, container);
     }
 
     @Override
-    protected HttpDelete createRequest(String url) {
-        return new HttpDelete(url);
+    protected HttpPut createRequest(String url) {
+        return new HttpPut(url);
     }
 
     @Override
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT)),
-            new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND)),
-            new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_CONFLICT))
+            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_CREATED)),
+            new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_ACCEPTED))
         };
     }
 

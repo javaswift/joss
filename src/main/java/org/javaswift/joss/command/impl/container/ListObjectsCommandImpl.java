@@ -1,5 +1,6 @@
 package org.javaswift.joss.command.impl.container;
 
+import org.javaswift.joss.command.shared.container.ListObjectsCommand;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
@@ -19,11 +20,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ListObjectsCommand extends AbstractContainerCommand<HttpGet, Collection<StoredObject>> {
+public class ListObjectsCommandImpl extends AbstractContainerCommand<HttpGet, Collection<StoredObject>> implements ListObjectsCommand {
 
     protected Container container;
 
-    public ListObjectsCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, ListInstructions listInstructions) {
+    public ListObjectsCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Container container, ListInstructions listInstructions) {
         super(account, httpClient, access, container);
         this.container = container;
         modifyURI(listInstructions.getQueryParameters());

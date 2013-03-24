@@ -1,33 +1,36 @@
 package org.javaswift.joss.command.impl.container;
 
 import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.container.ContainerMetadataCommand;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.model.Container;
-import org.javaswift.joss.headers.container.ContainerRights;
+import org.javaswift.joss.headers.Header;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpPost;
 
-public class ContainerRightsCommand extends AbstractContainerCommand<HttpPut, String[]> {
+import java.util.Collection;
 
-    public ContainerRightsCommand(Account account, HttpClient httpClient, AccessImpl access, Container container, boolean publicContainer) {
+public class ContainerMetadataCommandImpl extends AbstractContainerCommand<HttpPost, Object> implements ContainerMetadataCommand {
+
+    public ContainerMetadataCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Container container, Collection<? extends Header> headers) {
         super(account, httpClient, access, container);
-        setHeader(new ContainerRights(publicContainer));
+        addHeaders(headers);
     }
 
     @Override
-    protected HttpPut createRequest(String url) {
-        return new HttpPut(url);
+    protected HttpPost createRequest(String url) {
+        return new HttpPost(url);
     }
 
     @Override
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_ACCEPTED)),
+            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT)),
             new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND))
         };
     }

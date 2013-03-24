@@ -1,4 +1,4 @@
-package org.javaswift.joss.command.impl.account;
+package org.javaswift.joss.command.shared.account;
 
 public class ContainerListElement {
 

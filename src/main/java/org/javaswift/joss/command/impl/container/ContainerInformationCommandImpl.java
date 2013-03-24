@@ -1,6 +1,7 @@
 package org.javaswift.joss.command.impl.container;
 
 import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.container.ContainerInformationCommand;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
@@ -19,9 +20,9 @@ import org.apache.http.client.methods.HttpHead;
 
 import java.io.IOException;
 
-public class ContainerInformationCommand extends AbstractContainerCommand<HttpHead, ContainerInformation> {
+public class ContainerInformationCommandImpl extends AbstractContainerCommand<HttpHead, ContainerInformation> implements ContainerInformationCommand {
 
-    public ContainerInformationCommand(Account account, HttpClient httpClient, AccessImpl access, Container container) {
+    public ContainerInformationCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Container container) {
         super(account, httpClient, access, container);
     }
 

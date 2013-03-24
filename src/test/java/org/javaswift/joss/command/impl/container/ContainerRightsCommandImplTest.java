@@ -13,7 +13,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ContainerRightsCommandTest extends BaseCommandTest {
+public class ContainerRightsCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
@@ -23,24 +23,24 @@ public class ContainerRightsCommandTest extends BaseCommandTest {
     @Test
     public void createContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(202);
-        new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true).call();
+        new ContainerRightsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true).call();
         verify(httpClient).execute(requestArgument.capture());
         assertEquals(ContainerRights.PUBLIC_CONTAINER, requestArgument.getValue().getFirstHeader(ContainerRights.X_CONTAINER_READ).getValue());
     }
 
     @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true));
+        checkForError(404, new ContainerRightsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true));
+        checkForError(500, new ContainerRightsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new ContainerRightsCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true), 202);
+        isSecure(new ContainerRightsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true), 202);
     }
 
 }

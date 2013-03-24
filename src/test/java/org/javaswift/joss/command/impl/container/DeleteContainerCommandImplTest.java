@@ -13,7 +13,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.mockito.Mockito.when;
 
-public class DeleteContainerCommandTest extends BaseCommandTest {
+public class DeleteContainerCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
@@ -23,26 +23,26 @@ public class DeleteContainerCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
+        new DeleteContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 
     @Test(expected = NotFoundException.class)
     public void deleteContainerDoesNotExist() throws IOException {
-        checkForError(404, new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
+        checkForError(404, new DeleteContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
     @Test(expected = NotEmptyException.class)
     public void deleteContainerNotEmpty() throws IOException {
-        checkForError(409, new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
+        checkForError(409, new DeleteContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
     @Test(expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
+        checkForError(500, new DeleteContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new DeleteContainerCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), 204);
+        isSecure(new DeleteContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")), 204);
     }
 }

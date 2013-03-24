@@ -21,7 +21,7 @@ import static org.javaswift.joss.headers.container.ContainerBytesUsed.X_CONTAINE
 import static org.javaswift.joss.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
 import static org.javaswift.joss.headers.container.ContainerRights.X_CONTAINER_READ;
 
-public class ContainerInformationCommandTest extends BaseCommandTest {
+public class ContainerInformationCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
@@ -42,7 +42,7 @@ public class ContainerInformationCommandTest extends BaseCommandTest {
     @Test
     public void getInfoSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        ContainerInformation info = new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
+        ContainerInformation info = new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
         assertEquals("Photo album", info.getMetadata("Description"));
         assertEquals("1984", info.getMetadata("Year"));
         assertEquals(123, info.getObjectCount());
@@ -52,16 +52,16 @@ public class ContainerInformationCommandTest extends BaseCommandTest {
 
     @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
+        checkForError(404, new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
+        checkForError(500, new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")), 204);
+        isSecure(new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")), 204);
     }
 }

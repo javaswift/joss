@@ -17,7 +17,7 @@ import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ContainerMetadataCommandTest extends BaseCommandTest {
+public class ContainerMetadataCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
@@ -31,7 +31,7 @@ public class ContainerMetadataCommandTest extends BaseCommandTest {
         headers.add(new AccountMetadata("Year", "123"));
         headers.add(new AccountMetadata("Title", "Roses are Red"));
         headers.add(new AccountMetadata("ISBN", "123456789"));
-        new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), headers).call();
+        new ContainerMetadataCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), headers).call();
         verify(httpClient).execute(requestArgument.capture());
         assertEquals("123", requestArgument.getValue().getFirstHeader(X_ACCOUNT_META_PREFIX + "Year").getValue());
         assertEquals("Roses are Red", requestArgument.getValue().getFirstHeader(X_ACCOUNT_META_PREFIX + "Title").getValue());
@@ -40,16 +40,16 @@ public class ContainerMetadataCommandTest extends BaseCommandTest {
 
     @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()));
+        checkForError(404, new ContainerMetadataCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()));
+        checkForError(500, new ContainerMetadataCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new ContainerMetadataCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()), 204);
+        isSecure(new ContainerMetadataCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), new ArrayList<Header>()), 204);
     }
 }

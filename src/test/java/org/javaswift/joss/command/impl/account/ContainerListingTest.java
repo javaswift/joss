@@ -1,5 +1,6 @@
 package org.javaswift.joss.command.impl.account;
 
+import org.javaswift.joss.command.shared.account.ContainerListElement;
 import org.javaswift.joss.util.ClasspathTemplateResource;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;

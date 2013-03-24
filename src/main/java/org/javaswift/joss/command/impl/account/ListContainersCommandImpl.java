@@ -1,5 +1,6 @@
 package org.javaswift.joss.command.impl.account;
 
+import org.javaswift.joss.command.shared.account.ContainerListElement;
 import org.javaswift.joss.command.shared.account.ListContainersCommand;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Account;

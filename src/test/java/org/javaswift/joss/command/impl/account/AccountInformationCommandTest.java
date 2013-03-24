@@ -1,6 +1,6 @@
 package org.javaswift.joss.command.impl.account;
 
-import org.javaswift.joss.command.impl.container.ContainerInformationCommand;
+import org.javaswift.joss.command.impl.container.ContainerInformationCommandImpl;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.information.AccountInformation;
@@ -49,7 +49,7 @@ public class AccountInformationCommandTest extends BaseCommandTest {
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerInformationCommand(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
+        checkForError(500, new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
     }
 
     @Test
