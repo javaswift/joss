@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static org.mockito.Mockito.when;
 
-public class DeleteObjectCommandTest extends BaseCommandTest {
+public class DeleteObjectCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
@@ -20,21 +20,21 @@ public class DeleteObjectCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        new DeleteObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName")).call();
+        new DeleteObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")).call();
     }
 
     @Test (expected = NotFoundException.class)
     public void deleteContainerDoesNotExist() throws IOException {
-        checkForError(404, new DeleteObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName")));
+        checkForError(404, new DeleteObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new DeleteObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName")));
+        checkForError(500, new DeleteObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new DeleteObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName")), 204);
+        isSecure(new DeleteObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")), 204);
     }
 }

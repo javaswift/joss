@@ -1,5 +1,6 @@
 package org.javaswift.joss.command.impl.object;
 
+import org.javaswift.joss.command.shared.object.ObjectInformationCommand;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.httpstatus.*;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
@@ -13,9 +14,9 @@ import org.apache.http.client.methods.HttpHead;
 
 import java.io.IOException;
 
-public class ObjectInformationCommand extends AbstractObjectCommand<HttpHead, ObjectInformation> {
+public class ObjectInformationCommandImpl extends AbstractObjectCommand<HttpHead, ObjectInformation> implements ObjectInformationCommand {
 
-    public ObjectInformationCommand(Account account, HttpClient httpClient, AccessImpl access, StoredObject object) {
+    public ObjectInformationCommandImpl(Account account, HttpClient httpClient, AccessImpl access, StoredObject object) {
         super(account, httpClient, access, object);
     }
 

@@ -17,7 +17,7 @@ import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PRE
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ObjectMetadataCommandTest extends BaseCommandTest {
+public class ObjectMetadataCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
@@ -30,7 +30,7 @@ public class ObjectMetadataCommandTest extends BaseCommandTest {
         Collection<Header> headers = new ArrayList<Header>();
         headers.add(new ObjectMetadata("Year", "1989"));
         headers.add(new ObjectMetadata("Company", "42 BV"));
-        new ObjectMetadataCommand(this.account, httpClient, defaultAccess, getObject("objectName"), headers).call();
+        new ObjectMetadataCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), headers).call();
         verify(httpClient).execute(requestArgument.capture());
         assertEquals("1989", requestArgument.getValue().getFirstHeader(X_OBJECT_META_PREFIX + "Year").getValue());
         assertEquals("42 BV", requestArgument.getValue().getFirstHeader(X_OBJECT_META_PREFIX + "Company").getValue());
@@ -38,16 +38,16 @@ public class ObjectMetadataCommandTest extends BaseCommandTest {
 
     @Test (expected = NotFoundException.class)
     public void objectDoesNotExist() throws IOException {
-        checkForError(404, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, getObject("objectName"), new ArrayList<Header>()));
+        checkForError(404, new ObjectMetadataCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), new ArrayList<Header>()));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ObjectMetadataCommand(this.account, httpClient, defaultAccess, getObject("objectName"), new ArrayList<Header>()));
+        checkForError(500, new ObjectMetadataCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), new ArrayList<Header>()));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new ObjectMetadataCommand(this.account, httpClient, defaultAccess, getObject("objectName"), new ArrayList<Header>()), 202);
+        isSecure(new ObjectMetadataCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), new ArrayList<Header>()), 202);
     }
 }

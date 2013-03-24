@@ -1,35 +1,35 @@
 package org.javaswift.joss.command.impl.object;
 
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.object.CopyObjectCommand;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.headers.Header;
+import org.javaswift.joss.headers.object.CopyFrom;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 
-import java.util.Collection;
+public class CopyObjectCommandImpl extends AbstractObjectCommand<HttpPut, Object> implements CopyObjectCommand {
 
-public class ObjectMetadataCommand extends AbstractObjectCommand<HttpPost, Object> {
-
-    public ObjectMetadataCommand(Account account, HttpClient httpClient, AccessImpl access, StoredObject object, Collection<? extends Header> headers) {
-        super(account, httpClient, access, object);
-        addHeaders(headers);
+    public CopyObjectCommandImpl(Account account, HttpClient httpClient, AccessImpl access,
+                                 StoredObject sourceObject, StoredObject targetObject) {
+        super(account, httpClient, access, targetObject);
+        setHeader(new CopyFrom(getObjectPath(sourceObject)));
     }
 
     @Override
-    protected HttpPost createRequest(String url) {
-        return new HttpPost(url);
+    protected HttpPut createRequest(String url) {
+        return new HttpPut(url);
     }
 
     @Override
     protected HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_ACCEPTED)),
+            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_CREATED)),
             new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND))
         };
     }

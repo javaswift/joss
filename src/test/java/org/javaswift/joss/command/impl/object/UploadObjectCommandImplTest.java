@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UploadObjectCommandTest extends BaseCommandTest {
+public class UploadObjectCommandImplTest extends BaseCommandTest {
 
     @Before
     @Override
@@ -37,7 +37,7 @@ public class UploadObjectCommandTest extends BaseCommandTest {
     @Test
     public void uploadByteArray() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
-        new UploadObjectCommand(this.account, httpClient, defaultAccess, getObject("objectname"),
+        new UploadObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"),
                                 new UploadInstructions(new byte[]{ })).call();
     }
 
@@ -47,7 +47,7 @@ public class UploadObjectCommandTest extends BaseCommandTest {
         byte[] bytes = new byte[]{ 0x01, 0x02, 0x03 };
         UploadInstructions instructions = spy(new UploadInstructions(bytes));
         when(instructions.getEtag()).thenThrow(new IOException());
-        new UploadObjectCommand(this.account, httpClient, defaultAccess, getObject("objectname"), instructions)
+        new UploadObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"), instructions)
                 .call();
     }
 
@@ -56,7 +56,7 @@ public class UploadObjectCommandTest extends BaseCommandTest {
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[]{ 0x01, 0x02, 0x03 });
 
-        new UploadObjectCommand(this.account, httpClient, defaultAccess, getObject("objectname"),
+        new UploadObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"),
                                 new UploadInstructions(inputStream)).call();
         verify(httpClient).execute(requestArgument.capture());
         assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
@@ -70,7 +70,7 @@ public class UploadObjectCommandTest extends BaseCommandTest {
         InputStream inputStream = new ByteArrayInputStream(new byte[]{ 0x01, 0x02, 0x03 });
         when(httpClient.execute(any(HttpRequestBase.class))).thenThrow(new IOException("Oops"));
 
-        new UploadObjectCommand(this.account, httpClient, defaultAccess, getObject("objectname"),
+        new UploadObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"),
                                 new UploadInstructions(inputStream)).call();
     }
 
@@ -78,7 +78,7 @@ public class UploadObjectCommandTest extends BaseCommandTest {
     public void supplyHeaders() throws IOException, DateParseException {
         when(statusLine.getStatusCode()).thenReturn(201);
         InputStream inputStream = new ByteArrayInputStream(new byte[]{ 0x01, 0x02, 0x03 });
-        new UploadObjectCommand(this.account, httpClient, defaultAccess, getObject("objectname"),
+        new UploadObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"),
                                 new UploadInstructions(inputStream).setMd5("ebabefac")
                                         .setContentType("image/bmp")
                                         .setDeleteAt(new DeleteAt("Sat, 22 Sep 2012 07:24:21 GMT"))
@@ -96,25 +96,25 @@ public class UploadObjectCommandTest extends BaseCommandTest {
 
     @Test(expected = MissingContentLengthOrTypeException.class)
     public void noContentTypeFoundError() throws IOException {
-        checkForError(411, new UploadObjectCommand(this.account, httpClient, defaultAccess,
+        checkForError(411, new UploadObjectCommandImpl(this.account, httpClient, defaultAccess,
                 getObject("objectname"), new UploadInstructions(new byte[]{})));
     }
 
     @Test(expected = Md5ChecksumException.class)
     public void md5checksumError() throws IOException {
-        checkForError(422, new UploadObjectCommand(this.account, httpClient, defaultAccess,
+        checkForError(422, new UploadObjectCommandImpl(this.account, httpClient, defaultAccess,
                 getObject("objectname"), new UploadInstructions(new byte[]{})));
     }
 
     @Test(expected = NotFoundException.class)
     public void containerNotFound() throws IOException {
-        checkForError(404, new UploadObjectCommand(this.account, httpClient, defaultAccess,
+        checkForError(404, new UploadObjectCommandImpl(this.account, httpClient, defaultAccess,
                 getObject("objectname"), new UploadInstructions(new byte[]{})));
     }
 
     @Test(expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new UploadObjectCommand(this.account, httpClient, defaultAccess,
+        checkForError(500, new UploadObjectCommandImpl(this.account, httpClient, defaultAccess,
                 getObject("objectname"), new UploadInstructions(new byte[]{})));
     }
 }

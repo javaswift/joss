@@ -31,8 +31,8 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ DownloadObjectToFileCommand.class, IOUtils.class, DigestUtils.class })
-public class DownloadObjectToFileCommandTest extends BaseCommandTest {
+@PrepareForTest({ DownloadObjectToFileCommandImpl.class, IOUtils.class, DigestUtils.class })
+public class DownloadObjectToFileCommandImplTest extends BaseCommandTest {
 
     private File downloadedFile = new File("download.tmp");
 
@@ -61,7 +61,7 @@ public class DownloadObjectToFileCommandTest extends BaseCommandTest {
     @Test
     public void testDownloadedFileExists() throws IOException {
         prepareMetadata();
-        new DownloadObjectToFileCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
+        new DownloadObjectToFileCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
         assertTrue(downloadedFile.exists());
     }
 
@@ -91,7 +91,7 @@ public class DownloadObjectToFileCommandTest extends BaseCommandTest {
         PowerMockito.mockStatic(IOUtils.class);
         Mockito.when(IOUtils.copy(any(InputStream.class), any(OutputStream.class))).thenThrow(new NullPointerException());
         try {
-            new DownloadObjectToFileCommand(this.account, httpClient, defaultAccess,
+            new DownloadObjectToFileCommandImpl(this.account, httpClient, defaultAccess,
                     getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
         } catch (NullPointerException err) {
             if (outputStream != null) {
@@ -126,7 +126,7 @@ public class DownloadObjectToFileCommandTest extends BaseCommandTest {
         PowerMockito.mockStatic(DigestUtils.class);
         Mockito.when(DigestUtils.md5Hex(any(InputStream.class))).thenThrow(new NullPointerException());
         try {
-            new DownloadObjectToFileCommand(this.account, httpClient, defaultAccess,
+            new DownloadObjectToFileCommandImpl(this.account, httpClient, defaultAccess,
                     getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
         } catch (NullPointerException err) {
             if (inputStream != null) {

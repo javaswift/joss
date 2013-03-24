@@ -13,7 +13,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class CopyObjectCommandTest extends BaseCommandTest {
+public class CopyObjectCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
@@ -23,7 +23,7 @@ public class CopyObjectCommandTest extends BaseCommandTest {
     @Test
     public void deleteContainerSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(201);
-        new CopyObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName"),
+        new CopyObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"),
                 getObject("objectName")).call();
         verify(httpClient).execute(requestArgument.capture());
         assertEquals("/container/objectName", requestArgument.getValue().getFirstHeader(CopyFrom.X_COPY_FROM).getValue());
@@ -31,19 +31,19 @@ public class CopyObjectCommandTest extends BaseCommandTest {
 
     @Test (expected = NotFoundException.class)
     public void deleteContainerDoesNotExist() throws IOException {
-        checkForError(404, new CopyObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName"),
+        checkForError(404, new CopyObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"),
                 getObject("objectName")));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new CopyObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName"),
+        checkForError(500, new CopyObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"),
                 getObject("objectName")));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new CopyObjectCommand(this.account, httpClient, defaultAccess, getObject("objectName"),
+        isSecure(new CopyObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"),
                 getObject("objectName")), 201);
     }
 }

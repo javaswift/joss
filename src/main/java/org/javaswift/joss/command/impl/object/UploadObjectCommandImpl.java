@@ -1,5 +1,6 @@
 package org.javaswift.joss.command.impl.object;
 
+import org.javaswift.joss.command.shared.object.UploadObjectCommand;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
@@ -17,10 +18,10 @@ import org.apache.http.params.CoreProtocolPNames;
 
 import java.io.IOException;
 
-public class UploadObjectCommand extends AbstractObjectCommand<HttpPut, Object> {
+public class UploadObjectCommandImpl extends AbstractObjectCommand<HttpPut, Object> implements UploadObjectCommand {
 
-    public UploadObjectCommand(Account account, HttpClient httpClient, AccessImpl access,
-                               StoredObject target, UploadInstructions uploadInstructions) {
+    public UploadObjectCommandImpl(Account account, HttpClient httpClient, AccessImpl access,
+                                   StoredObject target, UploadInstructions uploadInstructions) {
         super(account, httpClient, access, target);
         try {
             prepareUpload(uploadInstructions);

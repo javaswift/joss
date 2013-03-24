@@ -1,5 +1,6 @@
 package org.javaswift.joss.command.impl.object;
 
+import org.javaswift.joss.command.shared.object.DownloadObjectToFileCommand;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
@@ -12,12 +13,12 @@ import org.apache.http.client.methods.HttpGet;
 
 import java.io.*;
 
-public class DownloadObjectToFileCommand extends AbstractDownloadObjectCommand<HttpGet, Object> {
+public class DownloadObjectToFileCommandImpl extends AbstractDownloadObjectCommand<HttpGet, Object> implements DownloadObjectToFileCommand {
 
     private File targetFile;
 
-    public DownloadObjectToFileCommand(Account account, HttpClient httpClient, AccessImpl access,
-                                       StoredObject object, DownloadInstructions downloadInstructions, File targetFile) {
+    public DownloadObjectToFileCommandImpl(Account account, HttpClient httpClient, AccessImpl access,
+                                           StoredObject object, DownloadInstructions downloadInstructions, File targetFile) {
         super(account, httpClient, access, object, downloadInstructions);
         this.targetFile = targetFile;
     }

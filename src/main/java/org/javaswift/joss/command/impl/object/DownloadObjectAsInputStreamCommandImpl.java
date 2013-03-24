@@ -1,5 +1,6 @@
 package org.javaswift.joss.command.impl.object;
 
+import org.javaswift.joss.command.shared.object.DownloadObjectAsInputStreamCommand;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
@@ -11,12 +12,12 @@ import org.apache.http.client.methods.HttpGet;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class DownloadObjectAsInputStreamCommand extends AbstractDownloadObjectCommand<HttpGet, InputStream> {
+public class DownloadObjectAsInputStreamCommandImpl extends AbstractDownloadObjectCommand<HttpGet, InputStream> implements DownloadObjectAsInputStreamCommand {
 
     private InputStream inputStream;
 
-    public DownloadObjectAsInputStreamCommand(Account account, HttpClient httpClient, AccessImpl access,
-                                              StoredObject object, DownloadInstructions downloadInstructions) {
+    public DownloadObjectAsInputStreamCommandImpl(Account account, HttpClient httpClient, AccessImpl access,
+                                                  StoredObject object, DownloadInstructions downloadInstructions) {
         super(account, httpClient, access, object, downloadInstructions);
     }
 

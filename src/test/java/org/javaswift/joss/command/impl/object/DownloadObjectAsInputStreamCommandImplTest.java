@@ -14,11 +14,11 @@ import java.io.InputStream;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
-import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommand.CONTENT_LENGTH;
-import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommand.ETAG;
+import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.CONTENT_LENGTH;
+import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.ETAG;
 import static org.mockito.Mockito.when;
 
-public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
+public class DownloadObjectAsInputStreamCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
@@ -37,7 +37,7 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     public void downloadSuccess() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
-        InputStream result = new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()).call();
+        InputStream result = new DownloadObjectAsInputStreamCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()).call();
         byte[] downloaded = IOUtils.toByteArray(result);
         result.close();
         assertEquals(bytes.length, downloaded.length);
@@ -47,7 +47,7 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     public void md5Mismatch() throws IOException {
         prepareBytes(new byte[] { 0x01}, "cafebabe"); // non-matching MD5
         try {
-            new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions());
+            new DownloadObjectAsInputStreamCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions());
         } catch (CommandException err) {
             fail("Downloading as an inputstream does not check for the MD5 checksum, so therefore should not throw an error");
         }
@@ -56,7 +56,7 @@ public class DownloadObjectAsInputStreamCommandTest extends BaseCommandTest {
     @Test
     public void isSecure() throws IOException {
         prepareBytes(new byte[] { 0x01, 0x02, 0x03}, null);
-        isSecure(new DownloadObjectAsInputStreamCommand(this.account, httpClient, defaultAccess,
+        isSecure(new DownloadObjectAsInputStreamCommandImpl(this.account, httpClient, defaultAccess,
                 getObject("objectname"), new DownloadInstructions()));
     }
 }
