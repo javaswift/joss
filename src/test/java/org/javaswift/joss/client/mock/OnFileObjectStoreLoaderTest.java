@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Enumeration;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -26,6 +27,14 @@ public class OnFileObjectStoreLoaderTest {
         StoredObject object = account.getContainer("container2").getObject("logo.png");
         assertEquals(4670, object.getContentLength());
         assertEquals("image/png", object.getContentType());
+    }
+
+    @Test
+    public void noDirectory() throws IOException, URISyntaxException {
+        OnFileObjectStoreLoader loader = new OnFileObjectStoreLoader();
+        ClassLoader classLoader = OnFileObjectStoreLoader.class.getClassLoader();
+        Enumeration<URL> urls = classLoader.getResources("object-store/container1/checkmark.png");
+        assertEquals(0, loader.listFiles(urls.nextElement()).length);
     }
 
     @Test
