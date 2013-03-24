@@ -1,9 +1,9 @@
-package org.javaswift.joss.command.impl.identity.access;
+package org.javaswift.joss.command.shared.identity.access;
 
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static org.javaswift.joss.command.impl.identity.access.EndPointBuilder.createEndPoint;
+import static org.javaswift.joss.command.shared.identity.access.EndPointBuilder.createEndPoint;
 
 public class ServiceCatalogTest {
 

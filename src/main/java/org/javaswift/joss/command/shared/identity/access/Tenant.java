@@ -1,4 +1,4 @@
-package org.javaswift.joss.command.impl.identity.access;
+package org.javaswift.joss.command.shared.identity.access;
 
 public class Tenant {
 

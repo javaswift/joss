@@ -2,7 +2,7 @@ package org.javaswift.joss.command.impl.object;
 
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.model.Account;
-import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.model.StoredObject;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;

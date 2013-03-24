@@ -1,4 +1,4 @@
-package org.javaswift.joss.command.impl.container;
+package org.javaswift.joss.command.shared.container;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 

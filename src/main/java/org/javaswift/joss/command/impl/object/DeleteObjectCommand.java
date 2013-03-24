@@ -5,7 +5,7 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
-import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.model.StoredObject;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;

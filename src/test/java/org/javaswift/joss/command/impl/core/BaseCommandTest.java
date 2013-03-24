@@ -2,7 +2,7 @@ package org.javaswift.joss.command.impl.core;
 
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.client.impl.AccountImpl;
-import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Token;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;

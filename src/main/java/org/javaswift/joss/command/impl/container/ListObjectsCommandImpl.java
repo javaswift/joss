@@ -1,13 +1,14 @@
 package org.javaswift.joss.command.impl.container;
 
 import org.javaswift.joss.command.shared.container.ListObjectsCommand;
+import org.javaswift.joss.command.shared.container.StoredObjectListElement;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
-import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
 import org.apache.http.HttpResponse;

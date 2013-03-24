@@ -1,7 +1,7 @@
 package org.javaswift.joss.client.impl;
 
 import org.javaswift.joss.command.impl.factory.AuthenticationCommandFactoryImpl;
-import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.model.Client;

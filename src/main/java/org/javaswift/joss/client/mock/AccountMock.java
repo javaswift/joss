@@ -3,7 +3,7 @@ package org.javaswift.joss.client.mock;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.client.core.AbstractAccount;
 import org.javaswift.joss.client.mock.scheduled.ObjectDeleter;
-import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.account.AccountBytesUsed;
 import org.javaswift.joss.headers.account.AccountContainerCount;

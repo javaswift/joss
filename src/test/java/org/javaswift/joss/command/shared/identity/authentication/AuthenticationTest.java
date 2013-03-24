@@ -1,4 +1,4 @@
-package org.javaswift.joss.command.impl.identity.authentication;
+package org.javaswift.joss.command.shared.identity.authentication;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;

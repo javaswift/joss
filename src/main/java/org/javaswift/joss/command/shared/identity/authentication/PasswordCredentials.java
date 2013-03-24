@@ -1,4 +1,4 @@
-package org.javaswift.joss.command.impl.identity.authentication;
+package org.javaswift.joss.command.shared.identity.authentication;
 
 public class PasswordCredentials {
 

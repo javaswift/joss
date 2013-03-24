@@ -1,4 +1,4 @@
-package org.javaswift.joss.command.impl.identity.access;
+package org.javaswift.joss.command.shared.identity.access;
 
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
-import static org.javaswift.joss.command.impl.identity.access.ServiceCatalogBuilder.createServiceCatalog;
+import static org.javaswift.joss.command.shared.identity.access.ServiceCatalogBuilder.createServiceCatalog;
 
 public class AccessTest {
     

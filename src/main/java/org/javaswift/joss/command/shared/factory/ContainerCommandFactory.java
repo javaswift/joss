@@ -1,7 +1,7 @@
 package org.javaswift.joss.command.shared.factory;
 
 import org.apache.http.client.HttpClient;
-import org.javaswift.joss.command.impl.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.container.*;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
