@@ -2,7 +2,7 @@ package org.javaswift.joss.client.impl;
 
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.command.core.BaseCommandTest;
+import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.headers.container.ContainerRights;
 import org.javaswift.joss.util.ClasspathTemplateResource;
 import org.apache.commons.io.IOUtils;

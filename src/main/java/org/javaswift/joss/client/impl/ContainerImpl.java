@@ -5,8 +5,8 @@ import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.client.core.AbstractContainer;
-import org.javaswift.joss.command.container.*;
-import org.javaswift.joss.command.identity.access.AccessImpl;
+import org.javaswift.joss.command.impl.container.*;
+import org.javaswift.joss.command.impl.identity.access.AccessImpl;
 import org.apache.http.client.HttpClient;
 
 import java.util.Collection;

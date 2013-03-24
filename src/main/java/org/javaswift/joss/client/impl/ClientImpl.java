@@ -1,8 +1,8 @@
 package org.javaswift.joss.client.impl;
 
-import org.javaswift.joss.command.identity.access.AccessImpl;
+import org.javaswift.joss.command.impl.identity.access.AccessImpl;
 import org.javaswift.joss.model.Client;
-import org.javaswift.joss.command.identity.AuthenticationCommand;
+import org.javaswift.joss.command.impl.identity.AuthenticationCommand;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;

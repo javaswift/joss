@@ -12,7 +12,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.javaswift.joss.command.core.BaseCommandTest.prepareHeader;
+import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
 import static org.mockito.Mockito.when;
 
 public class ContainerRightsTest extends AbstractHeaderTest {

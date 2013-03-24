@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.assertNull;
-import static org.javaswift.joss.command.core.BaseCommandTest.prepareHeader;
+import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
 import static org.javaswift.joss.headers.object.DeleteAt.X_DELETE_AT;
 import static org.mockito.Mockito.when;
 

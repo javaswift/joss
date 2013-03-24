@@ -61,11 +61,6 @@ public class StoredObjectMockTest {
     }
 
     @Test
-    public void eliminateFluff() { // Pick out the items which are not useful in mock mode
-        assertEquals("", object.getPublicURL());
-    }
-
-    @Test
     public void mockUrl() {
         AccountMock account = new AccountMock();
         account.setPublicUrl("http://127.0.0.1");

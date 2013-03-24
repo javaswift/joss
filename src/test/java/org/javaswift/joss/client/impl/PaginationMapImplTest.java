@@ -1,6 +1,6 @@
 package org.javaswift.joss.client.impl;
 
-import org.javaswift.joss.command.core.BaseCommandTest;
+import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.model.Container;
 import org.junit.Test;
 

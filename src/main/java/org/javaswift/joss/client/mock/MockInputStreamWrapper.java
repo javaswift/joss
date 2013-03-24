@@ -1,6 +1,6 @@
 package org.javaswift.joss.client.mock;
 
-import org.javaswift.joss.command.object.InputStreamWrapper;
+import org.javaswift.joss.command.impl.object.InputStreamWrapper;
 
 import java.io.IOException;
 import java.io.InputStream;

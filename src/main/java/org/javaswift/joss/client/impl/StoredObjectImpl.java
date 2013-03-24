@@ -1,6 +1,6 @@
 package org.javaswift.joss.client.impl;
 
-import org.javaswift.joss.command.identity.access.AccessImpl;
+import org.javaswift.joss.command.impl.identity.access.AccessImpl;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Container;
@@ -9,7 +9,7 @@ import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.headers.object.ObjectContentType;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.client.core.AbstractStoredObject;
-import org.javaswift.joss.command.object.*;
+import org.javaswift.joss.command.impl.object.*;
 import org.apache.http.client.HttpClient;
 
 import java.io.File;
