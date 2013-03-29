@@ -1,5 +1,8 @@
 package org.javaswift.joss.instructions;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.apache.http.NameValuePair;
 
 public class QueryParameter implements NameValuePair {
@@ -24,6 +27,14 @@ public class QueryParameter implements NameValuePair {
     }
 
     public String getQuery() {
-        return getValue() == null ? null : getName() + "=" + getValue();
+        return getValue() == null ? null : urlEncode(getName()) + "=" + urlEncode(getValue());
+    }
+
+    private String urlEncode(String value) {
+        try {
+            return URLEncoder.encode(value, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }
