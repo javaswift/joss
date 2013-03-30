@@ -35,7 +35,18 @@ public abstract class CommandMock<T> {
         this.object = object;
     }
 
+    protected void applyDelay() {
+        if (swift.getMillisDelay() > 0) {
+            try {
+                Thread.sleep(swift.getMillisDelay());
+            } catch (InterruptedException e) {
+                throw new CommandException("Sleep interrupted", e);
+            }
+        }
+    }
+
     public T call() {
+        applyDelay();
         try {
             SwiftResult<T> result = callSwift();
             HttpStatusChecker.verifyCode(getStatusCheckers(), result.getStatus());

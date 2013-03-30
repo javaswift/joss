@@ -3,9 +3,9 @@ package org.javaswift.joss.client.mock;
 import org.javaswift.joss.command.mock.factory.AuthenticationCommandFactoryMock;
 import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
 import org.javaswift.joss.model.Client;
-import org.javaswift.joss.swift.scheduled.ObjectDeleter;
 import org.javaswift.joss.swift.MockUserStore;
 import org.javaswift.joss.swift.Swift;
+import org.javaswift.joss.swift.scheduled.ObjectDeleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +23,8 @@ public class ClientMock implements Client<AccountMock> {
 
     private String publicUrl = null;
 
+    private long millisDelay = 0;
+
     public AccountMock authenticate(String tenant, String username, String password, String authUrl) {
         return authenticate(tenant, username, password, authUrl, null);
     }
@@ -38,10 +40,11 @@ public class ClientMock implements Client<AccountMock> {
                 .setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null)
                 .setOnFileObjectStore(onFileObjectStore)
                 .setUserStore(users)
+                .setMillisDelay(millisDelay)
                 .setPublicUrl(publicUrl);
         if (!allowEveryone) {
             AuthenticationCommandFactory authenticationCommandFactory = new AuthenticationCommandFactoryMock(swift);
-            LOG.info("JOSS / Attempting authentication with tenant: "+tenant+", username: "+username+", Auth URL: "+authUrl);
+            LOG.info("JOSS / Attempting authentication with tenant: " + tenant + ", username: " + username + ", Auth URL: " + authUrl);
             authenticationCommandFactory.createAuthenticationCommand(null, null, tenant, username, password).call();
         }
         return new AccountMock(swift);
@@ -64,6 +67,11 @@ public class ClientMock implements Client<AccountMock> {
 
     public ClientMock setPublicUrl(String publicUrl) {
         this.publicUrl = publicUrl;
+        return this;
+    }
+
+    public ClientMock setMillisDelay(long millisDelay) {
+        this.millisDelay = millisDelay;
         return this;
     }
 

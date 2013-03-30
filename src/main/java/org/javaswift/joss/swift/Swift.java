@@ -37,6 +37,8 @@ public class Swift {
 
     private HeaderStore headers = new HeaderStore();
 
+    private long millisDelay = 0;
+
     public Swift setOnFileObjectStore(String onFileObjectStore) {
         if (onFileObjectStore == null) {
             return this;
@@ -62,6 +64,11 @@ public class Swift {
 
     public Swift setPublicUrl(String publicUrl) {
         this.publicUrl = publicUrl;
+        return this;
+    }
+
+    public Swift setMillisDelay(long millisDelay) {
+        this.millisDelay = millisDelay;
         return this;
     }
 
@@ -365,6 +372,10 @@ public class Swift {
             offset += segment.getBytesUsed();
         }
         return mergedObject;
+    }
+
+    public long getMillisDelay() {
+        return millisDelay;
     }
 
 }

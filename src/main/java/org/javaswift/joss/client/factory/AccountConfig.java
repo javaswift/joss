@@ -8,6 +8,7 @@ public class AccountConfig {
     private String authUrl;
     private boolean mock;
     private String mockPublicUrl;
+    private int mockMillisDelay = 0;
 
     public void setTenant(String tenant) {
         this.tenant = tenant;
@@ -55,5 +56,13 @@ public class AccountConfig {
 
     public void setMockPublicUrl(String mockPublicUrl) {
         this.mockPublicUrl = mockPublicUrl;
+    }
+
+    public int getMockMillisDelay() {
+        return mockMillisDelay;
+    }
+
+    public void setMockMillisDelay(int mockMillisDelay) {
+        this.mockMillisDelay = mockMillisDelay;
     }
 }
