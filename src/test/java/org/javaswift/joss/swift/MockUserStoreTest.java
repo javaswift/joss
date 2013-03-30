@@ -1,13 +1,10 @@
 package org.javaswift.joss.swift;
 
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.exception.CommandExceptionError;
-import org.javaswift.joss.swift.MockUserStore;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 public class MockUserStoreTest {
 
@@ -20,28 +17,16 @@ public class MockUserStoreTest {
 
     @Test
     public void authenticateSuccess() {
-        try {
-            users.authenticate("richard", "test123");
-        } catch (Exception err) {
-            fail("Should not have thrown an exception");
-        }
+        assertTrue(users.authenticate("", "richard", "test123"));
     }
 
     @Test
     public void userDoesNotExist() {
-        try {
-            users.authenticate("charlie", "123test");
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.UNAUTHORIZED, err.getError());
-        }
+        assertFalse(users.authenticate("", "charlie", "123test"));
     }
 
     @Test
     public void userHasWrongPassword() {
-        try {
-            users.authenticate("richard", "321tset");
-        } catch (CommandException err) {
-            assertEquals(CommandExceptionError.UNAUTHORIZED, err.getError());
-        }
+        assertFalse(users.authenticate("", "richard", "321tset"));
     }
 }

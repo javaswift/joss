@@ -1,5 +1,7 @@
 package org.javaswift.joss.client.mock;
 
+import org.javaswift.joss.command.mock.factory.AuthenticationCommandFactoryMock;
+import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
 import org.javaswift.joss.model.Client;
 import org.javaswift.joss.swift.scheduled.ObjectDeleter;
 import org.javaswift.joss.swift.MockUserStore;
@@ -27,18 +29,21 @@ public class ClientMock implements Client<AccountMock> {
 
     public AccountMock authenticate(String tenant, String username, String password, String authUrl, String preferredRegion) {
         LOG.info("JOSS / MOCK mode");
-        if (!allowEveryone) {
-            LOG.info("JOSS / Attempting authentication with tenant: "+tenant+", username: "+username+", Auth URL: "+authUrl);
-            users.authenticate(username, password);
-        }
         LOG.info("JOSS / Creating mock account instance");
+        LOG.info("JOSS / * Check credentials: "+!allowEveryone);
         LOG.info("JOSS / * Allow objectdeleter: "+allowObjectDeleter);
         LOG.info("JOSS / * Use onFileObjectStore: "+onFileObjectStore);
         LOG.info("JOSS / * Use public URL: "+publicUrl);
         Swift swift = new Swift()
                 .setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null)
                 .setOnFileObjectStore(onFileObjectStore)
+                .setUserStore(users)
                 .setPublicUrl(publicUrl);
+        if (!allowEveryone) {
+            AuthenticationCommandFactory authenticationCommandFactory = new AuthenticationCommandFactoryMock(swift);
+            LOG.info("JOSS / Attempting authentication with tenant: "+tenant+", username: "+username+", Auth URL: "+authUrl);
+            authenticationCommandFactory.createAuthenticationCommand(null, null, tenant, username, password).call();
+        }
         return new AccountMock(swift);
     }
 

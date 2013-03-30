@@ -146,4 +146,8 @@ public class SwiftStoredObject implements Comparable<SwiftStoredObject>, ListSub
         return this.objectManifest;
     }
 
+    public void addHeader(Header header) {
+        this.headers.addHeader(header);
+    }
+
 }

@@ -1,8 +1,5 @@
 package org.javaswift.joss.swift;
 
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.exception.CommandExceptionError;
-import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,12 +12,13 @@ public class MockUserStore {
 
     private Map<String, String> users = new TreeMap<String, String>();
 
-    public void authenticate(String username, String password) {
+    public boolean authenticate(String tenant, String username, String password) {
         String expectedPassword = users.get(username);
         if (expectedPassword == null || !expectedPassword.equals(password)) {
             LOG.warn("JOSS / Failed to authenticate with user '"+username+"'");
-            throw new CommandException(HttpStatus.SC_UNAUTHORIZED, CommandExceptionError.UNAUTHORIZED);
+            return false;
         }
+        return true;
     }
 
     public void addUser(String username, String password) {

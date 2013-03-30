@@ -1,6 +1,7 @@
 package org.javaswift.joss.swift;
 
 import org.apache.commons.io.IOUtils;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.account.AccountBytesUsed;
 import org.javaswift.joss.headers.account.AccountContainerCount;
@@ -30,6 +31,8 @@ public class Swift {
 
     private ObjectDeleter objectDeleter;
 
+    private MockUserStore users = new MockUserStore();
+
     private String publicUrl;
 
     private HeaderStore headers = new HeaderStore();
@@ -52,6 +55,11 @@ public class Swift {
         return this;
     }
 
+    public Swift setUserStore(MockUserStore users) {
+        this.users = users;
+        return this;
+    }
+
     public Swift setPublicUrl(String publicUrl) {
         this.publicUrl = publicUrl;
         return this;
@@ -59,6 +67,14 @@ public class Swift {
 
     public ObjectDeleter getObjectDeleter() {
         return this.objectDeleter;
+    }
+
+    public SwiftResult<AccessImpl> authenticate(String tenant, String username, String password) {
+        if (users.authenticate(tenant, username, password)) {
+            return new SwiftResult<AccessImpl>(null, HttpStatus.SC_OK);
+        } else {
+            return new SwiftResult<AccessImpl>(HttpStatus.SC_UNAUTHORIZED);
+        }
     }
 
     public SwiftResult<Collection<Container>> listContainers(Account account, ListInstructions listInstructions) {
@@ -251,7 +267,7 @@ public class Swift {
                 foundContainer.deleteObject(foundObject.getName());
             } else {
                 this.objectDeleter.scheduleForDeletion(foundContainer, foundObject, deleteAt.getDate());
-                this.headers.addHeader(deleteAt);
+                foundObject.addHeader(deleteAt);
             }
         }
         return foundObject.saveMetadata(headers);
@@ -265,19 +281,6 @@ public class Swift {
         }
         return null;
     }
-
-//    public StoredObject setDeleteAfter(long seconds) {
-//        return setDeleteAt(new Date(new Date().getTime() + seconds * 1000));
-//    }
-//
-//    public StoredObject setDeleteAt(Date date) {
-//        ObjectDeleter objectDeleter = ((AccountMock)getContainer().getAccount()).getObjectDeleter();
-//        this.info.setDeleteAt(new DeleteAt(date));
-//        if (objectDeleter != null) {
-//            objectDeleter.scheduleForDeletion(this, date);
-//        }
-//        return this;
-//    }
 
     public SwiftResult<ObjectInformation> getObjectInformation(Container container, StoredObject object) {
         SwiftContainer foundContainer = containers.get(container.getName());

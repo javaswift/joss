@@ -28,10 +28,6 @@ public abstract class CommandMock<T> {
         this(swift, account, container, null);
     }
 
-    public CommandMock(Swift swift, Account account, StoredObject object) {
-        this(swift, account, null, object);
-    }
-
     public CommandMock(Swift swift, Account account, Container container, StoredObject object) {
         this.swift = swift;
         this.account = account;
@@ -45,12 +41,8 @@ public abstract class CommandMock<T> {
             HttpStatusChecker.verifyCode(getStatusCheckers(), result.getStatus());
             return result.getPayload();
         } catch (CommandException err) {
-            LOG.error(
-                    "JOSS / "+this.getClass().getSimpleName()+
-                            (err.getHttpStatusCode() == 0 ? "" : ", HTTP status "+err.getHttpStatusCode())+
-                            (err.getError() == null ? "" : ", Error "+err.getError())+
-                            (err.getMessage() == null ? "" : ", Message '"+err.getMessage()+"'")+
-                            (err.getCause() == null ? "" : ", Cause "+err.getCause().getClass().getSimpleName()));
+            LOG.error("JOSS / "+this.getClass().getSimpleName()+
+                    ", HTTP status "+err.getHttpStatusCode());
             throw err;
         }
     }
