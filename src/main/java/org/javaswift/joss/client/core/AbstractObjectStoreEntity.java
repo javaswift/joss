@@ -66,6 +66,7 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
 
     public boolean exists() {
         try {
+            invalidate();
             checkForInfo();
         } catch (NotFoundException err) {
             return false;

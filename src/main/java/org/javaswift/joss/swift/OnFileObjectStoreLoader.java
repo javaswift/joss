@@ -1,38 +1,40 @@
-package org.javaswift.joss.client.mock;
+package org.javaswift.joss.swift;
 
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Container;
-import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.instructions.UploadInstructions;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class OnFileObjectStoreLoader {
 
     private ClassLoader classLoader = OnFileObjectStoreLoader.class.getClassLoader();
 
-    public void createContainers(Account account, String onFileObjectStore) throws IOException, URISyntaxException {
+    public Map<String, SwiftContainer> createContainers(String onFileObjectStore) throws IOException, URISyntaxException {
+        Map<String, SwiftContainer> containers = new TreeMap<String, SwiftContainer>();
         Enumeration<URL> urls = classLoader.getResources(onFileObjectStore);
         while (urls.hasMoreElements()) {
             URL url = urls.nextElement();
             for (File containerFile : listFiles(url)) {
-                Container container = account.getContainer(containerFile.getName());
-                container.create();
+                SwiftContainer container = new SwiftContainer(containerFile.getName());
+                containers.put(container.getName(), container);
                 storeObjects(container, onFileObjectStore + "/" + containerFile.getName());
             }
         }
+        return containers;
     }
 
-    public void storeObjects(Container container, String containerLocation) throws IOException, URISyntaxException {
+    public void storeObjects(SwiftContainer container, String containerLocation) throws IOException, URISyntaxException {
         Enumeration<URL> containerUrls = classLoader.getResources(containerLocation);
         while (containerUrls.hasMoreElements()) {
             URL containerURL = containerUrls.nextElement();
             for (File objectFile : listFiles(containerURL)) {
-                StoredObject object = container.getObject(objectFile.getName());
-                object.uploadObject(objectFile);
+                SwiftStoredObject object = container.createObject(objectFile.getName());
+                object.uploadObject(new UploadInstructions(objectFile));
             }
         }
     }

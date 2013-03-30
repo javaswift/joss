@@ -24,7 +24,7 @@ public class CreateContainerCommandImpl extends AbstractContainerCommand<HttpPut
     }
 
     @Override
-    protected HttpStatusChecker[] getStatusCheckers() {
+    public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_CREATED)),
             new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_ACCEPTED))

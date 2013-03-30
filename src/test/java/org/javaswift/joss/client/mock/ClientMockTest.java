@@ -1,6 +1,9 @@
 package org.javaswift.joss.client.mock;
 
+import org.javaswift.joss.command.mock.factory.AccountCommandFactoryMock;
 import org.javaswift.joss.model.Account;
+import org.javaswift.joss.swift.MockUserStore;
+import org.javaswift.joss.swift.Swift;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNotNull;
@@ -27,7 +30,12 @@ public class ClientMockTest {
 
     @Test
     public void noObjectDeleter() {
-        Account account = new ClientMock().setAllowObjectDeleter(false).setAllowEveryone(true).authenticate(null, null, null, null);
-        assertNull(((AccountMock) account).getObjectDeleter());
+        AccountMock account = new ClientMock()
+                .setAllowObjectDeleter(false)
+                .setAllowEveryone(true)
+                .authenticate(null, null, null, null);
+        Swift swift = ((AccountCommandFactoryMock)account.getFactory()).getSwift();
+        assertNull(swift.getObjectDeleter());
     }
+
 }

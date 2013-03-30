@@ -36,6 +36,10 @@ public class ContainerInformation extends AbstractInformation {
         return containerRights.isPublic();
     }
 
+    public void setPublicContainer(boolean publicContainer) {
+        setPublicContainer(new ContainerRights(publicContainer));
+    }
+
     public void setPublicContainer(ContainerRights containerRights) {
         this.containerRights = containerRights;
     }

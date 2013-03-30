@@ -42,7 +42,7 @@ public class ContainerInformationCommandImpl extends AbstractContainerCommand<Ht
     }
 
     @Override
-    protected HttpStatusChecker[] getStatusCheckers() {
+    public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT)),
             new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND))

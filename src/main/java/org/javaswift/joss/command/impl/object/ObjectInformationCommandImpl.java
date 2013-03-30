@@ -38,7 +38,7 @@ public class ObjectInformationCommandImpl extends AbstractObjectCommand<HttpHead
     }
 
     @Override
-    protected HttpStatusChecker[] getStatusCheckers() {
+    public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusSuccessCondition(new HttpStatusRange(200, 299)),
             new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND))

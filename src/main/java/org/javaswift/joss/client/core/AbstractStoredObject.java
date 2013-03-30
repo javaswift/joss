@@ -1,14 +1,18 @@
 package org.javaswift.joss.client.core;
 
+import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
 import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.headers.object.*;
+import org.javaswift.joss.information.ObjectInformation;
+import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
+import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.headers.Metadata;
-import org.javaswift.joss.information.ObjectInformation;
 
-import java.io.UnsupportedEncodingException;
+import java.io.File;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,8 +24,11 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     private Container container;
 
-    public AbstractStoredObject(Container container, String name, boolean allowCaching) {
+    private final StoredObjectCommandFactory commandFactory;
+
+    public AbstractStoredObject(StoredObjectCommandFactory commandFactory, Container container, String name, boolean allowCaching) {
         super(allowCaching);
+        this.commandFactory = commandFactory;
         this.container = container;
         this.name = name;
         this.info = new ObjectInformation();
@@ -87,11 +94,15 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         }
     }
 
+    public void setLastModified(Date date) {
+        this.info.setLastModified(new ObjectLastModified(date));
+    }
+
     public void setLastModified(String date) {
         try {
             // The LastModified date in the JSON body differs from that in the response header
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            this.info.setLastModified(new ObjectLastModified(formatter.parse(date)));
+            setLastModified(formatter.parse(date));
         } catch (ParseException e) {
             throw new CommandException("Unable to convert date string: "+date, e);
         }
@@ -119,6 +130,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         } else {
             directlyUploadObject(uploadInstructions);
         }
+        invalidate();
     }
 
     public void uploadObjectAsSegments(UploadInstructions uploadInstructions) {
@@ -129,8 +141,6 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
                 .setContentType(uploadInstructions.getContentType());
         uploadObject(manifest);
     }
-
-    protected abstract void directlyUploadObject(UploadInstructions uploadInstructions);
 
     @SuppressWarnings("ConstantConditions")
     public boolean equals(Object o) {
@@ -149,4 +159,95 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     protected Metadata createMetadataEntry(String name, String value) {
         return new ObjectMetadata(name, value);
     }
+
+    public InputStream downloadObjectAsInputStream() {
+        return downloadObjectAsInputStream(new DownloadInstructions());
+    }
+
+    public InputStream downloadObjectAsInputStream(DownloadInstructions downloadInstructions) {
+        return commandFactory.createDownloadObjectAsInputStreamCommand(getAccount(), getContainer(), this, downloadInstructions).call();
+    }
+
+    public byte[] downloadObject() {
+        return downloadObject(new DownloadInstructions());
+    }
+
+    public byte[] downloadObject(DownloadInstructions downloadInstructions) {
+        return commandFactory.createDownloadObjectAsByteArrayCommand(getAccount(), getContainer(),this, downloadInstructions).call();
+    }
+
+    public void downloadObject(File targetFile) {
+        downloadObject(targetFile, new DownloadInstructions());
+    }
+
+    public void downloadObject(File targetFile, DownloadInstructions downloadInstructions) {
+        commandFactory.createDownloadObjectToFileCommand(getAccount(), getContainer(),this, downloadInstructions, targetFile).call();
+    }
+
+    public void directlyUploadObject(UploadInstructions uploadInstructions) {
+        commandFactory.createUploadObjectCommand(getAccount(), getContainer(), this, uploadInstructions).call();
+    }
+
+    public void uploadObject(InputStream inputStream) {
+        uploadObject(new UploadInstructions(inputStream));
+    }
+
+    public void uploadObject(byte[] fileToUpload) {
+        uploadObject(new UploadInstructions(fileToUpload));
+    }
+
+    public void uploadObject(File fileToUpload) {
+        uploadObject(new UploadInstructions(fileToUpload));
+    }
+
+    public void delete() {
+        commandFactory.createDeleteObjectCommand(getAccount(), getContainer(), this).call();
+    }
+
+    public void copyObject(Container targetContainer, StoredObject targetObject) {
+        commandFactory.createCopyObjectCommand(
+                getAccount(),
+                getContainer(), this,
+                ((AbstractStoredObject)targetObject).getContainer(), targetObject).call();
+    }
+
+    public StoredObject setContentType(String contentType) {
+        checkForInfo();
+        info.setContentType(new ObjectContentType(contentType));
+        commandFactory.createObjectMetadataCommand(
+                getAccount(), getContainer(), this, info.getHeadersIncludingHeader(info.getContentTypeHeader())).call();
+        return this;
+    }
+
+    public StoredObject setDeleteAfter(long seconds) {
+        checkForInfo();
+        info.setDeleteAt(null);
+        info.setDeleteAfter(new DeleteAfter(seconds));
+        commandFactory.createObjectMetadataCommand(
+                getAccount(), getContainer(), this, info.getHeadersIncludingHeader(info.getDeleteAfter())).call();
+        return this;
+    }
+
+    @Override
+    public StoredObject setDeleteAt(Date date) {
+        checkForInfo();
+        info.setDeleteAt(new DeleteAt(date));
+        saveMetadata();
+        return this;
+    }
+
+    protected Account getAccount() {
+        return getContainer().getAccount();
+    }
+
+    @Override
+    protected void saveMetadata() {
+        commandFactory.createObjectMetadataCommand(getAccount(), getContainer(), this, info.getHeaders()).call();
+    }
+
+    protected void getInfo() {
+        this.info = commandFactory.createObjectInformationCommand(getAccount(), getContainer(), this).call();
+        this.setInfoRetrieved();
+    }
+
 }

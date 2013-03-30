@@ -291,7 +291,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
     @Test
     public void setLastModified() {
         String dateText = "2012-12-05T14:57:00.165930";
-        StoredObject object = new StoredObjectImpl(null, "alpha", true);
+        StoredObject object = createStoredObject("alpha");
         object.setLastModified(dateText);
         object.metadataSetFromHeaders();
         Date date = object.getLastModifiedAsDate();
@@ -302,8 +302,14 @@ public class StoredObjectImplTest extends BaseCommandTest {
     @Test(expected = CommandException.class)
     public void setLastModifiedFalseDate() {
         String dateText = "2012/12/05";
-        StoredObject object = new StoredObjectImpl(null, "alpha", true);
+        StoredObject object = createStoredObject("alpha");
         object.setLastModified(dateText);
+    }
+
+    protected StoredObject createStoredObject(String name) {
+        AccountImpl account = new AccountImpl(null, null, null, false);
+        ContainerImpl container = new ContainerImpl(account, "", false);
+        return new StoredObjectImpl(container, "alpha", true);
     }
 
 }

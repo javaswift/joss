@@ -48,7 +48,7 @@ public class UploadObjectCommandImpl extends AbstractObjectCommand<HttpPut, Obje
     }
 
     @Override
-    protected HttpStatusChecker[] getStatusCheckers() {
+    public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_CREATED)),
             new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_LENGTH_REQUIRED)),

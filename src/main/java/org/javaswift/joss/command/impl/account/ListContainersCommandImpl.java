@@ -51,7 +51,7 @@ public class ListContainersCommandImpl extends AbstractSecureCommand<HttpGet, Co
     }
 
     @Override
-    protected HttpStatusChecker[] getStatusCheckers() {
+    public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_OK)),
             new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT))

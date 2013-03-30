@@ -5,7 +5,6 @@ import org.javaswift.joss.instructions.SegmentationPlan;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.*;
 import org.javaswift.joss.model.Container;
-import org.javaswift.joss.client.mock.scheduled.ObjectDeleter;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
@@ -15,6 +14,7 @@ import org.javaswift.joss.headers.object.conditional.IfNoneMatch;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.headers.object.range.*;
 import org.apache.commons.io.IOUtils;
+import org.javaswift.joss.swift.Swift;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,6 +43,10 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 @PrepareForTest({ StoredObjectMock.class, IOUtils.class })
 public class StoredObjectMockTest {
 
+    private AccountMock account;
+
+    private ContainerMock container;
+
     private StoredObjectMock object;
 
     private byte[] uploadBytes = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
@@ -51,8 +55,13 @@ public class StoredObjectMockTest {
 
     @Before
     public void setup() {
-        Container container = new ContainerMock(new AccountMock(), "someContainer").create();
+        account = new AccountMock();
+        container = (ContainerMock)new ContainerMock(account, "someContainer").create();
         object = new StoredObjectMock(container, "someObject");
+    }
+
+    public void uploadSomeBytes() {
+        object.uploadObject(uploadBytes);
     }
 
     @After
@@ -62,8 +71,7 @@ public class StoredObjectMockTest {
 
     @Test
     public void mockUrl() {
-        AccountMock account = new AccountMock();
-        account.setPublicUrl("http://127.0.0.1");
+        AccountMock account = new AccountMock(new Swift().setPublicUrl("http://127.0.0.1"));
         StoredObject object = account.getContainer("someContainer").getObject("someObject");
         assertEquals("http://127.0.0.1/someContainer/someObject", object.getPublicURL());
     }
@@ -77,7 +85,7 @@ public class StoredObjectMockTest {
 
     @Test
     public void getInfo() throws IOException {
-        object = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer").create(), "plain.txt");
+        object = new StoredObjectMock(container, "plain.txt");
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
         object.uploadObject(bytes);
         assertEquals(3, object.getContentLength());
@@ -87,7 +95,7 @@ public class StoredObjectMockTest {
 
     @Test
     public void setContentType() {
-        object = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer"), "plain.txt");
+        uploadSomeBytes();
         object.setContentType("text/plain");
         assertEquals("text/plain", object.getContentType());
     }
@@ -95,19 +103,13 @@ public class StoredObjectMockTest {
     @Test
     public void setDeleteAfterWithNoObjectDeleter() {
         Account account = new ClientMock().setAllowObjectDeleter(false).setAllowEveryone(true).authenticate(null, null, null, null);
-        StoredObject object = account.getContainer("alpha").getObject("somefile.png");
+        Container container = account.getContainer("alpha");
+        container.create();
+        StoredObject object = container.getObject("somefile.png");
+        object.uploadObject(new byte[] {});
         object.setDeleteAfter(10);
-    }
-
-    @Test
-    public void setDeleteAfter() {
-        Account account = new ClientMock().setAllowObjectDeleter(false).setAllowEveryone(true).authenticate(null, null, null, null);
-        ObjectDeleter objectDeleter = Mockito.mock(ObjectDeleter.class);
-        ((AccountMock) account).setObjectDeleter(objectDeleter);
-        StoredObject object = account.getContainer("alpha").getObject("somefile.png");
-        object.setDeleteAfter(10);
-        verify(objectDeleter).scheduleForDeletion(same(object), isA(Date.class));
-        assertNotNull(object.getDeleteAt());
+//        object.reload();
+        assertFalse(object.exists());
     }
 
     @Test
@@ -132,7 +134,7 @@ public class StoredObjectMockTest {
 
     @Test
     public void downloadWithIfNoneMatch() throws IOException {
-        object = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer").create(), "plain.txt");
+        object = new StoredObjectMock(container, "plain.txt");
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
         object.uploadObject(bytes);
         try {
@@ -144,6 +146,7 @@ public class StoredObjectMockTest {
 
     @Test
     public void addMetadata() {
+        uploadSomeBytes();
         Map<String, Object> metadata = new TreeMap<String, Object>();
         metadata.put("name", "value");
         object.setMetadata(metadata);
@@ -155,7 +158,7 @@ public class StoredObjectMockTest {
         assertFalse(object.exists());
         object.uploadObject(uploadBytes);
         assertTrue(object.exists());
-        StoredObject mockObject = new StoredObjectMock(object.getContainer(), "some-object") {
+        StoredObject mockObject = new StoredObjectMock((ContainerMock)object.getContainer(), "some-object") {
             @Override
             public void getInfo() {
                 throw new NotFoundException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
@@ -167,7 +170,8 @@ public class StoredObjectMockTest {
     @Test
     public void copyObjectToNonExistingContainer() throws IOException {
         object.uploadObject(uploadBytes);
-        Container copyContainer = object.getContainer().getAccount().getContainer("copy-container");
+        Container copyContainer = account.getContainer("copy-container");
+        copyContainer.create();
         StoredObject copyObject = copyContainer.getObject("copy-object");
         object.copyObject(copyContainer, copyObject);
         assertTrue(copyObject.exists());
@@ -182,12 +186,11 @@ public class StoredObjectMockTest {
 
     @Test
     public void checkForLastModificationTime() {
-        InputStream bytes = new ByteArrayInputStream(uploadBytes);
-        assertNull(object.getLastModified());
-        assertNull(object.getLastModifiedAsDate());
-        object.uploadObject(bytes);
-        assertNotNull(object.getLastModified());
-        assertNotNull(object.getLastModifiedAsDate());
+        uploadSomeBytes();
+        Date firstDate = object.getLastModifiedAsDate();
+        object.uploadObject(new byte[] { 0x01, 0x02, 0x03 });
+        Date secondDate = object.getLastModifiedAsDate();
+        assertNotSame(firstDate, secondDate);
     }
 
     @Test
@@ -242,7 +245,7 @@ public class StoredObjectMockTest {
     }
 
     protected void verifyRangeDownload(byte[] uploadBytes, byte[] expectedBytes, AbstractRange range) throws IOException {
-        object = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer").create(), "plain.txt");
+        object = new StoredObjectMock(container, "plain.txt");
         object.uploadObject(uploadBytes);
         byte[] part = object.downloadObject(new DownloadInstructions().setRange(range));
         assertEquals(expectedBytes.length, part.length);
@@ -304,7 +307,6 @@ public class StoredObjectMockTest {
 
     @Test
     public void downloadSegmentedObject() {
-        Account account = new AccountMock();
         Container container = account.getContainer("segment_container").create();
         StoredObject someOtherObject = container.getObject("ignore-this");
         someOtherObject.uploadObject(uploadBytes);
@@ -315,7 +317,7 @@ public class StoredObjectMockTest {
 
     @Test(expected = NotFoundException.class)
     public void uploadToContainerThatDoesNotExist() {
-        Container container = new AccountMock().getContainer("i-do-not-exist");
+        Container container = account.getContainer("i-do-not-exist");
         StoredObject object = container.getObject("neither-will-i");
         object.uploadObject(uploadBytes);
     }
@@ -323,7 +325,6 @@ public class StoredObjectMockTest {
     @Test
     public void downloadSegmentedObjectSplitOverVariousFolders() {
         // Upload the segments and the manifest into separate containers
-        Account account = new AccountMock();
         Container segments = account.getContainer("segments").create();
         StoredObject object1 = segments.getObjectSegment("segment", 1);
         object1.uploadObject(new byte[] { 0x01, 0x02, 0x03 } );
@@ -354,14 +355,14 @@ public class StoredObjectMockTest {
         whenNew(FileOutputStream.class).withArguments(downloadedFile).thenReturn(outputStream);
         PowerMockito.mockStatic(IOUtils.class);
         Mockito.when(IOUtils.copy(any(InputStream.class), any(OutputStream.class))).thenThrow(new IOException());
-        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer").create(), "plain.txt");
+        StoredObjectMock storedObject = new StoredObjectMock(container, "plain.txt");
         storedObject.downloadObject(null, new DownloadInstructions());
     }
 
     @Test(expected = CommandException.class)
     public void downloadObjectThrowsIOExceptionNoStreamsToClose() throws Exception {
         whenNew(ByteArrayInputStream.class).withArguments(null).thenThrow(new IOException());
-        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer").create(), "plain.txt");
+        StoredObjectMock storedObject = new StoredObjectMock(container, "plain.txt");
         storedObject.downloadObject(null, new DownloadInstructions());
     }
 
@@ -369,7 +370,7 @@ public class StoredObjectMockTest {
     public void uploadObjectWithInstructionsThrowsIOException() throws Exception {
         PowerMockito.mockStatic(IOUtils.class);
         Mockito.when(IOUtils.toByteArray((any(InputStream.class)))).thenThrow(new IOException());
-        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer").create(), "plain.txt");
+        StoredObjectMock storedObject = new StoredObjectMock(container, "plain.txt");
         storedObject.uploadObject(new UploadInstructions(new byte[] { }));
     }
 
@@ -377,7 +378,7 @@ public class StoredObjectMockTest {
     public void uploadObjectWithInputStreamThrowsIOException() throws Exception {
         PowerMockito.mockStatic(IOUtils.class);
         Mockito.when(IOUtils.toByteArray((any(InputStream.class)))).thenThrow(new IOException());
-        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer").create(), "plain.txt");
+        StoredObjectMock storedObject = new StoredObjectMock(container, "plain.txt");
         storedObject.uploadObject(new ByteArrayInputStream(new byte[] { }));
     }
 
@@ -389,14 +390,14 @@ public class StoredObjectMockTest {
         whenNew(ByteArrayOutputStream.class).withNoArguments().thenReturn(inputStream);
         PowerMockito.mockStatic(IOUtils.class);
         Mockito.when(IOUtils.copy(any(InputStream.class), any(OutputStream.class))).thenThrow(new IOException());
-        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer").create(), "plain.txt");
+        StoredObjectMock storedObject = new StoredObjectMock(container, "plain.txt");
         storedObject.uploadObject(downloadedFile);
     }
 
     @Test(expected = CommandException.class)
     public void uploadObjectWithFileThrowsIOExceptionNoStreamsToClose() throws Exception {
         whenNew(FileInputStream.class).withArguments(downloadedFile).thenThrow(new IOException());
-        StoredObjectMock storedObject = new StoredObjectMock(new ContainerMock(new AccountMock(), "someContainer").create(), "plain.txt");
+        StoredObjectMock storedObject = new StoredObjectMock(container, "plain.txt");
         storedObject.uploadObject(downloadedFile);
     }
 

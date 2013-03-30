@@ -63,15 +63,15 @@ public class ContainerMockTest {
     @Test
     public void listObjects() throws IOException {
         addObjects(3);
-        assertEquals(3, container.listObjects().size());
+        assertEquals(3, container.list().size());
     }
 
     @Test
     public void deleteObject() throws IOException {
         object.uploadObject(new byte[]{});
-        assertEquals(1, container.getCount());
+        assertEquals(1, container.list().size());
         object.delete();
-        assertEquals(0, container.getCount());
+        assertEquals(0, container.list().size());
     }
 
     @Test
@@ -85,11 +85,12 @@ public class ContainerMockTest {
 
     @Test
     public void existence() {
-        Container container = new AccountMock().getContainer("someContainer");
+        AccountMock account = new AccountMock();
+        Container container = account.getContainer("someContainer");
         assertFalse(container.exists());
         container.create();
         assertTrue(container.exists());
-        Container newContainer = new ContainerMock(container.getAccount(), "test") {
+        Container newContainer = new ContainerMock(account, "test") {
             @Override
             protected void checkForInfo() {
                 throw new NotFoundException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);

@@ -47,7 +47,7 @@ public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, AccessI
     }
 
     @Override
-    protected HttpStatusChecker[] getStatusCheckers() {
+    public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusSuccessCondition(new HttpStatusRange(200, 299))
         };

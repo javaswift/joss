@@ -1,6 +1,7 @@
-package org.javaswift.joss.client.mock.scheduled;
+package org.javaswift.joss.swift.scheduled;
 
-import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.swift.SwiftContainer;
+import org.javaswift.joss.swift.SwiftStoredObject;
 
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -9,23 +10,23 @@ import java.util.concurrent.TimeUnit;
 
 public class ObjectDeleter implements Runnable {
 
-    private List<ScheduledForDeletion> objectsToDelete = new ArrayList<ScheduledForDeletion>();
+    private Set<ScheduledForDeletion> objectsToDelete = new HashSet<ScheduledForDeletion>();
 
     public ObjectDeleter(int startAfter, int intervalInSeconds) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this, startAfter, intervalInSeconds, TimeUnit.SECONDS);
     }
 
-    public void scheduleForDeletion(StoredObject storedObject, Date deleteAt) {
-        objectsToDelete.add(new ScheduledForDeletion(storedObject, deleteAt));
+    public void scheduleForDeletion(SwiftContainer container, SwiftStoredObject object, Date deleteAt) {
+        objectsToDelete.add(new ScheduledForDeletion(container, object, deleteAt));
     }
 
-    @Override
     public void run() {
         Date now = new Date();
         List<ScheduledForDeletion> objectsToDeleteNow = new ArrayList<ScheduledForDeletion>();
         for (ScheduledForDeletion scheduledForDeletion : objectsToDelete) {
             if (scheduledForDeletion.deleteIf(now)) {
+                scheduledForDeletion.getContainer().deleteObject(scheduledForDeletion.getObjectName());
                 objectsToDeleteNow.add(scheduledForDeletion);
             }
         }

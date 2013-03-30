@@ -1,7 +1,9 @@
 package org.javaswift.joss.client.mock;
 
 import org.javaswift.joss.model.Client;
-import org.javaswift.joss.client.mock.scheduled.ObjectDeleter;
+import org.javaswift.joss.swift.scheduled.ObjectDeleter;
+import org.javaswift.joss.swift.MockUserStore;
+import org.javaswift.joss.swift.Swift;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,10 +35,11 @@ public class ClientMock implements Client<AccountMock> {
         LOG.info("JOSS / * Allow objectdeleter: "+allowObjectDeleter);
         LOG.info("JOSS / * Use onFileObjectStore: "+onFileObjectStore);
         LOG.info("JOSS / * Use public URL: "+publicUrl);
-        return new AccountMock()
+        Swift swift = new Swift()
                 .setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null)
                 .setOnFileObjectStore(onFileObjectStore)
                 .setPublicUrl(publicUrl);
+        return new AccountMock(swift);
     }
 
     public ClientMock setAllowObjectDeleter(boolean allowObjectDeleter) {

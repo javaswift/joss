@@ -1,8 +1,12 @@
 package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.client.impl.ContainerPaginationMap;
+import org.javaswift.joss.client.impl.StoredObjectImpl;
+import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
 import org.javaswift.joss.headers.container.ContainerObjectCount;
+import org.javaswift.joss.headers.container.ContainerRights;
+import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.SegmentationPlan;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Account;
@@ -26,12 +30,15 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
 
     private static final Integer MAX_PAGE_SIZE = 9999;
 
-    protected String name;
+    protected final String name;
 
-    private Account account;
+    private final Account account;
 
-    public AbstractContainer(Account account, String name, boolean allowCaching) {
+    private final ContainerCommandFactory commandFactory;
+
+    public AbstractContainer(ContainerCommandFactory commandFactory, Account account, String name, boolean allowCaching) {
         super(allowCaching);
+        this.commandFactory = commandFactory;
         this.name = name;
         this.account = account;
         this.info = new ContainerInformation();
@@ -131,5 +138,49 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
 
     public int getMaxPageSize() {
         return MAX_PAGE_SIZE;
+    }
+
+    public ContainerCommandFactory getFactory() {
+        return this.commandFactory;
+    }
+
+    public void makePublic() {
+        setContainerRights(true);
+    }
+
+    public void makePrivate() {
+        setContainerRights(false);
+    }
+
+    public void setContainerRights(boolean publicContainer) {
+        commandFactory.createContainerRightsCommand(getAccount(), this, publicContainer).call();
+        this.info.setPublicContainer(publicContainer);
+    }
+
+    public Collection<StoredObject> list(String prefix, String marker, int pageSize) {
+        ListInstructions listInstructions = new ListInstructions()
+                .setPrefix(prefix)
+                .setMarker(marker)
+                .setLimit(pageSize);
+        return commandFactory.createListObjectsCommand(getAccount(), this, listInstructions).call();
+    }
+
+    public Container create() {
+        commandFactory.createCreateContainerCommand(getAccount(), this).call();
+        return this;
+    }
+
+    public void delete() {
+        commandFactory.createDeleteContainerCommand(getAccount(), this).call();
+    }
+
+    @Override
+    protected void saveMetadata() {
+        commandFactory.createContainerMetadataCommand(getAccount(), this, info.getMetadata()).call();
+    }
+
+    protected void getInfo() {
+        this.info = commandFactory.createContainerInformationCommand(getAccount(), this).call();
+        this.setInfoRetrieved();
     }
 }

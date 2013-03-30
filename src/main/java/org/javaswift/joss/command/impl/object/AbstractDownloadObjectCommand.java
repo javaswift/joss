@@ -68,7 +68,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
     }
 
     @Override
-    protected HttpStatusChecker[] getStatusCheckers() {
+    public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_OK)),
             new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_PARTIAL_CONTENT)),

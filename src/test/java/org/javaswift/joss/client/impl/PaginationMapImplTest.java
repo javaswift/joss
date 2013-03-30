@@ -1,6 +1,10 @@
 package org.javaswift.joss.client.impl;
 
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
+import org.javaswift.joss.command.impl.factory.AccountCommandFactoryImpl;
+import org.javaswift.joss.command.mock.factory.AccountCommandFactoryMock;
+import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
+import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.junit.Test;
 
@@ -28,12 +32,13 @@ public class PaginationMapImplTest extends BaseCommandTest {
     @Test
     public void buildMap() {
         account = mock(AccountImpl.class);
+        when(account.getFactory()).thenReturn(new AccountCommandFactoryImpl(null, null, null));
         when(account.getCount()).thenReturn(9);
-        when(account.list(null, null, 2)).thenReturn(createContainerCollection(new String[]{ "A", "B" }));
-        when(account.list(null, "B", 2)).thenReturn(createContainerCollection(new String[] { "C", "D"}));
-        when(account.list(null, "D", 2)).thenReturn(createContainerCollection(new String[] { "E", "F" }));
-        when(account.list(null, "F", 2)).thenReturn(createContainerCollection(new String[] { "G", "H" }));
-        when(account.list(null, "H", 2)).thenReturn(createContainerCollection(new String[] { "I" }));
+        whenList(account, null, new String[]{ "A", "B" });
+        whenList(account, "B", new String[]{ "C", "D" });
+        whenList(account, "D", new String[]{ "E", "F" });
+        whenList(account, "F", new String[]{ "G", "H" });
+        whenList(account, "H", new String[]{ "I" });
         AbstractPaginationMap paginationMap = new AccountPaginationMap(account, null, 4)
                 .setBlockSize(2)
                 .buildMap();
@@ -44,10 +49,15 @@ public class PaginationMapImplTest extends BaseCommandTest {
         assertEquals("H", paginationMap.getMarker(2));
     }
 
-    protected Collection<Container> createContainerCollection(String[] containerNames) {
+    protected void whenList(AccountImpl account, String markerContainer, String[] returnedContainers) {
+        Collection<Container> collection = createContainerCollection(account, returnedContainers);
+        when(account.list(null, markerContainer, 2)).thenReturn(collection);
+    }
+
+    protected Collection<Container> createContainerCollection(AccountImpl account, String[] containerNames) {
         List<Container> containers = new ArrayList<Container>();
         for (String containerName : containerNames) {
-            containers.add(new ContainerImpl(null, containerName, true));
+            containers.add(new ContainerImpl(account, containerName, true));
         }
         return containers;
     }

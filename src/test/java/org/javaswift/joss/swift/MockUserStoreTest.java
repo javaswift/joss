@@ -1,7 +1,8 @@
-package org.javaswift.joss.client.mock;
+package org.javaswift.joss.swift;
 
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
+import org.javaswift.joss.swift.MockUserStore;
 import org.junit.Before;
 import org.junit.Test;
 

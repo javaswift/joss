@@ -175,20 +175,4 @@ public class AccountMockTest {
         assertEquals(container1, container2);
     }
 
-    @Test(expected = CommandException.class)
-    public void setOnFileObjectStore() throws Exception {
-        OnFileObjectStoreLoader loader = mock(OnFileObjectStoreLoader.class);
-        whenNew(OnFileObjectStoreLoader.class).withNoArguments().thenReturn(loader);
-        doThrow(new IOException()).when(loader).createContainers(any(Account.class), anyString());
-        new AccountMock().setOnFileObjectStore("test");
-    }
-
-    @Test
-    public void getPublicUrl() {
-        assertEquals("", new AccountMock().getPublicURL());
-        AccountMock account = new AccountMock()
-                .setPublicUrl("http://localhost:8080/mock");
-        assertEquals("http://localhost:8080/mock", account.getPublicURL());
-    }
-
 }

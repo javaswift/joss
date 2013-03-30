@@ -28,7 +28,7 @@ public class ObjectMetadataCommandImpl extends AbstractObjectCommand<HttpPost, O
     }
 
     @Override
-    protected HttpStatusChecker[] getStatusCheckers() {
+    public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
             new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_ACCEPTED)),
             new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND))

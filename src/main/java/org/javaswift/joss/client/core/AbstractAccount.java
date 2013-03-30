@@ -1,6 +1,9 @@
 package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.client.impl.AccountPaginationMap;
+import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.headers.account.AccountMetadata;
@@ -18,6 +21,8 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private int numberOfCalls = 0;
 
+    private final AccountCommandFactory commandFactory;
+
     public Collection<Container> list() {
         return list(null, null, getMaxPageSize());
     }
@@ -34,8 +39,9 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return getPaginationMap(null, pageSize);
     }
 
-    public AbstractAccount(boolean allowCaching) {
+    public AbstractAccount(AccountCommandFactory commandFactory, boolean allowCaching) {
         super(allowCaching);
+        this.commandFactory = commandFactory;
         this.info = new AccountInformation();
     }
 
@@ -77,6 +83,37 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     public int getNumberOfCalls() {
         return numberOfCalls;
+    }
+
+    public AccountCommandFactory getFactory() {
+        return this.commandFactory;
+    }
+
+    public AccessImpl authenticate() {
+        return this.commandFactory.authenticate();
+    }
+
+    @Override
+    public String getPublicURL() {
+        return this.commandFactory.getPublicURL();
+    }
+
+    public Collection<Container> list(String prefix, String marker, int pageSize) {
+        ListInstructions listInstructions = new ListInstructions()
+                .setPrefix(prefix)
+                .setMarker(marker)
+                .setLimit(pageSize);
+        return commandFactory.createListContainersCommand(this, listInstructions).call();
+    }
+
+    @Override
+    protected void saveMetadata() {
+        commandFactory.createAccountMetadataCommand(this, info.getMetadata()).call();
+    }
+
+    protected void getInfo() {
+        this.info = commandFactory.createAccountInformationCommand(this).call();
+        this.setInfoRetrieved();
     }
 
 }

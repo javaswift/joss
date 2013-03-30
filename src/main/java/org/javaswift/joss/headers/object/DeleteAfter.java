@@ -12,6 +12,10 @@ public class DeleteAfter extends Header {
         this.expireAfterSeconds = expireAfterSeconds;
     }
 
+    public long getExpireAfterSeconds() {
+        return this.expireAfterSeconds;
+    }
+
     @Override
     public String getHeaderValue() {
         return Long.toString(expireAfterSeconds);

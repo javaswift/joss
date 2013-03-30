@@ -1,4 +1,4 @@
-package org.javaswift.joss.client.mock;
+package org.javaswift.joss.swift;
 
 import org.javaswift.joss.model.ListSubject;
 
