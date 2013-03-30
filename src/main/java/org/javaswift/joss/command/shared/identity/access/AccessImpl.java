@@ -20,6 +20,8 @@ public class AccessImpl implements Access {
 
     public User user;
 
+    public Metadata metadata;
+
     @JsonIgnore
     private EndPoint currentEndPoint;
 

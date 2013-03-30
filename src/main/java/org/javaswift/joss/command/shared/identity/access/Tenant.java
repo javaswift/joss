@@ -7,4 +7,8 @@ public class Tenant {
     public String id;
 
     public String name;
+
+    public String handle;
+
+    public String description;
 }

@@ -10,4 +10,6 @@ public class EndPoint {
 
     public String publicURL;
 
+    public String id;
+
 }
