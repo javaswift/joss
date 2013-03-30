@@ -43,14 +43,18 @@ public class ScheduledForDeletionTest {
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     public void equals() {
-        SwiftContainer container = new SwiftContainer("someContainer");
+        SwiftContainer container = new SwiftContainer("someContainer1");
         container.createObject("alpha");
         ScheduledForDeletion sched1 = new ScheduledForDeletion(container, container.getObject("alpha"), new Date());
         container.createObject("beta");
         ScheduledForDeletion sched2 = new ScheduledForDeletion(container, container.getObject("beta"), new Date());
         ScheduledForDeletion sched3 = new ScheduledForDeletion(container, container.getObject("alpha"), new Date());
+        SwiftContainer container2 = new SwiftContainer("someContainer2");
+        container2.createObject("alpha");
+        ScheduledForDeletion sched4 = new ScheduledForDeletion(container2, container2.getObject("alpha"), new Date());
         assertTrue(sched1.equals(sched1));
         assertFalse(sched1.equals(sched2));
+        assertFalse(sched1.equals(sched4));
         assertNotSame(sched1.hashCode(), sched2.hashCode());
         assertEquals(sched1.hashCode(), sched3.hashCode());
         assertFalse(sched1.equals("bla"));

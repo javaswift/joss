@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 public class ObjectInformationTest {
 
@@ -29,6 +30,13 @@ public class ObjectInformationTest {
                 assertEquals("image/png", header.getHeaderValue());
             }
         }
+    }
+
+    @Test
+    public void getLastModified() {
+        ObjectInformation info = new ObjectInformation();
+        assertNull(info.getLastModified());
+        assertNull(info.getLastModifiedAsDate());
     }
 
     @Test
