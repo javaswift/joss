@@ -1,10 +1,11 @@
-package org.javaswift.joss.client.impl;
+package org.javaswift.joss.client.core;
 
+import org.javaswift.joss.client.core.AbstractPaginationMap;
+import org.javaswift.joss.client.core.AccountPaginationMap;
+import org.javaswift.joss.client.impl.AccountImpl;
+import org.javaswift.joss.client.impl.ContainerImpl;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.command.impl.factory.AccountCommandFactoryImpl;
-import org.javaswift.joss.command.mock.factory.AccountCommandFactoryMock;
-import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
-import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.junit.Test;
 

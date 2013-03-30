@@ -1,11 +1,8 @@
 package org.javaswift.joss.client.core;
 
-import org.javaswift.joss.client.impl.ContainerPaginationMap;
-import org.javaswift.joss.client.impl.StoredObjectImpl;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
 import org.javaswift.joss.headers.container.ContainerObjectCount;
-import org.javaswift.joss.headers.container.ContainerRights;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.SegmentationPlan;
 import org.javaswift.joss.instructions.UploadInstructions;

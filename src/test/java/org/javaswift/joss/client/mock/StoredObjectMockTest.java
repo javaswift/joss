@@ -108,7 +108,6 @@ public class StoredObjectMockTest {
         StoredObject object = container.getObject("somefile.png");
         object.uploadObject(new byte[] {});
         object.setDeleteAfter(10);
-//        object.reload();
         assertFalse(object.exists());
     }
 

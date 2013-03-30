@@ -1,6 +1,5 @@
 package org.javaswift.joss.client.core;
 
-import org.javaswift.joss.client.impl.AccountPaginationMap;
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.instructions.ListInstructions;

@@ -1,4 +1,4 @@
-package org.javaswift.joss.client.impl;
+package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
