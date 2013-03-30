@@ -15,7 +15,7 @@ import org.javaswift.joss.model.StoredObject;
 
 import java.util.*;
 
-public class SwiftContainer implements Comparable<SwiftContainer>, ListSubject {
+public class SwiftContainer implements ListSubject {
 
     private Map<String, SwiftStoredObject> objects = new TreeMap<String, SwiftStoredObject>();
 
@@ -28,24 +28,6 @@ public class SwiftContainer implements Comparable<SwiftContainer>, ListSubject {
     public SwiftContainer(String name) {
         this.name = name;
         setContainerPrivacy(false);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof SwiftContainer)) {
-            return false;
-        }
-        return this.name.equals(((SwiftContainer)obj).name);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.name.hashCode();
-    }
-
-    @Override
-    public int compareTo(SwiftContainer column) {
-        return this.name.compareTo(column.name);
     }
 
     public int getCount() {

@@ -267,7 +267,7 @@ public class Swift {
                 foundContainer.deleteObject(foundObject.getName());
             } else {
                 this.objectDeleter.scheduleForDeletion(foundContainer, foundObject, deleteAt.getDate());
-                foundObject.addHeader(deleteAt);
+                foundObject.setDeleteAt(deleteAt);
             }
         }
         return foundObject.saveMetadata(headers);

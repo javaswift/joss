@@ -9,17 +9,13 @@ import org.javaswift.joss.information.ObjectInformation;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.ListSubject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.activation.MimetypesFileTypeMap;
-import java.io.*;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 
-public class SwiftStoredObject implements Comparable<SwiftStoredObject>, ListSubject {
-
-    public static final Logger LOG = LoggerFactory.getLogger(SwiftStoredObject.class);
+public class SwiftStoredObject implements ListSubject {
 
     private String name;
 
@@ -35,26 +31,10 @@ public class SwiftStoredObject implements Comparable<SwiftStoredObject>, ListSub
 
     private HeaderStore headers = new HeaderStore();
 
+    private DeleteAt deleteAt;
+
     public SwiftStoredObject(String name) {
         this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof SwiftStoredObject)) {
-            return false;
-        }
-        return this.name.equals(((SwiftStoredObject) obj).name);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.name.hashCode();
-    }
-
-    @Override
-    public int compareTo(SwiftStoredObject column) {
-        return this.name.compareTo(column.name);
     }
 
     public long getBytesUsed() {
@@ -88,6 +68,7 @@ public class SwiftStoredObject implements Comparable<SwiftStoredObject>, ListSub
         objectInformation.setContentType(contentType);
         objectInformation.setEtag(etag);
         objectInformation.setLastModified(new ObjectLastModified(lastModified));
+        objectInformation.setDeleteAt(deleteAt);
         return objectInformation;
     }
 
@@ -146,8 +127,7 @@ public class SwiftStoredObject implements Comparable<SwiftStoredObject>, ListSub
         return this.objectManifest;
     }
 
-    public void addHeader(Header header) {
-        this.headers.addHeader(header);
+    public void setDeleteAt(DeleteAt deleteAt) {
+        this.deleteAt = deleteAt;
     }
-
 }

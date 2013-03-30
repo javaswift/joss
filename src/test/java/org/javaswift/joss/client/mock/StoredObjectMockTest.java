@@ -1,19 +1,19 @@
 package org.javaswift.joss.client.mock;
 
-import org.javaswift.joss.instructions.DownloadInstructions;
-import org.javaswift.joss.instructions.SegmentationPlan;
-import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.*;
-import org.javaswift.joss.model.Container;
+import org.apache.commons.io.IOUtils;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.headers.object.ObjectManifest;
 import org.javaswift.joss.headers.object.conditional.IfModifiedSince;
 import org.javaswift.joss.headers.object.conditional.IfNoneMatch;
-import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.headers.object.range.*;
-import org.apache.commons.io.IOUtils;
+import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.instructions.SegmentationPlan;
+import org.javaswift.joss.instructions.UploadInstructions;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.swift.Swift;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,8 +33,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import static junit.framework.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
@@ -98,6 +97,19 @@ public class StoredObjectMockTest {
         uploadSomeBytes();
         object.setContentType("text/plain");
         assertEquals("text/plain", object.getContentType());
+    }
+
+    @Test
+    public void setDeleteAtDayFromNow() {
+        ClientMock client = new ClientMock().setAllowEveryone(true);
+        Account account = client.authenticate("","","","");
+        Container container = account.getContainer("images");
+        container.create();
+        StoredObject object = container.getObject("some-image.jpg");
+        object.uploadObject(new byte[]{});
+        object.setDeleteAt(new Date(new Date().getTime()+86400));
+        object.reload();
+        assertNotNull(object.getDeleteAt());
     }
 
     @Test
@@ -187,7 +199,7 @@ public class StoredObjectMockTest {
     public void checkForLastModificationTime() {
         uploadSomeBytes();
         Date firstDate = object.getLastModifiedAsDate();
-        object.uploadObject(new byte[] { 0x01, 0x02, 0x03 });
+        object.uploadObject(new byte[]{0x01, 0x02, 0x03});
         Date secondDate = object.getLastModifiedAsDate();
         assertNotSame(firstDate, secondDate);
     }
