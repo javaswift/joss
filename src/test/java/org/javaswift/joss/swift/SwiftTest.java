@@ -4,6 +4,8 @@ import org.apache.http.HttpStatus;
 import org.javaswift.joss.client.mock.AccountMock;
 import org.javaswift.joss.client.mock.ContainerMock;
 import org.javaswift.joss.client.mock.StoredObjectMock;
+import org.javaswift.joss.command.mock.account.AccountInformationCommandMock;
+import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.model.Account;
@@ -167,6 +169,31 @@ public class SwiftTest {
         container.create();
         object.uploadObject(new byte[]{});
         assertEquals(HttpStatus.SC_UNPROCESSABLE_ENTITY, swift.downloadObject(container, object, new File("non-existing-folder/there-you-go"), new DownloadInstructions()).getStatus());
+    }
+
+    @Test
+    public void genericStatus() {
+        Swift swift = new Swift();
+        swift.addIgnore();
+        swift.addIgnore();
+        swift.addStatus(HttpStatus.SC_NOT_FOUND);
+        assertEquals(-1, swift.getStatus(CommandMock.class));
+        assertEquals(-1, swift.getStatus(CommandMock.class));
+        assertEquals(HttpStatus.SC_NOT_FOUND, swift.getStatus(CommandMock.class));
+        assertEquals(-1, swift.getStatus(CommandMock.class));
+    }
+
+    @Test
+    public void classStatus() {
+        Swift swift = new Swift();
+        swift.addIgnore(AccountInformationCommandMock.class);
+        swift.addIgnore(AccountInformationCommandMock.class);
+        swift.addStatus(AccountInformationCommandMock.class, HttpStatus.SC_NOT_FOUND);
+        assertEquals(-1, swift.getStatus(CommandMock.class));
+        assertEquals(-1, swift.getStatus(AccountInformationCommandMock.class));
+        assertEquals(-1, swift.getStatus(AccountInformationCommandMock.class));
+        assertEquals(HttpStatus.SC_NOT_FOUND, swift.getStatus(AccountInformationCommandMock.class));
+        assertEquals(-1, swift.getStatus(AccountInformationCommandMock.class));
     }
 
 }

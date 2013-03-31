@@ -1,6 +1,7 @@
 package org.javaswift.joss.swift;
 
 import org.apache.commons.io.IOUtils;
+import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.account.AccountBytesUsed;
@@ -21,10 +22,14 @@ import org.javaswift.joss.swift.scheduled.ObjectDeleter;
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.model.Container;
+import org.javaswift.joss.swift.statusgenerator.StatusGenerator;
 
 import java.io.*;
 import java.util.*;
 
+/**
+* Mock implementation of the Swift Object Store
+*/
 public class Swift {
 
     private Map<String, SwiftContainer> containers = new TreeMap<String, SwiftContainer>();
@@ -38,6 +43,8 @@ public class Swift {
     private HeaderStore headers = new HeaderStore();
 
     private long millisDelay = 0;
+
+    StatusGenerator statusGenerator = new StatusGenerator();
 
     public Swift setOnFileObjectStore(String onFileObjectStore) {
         if (onFileObjectStore == null) {
@@ -70,6 +77,26 @@ public class Swift {
     public Swift setMillisDelay(long millisDelay) {
         this.millisDelay = millisDelay;
         return this;
+    }
+
+    public void addIgnore() {
+        this.statusGenerator.addIgnore();
+    }
+
+    public void addIgnore(Class<? extends CommandMock> ignoreClass) {
+        this.statusGenerator.addIgnore(ignoreClass);
+    }
+
+    public void addStatus(int status) {
+        this.statusGenerator.addStatus(status);
+    }
+
+    public void addStatus(Class<? extends CommandMock> clazz, int status) {
+        this.statusGenerator.addStatus(clazz, status);
+    }
+
+    public int getStatus(Class<? extends CommandMock> clazz) {
+        return this.statusGenerator.getStatus(clazz);
     }
 
     public ObjectDeleter getObjectDeleter() {

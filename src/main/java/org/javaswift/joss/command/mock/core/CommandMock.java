@@ -46,9 +46,19 @@ public abstract class CommandMock<T> {
     }
 
     public T call() {
+        // Custom delay for mock command calls
         applyDelay();
         try {
-            SwiftResult<T> result = callSwift();
+            // Make sure to check if the command must return a prepared HTTP status code
+            int suggestedStatus = swift.getStatus(getClass());
+            final SwiftResult<T> result;
+            if (suggestedStatus == -1) {
+                // The -1 code means that the call is executed as normal
+                result = callSwift();
+            } else {
+                result = new SwiftResult<T>(suggestedStatus);
+            }
+            // The HTTP status code is checked against the mappers for the command class
             HttpStatusChecker.verifyCode(getStatusCheckers(), result.getStatus());
             return result.getPayload();
         } catch (CommandException err) {

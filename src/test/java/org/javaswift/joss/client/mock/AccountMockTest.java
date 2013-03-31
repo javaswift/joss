@@ -1,6 +1,8 @@
 package org.javaswift.joss.client.mock;
 
+import org.javaswift.joss.command.mock.container.ContainerInformationCommandMock;
 import org.javaswift.joss.command.mock.core.CommandMock;
+import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.PaginationMap;
@@ -190,6 +192,27 @@ public class AccountMockTest {
         container1.create();
         Container container2 = account.getContainer("Alpha");
         assertEquals(container1, container2);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void forceGenericErrorStatus() {
+        Swift swift = new Swift();
+        swift.addIgnore(); // Container create is fine
+        swift.addStatus(404); // The get info must fail
+        Account account = new AccountMock(swift);
+        Container container = account.getContainer("alpha");
+        container.create();
+        container.getCount();
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void forceSpecificErrorStatus() {
+        Swift swift = new Swift();
+        swift.addStatus(ContainerInformationCommandMock.class, 404);
+        Account account = new AccountMock(swift);
+        Container container = account.getContainer("alpha");
+        container.create();
+        container.getCount();
     }
 
 }
