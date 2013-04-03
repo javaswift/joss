@@ -25,8 +25,8 @@ public class ContainerCommandFactoryImpl implements ContainerCommandFactory {
     }
 
     @Override
-    public ContainerInformationCommand createContainerInformationCommand(Account account, Container container) {
-        return new ContainerInformationCommandImpl(account, getHttpClient(), getAccess(), container);
+    public ContainerInformationCommand createContainerInformationCommand(Account account, Container container, boolean allowErrorLog) {
+        return new ContainerInformationCommandImpl(account, getHttpClient(), getAccess(), container, allowErrorLog);
     }
 
     @Override

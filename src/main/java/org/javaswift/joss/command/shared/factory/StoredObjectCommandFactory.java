@@ -29,7 +29,7 @@ public interface StoredObjectCommandFactory {
                                                                   DownloadInstructions downloadInstructions, File targetFile);
 
     ObjectInformationCommand createObjectInformationCommand(Account account, Container container,
-                                                            StoredObject object);
+                                                            StoredObject object, boolean allowErrorLog);
 
     ObjectMetadataCommand createObjectMetadataCommand(Account account, Container container,
                                                       StoredObject object, Collection<? extends Header> headers);

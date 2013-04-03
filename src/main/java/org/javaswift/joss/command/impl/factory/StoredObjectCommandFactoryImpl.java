@@ -49,8 +49,8 @@ public class StoredObjectCommandFactoryImpl implements StoredObjectCommandFactor
     }
 
     @Override
-    public ObjectInformationCommand createObjectInformationCommand(Account account, Container container, StoredObject object) {
-        return new ObjectInformationCommandImpl(account, getHttpClient(), getAccess(), object);
+    public ObjectInformationCommand createObjectInformationCommand(Account account, Container container, StoredObject object, boolean allowErrorLog) {
+        return new ObjectInformationCommandImpl(account, getHttpClient(), getAccess(), object, allowErrorLog);
     }
 
     @Override

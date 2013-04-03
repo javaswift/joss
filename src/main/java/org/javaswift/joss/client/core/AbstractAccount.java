@@ -110,7 +110,7 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         commandFactory.createAccountMetadataCommand(this, info.getMetadata()).call();
     }
 
-    protected void getInfo() {
+    protected void getInfo(boolean allowErrorLog) {
         this.info = commandFactory.createAccountInformationCommand(this).call();
         this.setInfoRetrieved();
     }

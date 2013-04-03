@@ -10,7 +10,7 @@ import java.util.Collection;
 
 public interface ContainerCommandFactory {
 
-    ContainerInformationCommand createContainerInformationCommand(Account account, Container container);
+    ContainerInformationCommand createContainerInformationCommand(Account account, Container container, boolean allowErrorLog);
 
     ContainerMetadataCommand createContainerMetadataCommand(Account account, Container container,
                                                             Collection<? extends Header> headers);

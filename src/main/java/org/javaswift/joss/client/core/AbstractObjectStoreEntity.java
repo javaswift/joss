@@ -46,16 +46,20 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
     }
 
     protected void checkForInfoAndAllowHeaderSet() {
-        checkForInfo(true);
+        checkForInfo(true, true);
     }
 
     protected void checkForInfo() {
-        checkForInfo(false);
+        checkForInfo(false, true);
     }
 
-    protected void checkForInfo(boolean readHeader) {
+    protected void checkForInfoDisallowErrorLog() {
+        checkForInfo(false, false);
+    }
+
+    protected void checkForInfo(boolean readHeader, boolean allowErrorLog) {
         if (isStale(readHeader)) {
-            getInfo();
+            getInfo(allowErrorLog);
             setInfoRetrieved();
         }
     }
@@ -67,7 +71,7 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
     public boolean exists() {
         try {
             invalidate();
-            checkForInfo();
+            checkForInfoDisallowErrorLog();
         } catch (NotFoundException err) {
             return false;
         }
@@ -106,5 +110,5 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
         return !this.stale;
     }
 
-    protected abstract void getInfo();
+    protected abstract void getInfo(boolean allowErrorLog);
 }

@@ -176,8 +176,8 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         commandFactory.createContainerMetadataCommand(getAccount(), this, info.getMetadata()).call();
     }
 
-    protected void getInfo() {
-        this.info = commandFactory.createContainerInformationCommand(getAccount(), this).call();
+    protected void getInfo(boolean allowErrorLog) {
+        this.info = commandFactory.createContainerInformationCommand(getAccount(), this, allowErrorLog).call();
         this.setInfoRetrieved();
     }
 }

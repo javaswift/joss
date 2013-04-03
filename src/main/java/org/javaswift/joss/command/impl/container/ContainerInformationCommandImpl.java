@@ -22,8 +22,9 @@ import java.io.IOException;
 
 public class ContainerInformationCommandImpl extends AbstractContainerCommand<HttpHead, ContainerInformation> implements ContainerInformationCommand {
 
-    public ContainerInformationCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Container container) {
+    public ContainerInformationCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Container container, boolean allowErrorLog) {
         super(account, httpClient, access, container);
+        setAllowErrorLog(allowErrorLog);
     }
 
     @Override

@@ -245,8 +245,8 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         commandFactory.createObjectMetadataCommand(getAccount(), getContainer(), this, info.getHeaders()).call();
     }
 
-    protected void getInfo() {
-        this.info = commandFactory.createObjectInformationCommand(getAccount(), getContainer(), this).call();
+    protected void getInfo(boolean allowErrorLog) {
+        this.info = commandFactory.createObjectInformationCommand(getAccount(), getContainer(), this, allowErrorLog).call();
         this.setInfoRetrieved();
     }
 

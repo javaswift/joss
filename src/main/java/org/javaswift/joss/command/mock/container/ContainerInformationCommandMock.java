@@ -15,8 +15,9 @@ import org.javaswift.joss.swift.SwiftResult;
 
 public class ContainerInformationCommandMock extends CommandMock<ContainerInformation> implements ContainerInformationCommand {
 
-    public ContainerInformationCommandMock(Swift swift, Account account, Container container) {
+    public ContainerInformationCommandMock(Swift swift, Account account, Container container, boolean allowErrorLog) {
         super(swift, account, container);
+        setAllowErrorLog(allowErrorLog);
     }
 
     @Override

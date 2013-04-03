@@ -45,13 +45,13 @@ public class ObjectInformationCommandImplTest extends BaseCommandTest {
     public void illegalDate() {
         prepareHeader(response, LAST_MODIFIED, "I'm not a date!");
         when(statusLine.getStatusCode()).thenReturn(200);
-        new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")).call();
+        new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), true).call();
     }
 
     @Test
     public void getInfoSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(200);
-        ObjectInformation info = new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")).call();
+        ObjectInformation info = new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), true).call();
         assertEquals("Photo album", info.getMetadata("Description"));
         assertEquals("1984", info.getMetadata("Year"));
         assertEquals("Mon, 03 Sep 2012 05:40:33 GMT", info.getLastModified());
@@ -63,17 +63,17 @@ public class ObjectInformationCommandImplTest extends BaseCommandTest {
 
     @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")));
+        checkForError(404, new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), true));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")));
+        checkForError(500, new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), true));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")));
+        isSecure(new ObjectInformationCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), true));
     }
 
 }

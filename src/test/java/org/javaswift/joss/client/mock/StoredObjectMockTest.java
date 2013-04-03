@@ -171,7 +171,7 @@ public class StoredObjectMockTest {
         assertTrue(object.exists());
         StoredObject mockObject = new StoredObjectMock((ContainerMock)object.getContainer(), "some-object") {
             @Override
-            public void getInfo() {
+            public void getInfo(boolean allowErrorLog) {
                 throw new NotFoundException(404, CommandExceptionError.ENTITY_DOES_NOT_EXIST);
             }
         };

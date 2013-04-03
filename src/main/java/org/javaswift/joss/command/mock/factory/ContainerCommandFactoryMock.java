@@ -24,8 +24,8 @@ public class ContainerCommandFactoryMock implements ContainerCommandFactory {
     }
 
     @Override
-    public ContainerInformationCommand createContainerInformationCommand(Account account, Container container) {
-        return new ContainerInformationCommandMock(swift, account, container);
+    public ContainerInformationCommand createContainerInformationCommand(Account account, Container container, boolean allowErrorLog) {
+        return new ContainerInformationCommandMock(swift, account, container, allowErrorLog);
     }
 
     @Override

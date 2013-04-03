@@ -30,9 +30,15 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
 
     protected HttpResponse response;
 
+    private boolean allowErrorLog = true;
+
     public AbstractCommand(HttpClient httpClient, String url) {
         this.httpClient = httpClient;
         this.request = createRequest(url);
+    }
+
+    public void setAllowErrorLog(boolean allowErrorLog) {
+        this.allowErrorLog = allowErrorLog;
     }
 
     public N call() {
@@ -42,16 +48,18 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
             HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
             return getReturnObject(response);
         } catch (CommandException err) {
-            LOG.error(
-                    "JOSS / HTTP "+request.getMethod()+
-                    " call "+request.getURI().toString()+
-                    (err.getHttpStatusCode() == 0 ? "" : ", HTTP status "+err.getHttpStatusCode())+
-                    (err.getError() == null ? "" : ", Error "+err.getError())+
-                    (err.getMessage() == null ? "" : ", Message '"+err.getMessage()+"'")+
-                    (err.getCause() == null ? "" : ", Cause "+err.getCause().getClass().getSimpleName()));
+            if (allowErrorLog) {
+                LOG.error(
+                        "JOSS / HTTP "+request.getMethod()+
+                        " call "+request.getURI().toString()+
+                        (err.getHttpStatusCode() == 0 ? "" : ", HTTP status "+err.getHttpStatusCode())+
+                        (err.getError() == null ? "" : ", Error "+err.getError())+
+                        (err.getMessage() == null ? "" : ", Message '"+err.getMessage()+"'")+
+                        (err.getCause() == null ? "" : ", Cause "+err.getCause().getClass().getSimpleName()));
 
-            for (org.apache.http.Header header : request.getAllHeaders()) {
-                LOG.error(header.getName()+"="+header.getValue());
+                for (org.apache.http.Header header : request.getAllHeaders()) {
+                    LOG.error(header.getName()+"="+header.getValue());
+                }
             }
             throw err;
         } catch (IOException err) {

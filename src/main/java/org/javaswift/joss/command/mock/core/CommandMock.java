@@ -17,6 +17,7 @@ public abstract class CommandMock<T> {
     protected Account account;
     protected Container container;
     protected StoredObject object;
+    protected boolean allowErrorLog = true;
 
     protected Swift swift;
 
@@ -33,6 +34,10 @@ public abstract class CommandMock<T> {
         this.account = account;
         this.container = container;
         this.object = object;
+    }
+
+    public void setAllowErrorLog(boolean allowErrorLog) {
+        this.allowErrorLog = allowErrorLog;
     }
 
     protected void applyDelay() {
@@ -62,8 +67,10 @@ public abstract class CommandMock<T> {
             HttpStatusChecker.verifyCode(getStatusCheckers(), result.getStatus());
             return result.getPayload();
         } catch (CommandException err) {
-            LOG.error("JOSS / "+this.getClass().getSimpleName()+
-                    ", HTTP status "+err.getHttpStatusCode());
+            if (!allowErrorLog) {
+                LOG.error("JOSS / "+this.getClass().getSimpleName()+
+                        ", HTTP status "+err.getHttpStatusCode());
+            }
             throw err;
         }
     }

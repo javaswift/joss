@@ -42,7 +42,7 @@ public class ContainerInformationCommandImplTest extends BaseCommandTest {
     @Test
     public void getInfoSuccess() throws IOException {
         when(statusLine.getStatusCode()).thenReturn(204);
-        ContainerInformation info = new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
+        ContainerInformation info = new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true).call();
         assertEquals("Photo album", info.getMetadata("Description"));
         assertEquals("1984", info.getMetadata("Year"));
         assertEquals(123, info.getObjectCount());
@@ -52,16 +52,16 @@ public class ContainerInformationCommandImplTest extends BaseCommandTest {
 
     @Test (expected = NotFoundException.class)
     public void createContainerFail() throws IOException {
-        checkForError(404, new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
+        checkForError(404, new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
+        checkForError(500, new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true));
     }
 
     @Test
     public void isSecure() throws IOException {
-        isSecure(new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")), 204);
+        isSecure(new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true), 204);
     }
 }

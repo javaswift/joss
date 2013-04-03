@@ -16,8 +16,9 @@ import java.io.IOException;
 
 public class ObjectInformationCommandImpl extends AbstractObjectCommand<HttpHead, ObjectInformation> implements ObjectInformationCommand {
 
-    public ObjectInformationCommandImpl(Account account, HttpClient httpClient, AccessImpl access, StoredObject object) {
+    public ObjectInformationCommandImpl(Account account, HttpClient httpClient, AccessImpl access, StoredObject object, boolean allowErrorLog) {
         super(account, httpClient, access, object);
+        setAllowErrorLog(allowErrorLog);
     }
 
     @Override

@@ -48,8 +48,8 @@ public class StoredObjectCommandFactoryMock implements StoredObjectCommandFactor
     }
 
     @Override
-    public ObjectInformationCommand createObjectInformationCommand(Account account, Container container, StoredObject object) {
-        return new ObjectInformationCommandMock(swift, account, container, object);
+    public ObjectInformationCommand createObjectInformationCommand(Account account, Container container, StoredObject object, boolean allowErrorLog) {
+        return new ObjectInformationCommandMock(swift, account, container, object, allowErrorLog);
     }
 
     @Override

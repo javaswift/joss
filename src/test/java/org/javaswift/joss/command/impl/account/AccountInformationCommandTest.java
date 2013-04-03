@@ -49,7 +49,7 @@ public class AccountInformationCommandTest extends BaseCommandTest {
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")));
+        checkForError(500, new ContainerInformationCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true));
     }
 
     @Test
