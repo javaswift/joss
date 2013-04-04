@@ -11,6 +11,9 @@ public class AccountConfig {
     private String host = null;
     private boolean mock = false;
     private int mockMillisDelay = 0;
+    private boolean mockAllowObjectDeleter = true;
+    private boolean mockAllowEveryone  = true;
+    private String mockOnFileObjectStore = null;
 
     public void setTenant(String tenant) {
         this.tenant = tenant;
@@ -82,5 +85,29 @@ public class AccountConfig {
 
     public void setAllowCaching(boolean allowCaching) {
         this.allowCaching = allowCaching;
+    }
+
+    public boolean isMockAllowObjectDeleter() {
+        return mockAllowObjectDeleter;
+    }
+
+    public void setMockAllowObjectDeleter(boolean mockAllowObjectDeleter) {
+        this.mockAllowObjectDeleter = mockAllowObjectDeleter;
+    }
+
+    public boolean isMockAllowEveryone() {
+        return mockAllowEveryone;
+    }
+
+    public void setMockAllowEveryone(boolean mockAllowEveryone) {
+        this.mockAllowEveryone = mockAllowEveryone;
+    }
+
+    public String getMockOnFileObjectStore() {
+        return mockOnFileObjectStore;
+    }
+
+    public void setMockOnFileObjectStore(String mockOnFileObjectStore) {
+        this.mockOnFileObjectStore = mockOnFileObjectStore;
     }
 }

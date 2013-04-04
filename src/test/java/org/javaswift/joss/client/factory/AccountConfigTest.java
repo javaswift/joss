@@ -18,15 +18,21 @@ public class AccountConfigTest {
         config.setMockMillisDelay(10);
         config.setAllowCaching(true);
         config.setAllowReauthenticate(true);
+        config.setMockAllowEveryone(true);
+        config.setMockAllowObjectDeleter(true);
+        config.setMockOnFileObjectStore("/some/path");
         config.setHost("http://localhost:8080/mock");
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
         assertEquals("tenant", config.getTenant());
         assertEquals("user", config.getUsername());
+        assertEquals("/some/path", config.getMockOnFileObjectStore());
         assertEquals(10, config.getMockMillisDelay());
         assertTrue(config.isMock());
         assertTrue(config.isAllowCaching());
         assertTrue(config.isAllowReauthenticate());
+        assertTrue(config.isMockAllowEveryone());
+        assertTrue(config.isMockAllowObjectDeleter());
         assertEquals("http://localhost:8080/mock", config.getHost());
     }
 }

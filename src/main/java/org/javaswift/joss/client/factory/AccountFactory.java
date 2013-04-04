@@ -34,7 +34,9 @@ public class AccountFactory {
 
     public Client createClientMock() {
         return new ClientMock()
-                .setAllowEveryone(true)
+                .setOnFileObjectStore(config.getMockOnFileObjectStore())
+                .setAllowObjectDeleter(config.isMockAllowObjectDeleter())
+                .setAllowEveryone(config.isMockAllowEveryone())
                 .setMillisDelay(config.getMockMillisDelay())
                 .setHost(config.getHost());
     }

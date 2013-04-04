@@ -15,7 +15,7 @@ public class ClientMock implements Client<AccountMock> {
 
     private MockUserStore users = new MockUserStore();
 
-    private boolean allowEveryone = false;
+    private boolean allowEveryone = true;
 
     private boolean allowObjectDeleter = true;
 
@@ -34,8 +34,9 @@ public class ClientMock implements Client<AccountMock> {
         LOG.info("JOSS / Creating mock account instance");
         LOG.info("JOSS / * Check credentials: "+!allowEveryone);
         LOG.info("JOSS / * Allow objectdeleter: "+allowObjectDeleter);
-        LOG.info("JOSS / * Use onFileObjectStore: "+onFileObjectStore);
+        LOG.info("JOSS / * On File ObjectStore: "+onFileObjectStore);
         LOG.info("JOSS / * Use host: "+ host);
+        LOG.info("JOSS / * Use milliseconds delay: "+ millisDelay);
         Swift swift = new Swift()
                 .setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null)
                 .setOnFileObjectStore(onFileObjectStore)

@@ -15,7 +15,7 @@ public class ClientMockTest {
     public void authenticate() {
         MockUserStore users = new MockUserStore();
         users.addUser("richard", "test123");
-        ClientMock client = new ClientMock();
+        ClientMock client = new ClientMock().setAllowEveryone(false);
         client.setUsers(users);
         client.getUsers(); // ignore
         Account account = client.authenticate("", "richard", "test123", "");
