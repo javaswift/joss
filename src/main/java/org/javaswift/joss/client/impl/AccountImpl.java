@@ -13,8 +13,9 @@ import java.util.Collection;
 
 public class AccountImpl extends AbstractAccount {
 
-    public AccountImpl(AuthenticationCommand command, HttpClient httpClient, AccessImpl access, boolean allowCaching) {
-        super(new AccountCommandFactoryImpl(httpClient, access, command), allowCaching);
+    public AccountImpl(AuthenticationCommand command, HttpClient httpClient, AccessImpl access,
+                       String host, boolean allowCaching) {
+        super(new AccountCommandFactoryImpl(httpClient, access, command, host), allowCaching);
     }
 
     public Container getContainer(String containerName) {

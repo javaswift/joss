@@ -1,6 +1,7 @@
 package org.javaswift.joss.command.impl.factory;
 
 import org.apache.http.client.HttpClient;
+import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.command.impl.account.AccountInformationCommandImpl;
 import org.javaswift.joss.command.impl.account.AccountMetadataCommandImpl;
 import org.javaswift.joss.command.impl.account.ListContainersCommandImpl;
@@ -24,11 +25,13 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     private final HttpClient httpClient;
     private AccessImpl access;
     private final AuthenticationCommand authCommand;
+    private final String host;
 
-    public AccountCommandFactoryImpl(HttpClient httpClient, AccessImpl access, AuthenticationCommand authCommand) {
+    public AccountCommandFactoryImpl(HttpClient httpClient, AccessImpl access, AuthenticationCommand authCommand, String host) {
         this.httpClient = httpClient;
         this.access = access;
         this.authCommand = authCommand;
+        this.host = host;
         this.containerCommandFactory = new ContainerCommandFactoryImpl(this);
     }
 
@@ -37,7 +40,7 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     }
 
     public String getPublicURL() {
-        return access.getPublicURL();
+        return this.host == null ? access.getPublicURL() : this.host;
     }
 
     @Override
