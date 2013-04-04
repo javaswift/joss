@@ -7,7 +7,7 @@ public class AccountConfig {
     private String password;
     private String authUrl;
     private boolean mock;
-    private String mockPublicUrl;
+    private String host;
     private int mockMillisDelay = 0;
 
     public void setTenant(String tenant) {
@@ -50,12 +50,12 @@ public class AccountConfig {
         return mock;
     }
 
-    public String getMockPublicUrl() {
-        return mockPublicUrl;
+    public String getHost() {
+        return host;
     }
 
-    public void setMockPublicUrl(String mockPublicUrl) {
-        this.mockPublicUrl = mockPublicUrl;
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public int getMockMillisDelay() {

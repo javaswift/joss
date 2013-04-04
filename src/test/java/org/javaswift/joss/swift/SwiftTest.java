@@ -8,9 +8,7 @@ import org.javaswift.joss.command.mock.account.AccountInformationCommandMock;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.instructions.DownloadInstructions;
-import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
-import org.javaswift.joss.model.StoredObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +56,7 @@ public class SwiftTest {
     @Test
     public void getPublicUrl() {
         assertEquals("", new Swift().getPublicURL());
-        swift = new Swift().setPublicUrl("http://localhost:8080/mock");
+        swift = new Swift().setHost("http://localhost:8080/mock");
         assertEquals("http://localhost:8080/mock", swift.getPublicURL());
     }
 

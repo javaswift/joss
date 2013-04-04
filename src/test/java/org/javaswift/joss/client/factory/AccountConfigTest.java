@@ -16,13 +16,13 @@ public class AccountConfigTest {
         config.setUsername("user");
         config.setMock(true);
         config.setMockMillisDelay(10);
-        config.setMockPublicUrl("http://localhost:8080/mock");
+        config.setHost("http://localhost:8080/mock");
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
         assertEquals("tenant", config.getTenant());
         assertEquals("user", config.getUsername());
         assertEquals(10, config.getMockMillisDelay());
         assertTrue(config.isMock());
-        assertEquals("http://localhost:8080/mock", config.getMockPublicUrl());
+        assertEquals("http://localhost:8080/mock", config.getHost());
     }
 }

@@ -21,7 +21,7 @@ public class ClientMock implements Client<AccountMock> {
 
     private String onFileObjectStore = null;
 
-    private String publicUrl = null;
+    private String host = null;
 
     private long millisDelay = 0;
 
@@ -35,13 +35,13 @@ public class ClientMock implements Client<AccountMock> {
         LOG.info("JOSS / * Check credentials: "+!allowEveryone);
         LOG.info("JOSS / * Allow objectdeleter: "+allowObjectDeleter);
         LOG.info("JOSS / * Use onFileObjectStore: "+onFileObjectStore);
-        LOG.info("JOSS / * Use public URL: "+publicUrl);
+        LOG.info("JOSS / * Use host: "+ host);
         Swift swift = new Swift()
                 .setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null)
                 .setOnFileObjectStore(onFileObjectStore)
                 .setUserStore(users)
                 .setMillisDelay(millisDelay)
-                .setPublicUrl(publicUrl);
+                .setHost(host);
         if (!allowEveryone) {
             AuthenticationCommandFactory authenticationCommandFactory = new AuthenticationCommandFactoryMock(swift);
             LOG.info("JOSS / Attempting authentication with tenant: " + tenant + ", username: " + username + ", Auth URL: " + authUrl);
@@ -65,8 +65,8 @@ public class ClientMock implements Client<AccountMock> {
         return this;
     }
 
-    public ClientMock setPublicUrl(String publicUrl) {
-        this.publicUrl = publicUrl;
+    public ClientMock setHost(String publicUrl) {
+        this.host = publicUrl;
         return this;
     }
 

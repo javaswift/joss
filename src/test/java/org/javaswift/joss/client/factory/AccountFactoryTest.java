@@ -84,7 +84,7 @@ public class AccountFactoryTest {
         AccountFactory factory = new AccountFactory();
         AccountConfig config = new AccountConfig();
         config.setMock(true);
-        config.setMockPublicUrl("http://find.me");
+        config.setHost("http://find.me");
         factory.setConfig(config);
         assertEquals("http://find.me", factory.createAccount().getPublicURL());
     }

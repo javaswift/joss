@@ -69,7 +69,7 @@ public class Swift {
         return this;
     }
 
-    public Swift setPublicUrl(String publicUrl) {
+    public Swift setHost(String publicUrl) {
         this.publicUrl = publicUrl;
         return this;
     }

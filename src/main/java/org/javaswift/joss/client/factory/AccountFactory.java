@@ -38,7 +38,7 @@ public class AccountFactory {
             client = new ClientMock()
                     .setAllowEveryone(true)
                     .setMillisDelay(config.getMockMillisDelay())
-                    .setPublicUrl(config.getMockPublicUrl());
+                    .setHost(config.getHost());
         } else {
             client = createClientImpl();
         }
