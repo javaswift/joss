@@ -16,6 +16,8 @@ public class AccountConfigTest {
         config.setUsername("user");
         config.setMock(true);
         config.setMockMillisDelay(10);
+        config.setAllowCaching(true);
+        config.setAllowReauthenticate(true);
         config.setHost("http://localhost:8080/mock");
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
@@ -23,6 +25,8 @@ public class AccountConfigTest {
         assertEquals("user", config.getUsername());
         assertEquals(10, config.getMockMillisDelay());
         assertTrue(config.isMock());
+        assertTrue(config.isAllowCaching());
+        assertTrue(config.isAllowReauthenticate());
         assertEquals("http://localhost:8080/mock", config.getHost());
     }
 }

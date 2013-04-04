@@ -6,8 +6,10 @@ public class AccountConfig {
     private String username;
     private String password;
     private String authUrl;
-    private boolean mock;
-    private String host;
+    private boolean allowReauthenticate = true;
+    private boolean allowCaching = true;
+    private String host = null;
+    private boolean mock = false;
     private int mockMillisDelay = 0;
 
     public void setTenant(String tenant) {
@@ -64,5 +66,21 @@ public class AccountConfig {
 
     public void setMockMillisDelay(int mockMillisDelay) {
         this.mockMillisDelay = mockMillisDelay;
+    }
+
+    public boolean isAllowReauthenticate() {
+        return allowReauthenticate;
+    }
+
+    public void setAllowReauthenticate(boolean allowReauthenticate) {
+        this.allowReauthenticate = allowReauthenticate;
+    }
+
+    public boolean isAllowCaching() {
+        return allowCaching;
+    }
+
+    public void setAllowCaching(boolean allowCaching) {
+        this.allowCaching = allowCaching;
     }
 }

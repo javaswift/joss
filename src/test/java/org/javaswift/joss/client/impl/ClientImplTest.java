@@ -50,5 +50,10 @@ public class ClientImplTest extends BaseCommandTest {
         assertEquals("http://some-other-url", account.getPublicURL());
     }
 
+    @Test
+    public void setEmptyHttpClient() {
+        client.setHttpClient(null);
+    }
+
 }
 

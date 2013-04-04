@@ -46,14 +46,18 @@ public class ClientImpl implements Client<AccountImpl> {
         return new AccountImpl(command, httpClient, access, allowCaching);
     }
 
-    public void setHttpClient(HttpClient httpClient) {
-        this.httpClient = httpClient;
-        LOG.info("JOSS / Use HTTP client set by client");
+    public ClientImpl setHttpClient(HttpClient httpClient) {
+        if (httpClient != null) {
+            LOG.info("JOSS / Use HTTP client set by client");
+            this.httpClient = httpClient;
+        }
+        return this;
     }
 
-    public void setAllowCaching(boolean allowCaching) {
-        this.allowCaching = allowCaching;
+    public ClientImpl setAllowCaching(boolean allowCaching) {
         LOG.info("JOSS / Allow caching: "+allowCaching);
+        this.allowCaching = allowCaching;
+        return this;
     }
 
 }

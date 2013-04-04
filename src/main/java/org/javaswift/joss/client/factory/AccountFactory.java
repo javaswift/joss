@@ -8,15 +8,11 @@ import org.apache.http.client.HttpClient;
 
 public class AccountFactory {
 
-    private AccountConfig config;
+    private final AccountConfig config;
 
     private HttpClient httpClient;
 
-    private boolean allowReauthenticate = true; // Default behaviour is to allow re-authentication
-
-    private boolean allowCaching = true;
-
-    public void setConfig(AccountConfig config) {
+    public AccountFactory(AccountConfig config) {
         this.config = config;
     }
 
@@ -24,35 +20,28 @@ public class AccountFactory {
         this.httpClient = httpClient;
     }
 
-    public void setAllowReauthenticate(boolean allowReauthenticate) {
-        this.allowReauthenticate = allowReauthenticate;
-    }
-
-    public void setAllowCaching(boolean allowCaching) {
-        this.allowCaching = allowCaching;
-    }
-
     public Account createAccount() {
-        Client client;
+        final Client client;
         if (config.isMock()) {
-            client = new ClientMock()
-                    .setAllowEveryone(true)
-                    .setMillisDelay(config.getMockMillisDelay())
-                    .setHost(config.getHost());
+            client = createClientMock();
         } else {
             client = createClientImpl();
         }
         return client
                 .authenticate(config.getTenant(), config.getUsername(), config.getPassword(), config.getAuthUrl())
-                .setAllowReauthenticate(this.allowReauthenticate);
+                .setAllowReauthenticate(config.isAllowReauthenticate());
     }
 
-    protected ClientImpl createClientImpl() {
-        ClientImpl client = new ClientImpl();
-        if (this.httpClient != null) {
-            client.setHttpClient(this.httpClient);
-        }
-        client.setAllowCaching(this.allowCaching);
-        return client;
+    public Client createClientMock() {
+        return new ClientMock()
+                .setAllowEveryone(true)
+                .setMillisDelay(config.getMockMillisDelay())
+                .setHost(config.getHost());
+    }
+
+    public Client createClientImpl() {
+        return new ClientImpl()
+                .setHttpClient(this.httpClient)
+                .setAllowCaching(config.isAllowCaching());
     }
 }
