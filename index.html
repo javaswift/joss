@@ -32,64 +32,70 @@
         <section id="main-content">
           <a href="https://travis-ci.org/java-openstack/joss"><img src="https://travis-ci.org/java-openstack/joss.png" alt="Build Status"></a>
 
-<p>JOSS is a Java client for the <a href="http://docs.openstack.org/essex/openstack-object-storage/admin/content/ch_introduction-to-openstack-object-storage.html">OpenStack Storage component</a> REST interface. In order to use it you must have an account with an OpenStack Storage provider, such as the <a href="https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/">CloudVPS Object Store</a>.</p>
+          <p>JOSS is a Java client for the <a href="http://docs.openstack.org/essex/openstack-object-storage/admin/content/ch_introduction-to-openstack-object-storage.html">OpenStack Storage component</a> REST interface. In order to use it you must have an account with an OpenStack Storage provider, such as the <a href="https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/">CloudVPS Object Store</a>.</p>
 
-<p>In order to use JOSS in your project, simply add the following dependency:</p>
+          <p>In order to use JOSS in your project, simply add the following dependency:</p>
 
-<div class="highlight"><pre>        <span class="nt">&lt;dependency&gt;</span>
+          <div class="highlight"><pre>        <span class="nt">&lt;dependency&gt;</span>
             <span class="nt">&lt;groupId&gt;</span>org.javaswift<span class="nt">&lt;/groupId&gt;</span>
             <span class="nt">&lt;artifactId&gt;</span>joss<span class="nt">&lt;/artifactId&gt;</span>
             <span class="nt">&lt;version&gt;</span>0.8.0<span class="nt">&lt;/version&gt;</span>
         <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
-<p>You can also download the artifact on <a href="http://search.maven.org">Maven Search</a></p>
+          <p>You can also download the artifact on <a href="http://search.maven.org">Maven Search</a></p>
 
-<h2>Getting Started</h2>
+          <h2>
+              <a name="getting-started" class="anchor" href="#getting-started"><span class="mini-icon mini-icon-link"></span></a>Getting Started</h2>
 
-<p>Your Object Store provider will have provided you with the following information in order to authenticate yourself:</p>
+          <p>Your Object Store provider will have provided you with the following information in order to authenticate yourself:</p>
 
-<ul>
-<li>tenant</li>
-<li>username</li>
-<li>password</li>
-<li>authentication URL</li>
-</ul><p>We start by opening up a stateful client and <strong>authenticating</strong> ourselves:</p>
+          <ul>
+              <li>tenant</li>
+              <li>username</li>
+              <li>password</li>
+              <li>authentication URL</li>
+          </ul><p>We start by opening up a stateful client and <strong>authenticating</strong> ourselves:</p>
 
-<div class="highlight"><pre>    <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClientImpl</span><span class="o">().</span><span class="na">authenticate</span><span class="o">(</span><span class="n">tenant</span><span class="o">,</span> <span class="n">username</span><span class="o">,</span> <span class="n">password</span><span class="o">,</span> <span class="n">url</span><span class="o">);</span>
+          <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setTenant</span><span class="o">(</span><span class="n">tenant</span><span class="o">);</span>
+    <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
 </pre></div>
 
-<p>On failure, the client will throw an exception. On success, the account can now be used to execute actions on the Object Store. The account takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire after 24 hours. The client will get a new token when it encounters a 401 and retry the original command just once.</p>
+          <p>On failure, the client will throw an exception. On success, the account can now be used to execute actions on the Object Store. The account takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire after 24 hours. The client will get a new token when it encounters a 401 and retry the original command just once.</p>
 
-<p>Next, we want to create a public container, where we can store our images:</p>
+          <p>Next, we want to create a public container, where we can store our images:</p>
 
-<div class="highlight"><pre>    <span class="n">Container</span> <span class="n">container</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="na">getContainer</span><span class="o">(</span><span class="s">"images"</span><span class="o">);</span>
+          <div class="highlight"><pre>    <span class="n">Container</span> <span class="n">container</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="na">getContainer</span><span class="o">(</span><span class="s">"images"</span><span class="o">);</span>
     <span class="n">container</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
     <span class="n">container</span><span class="o">.</span><span class="na">makePublic</span><span class="o">();</span>
 </pre></div>
 
-<p>A container is private by default, so you will have to explicitly set it to public to be able to access it through its public URL.</p>
+          <p>A container is private by default, so you will have to explicitly set it to public to be able to access it through its public URL.</p>
 
-<p>To check whether the creation succeeded, list the containers.</p>
+          <p>To check whether the creation succeeded, list the containers.</p>
 
-<div class="highlight"><pre>    <span class="n">Collection</span><span class="o">&lt;</span><span class="n">Container</span><span class="o">&gt;</span> <span class="n">containers</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="na">list</span><span class="o">();</span>
+          <div class="highlight"><pre>    <span class="n">Collection</span><span class="o">&lt;</span><span class="n">Container</span><span class="o">&gt;</span> <span class="n">containers</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="na">list</span><span class="o">();</span>
     <span class="k">for</span> <span class="o">(</span><span class="n">Container</span> <span class="n">currentContainer</span> <span class="o">:</span> <span class="n">containers</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">currentContainer</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
     <span class="o">}</span>
 </pre></div>
 
-<p>Now it is time to upload a file to the Object Store. In this example, we take an image located in the root directory of the file system.</p>
+          <p>Now it is time to upload a file to the Object Store. In this example, we take an image located in the root directory of the file system.</p>
 
-<div class="highlight"><pre>    <span class="n">StoredObject</span> <span class="n">object</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="s">"dog.png"</span><span class="o">);</span>
+          <div class="highlight"><pre>    <span class="n">StoredObject</span> <span class="n">object</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="s">"dog.png"</span><span class="o">);</span>
     <span class="n">object</span><span class="o">.</span><span class="na">uploadObject</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">"/dog.png"</span><span class="o">));</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Public URL: "</span><span class="o">+</span><span class="n">object</span><span class="o">.</span><span class="na">getPublicURL</span><span class="o">());</span>
 </pre></div>
 
-<p>If you fire up your browser, you can navigate to the public URL to see your resource for real. This is only possible because the container has been set to public. If it was private, you would not be able to do this.</p>
+          <p>If you fire up your browser, you can navigate to the public URL to see your resource for real. This is only possible because the container has been set to public. If it was private, you would not be able to do this.</p>
 
-<p>You can also check whether the upload succeeded by listing the objects in a container or by fetching the object information.</p>
+          <p>You can also check whether the upload succeeded by listing the objects in a container or by fetching the object information.</p>
 
-<div class="highlight"><pre>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Last modified:  "</span><span class="o">+</span><span class="n">object</span><span class="o">.</span><span class="na">getLastModified</span><span class="o">());</span>
+          <div class="highlight"><pre>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Last modified:  "</span><span class="o">+</span><span class="n">object</span><span class="o">.</span><span class="na">getLastModified</span><span class="o">());</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"ETag:           "</span><span class="o">+</span><span class="n">object</span><span class="o">.</span><span class="na">getEtag</span><span class="o">());</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Content type:   "</span><span class="o">+</span><span class="n">object</span><span class="o">.</span><span class="na">getContentType</span><span class="o">());</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Content length: "</span><span class="o">+</span><span class="n">object</span><span class="o">.</span><span class="na">getContentLength</span><span class="o">());</span>
@@ -100,137 +106,146 @@
     <span class="o">}</span>
 </pre></div>
 
-<p>Alternatively, besides <a href="http://docs.oracle.com/javase/6/docs/api/java/io/File.html">File</a>, you could also use a <em>byte[]</em> or an <a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html">InputStream</a> to upload a file.</p>
+          <p>Alternatively, besides <a href="http://docs.oracle.com/javase/6/docs/api/java/io/File.html">File</a>, you could also use a <em>byte[]</em> or an <a href="http://docs.oracle.com/javase/6/docs/api/java/io/InputStream.html">InputStream</a> to upload a file.</p>
 
-<p>It is time to download what you just uploaded. Here we go.</p>
+          <p>It is time to download what you just uploaded. Here we go.</p>
 
-<div class="highlight"><pre>    <span class="n">object</span><span class="o">.</span><span class="na">downloadObject</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">"/dog2.png"</span><span class="o">));</span>
+          <div class="highlight"><pre>    <span class="n">object</span><span class="o">.</span><span class="na">downloadObject</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">"/dog2.png"</span><span class="o">));</span>
 </pre></div>
 
-<p>Open the file "/dog2.png" on the file system to verify that the operation worked. Again, also byte[] and InputStream are at your disposal. <em>On using InputStream be aware that you are responsible for closing the stream by calling close() on the wrapper</em>.</p>
+          <p>Open the file "/dog2.png" on the file system to verify that the operation worked. Again, also byte[] and InputStream are at your disposal. <em>On using InputStream be aware that you are responsible for closing the stream by calling close() on the wrapper</em>.</p>
 
-<p>Now, if you want the object to be retrievable through another URL, you will have to move the object. This is accomplished by executing first a copy, then a delete action.</p>
+          <p>Now, if you want the object to be retrievable through another URL, you will have to move the object. This is accomplished by executing first a copy, then a delete action.</p>
 
-<div class="highlight"><pre>    <span class="n">StoredObject</span> <span class="n">newObject</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="s">"new-dog.png"</span><span class="o">);</span>
+          <div class="highlight"><pre>    <span class="n">StoredObject</span> <span class="n">newObject</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="s">"new-dog.png"</span><span class="o">);</span>
     <span class="n">object</span><span class="o">.</span><span class="na">copyObject</span><span class="o">(</span><span class="n">container</span><span class="o">,</span> <span class="n">newObject</span><span class="o">);</span>
     <span class="n">object</span><span class="o">.</span><span class="na">delete</span><span class="o">();</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Public URL: "</span><span class="o">+</span><span class="n">object</span><span class="o">.</span><span class="na">getPublicURL</span><span class="o">());</span> <span class="c1">// no longer retrievable</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Public URL: "</span><span class="o">+</span><span class="n">newObject</span><span class="o">.</span><span class="na">getPublicURL</span><span class="o">());</span> <span class="c1">// the new URL</span>
 </pre></div>
 
-<p>You can once more use the browser to access both resources. You will see that the first URL gives you a 404, while the second one now gives you the original resource.</p>
+          <p>You can once more use the browser to access both resources. You will see that the first URL gives you a 404, while the second one now gives you the original resource.</p>
 
-<p>It is possible to add metadata to both containers and objects.</p>
+          <p>It is possible to add metadata to both containers and objects.</p>
 
-<div class="highlight"><pre>    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">metadata</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;();</span>
+          <div class="highlight"><pre>    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">metadata</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;();</span>
     <span class="n">metadata</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"title"</span><span class="o">,</span> <span class="s">"Some Title"</span><span class="o">);</span>
     <span class="n">metadata</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"department"</span><span class="o">,</span> <span class="s">"Some Department"</span><span class="o">);</span>
     <span class="n">container</span><span class="o">.</span><span class="na">setMetadata</span><span class="o">(</span><span class="n">metadata</span><span class="o">);</span>
 </pre></div>
 
-<p>Likewise, this information can be retrieved, as seen above.</p>
+          <p>Likewise, this information can be retrieved, as seen above.</p>
 
-<div class="highlight"><pre>    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">returnedMetadata</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="na">getMetadata</span><span class="o">();</span>
+          <div class="highlight"><pre>    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">returnedMetadata</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="na">getMetadata</span><span class="o">();</span>
     <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">name</span> <span class="o">:</span> <span class="n">returnedMetadata</span><span class="o">.</span><span class="na">keySet</span><span class="o">())</span> <span class="o">{</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"META / "</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s">": "</span><span class="o">+</span><span class="n">returnedMetadata</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">name</span><span class="o">));</span>
     <span class="o">}</span>
 </pre></div>
 
-<p>There are many situations in which it is not necessary, not possible, or even plain clumsy, to be connected to external dependencies. For those situations, JOSS offers the InMemory implementation of the OpenStackClient.</p>
+          <p>There are many situations in which it is not necessary, not possible, or even plain clumsy, to be connected to external dependencies. For those situations, JOSS offers the InMemory implementation of the OpenStackClient.</p>
 
-<div class="highlight"><pre>    <span class="n">ClientMock</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClientMock</span><span class="o">();</span>
+          <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setTenant</span><span class="o">(</span><span class="n">tenant</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setMock</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
 </pre></div>
 
-<p>All the operations work basically in the same way. It is possible to run the in-memory client and have it hold the resources for a local run of your application. <em>Note that there is no such thing as a public URL for the in-memory run</em>.</p>
+          <p>All the operations work basically in the same way. It is possible to run the in-memory client and have it hold the resources for a local run of your application.</p>
 
-<p>Note that you will have to add some users to authenticate against.</p>
+          <p>Presumably, you are using Spring or something similar, in which case it will be easy to configure your profiles to either use the real client or the mock client.</p>
 
-<div class="highlight"><pre>    <span class="n">MockUserStore</span> <span class="n">users</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MockUserStore</span><span class="o">();</span>
-    <span class="n">users</span><span class="o">.</span><span class="na">addUser</span><span class="o">(</span><span class="s">"testuser"</span><span class="o">,</span> <span class="s">"testpassword"</span><span class="o">);</span>
-    <span class="n">client</span><span class="o">.</span><span class="na">setUsers</span><span class="o">(</span><span class="n">users</span><span class="o">);</span>
-</pre></div>
+          <p>This wraps up the tutorial. Good luck using JOSS.</p>
 
-<p>Presumably, you are using Spring or something similar, in which case it will be easy to configure your profiles to either use the real client or the mock client.</p>
+          <h2>
+              <a name="background" class="anchor" href="#background"><span class="mini-icon mini-icon-link"></span></a>Background</h2>
 
-<p>This wraps up the tutorial. Good luck using JOSS.</p>
+          <p>JOSS provides access to the Container part of the OpenStack API. It is a specialized utility for this purpose. You will be able to:</p>
 
-<h2>Background</h2>
+          <ul>
+              <li>access your account</li>
+              <li>handle containers</li>
+              <li>handle objects, including upload and download</li>
+          </ul><p>Generally, Java developers want to be able to isolate their applications from the target servers during development, which is why JOSS support an in-memory mode. Simply have your application instantiate OpenStackClientInMemory (instead of OpenStackClientImpl) and you have a fully fledged in-memory Storage container, useful for testing your application on your own development system and isolating your application during various test stages.</p>
 
-<p>JOSS provides access to the Container part of the OpenStack API. It is a specialized utility for this purpose. You will be able to:</p>
+          <h2>
+              <a name="done-and-to-do" class="anchor" href="#done-and-to-do"><span class="mini-icon mini-icon-link"></span></a>Done and To-do</h2>
 
-<ul>
-<li>access your account</li>
-<li>handle containers</li>
-<li>handle objects, including upload and download</li>
-</ul><p>Generally, Java developers want to be able to isolate their applications from the target servers during development, which is why JOSS support an in-memory mode. Simply have your application instantiate OpenStackClientInMemory (instead of OpenStackClientImpl) and you have a fully fledged in-memory Storage container, useful for testing your application on your own development system and isolating your application during various test stages.</p>
+          <p>Things JOSS can do for you:</p>
 
-<h2>Done and To-do</h2>
+          <ul>
+              <li>Java-based wrapper library for OpenStack, so REST calls do not have to be made directly</li>
+              <li>option to switch between real (ie, HTTPS target) and mock mode</li>
+              <li>in-memory storage of objects for unit testing and local application run purposes</li>
+              <li>auto-reconnecting your Swift session</li>
+              <li>documentation and tutorials to help you get started</li>
+          </ul><h2>
+              <a name="license" class="anchor" href="#license"><span class="mini-icon mini-icon-link"></span></a>License</h2>
 
-<p>Things JOSS can do for you:</p>
-
-<ul>
-<li>Java-based wrapper library for OpenStack, so REST calls do not have to be made directly</li>
-<li>option to switch between real (ie, HTTPS target) and mock mode</li>
-<li>in-memory storage of objects for unit testing and local application run purposes</li>
-<li>auto-reconnecting your Swift session</li>
-<li>documentation and tutorials to help you get started</li>
-</ul><h2>License</h2>
-
-<p>Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at</p>
+          <p>Licensed under the Apache License, Version 2.0 (the "License");
+              you may not use this file except in compliance with the License.
+              You may obtain a copy of the License at</p>
 
 <pre><code>http://www.apache.org/licenses/LICENSE-2.0
 </code></pre>
 
-<p>Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.</p>
+          <p>Unless required by applicable law or agreed to in writing, software
+              distributed under the License is distributed on an "AS IS" BASIS,
+              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+              See the License for the specific language governing permissions and
+              limitations under the License.</p>
 
-<h2>More information</h2>
+          <h2>
+              <a name="more-information" class="anchor" href="#more-information"><span class="mini-icon mini-icon-link"></span></a>More information</h2>
 
-<p><em>On JOSS</em></p>
+          <p><em>On JOSS</em></p>
 
-<ul>
-<li>High level explanation of JOSS; <a href="http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss">http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss</a>
-</li>
-<li>Hands-on JOSS tutorial; <a href="http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage">http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage</a>
-</li>
-<li>Architecture models; <a href="http://blog.42.nl/articles/joss-architecture-approaches-integrating-with-openstack-object-storage">http://blog.42.nl/articles/joss-architecture-approaches-integrating-with-openstack-object-storage</a>
-</li>
-<li>If-Modified-Since; <a href="http://blog.42.nl/articles/instruct-java-facilitate-browser-cache-if-modified-since">http://blog.42.nl/articles/instruct-java-facilitate-browser-cache-if-modified-since</a>
-</li>
-<li>Working JOSS tutorial project; <a href="https://github.com/java-openstack/tutorial-joss-quickstart">https://github.com/java-openstack/tutorial-joss-quickstart</a>
-</li>
-<li>Working JOSS streaming project; <a href="https://github.com/java-openstack/tutorial-joss-streaming">https://github.com/java-openstack/tutorial-joss-streaming</a>
-</li>
-<li>Working JOSS If-Modified-Since project; <a href="https://github.com/java-openstack/tutorial-joss-if-modified-since">https://github.com/java-openstack/tutorial-joss-if-modified-since</a>
-</li>
-</ul><p><em>On Cloud VPS Object Store</em></p>
+          <ul>
+              <li>High level explanation of JOSS; <a href="http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss">http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss</a>
+              </li>
+              <li>Hands-on JOSS tutorial; <a href="http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage">http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage</a>
+              </li>
+              <li>Architecture models; <a href="http://blog.42.nl/articles/joss-architecture-approaches-integrating-with-openstack-object-storage">http://blog.42.nl/articles/joss-architecture-approaches-integrating-with-openstack-object-storage</a>
+              </li>
+              <li>If-Modified-Since; <a href="http://blog.42.nl/articles/instruct-java-facilitate-browser-cache-if-modified-since">http://blog.42.nl/articles/instruct-java-facilitate-browser-cache-if-modified-since</a>
+              </li>
+              <li>Working JOSS tutorial project; <a href="https://github.com/java-openstack/tutorial-joss-quickstart">https://github.com/java-openstack/tutorial-joss-quickstart</a>
+              </li>
+              <li>Working JOSS streaming project; <a href="https://github.com/java-openstack/tutorial-joss-streaming">https://github.com/java-openstack/tutorial-joss-streaming</a>
+              </li>
+              <li>Working JOSS If-Modified-Since project; <a href="https://github.com/java-openstack/tutorial-joss-if-modified-since">https://github.com/java-openstack/tutorial-joss-if-modified-since</a>
+              </li>
+          </ul><p><em>On Cloud VPS Object Store</em></p>
 
-<ul>
-<li>How to use the CloudVPS ObjectStore as a beta-tester; <a href="http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/">http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/</a>
-</li>
-<li>How to get a beta-tester account on the CloudVPS ObjectStore; <a href="https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/">https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/</a>
-</li>
-<li>CloudVPS writes on collaboration with 42 to create JOSS; <a href="https://www.cloudvps.com/blog/cloudvps-object-store-beta-tester-contributes-java-library/">https://www.cloudvps.com/blog/cloudvps-object-store-beta-tester-contributes-java-library/</a>
-</li>
-</ul><p><em>On the OpenStack API</em></p>
+          <ul>
+              <li>How to use the CloudVPS ObjectStore as a beta-tester; <a href="http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/">http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/</a>
+              </li>
+              <li>How to get a beta-tester account on the CloudVPS ObjectStore; <a href="https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/">https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/</a>
+              </li>
+              <li>CloudVPS writes on collaboration with 42 to create JOSS; <a href="https://www.cloudvps.com/blog/cloudvps-object-store-beta-tester-contributes-java-library/">https://www.cloudvps.com/blog/cloudvps-object-store-beta-tester-contributes-java-library/</a>
+              </li>
+          </ul><p><em>On the OpenStack API</em></p>
 
-<ul>
-<li>OpenStack API; <a href="http://api.openstack.org/">http://api.openstack.org/</a>
-</li>
-<li>OpenStack API; <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/">http://docs.openstack.org/api/openstack-object-storage/1.0/content/</a>
-</li>
-</ul>
+          <ul>
+              <li>OpenStack API; <a href="http://api.openstack.org/">http://api.openstack.org/</a>
+              </li>
+              <li>OpenStack API; <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/">http://docs.openstack.org/api/openstack-object-storage/1.0/content/</a>
+              </li>
+          </ul><p>Also, check out the <a href="https://github.com/java-openstack/joss/wiki">WIKI</a></p>
 
-<p>Special thanks to Oscar Westra van Holthe - Kind and Erik Hooijmeijer for premium advice and support.</p>
+          <p>Keep up to date on the library development by joining the Java OpenStack Storage discussion group <a href="https://groups.google.com/forum/?fromgroups#!forum/java-openstack-storage---joss">Google Group</a></p>
 
-<h2>Sponsor</h2>
+          <p>or follow us on <a href="http://twitter.com/JavaOSS">Twitter</a></p>
 
-<p>This component was graciously donated by <a href="http://www.42.nl">42 BV</a> <img src="http://www.42.nl/images/42-54x59.png" alt="42 logo" title="42"></p>
+          <p>Special thanks to Oscar Westra van Holthe - Kind and Erik Hooijmeijer for premium advice and support.</p>
+
+          <h2>
+              <a name="sponsor" class="anchor" href="#sponsor"><span class="mini-icon mini-icon-link"></span></a>Sponsor</h2>
+
+          <p>This component was graciously donated by <a href="http://www.42.nl">42 BV</a> <a href="https://a248.e.akamai.net/camo.github.com/73ebe8f25ddf805b57c75036248050f3493e0612/687474703a2f2f7777772e34322e6e6c2f696d616765732f34322d35347835392e706e67" target="_blank"><img src="https://a248.e.akamai.net/camo.github.com/73ebe8f25ddf805b57c75036248050f3493e0612/687474703a2f2f7777772e34322e6e6c2f696d616765732f34322d35347835392e706e67" alt="42 logo" title="42" style="max-width:100%;"></a></p></article>
+
         </section>
 
         <aside id="sidebar">
