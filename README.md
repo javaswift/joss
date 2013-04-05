@@ -25,7 +25,12 @@ Your Object Store provider will have provided you with the following information
 We start by opening up a stateful client and **authenticating** ourselves:
 
 ```java
-    Account account = new ClientImpl().authenticate(tenant, username, password, url);
+    AccountConfig config = new AccountConfig()
+            .setUsername( username)
+            .setPassword(password)
+            .setAuthUrl(url)
+            .setTenant(tenant);
+    Account account = new AccountFactory(config).createAccount();
 ```
 
 On failure, the client will throw an exception. On success, the account can now be used to execute actions on the Object Store. The account takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire after 24 hours. The client will get a new token when it encounters a 401 and retry the original command just once.
@@ -107,7 +112,7 @@ It is possible to add metadata to both containers and objects.
 Likewise, this information can be retrieved, as seen above.
 
 ```java
-    Map<String, String> returnedMetadata = container.getMetadata();
+    Map<String, Object> returnedMetadata = container.getMetadata();
     for (String name : returnedMetadata.keySet()) {
         System.out.println("META / "+name+": "+returnedMetadata.get(name));
     }
@@ -116,18 +121,16 @@ Likewise, this information can be retrieved, as seen above.
 There are many situations in which it is not necessary, not possible, or even plain clumsy, to be connected to external dependencies. For those situations, JOSS offers the InMemory implementation of the OpenStackClient.
 
 ```java
-    ClientMock client = new ClientMock();
+    AccountConfig config = new AccountConfig()
+            .setUsername( username)
+            .setPassword(password)
+            .setAuthUrl(url)
+            .setTenant(tenant)
+            .setMock(true);
+    Account account = new AccountFactory(config).createAccount();
 ```
 
 All the operations work basically in the same way. It is possible to run the in-memory client and have it hold the resources for a local run of your application. *Note that there is no such thing as a public URL for the in-memory run*.
-
-Note that you will have to add some users to authenticate against.
-
-```java
-    MockUserStore users = new MockUserStore();
-    users.addUser("testuser", "testpassword");
-    client.setUsers(users);
-```
 
 Presumably, you are using Spring or something similar, in which case it will be easy to configure your profiles to either use the real client or the mock client.
 
