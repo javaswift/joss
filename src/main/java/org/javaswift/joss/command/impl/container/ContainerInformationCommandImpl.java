@@ -1,12 +1,9 @@
 package org.javaswift.joss.command.impl.container;
 
+import org.javaswift.joss.command.impl.core.httpstatus.*;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.container.ContainerInformationCommand;
 import org.javaswift.joss.model.Account;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
 import org.javaswift.joss.headers.container.ContainerMetadata;
@@ -45,7 +42,7 @@ public class ContainerInformationCommandImpl extends AbstractContainerCommand<Ht
     @Override
     public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT)),
+            new HttpStatusSuccessCondition(new HttpStatusRange(200, 299)),
             new HttpStatusFailCondition(new HttpStatusMatch(HttpStatus.SC_NOT_FOUND))
         };
     }

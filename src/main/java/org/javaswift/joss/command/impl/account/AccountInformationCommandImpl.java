@@ -1,5 +1,6 @@
 package org.javaswift.joss.command.impl.account;
 
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
 import org.javaswift.joss.command.shared.account.AccountInformationCommand;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.*;
@@ -43,7 +44,7 @@ public class AccountInformationCommandImpl extends AbstractSecureCommand<HttpHea
     @Override
     public HttpStatusChecker[] getStatusCheckers() {
         return new HttpStatusChecker[] {
-            new HttpStatusSuccessCondition(new HttpStatusMatch(HttpStatus.SC_NO_CONTENT))
+            new HttpStatusSuccessCondition(new HttpStatusRange(200, 299))
         };
     }
 
