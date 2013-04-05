@@ -34,15 +34,16 @@ public class AccountFactory {
 
     public Client createClientMock() {
         return new ClientMock()
+                .setHost(config.getHost())
                 .setOnFileObjectStore(config.getMockOnFileObjectStore())
                 .setAllowObjectDeleter(config.isMockAllowObjectDeleter())
                 .setAllowEveryone(config.isMockAllowEveryone())
-                .setMillisDelay(config.getMockMillisDelay())
-                .setHost(config.getHost());
+                .setMillisDelay(config.getMockMillisDelay());
     }
 
     public Client createClientImpl() {
         return new ClientImpl()
+                .setHost(config.getHost())
                 .setHttpClient(this.httpClient)
                 .setAllowCaching(config.isAllowCaching());
     }
