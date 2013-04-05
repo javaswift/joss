@@ -130,7 +130,7 @@ There are many situations in which it is not necessary, not possible, or even pl
     Account account = new AccountFactory(config).createAccount();
 ```
 
-All the operations work basically in the same way. It is possible to run the in-memory client and have it hold the resources for a local run of your application. *Note that there is no such thing as a public URL for the in-memory run*.
+All the operations work basically in the same way. It is possible to run the in-memory client and have it hold the resources for a local run of your application.
 
 Presumably, you are using Spring or something similar, in which case it will be easy to configure your profiles to either use the real client or the mock client.
 
