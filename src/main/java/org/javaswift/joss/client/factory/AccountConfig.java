@@ -80,40 +80,45 @@ public class AccountConfig {
     */
     private String mockOnFileObjectStore = null;
 
-    public void setTenant(String tenant) {
+    public AccountConfig setTenant(String tenant) {
         this.tenant = tenant;
+        return this;
     }
 
     public String getTenant() {
         return tenant;
     }
 
-    public void setUsername(String username) {
+    public AccountConfig setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setPassword(String password) {
+    public AccountConfig setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setAuthUrl(String authUrl) {
+    public AccountConfig setAuthUrl(String authUrl) {
         this.authUrl = authUrl;
+        return this;
     }
 
     public String getAuthUrl() {
         return authUrl;
     }
 
-    public void setMock(boolean mock) {
+    public AccountConfig setMock(boolean mock) {
         this.mock = mock;
+        return this;
     }
 
     public boolean isMock() {
@@ -124,55 +129,62 @@ public class AccountConfig {
         return host;
     }
 
-    public void setHost(String host) {
+    public AccountConfig setHost(String host) {
         this.host = host;
+        return this;
     }
 
     public int getMockMillisDelay() {
         return mockMillisDelay;
     }
 
-    public void setMockMillisDelay(int mockMillisDelay) {
+    public AccountConfig setMockMillisDelay(int mockMillisDelay) {
         this.mockMillisDelay = mockMillisDelay;
+        return this;
     }
 
     public boolean isAllowReauthenticate() {
         return allowReauthenticate;
     }
 
-    public void setAllowReauthenticate(boolean allowReauthenticate) {
+    public AccountConfig setAllowReauthenticate(boolean allowReauthenticate) {
         this.allowReauthenticate = allowReauthenticate;
+        return this;
     }
 
     public boolean isAllowCaching() {
         return allowCaching;
     }
 
-    public void setAllowCaching(boolean allowCaching) {
+    public AccountConfig setAllowCaching(boolean allowCaching) {
         this.allowCaching = allowCaching;
+        return this;
     }
 
     public boolean isMockAllowObjectDeleter() {
         return mockAllowObjectDeleter;
     }
 
-    public void setMockAllowObjectDeleter(boolean mockAllowObjectDeleter) {
+    public AccountConfig setMockAllowObjectDeleter(boolean mockAllowObjectDeleter) {
         this.mockAllowObjectDeleter = mockAllowObjectDeleter;
+        return this;
     }
 
     public boolean isMockAllowEveryone() {
         return mockAllowEveryone;
     }
 
-    public void setMockAllowEveryone(boolean mockAllowEveryone) {
+    public AccountConfig setMockAllowEveryone(boolean mockAllowEveryone) {
         this.mockAllowEveryone = mockAllowEveryone;
+        return this;
     }
 
     public String getMockOnFileObjectStore() {
         return mockOnFileObjectStore;
     }
 
-    public void setMockOnFileObjectStore(String mockOnFileObjectStore) {
+    public AccountConfig setMockOnFileObjectStore(String mockOnFileObjectStore) {
         this.mockOnFileObjectStore = mockOnFileObjectStore;
+        return this;
     }
 }
