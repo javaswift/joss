@@ -37,6 +37,7 @@ public class ClientImpl implements Client<AccountImpl> {
         connectionManager.setDefaultMaxPerRoute(25);
         this.httpClient = new DefaultHttpClient(connectionManager);
         if (socketTimeout != -1) {
+            LOG.info("JOSS / Set socket timeout on HttpClient: "+socketTimeout);
             HttpParams params = this.httpClient.getParams();
             HttpConnectionParams.setSoTimeout(params, socketTimeout);
         }
@@ -58,7 +59,7 @@ public class ClientImpl implements Client<AccountImpl> {
 
     public ClientImpl setHttpClient(HttpClient httpClient) {
         if (httpClient != null) {
-            LOG.info("JOSS / Use HTTP client set by client");
+            LOG.info("JOSS / Use HTTP client set by client (overrides previous HttpClient settings)");
             this.httpClient = httpClient;
         }
         return this;
