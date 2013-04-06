@@ -33,6 +33,16 @@
 
             <h1>Release notes</h1>
 
+            <h2><a name="v081" class="anchor" href="#v081"><span class="mini-icon mini-icon-link"></span></a>v0.8.1</h2>
+            <ul>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/8">exists() does not log an error</a></strong>; everytime exists() is called, it used to log a 404 error. Since the call is about detecting, this has been disabled</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/9">custom host</a></strong>; not only mock, but also real mode benefits from having a custom host which you can use to prefix ObjectStore URLs</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/10">HttpClient socket timeout</a></strong>; if no custom HttpClient is supplied, JOSS can be instructed to instantiate a DefaultHttpClient with a custom socket timeout. In light of <a href="http://pragprog.com/book/mnee/release-it">Release It!</a>, useful to get more robust systems not clogging up on deadlocked HTTP clients</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/11">more clean ObjectDeleter</a></strong>; ObjectDeleter used to be a ScheduledExecutorService that always ran in the background. Now it only pops up when it is needed (for DeleteAt/DeleteAfter headers) and it shuts down when it is not</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/12">configurables in AccountConfig</a></strong>; easier to configure JOSS, with more variables now centralized in AccountConfig. The new variables are allowReathenticate, allowCaching, mock allowObjectDeleter (see above), mock allowEveryone and mock onFileObjectStore</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/13">HEAD calls return SC_OK instead of SC_NO_CONTENT;</a></strong>; Swift now returns SC_OK on all HEAD calls (account, container and object), instead of the SC_NO_CONTENT it had before. Mock mode has been aligned with this changed reality</li>
+            </ul>
+
             <h2><a name="v080" class="anchor" href="#v080"><span class="mini-icon mini-icon-link"></span></a>v0.8.0</h2>
             <p>Theme: <em>polishing for v1.0, adopting more requirements from project at 42</em></p>
 
