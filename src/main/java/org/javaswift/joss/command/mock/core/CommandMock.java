@@ -67,7 +67,7 @@ public abstract class CommandMock<T> {
             HttpStatusChecker.verifyCode(getStatusCheckers(), result.getStatus());
             return result.getPayload();
         } catch (CommandException err) {
-            if (!allowErrorLog) {
+            if (allowErrorLog) {
                 LOG.error("JOSS / "+this.getClass().getSimpleName()+
                         ", HTTP status "+err.getHttpStatusCode());
             }
