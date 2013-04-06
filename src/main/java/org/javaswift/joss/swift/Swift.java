@@ -34,6 +34,8 @@ public class Swift {
 
     private Map<String, SwiftContainer> containers = new TreeMap<String, SwiftContainer>();
 
+    private boolean allowObjectDeleter;
+
     private ObjectDeleter objectDeleter;
 
     private MockUserStore users = new MockUserStore();
@@ -43,6 +45,10 @@ public class Swift {
     private HeaderStore headers = new HeaderStore();
 
     private long millisDelay = 0;
+
+    private int objectDeleterStartAfterSeconds = 10;
+
+    private int objectDeleterIntervalSeconds = 10;
 
     StatusGenerator statusGenerator = new StatusGenerator();
 
@@ -59,8 +65,19 @@ public class Swift {
         return this;
     }
 
-    public Swift setObjectDeleter(ObjectDeleter objectDeleter) {
-        this.objectDeleter = objectDeleter;
+    public ObjectDeleter getCurrentObjectDeleter() {
+        if (!allowObjectDeleter) {
+            return null;
+        }
+        if (    this.objectDeleter == null ||
+                this.objectDeleter.isShutdown()) {
+            this.objectDeleter = new ObjectDeleter(objectDeleterStartAfterSeconds, objectDeleterIntervalSeconds);
+        }
+        return this.objectDeleter;
+    }
+
+    public Swift setAllowObjectDeleter(boolean allowObjectDeleter) {
+        this.allowObjectDeleter = allowObjectDeleter;
         return this;
     }
 
@@ -76,6 +93,16 @@ public class Swift {
 
     public Swift setMillisDelay(long millisDelay) {
         this.millisDelay = millisDelay;
+        return this;
+    }
+
+    public Swift setObjectDeleterStartAfterSeconds(int objectDeleterStartAfterSeconds) {
+        this.objectDeleterStartAfterSeconds = objectDeleterStartAfterSeconds;
+        return this;
+    }
+
+    public Swift setObjectDeleterIntervalSeconds(int objectDeleterIntervalSeconds) {
+        this.objectDeleterIntervalSeconds = objectDeleterIntervalSeconds;
         return this;
     }
 
@@ -97,10 +124,6 @@ public class Swift {
 
     public int getStatus(Class<? extends CommandMock> clazz) {
         return this.statusGenerator.getStatus(clazz);
-    }
-
-    public ObjectDeleter getObjectDeleter() {
-        return this.objectDeleter;
     }
 
     public SwiftResult<AccessImpl> authenticate(String tenant, String username, String password) {
@@ -297,11 +320,11 @@ public class Swift {
             }
         }
         if (deleteAt != null) {
-            if (objectDeleter == null) { // Remove immediately
-                foundContainer.deleteObject(foundObject.getName());
-            } else {
-                this.objectDeleter.scheduleForDeletion(foundContainer, foundObject, deleteAt.getDate());
+            if (this.allowObjectDeleter) {
+                getCurrentObjectDeleter().scheduleForDeletion(foundContainer, foundObject, deleteAt.getDate());
                 foundObject.setDeleteAt(deleteAt);
+            } else { // Remove immediately
+                foundContainer.deleteObject(foundObject.getName());
             }
         }
         return foundObject.saveMetadata(headers);

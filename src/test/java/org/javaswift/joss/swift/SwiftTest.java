@@ -2,12 +2,17 @@ package org.javaswift.joss.swift;
 
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.client.mock.AccountMock;
+import org.javaswift.joss.client.mock.ClientMock;
 import org.javaswift.joss.client.mock.ContainerMock;
 import org.javaswift.joss.client.mock.StoredObjectMock;
 import org.javaswift.joss.command.mock.account.AccountInformationCommandMock;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.Header;
+import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.instructions.UploadInstructions;
+import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +22,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 import static junit.framework.Assert.*;
 import static org.mockito.Matchers.*;
@@ -37,12 +45,15 @@ public class SwiftTest {
 
     protected StoredObjectMock object;
 
+    protected UploadInstructions instructions;
+
     @Before
     public void setup() {
         this.swift = new Swift();
         this.account = new AccountMock(swift);
         this.container = new ContainerMock(account, "does-not-exist");
         this.object = new StoredObjectMock(container, "does-not-exist");
+        this.instructions = new UploadInstructions(new byte[] { 0x01, 0x02, 0x03 });
     }
 
     @Test(expected = CommandException.class)
@@ -192,6 +203,28 @@ public class SwiftTest {
         assertEquals(-1, swift.getStatus(AccountInformationCommandMock.class));
         assertEquals(HttpStatus.SC_NOT_FOUND, swift.getStatus(AccountInformationCommandMock.class));
         assertEquals(-1, swift.getStatus(AccountInformationCommandMock.class));
+    }
+
+    @Test
+    public void scheduledDeleteForcingShutdown() throws InterruptedException {
+        Swift swift = new Swift()
+                .setAllowObjectDeleter(true)
+                .setObjectDeleterStartAfterSeconds(1)
+                .setObjectDeleterIntervalSeconds(1);
+        swift.createContainer(container.getName());
+        objectDeleteAt(swift);
+        objectDeleteAt(swift);
+    }
+
+    protected void objectDeleteAt(Swift swift) throws InterruptedException {
+        swift.uploadObject(container, object, instructions);
+        assertEquals(HttpStatus.SC_OK, swift.getObjectInformation(container, object).getStatus());
+        DeleteAt deleteAt = new DeleteAt(new Date(new Date().getTime()+2)); // 2 seconds from now
+        Collection<Header> headers = new ArrayList<Header>();
+        headers.add(deleteAt);
+        swift.saveObjectMetadata(container, object, headers);
+        Thread.sleep(3000);
+        assertEquals(HttpStatus.SC_NOT_FOUND, swift.getObjectInformation(container, object).getStatus());
     }
 
 }

@@ -35,7 +35,7 @@ public class ClientMockTest {
                 .setAllowEveryone(true)
                 .authenticate(null, null, null, null);
         Swift swift = ((AccountCommandFactoryMock)account.getFactory()).getSwift();
-        assertNull(swift.getObjectDeleter());
+        assertNull(swift.getCurrentObjectDeleter());
     }
 
 }

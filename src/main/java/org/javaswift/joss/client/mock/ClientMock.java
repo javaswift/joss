@@ -35,7 +35,7 @@ public class ClientMock implements Client<AccountMock> {
         LOG.info("JOSS / * On File ObjectStore: "+onFileObjectStore);
         LOG.info("JOSS / * Use milliseconds delay: "+ millisDelay);
         Swift swift = new Swift()
-                .setObjectDeleter(allowObjectDeleter ? new ObjectDeleter(10, 10) : null)
+                .setAllowObjectDeleter(allowObjectDeleter)
                 .setOnFileObjectStore(onFileObjectStore)
                 .setUserStore(users)
                 .setMillisDelay(millisDelay);
