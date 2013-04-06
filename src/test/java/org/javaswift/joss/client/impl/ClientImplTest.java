@@ -53,8 +53,6 @@ public class ClientImplTest extends BaseCommandTest {
     @Test
     public void coverSetters() {
         client.setHttpClient(null);
-        client.setHost(null);
-        client.setHost("http://localhost");
     }
 
 }

@@ -27,6 +27,10 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
         this.containerCommandFactory = new ContainerCommandFactoryMock(this.swift);
     }
 
+    public void setHost(String host) {
+        this.swift.setHost(host);
+    }
+
     @Override
     public AccessImpl authenticate() {
         return null;

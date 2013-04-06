@@ -59,7 +59,7 @@ public abstract class BaseCommandTest {
         when(statusLine.getStatusCode()).thenReturn(200);
         when(response.getStatusLine()).thenReturn(statusLine);
         when(httpClient.execute(any(HttpRequestBase.class))).thenReturn(response);
-        account = new AccountImpl(null, httpClient, defaultAccess, null, true);
+        account = new AccountImpl(null, httpClient, defaultAccess, true);
         requestArgument = ArgumentCaptor.forClass(HttpRequestBase.class);
     }
 

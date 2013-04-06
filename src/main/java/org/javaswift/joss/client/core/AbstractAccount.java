@@ -9,10 +9,14 @@ import org.javaswift.joss.headers.account.AccountMetadata;
 import org.javaswift.joss.information.AccountInformation;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.PaginationMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
 public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountInformation> implements Account {
+
+    public static final Logger LOG = LoggerFactory.getLogger(AbstractAccount.class);
 
     private static final Integer MAX_PAGE_SIZE = 9999;
 
@@ -44,7 +48,14 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         this.info = new AccountInformation();
     }
 
+    public AbstractAccount setHost(String host) {
+        LOG.info("JOSS / Use host: "+host);
+        this.commandFactory.setHost(host);
+        return this;
+    }
+
     public AbstractAccount setAllowReauthenticate(boolean allowReauthenticate) {
+        LOG.info("JOSS / Allow reauthentication: "+allowReauthenticate);
         this.allowReauthenticate = allowReauthenticate;
         return this;
     }

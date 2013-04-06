@@ -95,13 +95,14 @@ public class AccountImplTest extends BaseCommandTest {
 
     @Test
     public void getPublicUROverride() {
-        account = new AccountImpl(null, httpClient, defaultAccess, "http://static.someurl.com", true);
+        account = new AccountImpl(null, httpClient, defaultAccess, true);
+        account.setHost("http://static.someurl.com");
         assertEquals("http://static.someurl.com", account.getPublicURL());
     }
 
     @Test
     public void isAllowCaching() throws IOException {
-        account = new AccountImpl(null, httpClient, defaultAccess, null, false); // Caching is turned off
+        account = new AccountImpl(null, httpClient, defaultAccess, false); // Caching is turned off
         when(statusLine.getStatusCode()).thenReturn(204);
         prepareMetadata();
         account.getCount();

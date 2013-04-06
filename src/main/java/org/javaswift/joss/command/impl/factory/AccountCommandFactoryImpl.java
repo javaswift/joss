@@ -25,14 +25,17 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     private final HttpClient httpClient;
     private AccessImpl access;
     private final AuthenticationCommand authCommand;
-    private final String host;
+    private String host;
 
-    public AccountCommandFactoryImpl(HttpClient httpClient, AccessImpl access, AuthenticationCommand authCommand, String host) {
+    public AccountCommandFactoryImpl(HttpClient httpClient, AccessImpl access, AuthenticationCommand authCommand) {
         this.httpClient = httpClient;
         this.access = access;
         this.authCommand = authCommand;
-        this.host = host;
         this.containerCommandFactory = new ContainerCommandFactoryImpl(this);
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public AccessImpl authenticate() {

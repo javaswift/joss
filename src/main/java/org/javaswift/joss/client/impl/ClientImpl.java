@@ -45,15 +45,7 @@ public class ClientImpl implements Client<AccountImpl> {
         LOG.info("JOSS / Successfully authenticated");
         access.setPreferredRegion(preferredRegion);
         LOG.info("JOSS / Applying preferred region: "+(preferredRegion == null ? "none" : preferredRegion));
-        return new AccountImpl(command, httpClient, access, host, allowCaching);
-    }
-
-    public ClientImpl setHost(String host) {
-        if (host != null) {
-            LOG.info("JOSS / Use host: "+host);
-            this.host = host;
-        }
-        return this;
+        return new AccountImpl(command, httpClient, access, allowCaching);
     }
 
     public ClientImpl setHttpClient(HttpClient httpClient) {

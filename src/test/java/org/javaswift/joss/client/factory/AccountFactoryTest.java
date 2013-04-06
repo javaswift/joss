@@ -34,10 +34,10 @@ public class AccountFactoryTest {
     public void setup() throws Exception {
         whenNew(ClientImpl.class).withNoArguments().thenReturn(mockedClient);
         when(mockedClient.setHttpClient(httpClient)).thenReturn(mockedClient);
-        when(mockedClient.setHost(anyString())).thenReturn(mockedClient);
         when(mockedClient.setAllowCaching(true)).thenReturn(mockedClient);
         when(mockedClient.authenticate(anyString(), anyString(), anyString(), anyString())).thenReturn(mockedAccount);
         when(mockedAccount.setAllowReauthenticate(anyBoolean())).thenReturn(mockedAccount);
+        when(mockedAccount.setHost(anyString())).thenReturn(mockedAccount);
     }
 
     @Test

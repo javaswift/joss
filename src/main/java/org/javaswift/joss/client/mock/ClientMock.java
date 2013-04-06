@@ -66,11 +66,6 @@ public class ClientMock implements Client<AccountMock> {
         return this;
     }
 
-    public ClientMock setHost(String publicUrl) {
-        this.host = publicUrl;
-        return this;
-    }
-
     public ClientMock setMillisDelay(long millisDelay) {
         this.millisDelay = millisDelay;
         return this;

@@ -16,6 +16,8 @@ public interface AccountCommandFactory {
 
     public String getPublicURL();
 
+    public void setHost(String host);
+
     AccountInformationCommand createAccountInformationCommand(Account account);
 
     AccountMetadataCommand createAccountMetadataCommand(Account account, Collection<? extends Header> headers);

@@ -60,6 +60,13 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     public Account setAllowReauthenticate(boolean allowReauthenticate);
 
     /**
+    * Set your own host to prefix the public URLs of objects
+    * @param host host of an object's public URL
+    * @return instance of Account
+    */
+    public Account setHost(String host);
+
+    /**
     * Whether reauthentication on expiration of the authentication token is allowed, or this is done
     * manually by the client
     * @return whether reauthentication is allowed

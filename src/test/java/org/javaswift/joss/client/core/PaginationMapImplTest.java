@@ -33,7 +33,7 @@ public class PaginationMapImplTest extends BaseCommandTest {
     @Test
     public void buildMap() {
         account = mock(AccountImpl.class);
-        when(account.getFactory()).thenReturn(new AccountCommandFactoryImpl(null, null, null, null));
+        when(account.getFactory()).thenReturn(new AccountCommandFactoryImpl(null, null, null));
         when(account.getCount()).thenReturn(9);
         whenList(account, null, new String[]{ "A", "B" });
         whenList(account, "B", new String[]{ "C", "D" });

@@ -29,12 +29,12 @@ public class AccountFactory {
         }
         return client
                 .authenticate(config.getTenant(), config.getUsername(), config.getPassword(), config.getAuthUrl())
+                .setHost(config.getHost())
                 .setAllowReauthenticate(config.isAllowReauthenticate());
     }
 
     public Client createClientMock() {
         return new ClientMock()
-                .setHost(config.getHost())
                 .setOnFileObjectStore(config.getMockOnFileObjectStore())
                 .setAllowObjectDeleter(config.isMockAllowObjectDeleter())
                 .setAllowEveryone(config.isMockAllowEveryone())
@@ -43,7 +43,6 @@ public class AccountFactory {
 
     public Client createClientImpl() {
         return new ClientImpl()
-                .setHost(config.getHost())
                 .setHttpClient(this.httpClient)
                 .setAllowCaching(config.isAllowCaching());
     }
