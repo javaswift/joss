@@ -53,7 +53,9 @@ public class ClientImplTest extends BaseCommandTest {
     @Test
     public void coverSetters() {
         client.setHttpClient(null);
+        new ClientImpl(1000);
     }
+
 
 }
 

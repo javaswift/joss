@@ -1,5 +1,7 @@
 package org.javaswift.joss.client.impl;
 
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.javaswift.joss.command.impl.factory.AuthenticationCommandFactoryImpl;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
@@ -19,19 +21,25 @@ public class ClientImpl implements Client<AccountImpl> {
 
     private boolean allowCaching = true;
 
-    private String host = null;
-
     private AuthenticationCommandFactory commandFactory = new AuthenticationCommandFactoryImpl();
 
-    public ClientImpl() {
-        initHttpClient();
+    public ClientImpl(int socketTimeout) {
+        initHttpClient(socketTimeout);
     }
 
-    private void initHttpClient() {
+    public ClientImpl() {
+        initHttpClient(-1);
+    }
+
+    private void initHttpClient(int socketTimeout) {
         PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
         connectionManager.setMaxTotal(50);
         connectionManager.setDefaultMaxPerRoute(25);
         this.httpClient = new DefaultHttpClient(connectionManager);
+        if (socketTimeout != -1) {
+            HttpParams params = this.httpClient.getParams();
+            HttpConnectionParams.setSoTimeout(params, socketTimeout);
+        }
     }
 
     public AccountImpl authenticate(String tenant, String username, String password, String authUrl) {

@@ -80,6 +80,13 @@ public class AccountConfig {
     */
     private String mockOnFileObjectStore = null;
 
+    /**
+    * Socket timeout in milliseconds, ie the allowable idle time between packets. Default this will
+    * not timeout. Note that this value will not be used if a custom HttpClient is supplied.
+    * See also: http://hc.apache.org/httpcomponents-core-ga/httpcore/apidocs/org/apache/http/params/CoreConnectionPNames.html#SO_TIMEOUT
+    */
+    private int socketTimeout = -1;
+
     public AccountConfig setTenant(String tenant) {
         this.tenant = tenant;
         return this;
@@ -185,6 +192,15 @@ public class AccountConfig {
 
     public AccountConfig setMockOnFileObjectStore(String mockOnFileObjectStore) {
         this.mockOnFileObjectStore = mockOnFileObjectStore;
+        return this;
+    }
+
+    public int getSocketTimeout() {
+        return socketTimeout;
+    }
+
+    public AccountConfig setSocketTimeout(int socketTimeout) {
+        this.socketTimeout = socketTimeout;
         return this;
     }
 }

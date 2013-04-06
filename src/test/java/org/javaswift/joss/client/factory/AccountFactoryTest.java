@@ -13,6 +13,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
@@ -32,7 +33,7 @@ public class AccountFactoryTest {
 
     @Before
     public void setup() throws Exception {
-        whenNew(ClientImpl.class).withNoArguments().thenReturn(mockedClient);
+        whenNew(ClientImpl.class).withArguments(anyInt()).thenReturn(mockedClient);
         when(mockedClient.setHttpClient(httpClient)).thenReturn(mockedClient);
         when(mockedClient.setAllowCaching(true)).thenReturn(mockedClient);
         when(mockedClient.authenticate(anyString(), anyString(), anyString(), anyString())).thenReturn(mockedAccount);

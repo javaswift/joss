@@ -42,7 +42,7 @@ public class AccountFactory {
     }
 
     public Client createClientImpl() {
-        return new ClientImpl()
+        return new ClientImpl(config.getSocketTimeout())
                 .setHttpClient(this.httpClient)
                 .setAllowCaching(config.isAllowCaching());
     }
