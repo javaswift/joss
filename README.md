@@ -192,11 +192,10 @@ _On the OpenStack API_
 * OpenStack API; http://api.openstack.org/
 * OpenStack API; http://docs.openstack.org/api/openstack-object-storage/1.0/content/
 
-Also, check out the [WIKI](https://github.com/java-openstack/joss/wiki)
+_Openstack Swift on Github_
+* Github project https://github.com/openstack/swift
 
-Keep up to date on the library development by joining the Java OpenStack Storage discussion group [Google Group](https://groups.google.com/forum/?fromgroups#!forum/java-openstack-storage---joss)
-
-or follow us on [Twitter](http://twitter.com/JavaOSS)
+or follow us on [Twitter](http://twitter.com/javaswiftorg)
 
 Special thanks to Oscar Westra van Holthe - Kind and Erik Hooijmeijer for premium advice and support.
 
