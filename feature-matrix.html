@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/joss.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>JOSS / Features</title>
+</head>
+
+<body>
+<header>
+    <div class="inner">
+        <h1><img src="images/joss-logo.png" title="JOSS"/></h1>
+        <h2>Java library for OpenStack Storage, aka Swift</h2>
+        <a href="https://github.com/javaswift/joss" class="button"><small>View project on</small>GitHub</a>
+    </div>
+</header>
+
+<div id="content-wrapper">
+    <div class="inner clearfix">
+        <section id="main-content">
+
+            <h1>Supported Swift Features</h1>
+            <p>Below is the list of features mapped to the features of the OpenStack Swift REST API.</p>
+
+            <h2>Authentication</h2>
+
+            <table class="feature-matrix">
+                <thead>
+                    <tr>
+                        <td class="supported"></td>
+                        <td class="article-ref">#</td>
+                        <td class="subject">Subject</td>
+                        <td class="documentation">Explanation</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">1.2</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/authentication-object-dev-guide.html">Authentication</a></td>
+                        <td class="documentation">N/A</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Account</h2>
+
+            <table class="feature-matrix">
+                <thead>
+                    <tr>
+                        <td class="supported"></td>
+                        <td class="article-ref">#</td>
+                        <td class="subject">Subject</td>
+                        <td class="documentation">Explanation</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.1.1</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/s_listcontainers.html">List Containers</a></td>
+                        <td class="documentation">
+                            Supported: prefix, marker, limit, format (always json)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.1.2</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-account-metadata.html">Retrieve Account Metadata</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.1.3</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/create-update-account-metadata.html">Create/Update Account Metadata</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.1.4</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/delete-account-metadata.html">Delete Account Metadata</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Container</h2>
+
+            <table class="feature-matrix">
+                <thead>
+                    <tr>
+                        <td class="supported"></td>
+                        <td class="article-ref">#</td>
+                        <td class="subject">Subject</td>
+                        <td class="documentation">Explanation</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.2.1</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/list-objects.html">List Objects</a></td>
+                        <td class="documentation">
+                            Supported: prefix, marker, limit, format (always json)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref">&nbsp;</td>
+                        <td class="subject">&nbsp;</td>
+                        <td class="documentation">
+                            Not supported: end_marker, delimiter, path
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.2.2</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/create-container.html">Create Container</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.2.3</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/delete-container.html">Delete Container</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.2.4</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-container-metadata.html">Retrieve Container Metadata</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.2.5</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/Update_Container_Metadata-d1e1900.html">Create/Update Container Metadata</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.2.6</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/delete-container-metadata.html">Delete Container Metadata</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">4.8</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/special-metadata-acls.html">Special Metadata: Container ACLs</a></td>
+                        <td class="documentation">Supported: public/private</td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref"></td>
+                        <td class="subject"></td>
+                        <td class="documentation">Not supported: fine-grained authorization</td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref">4.13</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/folders-directories.html">Pseudo-Hierarchical Folders/Directories</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Static website</h2>
+
+            <table class="feature-matrix">
+                <thead>
+                    <tr>
+                        <td class="supported"></td>
+                        <td class="article-ref">#</td>
+                        <td class="subject">Subject</td>
+                        <td class="documentation">Explanation</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref">3.3.1</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/Examples_for_static_web-dle4025.html">Static Web Middleware via swift</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref">3.3.2</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/Set_Error_Pages_for_Static_Website-dle4005.html">Set Error Pages for Static Website</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Object</h2>
+
+            <table class="feature-matrix">
+                <thead>
+                    <tr>
+                        <td class="supported"></td>
+                        <td class="article-ref">#</td>
+                        <td class="subject">Subject</td>
+                        <td class="documentation">Explanation</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.4.1</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html">Retrieve Object</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.4.2</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/create-update-object.html">Create/Update Object</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.4.2.1</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/large-object-creation.html">Large Object Creation</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref"></td>
+                        <td class="subject"><a href="http://docs.openstack.org/developer/swift/overview_large_objects.html">Automatically apply Swift convention for large objects</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref">3.4.2.2</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/chunked-transfer-encoding.html">Chunked Transfer Encoding</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref">3.4.3</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/assigning-cors-headers-to-requests.html">Assigning CORS Headers to Requests</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref">3.4.4</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/enabling-file-compression-with-content-encoding-header.html">Enabling File Compression with the Content-Encoding Header</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref">3.4.5</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/enabling-browser-bypass-with-content-disposition-header.html">Enabling Browser Bypass with the Content-Disposition Header</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.4.6</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/Expiring_Objects-e1e3228.html">Expiring Objects with the X-Delete-After and X-Delete-At Headers</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/cross.png"/></td>
+                        <td class="article-ref">3.4.7</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/Object_Versioning-e1e3230.html">Object Versioning</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.4.8</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/copy-object.html">Copy Object</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.4.9</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/delete-object.html">Delete Object</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.4.10</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object-metadata.html">Retrieve Object Metadata</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                    <tr>
+                        <td class="supported"><img src="images/checkmark.png"/></td>
+                        <td class="article-ref">3.4.11</td>
+                        <td class="subject"><a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/update-object-metadata.html">Update Object Metadata</a></td>
+                        <td class="documentation"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+        <aside id="sidebar">
+
+            <p class="site-link"><a href="index.html">Home</a></p>
+            <p class="site-link">Tutorials</p>
+            <p class="site-link-sub"><a href="pagination.html">Pagination</a></p>
+            <p class="site-link-sub"><a href="spring.html">Wiring to Spring</a></p>
+            <p class="site-link-sub"><a href="economy.html">Economy of server calls</a></p>
+            <p class="site-link">Roadmap</p>
+            <p class="site-link-sub"><a href="release-notes.html">Release notes</a></p>
+            <p class="site-link-sub"><a href="feature-matrix.html">Supported Swift features</a></p>
+            <p class="site-link-sub"><a href="future-features.html">Future features</a></p>
+            <p class="site-link"><a href="http://javaswift.org">Javaswift</a></p>
+            <p class="site-link-sub"><a href="http://joss.javaswift.org">JOSS</a></p>
+            <p class="site-link-sub"><a href="http://cloudie.javaswift.org">Cloudie</a></p>
+
+            <hr>
+
+            <a href="https://github.com/javaswift/joss/zipball/master" class="button">
+                <small>Download</small>
+                .zip file
+            </a>
+            <a href="https://github.com/javaswift/joss/tarball/master" class="button">
+                <small>Download</small>
+                .tar.gz file
+            </a>
+
+            <p class="repo-owner"><a href="https://github.com/javaswift/joss"></a> is maintained by <a href="https://github.com/javaswift">javaswift</a>.</p>
+
+            <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-39343905-1");
+        pageTracker._trackPageview();
+    } catch(err) {}
+</script>
+
+</body>
+</html>

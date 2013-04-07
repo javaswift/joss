@@ -30,3 +30,30 @@ hr {
     margin-bottom: 10px;
 }
 
+.feature-matrix thead td {
+    font-weight: bold;
+}
+
+.feature-matrix .supported {
+    text-align: center;
+    width: 4%;
+}
+
+.feature-matrix .article-ref {
+    text-align: center;
+    width: 8%;
+}
+
+.feature-matrix .subject {
+    text-align: left;
+    width: 30%;
+}
+
+.feature-matrix .documentation {
+    text-align: left;
+    width: 58%;
+}
+
+td.supported img {
+    width: 20px;
+}
