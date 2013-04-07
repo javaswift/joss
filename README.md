@@ -177,9 +177,9 @@ _On JOSS_
 * Hands-on JOSS tutorial; http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage
 * Architecture models; http://blog.42.nl/articles/joss-architecture-approaches-integrating-with-openstack-object-storage
 * If-Modified-Since; http://blog.42.nl/articles/instruct-java-facilitate-browser-cache-if-modified-since
-* Working JOSS tutorial project; https://github.com/java-openstack/tutorial-joss-quickstart
-* Working JOSS streaming project; https://github.com/java-openstack/tutorial-joss-streaming
-* Working JOSS If-Modified-Since project; https://github.com/java-openstack/tutorial-joss-if-modified-since
+* Working JOSS tutorial project; https://github.com/javaswift/tutorial-joss-quickstart
+* Working JOSS streaming project; https://github.com/javaswift/tutorial-joss-streaming
+* Working JOSS If-Modified-Since project; https://github.com/javaswift/tutorial-joss-if-modified-since
 
 _On Cloud VPS Object Store_
 
