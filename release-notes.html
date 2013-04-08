@@ -33,6 +33,11 @@
 
             <h1>Release notes</h1>
 
+            <h2><a name="v082" class="anchor" href="#v082"><span class="mini-icon mini-icon-link"></span></a>v0.8.2</h2>
+            <ul>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/15">fluent interface on AccountConfig interferes with Tomcat context.xml</a></strong>; Tomcat does not like a Bean to have fluent setter methods. AccountConfig is now once more a plain bean with void setters. The fluent interface has been relocated to factory.</li>
+            </ul>
+
             <h2><a name="v081" class="anchor" href="#v081"><span class="mini-icon mini-icon-link"></span></a>v0.8.1</h2>
             <ul>
                 <li><strong><a href="https://github.com/javaswift/joss/issues/8">exists() does not log an error</a></strong>; everytime exists() is called, it used to log a 404 error. Since the call is about detecting, this has been disabled</li>
