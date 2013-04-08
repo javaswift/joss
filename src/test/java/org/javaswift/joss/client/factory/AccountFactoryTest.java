@@ -66,4 +66,23 @@ public class AccountFactoryTest {
         factory.createAccount();
     }
 
+    @Test
+    public void useFluentInterface() {
+        new AccountFactory()
+                .setAllowCaching(true)
+                .setAllowReauthenticate(true)
+                .setAuthUrl(null)
+                .setHost(null)
+                .setHttpClient(null)
+                .setMock(true)
+                .setMockAllowEveryone(true)
+                .setMockAllowObjectDeleter(true)
+                .setMockMillisDelay(0)
+                .setMockOnFileObjectStore(null)
+                .setPassword(null)
+                .setSocketTimeout(0)
+                .setTenant(null)
+                .setUsername(null);
+    }
+
 }

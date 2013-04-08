@@ -9,20 +9,20 @@ public class AccountConfigTest {
 
     @Test
     public void construct() {
-        AccountConfig config = new AccountConfig()
-            .setAuthUrl("auth")
-            .setPassword("pwd")
-            .setTenant("tenant")
-            .setUsername("user")
-            .setMock(true)
-            .setMockMillisDelay(10)
-            .setAllowCaching(true)
-            .setAllowReauthenticate(true)
-            .setMockAllowEveryone(true)
-            .setMockAllowObjectDeleter(true)
-            .setMockOnFileObjectStore("/some/path")
-            .setHost("http://localhost:8080/mock")
-            .setSocketTimeout(1000);
+        AccountConfig config = new AccountConfig();
+        config.setAuthUrl("auth");
+        config.setPassword("pwd");
+        config.setTenant("tenant");
+        config.setUsername("user");
+        config.setMock(true);
+        config.setMockMillisDelay(10);
+        config.setAllowCaching(true);
+        config.setAllowReauthenticate(true);
+        config.setMockAllowEveryone(true);
+        config.setMockAllowObjectDeleter(true);
+        config.setMockOnFileObjectStore("/some/path");
+        config.setHost("http://localhost:8080/mock");
+        config.setSocketTimeout(1000);
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
         assertEquals("tenant", config.getTenant());

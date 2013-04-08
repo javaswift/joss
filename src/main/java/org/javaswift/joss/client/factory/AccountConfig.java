@@ -87,45 +87,40 @@ public class AccountConfig {
     */
     private int socketTimeout = -1;
 
-    public AccountConfig setTenant(String tenant) {
+    public void setTenant(String tenant) {
         this.tenant = tenant;
-        return this;
     }
 
     public String getTenant() {
         return tenant;
     }
 
-    public AccountConfig setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
-        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public AccountConfig setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public AccountConfig setAuthUrl(String authUrl) {
+    public void setAuthUrl(String authUrl) {
         this.authUrl = authUrl;
-        return this;
     }
 
     public String getAuthUrl() {
         return authUrl;
     }
 
-    public AccountConfig setMock(boolean mock) {
+    public void setMock(boolean mock) {
         this.mock = mock;
-        return this;
     }
 
     public boolean isMock() {
@@ -136,71 +131,63 @@ public class AccountConfig {
         return host;
     }
 
-    public AccountConfig setHost(String host) {
+    public void setHost(String host) {
         this.host = host;
-        return this;
     }
 
     public int getMockMillisDelay() {
         return mockMillisDelay;
     }
 
-    public AccountConfig setMockMillisDelay(int mockMillisDelay) {
+    public void setMockMillisDelay(int mockMillisDelay) {
         this.mockMillisDelay = mockMillisDelay;
-        return this;
     }
 
     public boolean isAllowReauthenticate() {
         return allowReauthenticate;
     }
 
-    public AccountConfig setAllowReauthenticate(boolean allowReauthenticate) {
+    public void setAllowReauthenticate(boolean allowReauthenticate) {
         this.allowReauthenticate = allowReauthenticate;
-        return this;
     }
 
     public boolean isAllowCaching() {
         return allowCaching;
     }
 
-    public AccountConfig setAllowCaching(boolean allowCaching) {
+    public void setAllowCaching(boolean allowCaching) {
         this.allowCaching = allowCaching;
-        return this;
     }
 
     public boolean isMockAllowObjectDeleter() {
         return mockAllowObjectDeleter;
     }
 
-    public AccountConfig setMockAllowObjectDeleter(boolean mockAllowObjectDeleter) {
+    public void setMockAllowObjectDeleter(boolean mockAllowObjectDeleter) {
         this.mockAllowObjectDeleter = mockAllowObjectDeleter;
-        return this;
     }
 
     public boolean isMockAllowEveryone() {
         return mockAllowEveryone;
     }
 
-    public AccountConfig setMockAllowEveryone(boolean mockAllowEveryone) {
+    public void setMockAllowEveryone(boolean mockAllowEveryone) {
         this.mockAllowEveryone = mockAllowEveryone;
-        return this;
     }
 
     public String getMockOnFileObjectStore() {
         return mockOnFileObjectStore;
     }
 
-    public AccountConfig setMockOnFileObjectStore(String mockOnFileObjectStore) {
+    public void setMockOnFileObjectStore(String mockOnFileObjectStore) {
         this.mockOnFileObjectStore = mockOnFileObjectStore;
-        return this;
     }
 
     public int getSocketTimeout() {
         return socketTimeout;
     }
 
-    public AccountConfig setSocketTimeout(int socketTimeout) {
+    public void setSocketTimeout(int socketTimeout) {
         this.socketTimeout = socketTimeout;
-        return this;
     }
 }
