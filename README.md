@@ -25,12 +25,12 @@ Your Object Store provider will have provided you with the following information
 We start by opening up a stateful client and **authenticating** ourselves:
 
 ```java
-    AccountConfig config = new AccountConfig()
-            .setUsername( username)
+    Account account = new AccountFactory()
+            .setUsername(username)
             .setPassword(password)
             .setAuthUrl(url)
-            .setTenant(tenant);
-    Account account = new AccountFactory(config).createAccount();
+            .setTenant(tenant)
+            .createAccount();
 ```
 
 On failure, the client will throw an exception. On success, the account can now be used to execute actions on the Object Store. The account takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire after 24 hours. The client will get a new token when it encounters a 401 and retry the original command just once.
