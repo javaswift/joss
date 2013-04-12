@@ -86,6 +86,13 @@
             <version>${commons.io.version}</version>
         </dependency>
 
+        <!-- JMockit, used for mocking during unit tests -->
+        <dependency>
+            <groupId>com.googlecode.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>1.1</version>
+        </dependency>
+
         <!-- Used for unit testing -->
         <dependency>
             <groupId>junit</groupId>

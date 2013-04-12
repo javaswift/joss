@@ -2,7 +2,6 @@ package org.javaswift.joss.swift;
 
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.client.mock.AccountMock;
-import org.javaswift.joss.client.mock.ClientMock;
 import org.javaswift.joss.client.mock.ContainerMock;
 import org.javaswift.joss.client.mock.StoredObjectMock;
 import org.javaswift.joss.command.mock.account.AccountInformationCommandMock;
@@ -12,7 +11,6 @@ import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,11 +25,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import static junit.framework.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.doThrow;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
+import static org.mockito.Matchers.anyString;
+import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest( Swift.class )
