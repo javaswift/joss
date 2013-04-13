@@ -1,5 +1,7 @@
 package org.javaswift.joss.instructions;
 
+import mockit.Expectations;
+import mockit.Mocked;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.object.DeleteAfter;
 import org.javaswift.joss.headers.object.DeleteAt;
@@ -8,9 +10,6 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -20,14 +19,9 @@ import java.util.Date;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest( { UploadInstructions.class, UploadPayloadFile.class } )
 public class UploadInstructionsTest {
 
     @Test
@@ -94,9 +88,13 @@ public class UploadInstructionsTest {
 
     @Test (expected = CommandException.class )
     public void getSegmentationPlanThrowsIOException() throws Exception {
-        UploadPayloadFile uploadPayload = mock(UploadPayloadFile.class);
-        whenNew(UploadPayloadFile.class).withArguments(null).thenReturn(uploadPayload);
-        when(uploadPayload.getSegmentationPlan(anyLong())).thenThrow(new IOException());
+        new Expectations() {
+            @Mocked UploadPayloadFile uploadPayload; {
+            new UploadPayloadFile(null);
+            result = uploadPayload;
+            uploadPayload.getSegmentationPlan(anyLong);
+            result = new IOException();
+        }};
         UploadInstructions instructions = new UploadInstructions((File)null);
         instructions.getSegmentationPlan();
     }

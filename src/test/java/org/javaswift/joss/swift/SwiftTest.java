@@ -1,5 +1,7 @@
 package org.javaswift.joss.swift;
 
+import mockit.Expectations;
+import mockit.Mocked;
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.client.mock.AccountMock;
 import org.javaswift.joss.client.mock.ContainerMock;
@@ -14,9 +16,6 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Container;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,11 +24,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import static junit.framework.Assert.*;
-import static org.mockito.Matchers.anyString;
-import static org.powermock.api.mockito.PowerMockito.*;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest( Swift.class )
 public class SwiftTest {
 
     protected Swift swift;
@@ -53,9 +48,13 @@ public class SwiftTest {
 
     @Test(expected = CommandException.class)
     public void setOnFileObjectStore() throws Exception {
-        OnFileObjectStoreLoader loader = mock(OnFileObjectStoreLoader.class);
-        whenNew(OnFileObjectStoreLoader.class).withNoArguments().thenReturn(loader);
-        doThrow(new IOException()).when(loader).createContainers(anyString());
+        new Expectations() {
+            @Mocked OnFileObjectStoreLoader loader; {
+            new OnFileObjectStoreLoader();
+            result = loader;
+            loader.createContainers(anyString);
+            result = new IOException();
+        }};
         new Swift().setOnFileObjectStore("test");
     }
 

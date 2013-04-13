@@ -1,37 +1,25 @@
 package org.javaswift.joss.client.mock;
 
+import mockit.Expectations;
+import mockit.Mocked;
 import org.javaswift.joss.command.mock.container.ContainerInformationCommandMock;
-import org.javaswift.joss.command.mock.core.CommandMock;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.PaginationMap;
 import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.swift.Swift;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
 import static junit.framework.Assert.*;
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyLong;
-import static org.powermock.api.mockito.PowerMockito.*;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({ AccountMock.class, CommandMock.class, Thread.class })
 public class AccountMockTest {
 
     @Test(expected = CommandException.class)
@@ -39,9 +27,11 @@ public class AccountMockTest {
         Swift swift = new Swift().setMillisDelay(1);
         Account account = new AccountMock(swift);
         account.reload();
-        mockStatic(Thread.class);
-        doThrow(new InterruptedException(null)).when(Thread.class);
-        Thread.sleep(anyLong());
+        new Expectations() {
+            @Mocked(stubOutClassInitialization = true) Thread unused; {
+            Thread.sleep(anyLong);
+            result = new InterruptedException(null);
+        }};
         account.reload();
     }
 
