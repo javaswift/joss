@@ -65,4 +65,14 @@ public class ContainerRightsTest extends AbstractHeaderTest {
         }};
         assertFalse(ContainerRights.fromResponse(response).isPublic());
     }
+
+    @Test
+    public void createPrivateContainerFromResponseNullHeaderList() {
+        new NonStrictExpectations() {{
+            response.getHeaders(ContainerRights.X_CONTAINER_READ);
+            result = null;
+        }};
+        assertFalse(ContainerRights.fromResponse(response).isPublic());
+    }
+
 }

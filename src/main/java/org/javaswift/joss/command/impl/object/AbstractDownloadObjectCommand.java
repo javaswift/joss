@@ -11,6 +11,7 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.exception.HttpStatusExceptionUtil;
+import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
@@ -41,8 +42,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
     @Override
     protected N getReturnObject(HttpResponse response) throws IOException {
         String expectedMd5 = response.getHeaders(ETAG)[0].getValue().replaceAll("\"", "");
-        boolean isManifest = response.getHeaders(X_OBJECT_MANIFEST) != null && response.getHeaders(X_OBJECT_MANIFEST).length > 0;
-
+        boolean isManifest = Header.headerNotEmpty(response, X_OBJECT_MANIFEST);
         handleEntity(response.getEntity());
         if (    !isManifest &&  // Manifest files may not be checked
                 HttpStatus.SC_PARTIAL_CONTENT != response.getStatusLine().getStatusCode()) {

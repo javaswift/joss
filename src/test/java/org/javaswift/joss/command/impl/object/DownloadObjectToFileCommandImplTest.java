@@ -13,10 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +69,19 @@ public class DownloadObjectToFileCommandImplTest extends BaseCommandTest {
                 getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
         new Verifications() {{
             fos.close(); times = 0;
+        }};
+    }
+
+    @Test(expected = CommandException.class)
+    public void closeMd5InputStreamNull(@Mocked final FileInputStream fis) throws Exception {
+        prepareMetadata();
+        new Expectations() {{
+            new FileInputStream(downloadedFile); result = new IOException();
+        }};
+        new DownloadObjectToFileCommandImpl(this.account, httpClient, defaultAccess,
+                getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
+        new Verifications() {{
+            fis.close(); times = 0;
         }};
     }
 

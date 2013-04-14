@@ -65,12 +65,16 @@ public class Swift {
         return this;
     }
 
+    public boolean isObjectDeleterActive() {
+        return  this.objectDeleter != null &&
+                !this.objectDeleter.isShutdown();
+    }
+
     public ObjectDeleter getCurrentObjectDeleter() {
         if (!allowObjectDeleter) {
             return null;
         }
-        if (    this.objectDeleter == null ||
-                this.objectDeleter.isShutdown()) {
+        if (!isObjectDeleterActive()) {
             this.objectDeleter = new ObjectDeleter(objectDeleterStartAfterSeconds, objectDeleterIntervalSeconds);
         }
         return this.objectDeleter;

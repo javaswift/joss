@@ -47,4 +47,11 @@ public abstract class Header {
         return response.getHeaders(name) == null ? null : response.getHeaders(name).length == 0 ? null : response.getHeaders(name)[0].getValue();
     }
 
+    public static boolean headerNotEmpty(HttpResponse response, String headerName) {
+        return
+                response.getHeaders(headerName) != null &&
+                response.getHeaders(headerName).length > 0 &&
+                response.getHeaders(headerName)[0].getValue().length() > 0;
+    }
+
 }

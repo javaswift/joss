@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.CONTENT_LENGTH;
 import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.ETAG;
 import static org.javaswift.joss.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
@@ -73,7 +74,7 @@ public class DownloadObjectAsByteArrayCommandImplTest extends BaseCommandTest {
     }
 
     @Test
-    public void manifestDoesNotTriggerAnMd5Check() throws IOException {
+    public void nullManifestDoesNotTriggerAnMd5Check() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03};
         prepareBytes(bytes, null);
         prepareHeader(response, X_OBJECT_MANIFEST, Long.toString(bytes.length));

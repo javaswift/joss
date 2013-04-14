@@ -158,6 +158,12 @@ public class SwiftTest {
     }
 
     @Test
+    public void getDownloadObjectAsByteArrayObjectNotFound() {
+        container.create();
+        assertEquals(HttpStatus.SC_NOT_FOUND, swift.downloadObject(container, object, null).getStatus());
+    }
+
+    @Test
     public void getDownloadObjectToFileContainerNotFound() {
         assertEquals(HttpStatus.SC_NOT_FOUND, swift.downloadObject(container, object, null, null).getStatus());
     }
@@ -199,26 +205,39 @@ public class SwiftTest {
         assertEquals(-1, swift.getStatus(AccountInformationCommandMock.class));
     }
 
-    @Test
-    public void scheduledDeleteForcingShutdown() throws InterruptedException {
-        Swift swift = new Swift()
-                .setAllowObjectDeleter(true)
-                .setObjectDeleterStartAfterSeconds(1)
-                .setObjectDeleterIntervalSeconds(1);
-        swift.createContainer(container.getName());
-        objectDeleteAt(swift);
-        objectDeleteAt(swift);
-    }
-
-    protected void objectDeleteAt(Swift swift) throws InterruptedException {
+    protected void objectDeleteAt(Swift swift, int secondsFromNow) {
         swift.uploadObject(container, object, instructions);
         assertEquals(HttpStatus.SC_OK, swift.getObjectInformation(container, object).getStatus());
-        DeleteAt deleteAt = new DeleteAt(new Date(new Date().getTime()+2)); // 2 seconds from now
+        DeleteAt deleteAt = new DeleteAt(new Date(new Date().getTime()+secondsFromNow));
         Collection<Header> headers = new ArrayList<Header>();
         headers.add(deleteAt);
         swift.saveObjectMetadata(container, object, headers);
+    }
+
+    @Test
+    public void initiallyObjectDeleterIsNotActive() {
+        Swift swift = createObjectDeleterSwift();
+        assertFalse(swift.isObjectDeleterActive());
+    }
+
+    @Test
+    public void afterDelayedDeleteObjectDeleterShutsDown() throws InterruptedException {
+        Swift swift = createObjectDeleterSwift();
+        swift.createContainer(container.getName());
+        objectDeleteAt(swift, 2);
+        assertTrue(swift.isObjectDeleterActive());
+        swift.getCurrentObjectDeleter(); // cover that line
+        assertEquals(HttpStatus.SC_OK, swift.getObjectInformation(container, object).getStatus());
         Thread.sleep(3000);
+        assertFalse(swift.isObjectDeleterActive());
         assertEquals(HttpStatus.SC_NOT_FOUND, swift.getObjectInformation(container, object).getStatus());
+    }
+
+    protected Swift createObjectDeleterSwift() {
+        return new Swift()
+                .setAllowObjectDeleter(true)
+                .setObjectDeleterStartAfterSeconds(1)
+                .setObjectDeleterIntervalSeconds(1);
     }
 
 }
