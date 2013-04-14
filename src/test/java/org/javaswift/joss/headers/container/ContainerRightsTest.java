@@ -1,29 +1,28 @@
 package org.javaswift.joss.headers.container;
 
-import org.javaswift.joss.headers.AbstractHeaderTest;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
-import static org.mockito.Mockito.when;
+import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeadersForRetrieval;
 
 public class ContainerRightsTest extends AbstractHeaderTest {
 
-    @Mock
+    @Mocked
     private HttpResponse response;
 
     protected void defaultSetup(String publicContainerSetting) {
-        List<Header> headers = new ArrayList<Header>();
+        final List<Header> headers = new ArrayList<Header>();
         prepareHeader(response, ContainerRights.X_CONTAINER_READ, publicContainerSetting, headers);
-        when(response.getHeaders(ContainerRights.X_CONTAINER_READ)).thenReturn(headers.toArray(new Header[headers.size()]));
+        prepareHeadersForRetrieval(response, headers);
     }
 
     @Test
@@ -60,7 +59,10 @@ public class ContainerRightsTest extends AbstractHeaderTest {
 
     @Test
     public void createPrivateContainerFromResponseEmptyHeaderList() {
-        when(response.getHeaders(ContainerRights.X_CONTAINER_READ)).thenReturn(new Header[] {} );
+        new NonStrictExpectations() {{
+            response.getHeaders(ContainerRights.X_CONTAINER_READ);
+            result = new Header[] {};
+        }};
         assertFalse(ContainerRights.fromResponse(response).isPublic());
     }
 }

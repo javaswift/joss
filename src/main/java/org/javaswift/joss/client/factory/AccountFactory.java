@@ -1,10 +1,10 @@
 package org.javaswift.joss.client.factory;
 
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Client;
+import org.apache.http.client.HttpClient;
 import org.javaswift.joss.client.impl.ClientImpl;
 import org.javaswift.joss.client.mock.ClientMock;
-import org.apache.http.client.HttpClient;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.Client;
 
 public class AccountFactory {
 

@@ -1,9 +1,9 @@
 package org.javaswift.joss.command.impl.core.httpstatus;
 
-import org.javaswift.joss.exception.CommandExceptionError;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.exception.HttpStatusExceptionUtil;
 import org.apache.http.HttpStatus;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.exception.CommandExceptionError;
+import org.javaswift.joss.exception.HttpStatusExceptionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

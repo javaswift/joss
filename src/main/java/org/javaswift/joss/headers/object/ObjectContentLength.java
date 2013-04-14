@@ -1,7 +1,7 @@
 package org.javaswift.joss.headers.object;
 
-import org.javaswift.joss.headers.SimpleHeader;
 import org.apache.http.HttpResponse;
+import org.javaswift.joss.headers.SimpleHeader;
 
 public class ObjectContentLength extends SimpleHeader {
 

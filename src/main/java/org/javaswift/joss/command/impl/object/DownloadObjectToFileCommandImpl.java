@@ -1,15 +1,15 @@
 package org.javaswift.joss.command.impl.object;
 
-import org.javaswift.joss.command.shared.object.DownloadObjectToFileCommand;
-import org.javaswift.joss.instructions.DownloadInstructions;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.model.StoredObject;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.object.DownloadObjectToFileCommand;
+import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.StoredObject;
 
 import java.io.*;
 
@@ -31,9 +31,7 @@ public class DownloadObjectToFileCommandImpl extends AbstractDownloadObjectComma
             IOUtils.copy(entity.getContent(), output);
         } finally {
             if (output != null) {
-                try {
-                    output.close();
-                } catch (IOException logOrIgnore) { }
+                output.close();
             }
         }
     }
@@ -46,9 +44,7 @@ public class DownloadObjectToFileCommandImpl extends AbstractDownloadObjectComma
             return DigestUtils.md5Hex(input);
         } finally {
             if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException logOrIgnore) {}
+                input.close();
             }
         }
     }

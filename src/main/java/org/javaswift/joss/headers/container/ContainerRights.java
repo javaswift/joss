@@ -1,7 +1,7 @@
 package org.javaswift.joss.headers.container;
 
-import org.javaswift.joss.headers.Header;
 import org.apache.http.HttpResponse;
+import org.javaswift.joss.headers.Header;
 
 /**
  * Allows the rights change of a container to and from public/private

@@ -1,8 +1,8 @@
 package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.exception.NotFoundException;
-import org.javaswift.joss.information.AbstractInformation;
 import org.javaswift.joss.headers.Metadata;
+import org.javaswift.joss.information.AbstractInformation;
 import org.javaswift.joss.model.ObjectStoreEntity;
 
 import java.util.Map;

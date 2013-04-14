@@ -1,16 +1,16 @@
 package org.javaswift.joss.command.impl.container;
 
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.command.shared.container.CreateContainerCommand;
-import org.javaswift.joss.model.Account;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPut;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
+import org.javaswift.joss.command.shared.container.CreateContainerCommand;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPut;
 
 public class CreateContainerCommandImpl extends AbstractContainerCommand<HttpPut, Object> implements CreateContainerCommand {
 

@@ -1,11 +1,11 @@
 package org.javaswift.joss.client.mock;
 
-import org.javaswift.joss.model.Container;
-import org.javaswift.joss.model.PaginationMap;
-import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
+import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.PaginationMap;
+import org.javaswift.joss.model.StoredObject;
 import org.junit.Before;
 import org.junit.Test;
 

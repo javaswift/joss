@@ -1,7 +1,7 @@
 package org.javaswift.joss.headers.account;
 
-import org.javaswift.joss.headers.SimpleHeader;
 import org.apache.http.HttpResponse;
+import org.javaswift.joss.headers.SimpleHeader;
 
 public class AccountBytesUsed extends SimpleHeader {
 

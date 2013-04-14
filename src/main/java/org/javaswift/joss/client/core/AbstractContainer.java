@@ -1,8 +1,12 @@
 package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
+import org.javaswift.joss.headers.container.ContainerMetadata;
 import org.javaswift.joss.headers.container.ContainerObjectCount;
+import org.javaswift.joss.information.ContainerInformation;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.SegmentationPlan;
 import org.javaswift.joss.instructions.UploadInstructions;
@@ -10,10 +14,6 @@ import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.PaginationMap;
 import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.headers.Metadata;
-import org.javaswift.joss.headers.container.ContainerMetadata;
-import org.javaswift.joss.information.ContainerInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

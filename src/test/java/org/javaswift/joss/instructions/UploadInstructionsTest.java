@@ -2,13 +2,13 @@ package org.javaswift.joss.instructions;
 
 import mockit.Expectations;
 import mockit.Mocked;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.InputStreamEntity;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.object.DeleteAfter;
 import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.headers.object.ObjectManifest;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.FileEntity;
-import org.apache.http.entity.InputStreamEntity;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -16,9 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

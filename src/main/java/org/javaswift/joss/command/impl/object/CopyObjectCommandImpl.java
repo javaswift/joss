@@ -1,17 +1,17 @@
 package org.javaswift.joss.command.impl.object;
 
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.command.shared.object.CopyObjectCommand;
-import org.javaswift.joss.model.Account;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPut;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
-import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.object.CopyObjectCommand;
 import org.javaswift.joss.headers.object.CopyFrom;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPut;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.StoredObject;
 
 public class CopyObjectCommandImpl extends AbstractObjectCommand<HttpPut, Object> implements CopyObjectCommand {
 

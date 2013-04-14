@@ -1,16 +1,16 @@
 package org.javaswift.joss.command.impl.container;
 
-import org.javaswift.joss.command.shared.container.DeleteContainerCommand;
-import org.javaswift.joss.model.Account;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
+import org.javaswift.joss.command.shared.container.DeleteContainerCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
 
 public class DeleteContainerCommandImpl extends AbstractContainerCommand<HttpDelete, String[]> implements DeleteContainerCommand {
 

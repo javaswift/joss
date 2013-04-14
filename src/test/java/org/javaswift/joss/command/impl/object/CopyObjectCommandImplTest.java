@@ -9,10 +9,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 public class CopyObjectCommandImplTest extends BaseCommandTest {
 
     @Before
@@ -22,11 +18,10 @@ public class CopyObjectCommandImplTest extends BaseCommandTest {
 
     @Test
     public void deleteContainerSuccess() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(201);
+        expectStatusCode(201);
         new CopyObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"),
                 getObject("objectName")).call();
-        verify(httpClient).execute(requestArgument.capture());
-        assertEquals("/container/objectName", requestArgument.getValue().getFirstHeader(CopyFrom.X_COPY_FROM).getValue());
+        verifyHeaderValue("/container/objectName", CopyFrom.X_COPY_FROM);
     }
 
     @Test (expected = NotFoundException.class)

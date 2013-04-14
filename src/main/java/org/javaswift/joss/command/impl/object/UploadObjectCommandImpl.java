@@ -1,20 +1,20 @@
 package org.javaswift.joss.command.impl.object;
 
-import org.javaswift.joss.command.shared.object.UploadObjectCommand;
-import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.model.StoredObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.params.CoreProtocolPNames;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.object.UploadObjectCommand;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.instructions.UploadInstructions;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.StoredObject;
 
 import java.io.IOException;
 

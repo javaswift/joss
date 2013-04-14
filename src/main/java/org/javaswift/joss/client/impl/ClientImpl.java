@@ -1,15 +1,15 @@
 package org.javaswift.joss.client.impl;
 
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.javaswift.joss.command.impl.factory.AuthenticationCommandFactoryImpl;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
-import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.model.Client;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.javaswift.joss.command.impl.factory.AuthenticationCommandFactoryImpl;
+import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
+import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.model.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,17 +1,17 @@
 package org.javaswift.joss.command.impl.object;
 
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.command.shared.object.DownloadObjectAsByteArrayCommand;
-import org.javaswift.joss.instructions.DownloadInstructions;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.StoredObject;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.object.DownloadObjectAsByteArrayCommand;
+import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.StoredObject;
 
-import java.io.*;
+import java.io.IOException;
 
 public class DownloadObjectAsByteArrayCommandImpl extends AbstractDownloadObjectCommand<HttpGet, byte[]> implements DownloadObjectAsByteArrayCommand {
 

@@ -1,15 +1,5 @@
 package org.javaswift.joss.command.impl.core;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.net.URI;
-import java.util.Collection;
-import java.util.concurrent.Callable;
-
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.headers.Header;
-import org.javaswift.joss.instructions.QueryParameters;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -17,8 +7,18 @@ import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.Header;
+import org.javaswift.joss.instructions.QueryParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Collection;
+import java.util.concurrent.Callable;
 
 public abstract class AbstractCommand<M extends HttpRequestBase, N> implements Callable<N>, Closeable {
 

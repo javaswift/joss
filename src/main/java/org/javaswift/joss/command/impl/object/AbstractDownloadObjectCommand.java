@@ -1,21 +1,21 @@
 package org.javaswift.joss.command.impl.object;
 
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.instructions.DownloadInstructions;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
-import org.javaswift.joss.exception.HttpStatusExceptionUtil;
-import org.javaswift.joss.model.StoredObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.exception.HttpStatusExceptionUtil;
+import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.StoredObject;
 
-import java.io.*;
+import java.io.IOException;
 
 import static org.javaswift.joss.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
 
@@ -41,7 +41,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
     @Override
     protected N getReturnObject(HttpResponse response) throws IOException {
         String expectedMd5 = response.getHeaders(ETAG)[0].getValue().replaceAll("\"", "");
-        boolean isManifest = response.getHeaders(X_OBJECT_MANIFEST) != null;
+        boolean isManifest = response.getHeaders(X_OBJECT_MANIFEST) != null && response.getHeaders(X_OBJECT_MANIFEST).length > 0;
 
         handleEntity(response.getEntity());
         if (    !isManifest &&  // Manifest files may not be checked

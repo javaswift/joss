@@ -4,7 +4,6 @@ import org.javaswift.joss.client.mock.ClientMock;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Client;
 import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.swift.OnFileObjectStoreLoader;
 import org.junit.Test;
 
 import java.io.IOException;

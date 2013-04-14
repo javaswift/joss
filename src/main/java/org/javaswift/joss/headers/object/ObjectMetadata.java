@@ -1,7 +1,7 @@
 package org.javaswift.joss.headers.object;
 
-import org.javaswift.joss.headers.Metadata;
 import org.apache.http.HttpResponse;
+import org.javaswift.joss.headers.Metadata;
 
 import java.util.Map;
 import java.util.TreeMap;

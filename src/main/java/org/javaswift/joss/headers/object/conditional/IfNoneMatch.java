@@ -1,7 +1,7 @@
 package org.javaswift.joss.headers.object.conditional;
 
-import org.javaswift.joss.exception.HttpStatusExceptionUtil;
 import org.apache.http.HttpStatus;
+import org.javaswift.joss.exception.HttpStatusExceptionUtil;
 
 public class IfNoneMatch extends AbstractIfMatch {
 

@@ -1,22 +1,24 @@
 package org.javaswift.joss.command.impl.object;
 
-import org.javaswift.joss.instructions.DownloadInstructions;
-import org.javaswift.joss.command.impl.core.BaseCommandTest;
-import org.javaswift.joss.exception.CommandException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.Header;
 import org.apache.http.entity.ByteArrayEntity;
+import org.javaswift.joss.command.impl.core.BaseCommandTest;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.instructions.DownloadInstructions;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.CONTENT_LENGTH;
 import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.ETAG;
-import static org.mockito.Mockito.when;
 
 public class DownloadObjectAsInputStreamCommandImplTest extends BaseCommandTest {
 
@@ -26,11 +28,11 @@ public class DownloadObjectAsInputStreamCommandImplTest extends BaseCommandTest 
     }
 
     protected void prepareBytes(byte[] bytes, String md5) {
-        when(statusLine.getStatusCode()).thenReturn(200);
-        prepareHeader(response, ETAG, md5 == null ? DigestUtils.md5Hex(bytes) : md5);
-        prepareHeader(response, CONTENT_LENGTH, "3");
-        httpEntity = new ByteArrayEntity(bytes);
-        when(response.getEntity()).thenReturn(httpEntity);
+        final List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, ETAG, md5 == null ? DigestUtils.md5Hex(bytes) : md5, headers);
+        prepareHeader(response, CONTENT_LENGTH, "3", headers);
+        prepareHeadersForRetrieval(response, headers);
+        setHttpEntity(new ByteArrayEntity(bytes));
     }
 
     @Test

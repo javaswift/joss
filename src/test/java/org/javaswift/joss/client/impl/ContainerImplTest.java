@@ -1,12 +1,10 @@
 package org.javaswift.joss.client.impl;
 
-import org.javaswift.joss.model.Container;
-import org.javaswift.joss.model.StoredObject;
+import org.apache.http.Header;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.headers.container.ContainerRights;
-import org.javaswift.joss.util.ClasspathTemplateResource;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.Header;
+import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.StoredObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,11 +13,9 @@ import java.util.*;
 
 import static junit.framework.Assert.*;
 import static org.javaswift.joss.headers.container.ContainerBytesUsed.X_CONTAINER_BYTES_USED;
-import static org.javaswift.joss.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
 import static org.javaswift.joss.headers.container.ContainerMetadata.X_CONTAINER_META_PREFIX;
+import static org.javaswift.joss.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
 import static org.javaswift.joss.headers.container.ContainerRights.X_CONTAINER_READ;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class ContainerImplTest extends BaseCommandTest {
 
@@ -29,7 +25,6 @@ public class ContainerImplTest extends BaseCommandTest {
     @Override
     public void setup() throws IOException {
         super.setup();
-        when(statusLine.getStatusCode()).thenReturn(202);
         container = account.getContainer("alpha");
     }
 
@@ -40,53 +35,53 @@ public class ContainerImplTest extends BaseCommandTest {
         prepareHeader(response, X_CONTAINER_READ, ContainerRights.PUBLIC_CONTAINER, headers);
         prepareHeader(response, X_CONTAINER_OBJECT_COUNT, "123", headers);
         prepareHeader(response, X_CONTAINER_BYTES_USED, "654321", headers);
-        when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
+        prepareHeadersForRetrieval(response, headers);
     }
 
     @Test
     public void listObjects() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(200);
-        when(httpEntity.getContent()).thenReturn(
-                IOUtils.toInputStream(new ClasspathTemplateResource("/sample-object-list.json").loadTemplate()));
+        loadSampleJson("/sample-object-list.json");
+        expectStatusCode(200);
         Collection<StoredObject> objects = container.list();
         assertEquals(4, objects.size());
     }
 
     @Test
     public void makePublic() throws IOException {
+        expectStatusCode(202);
         container.makePublic();
-        checkContainerRights(ContainerRights.PUBLIC_CONTAINER);
+        verifyHeaderValue(ContainerRights.PUBLIC_CONTAINER, X_CONTAINER_READ);
     }
 
     @Test
     public void makePrivate() throws IOException {
+        expectStatusCode(202);
         container.makePrivate();
-        checkContainerRights("");
+        verifyHeaderValue("", X_CONTAINER_READ);
     }
 
     @Test
     public void createDelete() {
-        when(statusLine.getStatusCode()).thenReturn(201);
+        expectStatusCode(201);
         container.create();
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         container.delete();
     }
 
     @Test
     public void setMetadata() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         Map<String, Object> metadata = new TreeMap<String, Object>();
         metadata.put("Year", "1989");
         metadata.put("Company", "42 BV");
         container.setMetadata(metadata);
-        verify(httpClient).execute(requestArgument.capture());
-        assertEquals("1989", requestArgument.getValue().getFirstHeader(X_CONTAINER_META_PREFIX + "Year").getValue());
-        assertEquals("42 BV", requestArgument.getValue().getFirstHeader(X_CONTAINER_META_PREFIX + "Company").getValue());
+        verifyHeaderValue("1989", X_CONTAINER_META_PREFIX + "Year", "POST");
+        verifyHeaderValue("42 BV", X_CONTAINER_META_PREFIX + "Company", "POST");
     }
 
     @Test
     public void getMetadata() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         prepareMetadata();
         assertEquals("1989", container.getMetadata().get("Year"));
         assertEquals("42 BV", container.getMetadata().get("Company"));
@@ -110,8 +105,4 @@ public class ContainerImplTest extends BaseCommandTest {
         assertEquals(container1.getName().hashCode(), container1.hashCode());
     }
 
-    protected void checkContainerRights(String expectedRightsValue) throws IOException {
-        verify(httpClient).execute(requestArgument.capture());
-        assertEquals(expectedRightsValue, requestArgument.getValue().getFirstHeader(ContainerRights.X_CONTAINER_READ).getValue());
-    }
 }

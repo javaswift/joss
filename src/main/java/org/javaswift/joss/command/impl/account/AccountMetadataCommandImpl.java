@@ -1,16 +1,16 @@
 package org.javaswift.joss.command.impl.account;
 
-import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
-import org.javaswift.joss.model.Account;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 import org.javaswift.joss.command.impl.core.AbstractSecureCommand;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
+import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Header;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import org.javaswift.joss.model.Account;
 
 import java.util.Collection;
 

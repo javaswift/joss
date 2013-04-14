@@ -9,10 +9,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 public class ContainerRightsCommandImplTest extends BaseCommandTest {
 
     @Before
@@ -22,10 +18,9 @@ public class ContainerRightsCommandImplTest extends BaseCommandTest {
 
     @Test
     public void createContainerSuccess() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(202);
+        expectStatusCode(202);
         new ContainerRightsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), true).call();
-        verify(httpClient).execute(requestArgument.capture());
-        assertEquals(ContainerRights.PUBLIC_CONTAINER, requestArgument.getValue().getFirstHeader(ContainerRights.X_CONTAINER_READ).getValue());
+        verifyHeaderValue(ContainerRights.PUBLIC_CONTAINER, ContainerRights.X_CONTAINER_READ);
     }
 
     @Test (expected = NotFoundException.class)

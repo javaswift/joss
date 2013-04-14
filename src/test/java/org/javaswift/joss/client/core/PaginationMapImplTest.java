@@ -1,7 +1,5 @@
 package org.javaswift.joss.client.core;
 
-import org.javaswift.joss.client.core.AbstractPaginationMap;
-import org.javaswift.joss.client.core.AccountPaginationMap;
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.client.impl.ContainerImpl;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;

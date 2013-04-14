@@ -1,17 +1,17 @@
 package org.javaswift.joss.command.impl.identity;
 
-import org.javaswift.joss.command.impl.core.*;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.command.shared.identity.authentication.Authentication;
-import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.exception.CommandException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.javaswift.joss.command.impl.core.AbstractCommand;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
+import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.authentication.Authentication;
+import org.javaswift.joss.exception.CommandException;
 
 import java.io.IOException;
 

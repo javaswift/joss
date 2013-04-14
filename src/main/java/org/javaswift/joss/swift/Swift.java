@@ -1,8 +1,10 @@
 package org.javaswift.joss.swift;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.account.AccountBytesUsed;
 import org.javaswift.joss.headers.account.AccountContainerCount;
@@ -17,11 +19,9 @@ import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.swift.scheduled.ObjectDeleter;
-import org.apache.http.HttpStatus;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.model.Container;
 import org.javaswift.joss.swift.statusgenerator.StatusGenerator;
 
 import java.io.*;

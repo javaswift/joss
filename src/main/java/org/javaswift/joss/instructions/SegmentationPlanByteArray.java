@@ -1,6 +1,8 @@
 package org.javaswift.joss.instructions;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class SegmentationPlanByteArray extends SegmentationPlan {
 

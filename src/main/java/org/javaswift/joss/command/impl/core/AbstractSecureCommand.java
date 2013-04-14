@@ -1,11 +1,11 @@
 package org.javaswift.joss.command.impl.core;
 
-import org.javaswift.joss.model.Access;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.exception.UnauthorizedException;
-import org.javaswift.joss.headers.Token;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.javaswift.joss.exception.UnauthorizedException;
+import org.javaswift.joss.headers.Token;
+import org.javaswift.joss.model.Access;
+import org.javaswift.joss.model.Account;
 
 public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extends AbstractCommand<M, N> {
 

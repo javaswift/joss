@@ -13,7 +13,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +25,6 @@ import static org.javaswift.joss.headers.object.Etag.ETAG;
 import static org.javaswift.joss.headers.object.ObjectContentLength.CONTENT_LENGTH;
 import static org.javaswift.joss.headers.object.ObjectContentType.CONTENT_TYPE;
 import static org.javaswift.joss.headers.object.ObjectLastModified.LAST_MODIFIED;
-import static org.mockito.Mockito.when;
 
 public class DownloadObjectToFileCommandImplTest extends BaseCommandTest {
 
@@ -40,14 +42,17 @@ public class DownloadObjectToFileCommandImplTest extends BaseCommandTest {
     }
 
     private void prepareMetadata() throws IOException {
-        InputStream inputStream = IOUtils.toInputStream("SOMEFILE");
-        when(httpEntity.getContent()).thenReturn(inputStream);
+        final InputStream inputStream = IOUtils.toInputStream("SOMEFILE");
+        new NonStrictExpectations() {{
+            httpEntity.getContent();
+            result = inputStream;
+        }};
         List<Header> headers = new ArrayList<Header>();
         prepareHeader(response, LAST_MODIFIED, "Mon, 03 Sep 2012 05:40:33 GMT");
         prepareHeader(response, ETAG, "e90629d47725dc3ad29e889d57e46106", headers);
         prepareHeader(response, CONTENT_LENGTH, "654321", headers);
         prepareHeader(response, CONTENT_TYPE, "image/png", headers);
-        when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
+        prepareHeadersForRetrieval(response, headers);
     }
 
     @Test
@@ -68,18 +73,6 @@ public class DownloadObjectToFileCommandImplTest extends BaseCommandTest {
         new Verifications() {{
             fos.close(); times = 0;
         }};
-    }
-
-    @Test(expected = CommandException.class)
-    public void closeOutputStreamThrowsException(@Mocked final FileOutputStream fos) throws Exception {
-        prepareMetadata();
-        new NonStrictExpectations() {{
-            new FileOutputStream(downloadedFile); result = fos;
-            fos.close();
-            result = new IOException();
-        }};
-        new DownloadObjectToFileCommandImpl(this.account, httpClient, defaultAccess,
-                getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
     }
 
 }

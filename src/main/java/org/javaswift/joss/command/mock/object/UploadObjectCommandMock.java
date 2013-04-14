@@ -5,7 +5,6 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
-import org.javaswift.joss.command.impl.object.UploadObjectCommandImpl;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.command.shared.object.UploadObjectCommand;
 import org.javaswift.joss.instructions.UploadInstructions;

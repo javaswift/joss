@@ -1,6 +1,8 @@
 package org.javaswift.joss.client.core;
 
-import org.javaswift.joss.model.*;
+import org.javaswift.joss.model.ListHolder;
+import org.javaswift.joss.model.ListSubject;
+import org.javaswift.joss.model.PaginationMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

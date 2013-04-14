@@ -1,19 +1,19 @@
 package org.javaswift.joss.command.impl.container;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpHead;
 import org.javaswift.joss.command.impl.core.httpstatus.*;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.container.ContainerInformationCommand;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Container;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
 import org.javaswift.joss.headers.container.ContainerMetadata;
 import org.javaswift.joss.headers.container.ContainerObjectCount;
 import org.javaswift.joss.headers.container.ContainerRights;
 import org.javaswift.joss.information.ContainerInformation;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpHead;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.Container;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
 package org.javaswift.joss.headers.object;
 
-import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

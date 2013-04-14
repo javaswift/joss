@@ -9,10 +9,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static org.mockito.Mockito.when;
-
 public class DeleteContainerCommandImplTest extends BaseCommandTest {
 
     @Before
@@ -22,7 +18,7 @@ public class DeleteContainerCommandImplTest extends BaseCommandTest {
 
     @Test
     public void deleteContainerSuccess() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         new DeleteContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 

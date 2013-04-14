@@ -1,13 +1,13 @@
 package org.javaswift.joss.command.impl.object;
 
-import org.javaswift.joss.command.shared.object.DownloadObjectAsInputStreamCommand;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.instructions.DownloadInstructions;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.model.StoredObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.object.DownloadObjectAsInputStreamCommand;
+import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.StoredObject;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -4,9 +4,6 @@ import org.javaswift.joss.exception.ModifiedException;
 import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-
 public class IfMatchTest extends AbstractHeaderTest {
 
     @Test

@@ -1,8 +1,8 @@
 package org.javaswift.joss.instructions;
 
-import org.javaswift.joss.headers.object.Etag;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
+import org.javaswift.joss.headers.object.Etag;
 
 import java.io.IOException;
 

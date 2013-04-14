@@ -1,22 +1,20 @@
 package org.javaswift.joss.command.impl.account;
 
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
-import org.javaswift.joss.command.shared.account.AccountInformationCommand;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.command.impl.core.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpHead;
+import org.javaswift.joss.command.impl.core.AbstractSecureCommand;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
-import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
+import org.javaswift.joss.command.shared.account.AccountInformationCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.account.AccountBytesUsed;
 import org.javaswift.joss.headers.account.AccountContainerCount;
 import org.javaswift.joss.headers.account.AccountMetadata;
 import org.javaswift.joss.headers.account.AccountObjectCount;
 import org.javaswift.joss.information.AccountInformation;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpHead;
+import org.javaswift.joss.model.Account;
 
 import java.io.IOException;
 

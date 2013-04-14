@@ -12,10 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static junit.framework.Assert.assertEquals;
 import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class ObjectMetadataCommandImplTest extends BaseCommandTest {
 
@@ -26,14 +23,13 @@ public class ObjectMetadataCommandImplTest extends BaseCommandTest {
 
     @Test
     public void getInfoSuccess() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(202);
+        expectStatusCode(202);
         Collection<Header> headers = new ArrayList<Header>();
         headers.add(new ObjectMetadata("Year", "1989"));
         headers.add(new ObjectMetadata("Company", "42 BV"));
         new ObjectMetadataCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName"), headers).call();
-        verify(httpClient).execute(requestArgument.capture());
-        assertEquals("1989", requestArgument.getValue().getFirstHeader(X_OBJECT_META_PREFIX + "Year").getValue());
-        assertEquals("42 BV", requestArgument.getValue().getFirstHeader(X_OBJECT_META_PREFIX + "Company").getValue());
+        verifyHeaderValue("1989", X_OBJECT_META_PREFIX + "Year", "POST");
+        verifyHeaderValue("42 BV", X_OBJECT_META_PREFIX + "Company", "POST");
     }
 
     @Test (expected = NotFoundException.class)

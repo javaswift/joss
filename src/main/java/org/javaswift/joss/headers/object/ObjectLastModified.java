@@ -1,9 +1,9 @@
 package org.javaswift.joss.headers.object;
 
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.headers.DateHeader;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.cookie.DateParseException;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.DateHeader;
 
 import java.util.Date;
 

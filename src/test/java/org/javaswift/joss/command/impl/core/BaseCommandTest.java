@@ -1,9 +1,9 @@
 package org.javaswift.joss.command.impl.core;
 
-import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.client.impl.AccountImpl;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.headers.Token;
+import mockit.Expectations;
+import mockit.Injectable;
+import mockit.NonStrictExpectations;
+import mockit.Verifications;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -11,87 +11,156 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.javaswift.joss.client.impl.AccountImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.headers.Token;
+import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.util.ClasspathTemplateResource;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public abstract class BaseCommandTest {
 
     protected AccountImpl account;
 
-    @Mock
+    @Injectable
     protected AccessImpl defaultAccess;
 
-    @Mock
+    @Injectable
     protected HttpClient httpClient;
 
-    @Mock
+    @Injectable
     protected HttpResponse response;
 
-    @Mock
+    @Injectable
     protected HttpEntity httpEntity;
 
-    @Mock
+    @Injectable
     protected StatusLine statusLine;
 
-    protected ArgumentCaptor<HttpRequestBase> requestArgument;
-
     public void setup() throws IOException {
-        InputStream inputStream = IOUtils.toInputStream("[]");
-        when(defaultAccess.getInternalURL()).thenReturn("http://someurl.nowhere");
-        when(defaultAccess.getPublicURL()).thenReturn("http://someurl.public");
-        when(defaultAccess.getToken()).thenReturn("cafebabe");
-        when(httpEntity.getContent()).thenReturn(inputStream);
-        when(response.getEntity()).thenReturn(httpEntity);
-        when(statusLine.getStatusCode()).thenReturn(200);
-        when(response.getStatusLine()).thenReturn(statusLine);
-        when(httpClient.execute(any(HttpRequestBase.class))).thenReturn(response);
+        final InputStream inputStream = IOUtils.toInputStream("[]");
         account = new AccountImpl(null, httpClient, defaultAccess, true);
-        requestArgument = ArgumentCaptor.forClass(HttpRequestBase.class);
+        new NonStrictExpectations() {{
+            defaultAccess.getInternalURL(); result = "http://someurl.nowhere";
+            defaultAccess.getPublicURL(); result = "http://someurl.public";
+            defaultAccess.getToken(); result = "cafebabe";
+            httpEntity.getContent(); result = inputStream;
+            response.getEntity(); result = httpEntity;
+            statusLine.getStatusCode(); result = 200;
+            response.getStatusLine(); result = statusLine;
+            httpClient.execute((HttpRequestBase)any); result = response;
+        }};
     }
 
     protected StoredObject getObject(String name) {
         return account.getContainer("container").getObject(name);
     }
 
-    protected void checkForError(int httpStatusCode, AbstractCommand command) throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(httpStatusCode);
+    protected void checkForError(final int httpStatusCode, AbstractCommand command) throws IOException {
+        new Expectations() {{
+            statusLine.getStatusCode(); result = httpStatusCode;
+        }};
         command.call();
         fail("Should have thrown an exception");
     }
 
-    public static void prepareHeader(HttpResponse response, String name, String value, List<Header> headers) {
-        Header header = Mockito.mock(Header.class);
-        when(header.getName()).thenReturn(name);
-        when(header.getValue()).thenReturn(value);
-        when(response.getHeaders(name)).thenReturn(new Header[] { header } );
+    public void setHttpEntity(final HttpEntity httpEntity) {
+        new NonStrictExpectations() {{
+            response.getEntity();
+            result = httpEntity;
+        }};
+    }
+
+    public static void prepareHeader(final HttpResponse response, final String name, final String value,
+                                     final List<Header> headers) {
+        new NonStrictExpectations() {
+            @Injectable Header header; {
+            header.getName(); result = name;
+            header.getValue(); result = value;
+            response.getHeaders(name); result = new Header[] { header };
+        }};
         if (headers != null) {
-            headers.add(header);
+            headers.add(response.getHeaders(name)[0]);
         }
+    }
+
+    public static void prepareHeadersForRetrieval(final HttpResponse response, final List<Header> headers) {
+        new NonStrictExpectations() {{
+            response.getAllHeaders();
+            result = headers.toArray(new Header[headers.size()]);
+        }};
+    }
+
+    protected void loadSampleJson(final String json) throws IOException {
+        new NonStrictExpectations() {{
+            httpEntity.getContent();
+            result = IOUtils.toInputStream(new ClasspathTemplateResource(json).loadTemplate());
+        }};
+    }
+
+    protected void expectStatusCode(final int statusCode) {
+        expectStatusCode(statusCode, true);
+    }
+
+    protected void expectStatusCode(final int statusCode, boolean strict) {
+        if (strict) {
+            expectStatusCodeStrict(statusCode);
+        } else {
+            expectStatusCodeNonStrict(statusCode);
+        }
+    }
+
+    protected void expectStatusCodeStrict(final int statusCode) {
+        new Expectations() {{
+            statusLine.getStatusCode(); result = statusCode;
+        }};
+    }
+
+    protected void expectStatusCodeNonStrict(final int statusCode) {
+        new NonStrictExpectations() {{
+            statusLine.getStatusCode(); result = statusCode;
+        }};
     }
 
     protected void prepareHeader(HttpResponse response, String name, String value) {
         prepareHeader(response, name, value, null);
     }
 
-    protected void isSecure(AbstractCommand command, int expectedOk) throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(expectedOk);
+    protected void verifyHeaderValue(final String expectedValue, final String header, final String matchHttpMethod) throws IOException {
+        new Verifications() {{
+            httpClient.execute((HttpRequestBase)any);
+            forEachInvocation = new Object() {
+                public void validate(HttpRequestBase request) {
+//                    System.out.println("* "+request.getMethod()+" | "+request.getURI().toString());
+                    if (matchHttpMethod == null || matchHttpMethod.equals(request.getMethod())) {
+                        if (expectedValue == null) {
+                            assertNull(request.getFirstHeader(header));
+                        } else {
+                            assertEquals(expectedValue, request.getFirstHeader(header).getValue());
+                        }
+                    }
+                }
+            };
+        }};
+    }
+
+    protected void verifyHeaderValue(final String expectedValue, final String header) throws IOException {
+        verifyHeaderValue(expectedValue, header, null);
+    }
+
+    protected void isSecure(AbstractCommand command, final int expectedOk) throws IOException {
+        new NonStrictExpectations() {{
+            statusLine.getStatusCode(); result = expectedOk;
+        }};
         command.call();
-        verify(httpClient).execute(requestArgument.capture());
-        assertEquals("cafebabe", requestArgument.getValue().getFirstHeader(Token.X_AUTH_TOKEN).getValue());
+        verifyHeaderValue("cafebabe", Token.X_AUTH_TOKEN);
     }
 
     protected void isSecure(AbstractCommand command) throws IOException {

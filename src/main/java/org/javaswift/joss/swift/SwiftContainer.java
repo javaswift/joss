@@ -1,14 +1,12 @@
 package org.javaswift.joss.swift;
 
 import org.apache.http.HttpStatus;
-import org.javaswift.joss.command.shared.container.StoredObjectListElement;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
 import org.javaswift.joss.headers.container.ContainerObjectCount;
 import org.javaswift.joss.headers.container.ContainerRights;
 import org.javaswift.joss.information.ContainerInformation;
 import org.javaswift.joss.instructions.ListInstructions;
-import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.ListSubject;
 import org.javaswift.joss.model.StoredObject;

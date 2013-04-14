@@ -1,8 +1,8 @@
 package org.javaswift.joss.headers.object.conditional;
 
-import org.javaswift.joss.exception.HttpStatusExceptionUtil;
 import org.apache.http.HttpStatus;
 import org.apache.http.impl.cookie.DateParseException;
+import org.javaswift.joss.exception.HttpStatusExceptionUtil;
 
 import java.util.Date;
 

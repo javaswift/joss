@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.mockito.Mockito.when;
-
 public class DeleteObjectCommandImplTest extends BaseCommandTest {
 
     @Before
@@ -19,7 +17,7 @@ public class DeleteObjectCommandImplTest extends BaseCommandTest {
 
     @Test
     public void deleteContainerSuccess() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         new DeleteObjectCommandImpl(this.account, httpClient, defaultAccess, getObject("objectName")).call();
     }
 

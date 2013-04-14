@@ -1,8 +1,8 @@
 package org.javaswift.joss.headers.object;
 
-import org.javaswift.joss.headers.SimpleHeader;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpResponse;
+import org.javaswift.joss.headers.SimpleHeader;
 
 import java.io.IOException;
 import java.io.InputStream;

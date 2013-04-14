@@ -1,7 +1,7 @@
 package org.javaswift.joss.headers.object.conditional;
 
-import org.javaswift.joss.headers.DateHeader;
 import org.apache.http.impl.cookie.DateParseException;
+import org.javaswift.joss.headers.DateHeader;
 
 import java.util.Date;
 

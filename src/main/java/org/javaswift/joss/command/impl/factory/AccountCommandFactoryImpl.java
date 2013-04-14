@@ -1,17 +1,16 @@
 package org.javaswift.joss.command.impl.factory;
 
 import org.apache.http.client.HttpClient;
-import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.command.impl.account.AccountInformationCommandImpl;
 import org.javaswift.joss.command.impl.account.AccountMetadataCommandImpl;
 import org.javaswift.joss.command.impl.account.ListContainersCommandImpl;
-import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
-import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.account.AccountInformationCommand;
 import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
 import org.javaswift.joss.command.shared.account.ListContainersCommand;
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
+import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
+import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
+import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Account;

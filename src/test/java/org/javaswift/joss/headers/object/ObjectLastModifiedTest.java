@@ -1,8 +1,8 @@
 package org.javaswift.joss.headers.object;
 
-import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
+import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.junit.Test;
 
 public class ObjectLastModifiedTest extends AbstractHeaderTest {

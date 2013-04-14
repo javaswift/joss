@@ -2,30 +2,24 @@ package org.javaswift.joss.command.impl.identity;
 
 import mockit.Expectations;
 import mockit.Mocked;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.entity.StringEntity;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.UnauthorizedException;
-import org.javaswift.joss.util.ClasspathTemplateResource;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 public class AuthenticationCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
         super.setup();
-        String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
-        InputStream inputStream = IOUtils.toInputStream(jsonString);
-        when(httpEntity.getContent()).thenReturn(inputStream);
+        loadSampleJson("/sample-access.json");
     }
 
     @Test

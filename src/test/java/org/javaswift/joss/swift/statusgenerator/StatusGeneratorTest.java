@@ -4,7 +4,6 @@ import org.javaswift.joss.command.mock.account.AccountInformationCommandMock;
 import org.javaswift.joss.command.mock.account.AccountMetadataCommandMock;
 import org.javaswift.joss.command.mock.account.ListContainersCommandMock;
 import org.javaswift.joss.command.mock.core.CommandMock;
-import org.javaswift.joss.command.shared.account.AccountInformationCommand;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

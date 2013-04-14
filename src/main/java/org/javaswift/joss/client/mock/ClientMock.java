@@ -5,7 +5,6 @@ import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
 import org.javaswift.joss.model.Client;
 import org.javaswift.joss.swift.MockUserStore;
 import org.javaswift.joss.swift.Swift;
-import org.javaswift.joss.swift.scheduled.ObjectDeleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

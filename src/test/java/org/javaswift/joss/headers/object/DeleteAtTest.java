@@ -1,14 +1,12 @@
 package org.javaswift.joss.headers.object;
 
-import org.javaswift.joss.headers.AbstractHeaderTest;
+import mockit.Mocked;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
+import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +14,10 @@ import java.util.List;
 import static junit.framework.Assert.assertNull;
 import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
 import static org.javaswift.joss.headers.object.DeleteAt.X_DELETE_AT;
-import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class DeleteAtTest extends AbstractHeaderTest {
 
-    @Mock
+    @Mocked
     private HttpResponse response;
 
     @Test
@@ -41,9 +37,8 @@ public class DeleteAtTest extends AbstractHeaderTest {
 
     @Test
     public void noLegalDeleteAtDate() {
-        List<Header> headers = new ArrayList<Header>();
+        final List<Header> headers = new ArrayList<Header>();
         prepareHeader(response, X_DELETE_AT, null, headers);
-        when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
         assertNull(DeleteAt.fromResponse(response));
     }
 }

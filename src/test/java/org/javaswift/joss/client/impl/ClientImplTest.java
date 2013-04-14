@@ -1,20 +1,13 @@
 package org.javaswift.joss.client.impl;
 
-import org.javaswift.joss.model.Account;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
-import org.javaswift.joss.util.ClasspathTemplateResource;
-import org.apache.commons.io.IOUtils;
-
+import org.javaswift.joss.model.Account;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
+import static junit.framework.Assert.*;
 
 public class ClientImplTest extends BaseCommandTest {
 
@@ -31,9 +24,7 @@ public class ClientImplTest extends BaseCommandTest {
 
     @Test
     public void authenticate() throws IOException {
-        String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
-        InputStream inputStream = IOUtils.toInputStream(jsonString);
-        when(httpEntity.getContent()).thenReturn(inputStream);
+        loadSampleJson("/sample-access.json");
         Account account = client.authenticate("sometenant", "superuser", "somepwd", "http://auth-url");
         assertNotNull(account);
         assertFalse(((AccountImpl)account).isAllowCaching());
@@ -42,9 +33,7 @@ public class ClientImplTest extends BaseCommandTest {
 
     @Test
     public void authenticateWithAPreferredRegion() throws IOException {
-        String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
-        InputStream inputStream = IOUtils.toInputStream(jsonString);
-        when(httpEntity.getContent()).thenReturn(inputStream);
+        loadSampleJson("/sample-access.json");
         Account account = client.authenticate("sometenant", "superuser", "somepwd", "http://auth-url", "AMS-02");
         assertNotNull(account);
         assertEquals("http://some-other-url", account.getPublicURL());

@@ -1,12 +1,12 @@
 package org.javaswift.joss.command.impl.container;
 
+import mockit.Verifications;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.util.ClasspathTemplateResource;
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,8 +15,6 @@ import java.util.Collection;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class ListObjectsCommandImplTest extends BaseCommandTest {
 
@@ -36,7 +34,7 @@ public class ListObjectsCommandImplTest extends BaseCommandTest {
 
     @Test
     public void listObjectsWithNoneThere() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         new ListObjectsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containername"), listInstructions).call();
     }
 
@@ -57,20 +55,25 @@ public class ListObjectsCommandImplTest extends BaseCommandTest {
 
     @Test
     public void queryParameters() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         new ListObjectsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
                 new ListInstructions().setMarker("dogs").setLimit(10)).call();
-        verify(httpClient).execute(requestArgument.capture());
-        String assertQueryParameters = "?marker=dogs&limit=10";
-        String uri = requestArgument.getValue().getURI().toString();
-        assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
+        new Verifications() {{
+            httpClient.execute((HttpRequestBase)any);
+            forEachInvocation = new Object() {
+                public void validate(HttpRequestBase request) {
+                    String assertQueryParameters = "?marker=dogs&limit=10";
+                    String uri = request.getURI().toString();
+                    assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
+                }
+            };
+        }};
     }
 
     @Test
     public void setHeaderValues() throws IOException {
-        when(httpEntity.getContent()).thenReturn(
-                IOUtils.toInputStream(new ClasspathTemplateResource("/sample-object-list.json").loadTemplate()));
-        when(statusLine.getStatusCode()).thenReturn(204);
+        loadSampleJson("/sample-object-list.json");
+        expectStatusCode(204);
         Collection<StoredObject> objects =
                 new ListObjectsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), listInstructions).call();
         assertEquals(4, objects.size());
@@ -83,9 +86,8 @@ public class ListObjectsCommandImplTest extends BaseCommandTest {
 
     @Test
     public void checkThatHeaderFieldsDoNotCostAnExtraCall() throws IOException {
-        when(httpEntity.getContent()).thenReturn(
-                IOUtils.toInputStream(new ClasspathTemplateResource("/sample-object-list.json").loadTemplate()));
-        when(statusLine.getStatusCode()).thenReturn(204);
+        loadSampleJson("/sample-object-list.json");
+        expectStatusCode(204);
         Collection<StoredObject> objects =
                 new ListObjectsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), listInstructions).call();
         assertEquals(1, account.getNumberOfCalls());

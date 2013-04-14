@@ -1,15 +1,14 @@
 package org.javaswift.joss.headers.object.conditional;
 
-import org.javaswift.joss.exception.ModifiedException;
-import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
+import org.javaswift.joss.exception.ModifiedException;
+import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.junit.Test;
 
 import java.util.Date;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 
 public class IfUnmodifiedSinceTest extends AbstractHeaderTest {
 

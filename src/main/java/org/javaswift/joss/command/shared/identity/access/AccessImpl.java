@@ -1,11 +1,11 @@
 package org.javaswift.joss.command.shared.identity.access;
 
-import org.javaswift.joss.exception.CommandExceptionError;
-import org.javaswift.joss.exception.HttpStatusExceptionUtil;
-import org.javaswift.joss.model.Access;
 import org.apache.http.HttpStatus;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.javaswift.joss.exception.CommandExceptionError;
+import org.javaswift.joss.exception.HttpStatusExceptionUtil;
+import org.javaswift.joss.model.Access;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,27 +1,22 @@
 package org.javaswift.joss.client.impl;
 
-import org.javaswift.joss.model.Container;
-import org.javaswift.joss.command.impl.core.BaseCommandTest;
-import org.javaswift.joss.model.PaginationMap;
-import org.javaswift.joss.util.ClasspathTemplateResource;
-import org.apache.commons.io.IOUtils;
+import mockit.Verifications;
 import org.apache.http.Header;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.javaswift.joss.command.impl.core.BaseCommandTest;
+import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.PaginationMap;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.*;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 import static org.javaswift.joss.headers.account.AccountBytesUsed.X_ACCOUNT_BYTES_USED;
 import static org.javaswift.joss.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
 import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
 import static org.javaswift.joss.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class AccountImplTest extends BaseCommandTest {
 
@@ -32,31 +27,28 @@ public class AccountImplTest extends BaseCommandTest {
     }
 
     protected void prepareMetadata() {
-        List<Header> headers = new ArrayList<Header>();
+        final List<Header> headers = new ArrayList<Header>();
         prepareHeader(response, X_ACCOUNT_META_PREFIX + "Year", "1989", headers);
         prepareHeader(response, X_ACCOUNT_META_PREFIX + "Company", "42 BV", headers);
         prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "7", headers);
         prepareHeader(response, X_ACCOUNT_OBJECT_COUNT, "123", headers);
         prepareHeader(response, X_ACCOUNT_BYTES_USED, "654321", headers);
-        when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
+        prepareHeadersForRetrieval(response, headers);
     }
 
     @Test
     public void listContainers() throws IOException {
-        when(httpEntity.getContent()).thenReturn(
-                IOUtils.toInputStream(new ClasspathTemplateResource("/sample-container-list.json").loadTemplate()));
+        loadSampleJson("/sample-container-list.json");
         Collection<Container> containers = account.list();
         assertEquals(4, containers.size());
     }
 
     @Test
     public void paginationMap() throws IOException {
-        when(httpEntity.getContent()).thenReturn(
-                IOUtils.toInputStream(new ClasspathTemplateResource("/sample-container-list.json").loadTemplate()));
+        loadSampleJson("/sample-container-list.json");
         List<Header> headers = new ArrayList<Header>();
         prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "4", headers);
-        when(response.getAllHeaders()).thenReturn(headers.toArray(new Header[headers.size()]));
-        when(statusLine.getStatusCode()).thenReturn(204);
+        prepareHeadersForRetrieval(response, headers);
         PaginationMap paginationMap = account.getPaginationMap(2);
         assertEquals(2, paginationMap.getPageSize());
         assertEquals(2, paginationMap.getNumberOfPages());
@@ -67,19 +59,18 @@ public class AccountImplTest extends BaseCommandTest {
 
     @Test
     public void setMetadata() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         Map<String, Object> metadata = new TreeMap<String, Object>();
         metadata.put("Year", "1989");
         metadata.put("Company", "42 BV");
         account.setMetadata(metadata);
-        verify(httpClient).execute(requestArgument.capture());
-        assertEquals("1989", requestArgument.getValue().getFirstHeader(X_ACCOUNT_META_PREFIX + "Year").getValue());
-        assertEquals("42 BV", requestArgument.getValue().getFirstHeader(X_ACCOUNT_META_PREFIX + "Company").getValue());
+        verifyHeaderValue("1989", X_ACCOUNT_META_PREFIX + "Year", "POST");
+        verifyHeaderValue("42 BV", X_ACCOUNT_META_PREFIX + "Company", "POST");
     }
 
     @Test
     public void getMetadata() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         prepareMetadata();
         assertEquals("1989", account.getMetadata().get("Year"));
         assertEquals("42 BV", account.getMetadata().get("Company"));
@@ -103,18 +94,19 @@ public class AccountImplTest extends BaseCommandTest {
     @Test
     public void isAllowCaching() throws IOException {
         account = new AccountImpl(null, httpClient, defaultAccess, false); // Caching is turned off
-        when(statusLine.getStatusCode()).thenReturn(204);
         prepareMetadata();
         account.getCount();
         account.getCount();
         // Because caching is turned off, the HTTP call must be made twice
-        verify(httpClient, times(2)).execute(requestArgument.capture());
+        new Verifications() {{
+            httpClient.execute((HttpRequestBase)any); times = 2;
+        }};
     }
 
     @Test
     public void isInfoRetrieved() throws IOException {
         assertFalse(account.isInfoRetrieved());
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         prepareMetadata();
         account.getCount();
         assertTrue(account.isInfoRetrieved());
@@ -122,11 +114,12 @@ public class AccountImplTest extends BaseCommandTest {
 
     @Test
     public void reload() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
         prepareMetadata();
         account.getCount();
         account.reload();
-        verify(httpClient, times(2)).execute(requestArgument.capture());
+        new Verifications() {{
+            httpClient.execute((HttpRequestBase)any); times = 2;
+        }};
     }
 
     @Test

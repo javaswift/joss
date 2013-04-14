@@ -8,10 +8,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static org.mockito.Mockito.when;
-
 public class CreateContainerCommandImplTest extends BaseCommandTest {
 
     @Before
@@ -21,7 +17,7 @@ public class CreateContainerCommandImplTest extends BaseCommandTest {
 
     @Test
     public void createContainerSuccess() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(201);
+        expectStatusCode(201);
         new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 

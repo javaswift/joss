@@ -1,7 +1,6 @@
 package org.javaswift.joss.command.mock.container;
 
 import org.apache.http.HttpStatus;
-import org.javaswift.joss.command.impl.container.ListObjectsCommandImpl;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;

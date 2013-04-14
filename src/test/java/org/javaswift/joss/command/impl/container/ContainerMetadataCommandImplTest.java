@@ -12,10 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static junit.framework.Assert.assertEquals;
 import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class ContainerMetadataCommandImplTest extends BaseCommandTest {
 
@@ -26,16 +23,15 @@ public class ContainerMetadataCommandImplTest extends BaseCommandTest {
 
     @Test
     public void getInfoSuccess() throws IOException {
-        when(statusLine.getStatusCode()).thenReturn(204);
+        expectStatusCode(204);
         Collection<Header> headers = new ArrayList<Header>();
         headers.add(new AccountMetadata("Year", "123"));
         headers.add(new AccountMetadata("Title", "Roses are Red"));
         headers.add(new AccountMetadata("ISBN", "123456789"));
         new ContainerMetadataCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"), headers).call();
-        verify(httpClient).execute(requestArgument.capture());
-        assertEquals("123", requestArgument.getValue().getFirstHeader(X_ACCOUNT_META_PREFIX + "Year").getValue());
-        assertEquals("Roses are Red", requestArgument.getValue().getFirstHeader(X_ACCOUNT_META_PREFIX + "Title").getValue());
-        assertEquals("123456789", requestArgument.getValue().getFirstHeader(X_ACCOUNT_META_PREFIX + "ISBN").getValue());
+        verifyHeaderValue("123", X_ACCOUNT_META_PREFIX + "Year", "POST");
+        verifyHeaderValue("Roses are Red", X_ACCOUNT_META_PREFIX + "Title", "POST");
+        verifyHeaderValue("123456789", X_ACCOUNT_META_PREFIX + "ISBN", "POST");
     }
 
     @Test (expected = NotFoundException.class)
