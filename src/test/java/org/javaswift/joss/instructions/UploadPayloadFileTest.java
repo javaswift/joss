@@ -1,19 +1,15 @@
 package org.javaswift.joss.instructions;
 
+import mockit.*;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class UploadPayloadFileTest {
 
     private File file = new File("test.tmp");
@@ -25,13 +21,13 @@ public class UploadPayloadFileTest {
     }
 
     @Test
-    public void mustBeSegmented() {
-        checkForRequiredSegmentation(12L, 9L, true);
+    public void mustBeSegmented(@Injectable final File fileToUpload) {
+        checkForRequiredSegmentation(fileToUpload, 12L, 9L, true);
     }
 
     @Test
-    public void mustNotBeSegmented() {
-        checkForRequiredSegmentation(9L, 12L, false);
+    public void mustNotBeSegmented(@Injectable final File fileToUpload) {
+        checkForRequiredSegmentation(fileToUpload, 9L, 12L, false);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -42,14 +38,15 @@ public class UploadPayloadFileTest {
         assertNotNull(payload.getSegmentationPlan(10L));
     }
 
-    protected UploadPayload createUploadPayload(Long fileSize) {
-        File fileToUpload = mock(File.class);
-        when(fileToUpload.length()).thenReturn(fileSize);
+    protected UploadPayload createUploadPayload(final File fileToUpload, final Long fileSize) {
+        new NonStrictExpectations(fileToUpload) {{
+            fileToUpload.length(); result = fileSize;
+        }};
         return new UploadPayloadFile(fileToUpload);
     }
 
-    protected void checkForRequiredSegmentation(Long fileSize, Long segmentationSize, boolean expectSegmentation) {
-        UploadPayload payload = createUploadPayload(fileSize);
+    protected void checkForRequiredSegmentation(File fileToUpload, Long fileSize, Long segmentationSize, boolean expectSegmentation) {
+        UploadPayload payload = createUploadPayload(fileToUpload, fileSize);
         assertEquals(expectSegmentation, payload.mustBeSegmented(segmentationSize));
     }
 }

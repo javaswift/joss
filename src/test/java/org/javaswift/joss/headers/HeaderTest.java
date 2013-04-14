@@ -1,41 +1,45 @@
 package org.javaswift.joss.headers;
 
+import mockit.Expectations;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
 import org.apache.http.HttpResponse;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class HeaderTest {
 
     private String headerName = "some-header";
 
-    @Mock
+    @Mocked
     private HttpResponse response;
 
     @Test
     public void noHeadersInResponse() {
-        when(response.getHeaders(headerName)).thenReturn(null);
+        new Expectations() {{
+            response.getHeaders(headerName);
+            result = null;
+        }};
         assertNull(Header.convertResponseHeader(response, headerName));
     }
 
     @Test
     public void headersWithLengthZero() {
-        when(response.getHeaders(headerName)).thenReturn(new org.apache.http.Header[] {});
+        new NonStrictExpectations() {{
+            response.getHeaders(headerName);
+            result = new org.apache.http.Header[] {};
+        }};
         assertNull(Header.convertResponseHeader(response, headerName));
     }
 
     @Test
-    public void headerWithValue() {
-        org.apache.http.Header header = mock(org.apache.http.Header.class);
-        when(header.getValue()).thenReturn("alpha");
-        when(response.getHeaders(headerName)).thenReturn(new org.apache.http.Header[] { header });
+    public void headerWithValue(@Mocked final org.apache.http.Header header) {
+        new NonStrictExpectations() {{
+            header.getValue(); result = "alpha";
+            response.getHeaders(headerName); result = new org.apache.http.Header[] { header };
+        }};
         assertEquals("alpha", Header.convertResponseHeader(response, headerName));
     }
 

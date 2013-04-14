@@ -138,7 +138,6 @@ public abstract class BaseCommandTest {
             httpClient.execute((HttpRequestBase)any);
             forEachInvocation = new Object() {
                 public void validate(HttpRequestBase request) {
-//                    System.out.println("* "+request.getMethod()+" | "+request.getURI().toString());
                     if (matchHttpMethod == null || matchHttpMethod.equals(request.getMethod())) {
                         if (expectedValue == null) {
                             assertNull(request.getFirstHeader(header));

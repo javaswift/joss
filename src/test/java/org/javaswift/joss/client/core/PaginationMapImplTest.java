@@ -1,5 +1,8 @@
 package org.javaswift.joss.client.core;
 
+import mockit.Expectations;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.client.impl.ContainerImpl;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
@@ -12,15 +15,14 @@ import java.util.Collection;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class PaginationMapImplTest extends BaseCommandTest {
 
     @Test
-    public void buildMapButContainersAreGone() {
-        account = mock(AccountImpl.class);
-        when(account.getCount()).thenReturn(9);
+    public void buildMapButContainersAreGone(@Mocked final AccountImpl account) {
+        new NonStrictExpectations() {{
+            account.getCount(); result = 9;
+        }};
         // Note that no containers are returned here, let's say they're quickly deleted
         AbstractPaginationMap paginationMap = new AccountPaginationMap(account, null, 4)
                 .setBlockSize(2)
@@ -29,10 +31,11 @@ public class PaginationMapImplTest extends BaseCommandTest {
     }
 
     @Test
-    public void buildMap() {
-        account = mock(AccountImpl.class);
-        when(account.getFactory()).thenReturn(new AccountCommandFactoryImpl(null, null, null));
-        when(account.getCount()).thenReturn(9);
+    public void buildMap(@Mocked final AccountImpl account) {
+        new NonStrictExpectations() {{
+            account.getCount(); result = 9;
+            account.getFactory(); result = new AccountCommandFactoryImpl(null, null, null);
+        }};
         whenList(account, null, new String[]{ "A", "B" });
         whenList(account, "B", new String[]{ "C", "D" });
         whenList(account, "D", new String[]{ "E", "F" });
@@ -48,9 +51,12 @@ public class PaginationMapImplTest extends BaseCommandTest {
         assertEquals("H", paginationMap.getMarker(2));
     }
 
-    protected void whenList(AccountImpl account, String markerContainer, String[] returnedContainers) {
-        Collection<Container> collection = createContainerCollection(account, returnedContainers);
-        when(account.list(null, markerContainer, 2)).thenReturn(collection);
+    protected void whenList(final AccountImpl account, final String markerContainer, final String[] returnedContainers) {
+        final Collection<Container> collection = createContainerCollection(account, returnedContainers);
+        new NonStrictExpectations() {{
+            account.list(null, markerContainer, 2);
+            result = collection;
+        }};
     }
 
     protected Collection<Container> createContainerCollection(AccountImpl account, String[] containerNames) {

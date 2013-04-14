@@ -1,6 +1,7 @@
 package org.javaswift.joss.instructions;
 
 import mockit.Expectations;
+import mockit.Injectable;
 import mockit.Mocked;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.FileEntity;
@@ -17,8 +18,6 @@ import java.io.IOException;
 import java.util.Date;
 
 import static junit.framework.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class UploadInstructionsTest {
 
@@ -77,9 +76,10 @@ public class UploadInstructionsTest {
     }
 
     @Test
-    public void requiresSegmentation() {
-        File fileToUpload = mock(File.class);
-        when(fileToUpload.length()).thenReturn(12L);
+    public void requiresSegmentation(@Injectable final File fileToUpload) {
+        new Expectations() {{
+            fileToUpload.length(); result = 12L;
+        }};
         UploadInstructions instructions = new UploadInstructions(fileToUpload).setSegmentationSize(9L);
         assertTrue(instructions.requiresSegmentation());
     }
