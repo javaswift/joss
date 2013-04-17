@@ -41,7 +41,9 @@ public class ContainerImplTest extends BaseCommandTest {
     @Test
     public void listObjects() throws IOException {
         loadSampleJson("/sample-object-list.json");
-        expectStatusCode(200);
+        List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, X_CONTAINER_OBJECT_COUNT, "4", headers);
+        prepareHeadersForRetrieval(response, headers);
         Collection<StoredObject> objects = container.list();
         assertEquals(4, objects.size());
     }

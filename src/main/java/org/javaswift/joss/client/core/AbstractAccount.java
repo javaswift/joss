@@ -12,7 +12,9 @@ import org.javaswift.joss.model.PaginationMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountInformation> implements Account {
 
@@ -26,12 +28,26 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private final AccountCommandFactory commandFactory;
 
+    public AbstractAccount(AccountCommandFactory commandFactory, boolean allowCaching) {
+        super(allowCaching);
+        this.commandFactory = commandFactory;
+        this.info = new AccountInformation();
+    }
+
     public Collection<Container> list() {
-        return list(null, null, getMaxPageSize());
+        return new AccountPaginationMap(this, null, MAX_PAGE_SIZE).listAllItems();
     }
 
     public Collection<Container> list(PaginationMap paginationMap, int page) {
         return list(paginationMap.getPrefix(), paginationMap.getMarker(page), paginationMap.getPageSize());
+    }
+
+    public Collection<Container> list(String prefix, String marker, int pageSize) {
+        ListInstructions listInstructions = new ListInstructions()
+                .setPrefix(prefix)
+                .setMarker(marker)
+                .setLimit(pageSize);
+        return commandFactory.createListContainersCommand(this, listInstructions).call();
     }
 
     public PaginationMap getPaginationMap(String prefix, int pageSize) {
@@ -40,12 +56,6 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     public PaginationMap getPaginationMap(int pageSize) {
         return getPaginationMap(null, pageSize);
-    }
-
-    public AbstractAccount(AccountCommandFactory commandFactory, boolean allowCaching) {
-        super(allowCaching);
-        this.commandFactory = commandFactory;
-        this.info = new AccountInformation();
     }
 
     public AbstractAccount setHost(String host) {
@@ -106,14 +116,6 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     @Override
     public String getPublicURL() {
         return this.commandFactory.getPublicURL();
-    }
-
-    public Collection<Container> list(String prefix, String marker, int pageSize) {
-        ListInstructions listInstructions = new ListInstructions()
-                .setPrefix(prefix)
-                .setMarker(marker)
-                .setLimit(pageSize);
-        return commandFactory.createListContainersCommand(this, listInstructions).call();
     }
 
     @Override

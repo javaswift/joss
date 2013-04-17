@@ -19,7 +19,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container {
 
@@ -41,16 +43,24 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         this.info = new ContainerInformation();
     }
 
-    public void metadataSetFromHeaders() {
-        this.staleHeaders = false;
-    }
-
     public Collection<StoredObject> list() {
-        return list(null, null, getMaxPageSize());
+        return new ContainerPaginationMap(this, null, MAX_PAGE_SIZE).listAllItems();
     }
 
     public Collection<StoredObject> list(PaginationMap paginationMap, int page) {
         return list(paginationMap.getPrefix(), paginationMap.getMarker(page), paginationMap.getPageSize());
+    }
+
+    public Collection<StoredObject> list(String prefix, String marker, int pageSize) {
+        ListInstructions listInstructions = new ListInstructions()
+                .setPrefix(prefix)
+                .setMarker(marker)
+                .setLimit(pageSize);
+        return commandFactory.createListObjectsCommand(getAccount(), this, listInstructions).call();
+    }
+
+    public void metadataSetFromHeaders() {
+        this.staleHeaders = false;
     }
 
     public PaginationMap getPaginationMap(String prefix, int pageSize) {
@@ -152,14 +162,6 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     public void setContainerRights(boolean publicContainer) {
         commandFactory.createContainerRightsCommand(getAccount(), this, publicContainer).call();
         this.info.setPublicContainer(publicContainer);
-    }
-
-    public Collection<StoredObject> list(String prefix, String marker, int pageSize) {
-        ListInstructions listInstructions = new ListInstructions()
-                .setPrefix(prefix)
-                .setMarker(marker)
-                .setLimit(pageSize);
-        return commandFactory.createListObjectsCommand(getAccount(), this, listInstructions).call();
     }
 
     public Container create() {

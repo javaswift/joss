@@ -6,6 +6,7 @@ import org.javaswift.joss.model.PaginationMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
@@ -34,6 +35,12 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
     }
 
     public AbstractPaginationMap buildMap() {
+        listAllItems();
+        return this;
+    }
+
+    public Collection<Child> listAllItems() {
+        Collection<Child> allChildren = new ArrayList<Child>();
         int recordsToGo = listHolder.getCount();
         String marker = null;
         int page = 0;
@@ -50,12 +57,13 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
                 }
             }
             recordsToGo -= children.size() == 0 ? recordsToGo : (children.size() < blockSize ? children.size() : blockSize);
+            allChildren.addAll(children);
         }
         if (locationInPage == 0) { // Remove last page if no elements follow it
             pageToMarker.remove(pageToMarker.size() - 1);
         }
         LOG.info("JOSS / Created PaginationMap with "+pageToMarker.size()+" pages for a total of "+numberOfRecords+" records");
-        return this;
+        return allChildren;
     }
 
     @Override

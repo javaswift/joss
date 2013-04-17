@@ -39,6 +39,9 @@ public class AccountImplTest extends BaseCommandTest {
     @Test
     public void listContainers() throws IOException {
         loadSampleJson("/sample-container-list.json");
+        List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "4", headers);
+        prepareHeadersForRetrieval(response, headers);
         Collection<Container> containers = account.list();
         assertEquals(4, containers.size());
     }
