@@ -1,9 +1,6 @@
 package org.javaswift.joss.command.impl.object;
 
-import mockit.Expectations;
-import mockit.Mocked;
-import mockit.NonStrictExpectations;
-import mockit.Verifications;
+import mockit.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
@@ -57,19 +54,6 @@ public class DownloadObjectToFileCommandImplTest extends BaseCommandTest {
         prepareMetadata();
         new DownloadObjectToFileCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
         assertTrue(downloadedFile.exists());
-    }
-
-    @Test(expected = CommandException.class)
-    public void closeOutputStreamNull(@Mocked final FileOutputStream fos) throws Exception {
-        prepareMetadata();
-        new Expectations() {{
-            new FileOutputStream(downloadedFile); result = new IOException();
-        }};
-        new DownloadObjectToFileCommandImpl(this.account, httpClient, defaultAccess,
-                getObject("objectname"), new DownloadInstructions(), downloadedFile).call();
-        new Verifications() {{
-            fos.close(); times = 0;
-        }};
     }
 
     @Test(expected = CommandException.class)

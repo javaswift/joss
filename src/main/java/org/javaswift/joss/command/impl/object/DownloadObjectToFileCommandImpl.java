@@ -30,9 +30,7 @@ public class DownloadObjectToFileCommandImpl extends AbstractDownloadObjectComma
             output = new FileOutputStream(targetFile);
             IOUtils.copy(entity.getContent(), output);
         } finally {
-            if (output != null) {
-                output.close();
-            }
+            close(output);
         }
     }
 
@@ -43,9 +41,13 @@ public class DownloadObjectToFileCommandImpl extends AbstractDownloadObjectComma
             input = new FileInputStream(targetFile);
             return DigestUtils.md5Hex(input);
         } finally {
-            if (input != null) {
-                input.close();
-            }
+            close(input);
+        }
+    }
+
+    protected void close(Closeable closeable) throws IOException {
+        if (closeable != null) {
+            closeable.close();
         }
     }
 
