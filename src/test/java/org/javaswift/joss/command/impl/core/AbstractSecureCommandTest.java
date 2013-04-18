@@ -11,6 +11,7 @@ import org.javaswift.joss.command.impl.identity.AuthenticationCommandImpl;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.exception.UnauthorizedException;
+import org.javaswift.joss.headers.ConnectionKeepAlive;
 import org.javaswift.joss.headers.Token;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,11 +22,18 @@ import static junit.framework.Assert.assertEquals;
 
 public class AbstractSecureCommandTest extends BaseCommandTest {
 
-//    @Injectable AuthenticationCommandImpl authCommand;
-
     @Before
     public void setup() throws IOException {
         super.setup();
+    }
+
+    @Test
+    public void checkConnectionKeepAlive() {
+        CreateContainerCommandImpl command =
+                new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"));
+        Header[] keepAlive = command.request.getHeaders(ConnectionKeepAlive.CONNECTION);
+        assertEquals(1, keepAlive.length);
+        assertEquals("Keep-Alive", keepAlive[0].getValue());
     }
 
     @Test

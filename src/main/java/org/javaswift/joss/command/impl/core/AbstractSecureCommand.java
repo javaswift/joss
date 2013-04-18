@@ -3,6 +3,7 @@ package org.javaswift.joss.command.impl.core;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.exception.UnauthorizedException;
+import org.javaswift.joss.headers.ConnectionKeepAlive;
 import org.javaswift.joss.headers.Token;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
@@ -15,6 +16,7 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
         super(httpClient, url);
         this.account = account;
         setToken(token);
+        setConnectionKeepAlive();
     }
 
     public AbstractSecureCommand(Account account, HttpClient httpClient, Access access) {
@@ -34,6 +36,10 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
             }
             throw err;
         }
+    }
+
+    protected void setConnectionKeepAlive() {
+        setHeader(new ConnectionKeepAlive());
     }
 
     private void setToken(String token) {
