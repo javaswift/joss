@@ -33,6 +33,14 @@
 
             <h1>Release notes</h1>
 
+            <h2><a name="v083" class="anchor" href="#v082"><span class="mini-icon mini-icon-link"></span></a>v0.8.3</h2>
+            <ul>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/17">Keep connection alive</a></strong>; the header "Connection: Keep-Alive" is passed to the ObjectStore. This forces HttpClient to keep the connection open.</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/18">Account.list() and Container.list() hide implementation details</a></strong>; the ObjectStore returns a maximum of 10,000 containers or objects. When you called list(), you would get only this maxium and no more. To get it all, you had to use a Pagination map. With this release, you can call list() and it will return all containers/objects, hiding the max page size implementation detail.</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/19">Replace Mockito with JMockit</a></strong>; refactoring of the unit tests to make use of JMockit instead of Mockito, see also the <a href="http://blog.42.nl/articles/mockito-powermock-vs-jmockit/">blog post</a>.</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/20">Public URL instead of internal URL</a></strong>; internal URL is intended for the hosting party, not for API usage. CloudVPS recommended to make use of the public URL returned by Keystone.</li>
+            </ul>
+
             <h2><a name="v082" class="anchor" href="#v082"><span class="mini-icon mini-icon-link"></span></a>v0.8.2</h2>
             <ul>
                 <li><strong><a href="https://github.com/javaswift/joss/issues/15">fluent interface on AccountConfig interferes with Tomcat context.xml</a></strong>; Tomcat does not like a Bean to have fluent setter methods. AccountConfig is now once more a plain bean with void setters. The fluent interface has been relocated to factory.</li>
