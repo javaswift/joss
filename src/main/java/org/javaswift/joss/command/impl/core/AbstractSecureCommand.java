@@ -20,7 +20,7 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
     }
 
     public AbstractSecureCommand(Account account, HttpClient httpClient, Access access) {
-        this(account, httpClient, access.getInternalURL(), access.getToken());
+        this(account, httpClient, access.getPublicURL(), access.getToken());
     }
 
     @Override
