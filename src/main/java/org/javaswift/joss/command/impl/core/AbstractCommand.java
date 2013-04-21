@@ -17,7 +17,9 @@ import org.slf4j.LoggerFactory;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 public abstract class AbstractCommand<M extends HttpRequestBase, N> implements Callable<N>, Closeable {
@@ -42,24 +44,14 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
     }
 
     public N call() {
-        LOG.debug("JOSS / Sending HTTP "+request.getMethod()+" call "+request.getURI().toString());
+        logCall(request);
         try {
             response = httpClient.execute(request);
             HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
             return getReturnObject(response);
         } catch (CommandException err) {
-            if (allowErrorLog) {
-                LOG.error(
-                        "JOSS / HTTP "+request.getMethod()+
-                        " call "+request.getURI().toString()+
-                        (err.getHttpStatusCode() == 0 ? "" : ", HTTP status "+err.getHttpStatusCode())+
-                        (err.getError() == null ? "" : ", Error "+err.getError())+
-                        (err.getMessage() == null ? "" : ", Message '"+err.getMessage()+"'")+
-                        (err.getCause() == null ? "" : ", Cause "+err.getCause().getClass().getSimpleName()));
-
-                for (org.apache.http.Header header : request.getAllHeaders()) {
-                    LOG.error(header.getName()+"="+header.getValue());
-                }
+            if (allowErrorLog) { // This is disabled, for example, for exists(), where we want to ignore the exception
+                logError(request, err);
             }
             throw err;
         } catch (IOException err) {
@@ -69,6 +61,38 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
                 try { close(); } catch (IOException err) { /* ignore */ }
             }
         }
+    }
+
+    private void logCall(M request) {
+        LOG.debug("JOSS / Sending "+getPrintableCall(request));
+        for (String printableHeaderLine : getPrintableHeaderLines(request)) {
+            LOG.debug("* "+printableHeaderLine);
+        }
+    }
+
+    private void logError(M request, CommandException err) {
+        LOG.error(
+                "JOSS / "+getPrintableCall(request)+
+                        (err.getHttpStatusCode() == 0 ? "" : ", HTTP status "+err.getHttpStatusCode())+
+                        (err.getError() == null ? "" : ", Error "+err.getError())+
+                        (err.getMessage() == null ? "" : ", Message '"+err.getMessage()+"'")+
+                        (err.getCause() == null ? "" : ", Cause "+err.getCause().getClass().getSimpleName()));
+
+        for (String printableHeaderLine : getPrintableHeaderLines(request)) {
+            LOG.error("* "+printableHeaderLine);
+        }
+    }
+
+    private String getPrintableCall(M request) {
+        return "HTTP "+request.getMethod()+" call "+request.getURI().toString();
+    }
+
+    private List<String> getPrintableHeaderLines(M request) {
+        List<String> printableHeaderLines = new ArrayList<String>();
+        for (org.apache.http.Header header : request.getAllHeaders()) {
+            printableHeaderLines.add(header.getName()+"="+header.getValue());
+        }
+        return printableHeaderLines;
     }
 
     protected void setHeader(Header header) {
