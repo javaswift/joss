@@ -1,10 +1,13 @@
 package org.javaswift.joss.client.core;
 
+import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.information.AbstractInformation;
 import org.javaswift.joss.model.ObjectStoreEntity;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -109,6 +112,17 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
     public boolean isInfoRetrieved() {
         return !this.stale;
     }
+
+    @Override
+    public String getPath() {
+        try {
+            return getPathForEntity();
+        } catch (Exception e) {
+            throw new CommandException("Unable to encode the object path");
+        }
+    }
+
+    public abstract String getPathForEntity() throws UnsupportedEncodingException;
 
     protected abstract void getInfo(boolean allowErrorLog);
 }

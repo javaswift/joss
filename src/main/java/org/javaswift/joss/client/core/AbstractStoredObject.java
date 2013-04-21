@@ -13,6 +13,7 @@ import org.javaswift.joss.model.StoredObject;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -83,15 +84,12 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     @Override
     public String getPublicURL() {
-        return getContainer().getAccount().getPublicURL() + "/" + getPath();
+        return getContainer().getAccount().getPublicURL() + getPath();
     }
 
-    public String getPath() {
-        try {
-            return URLEncoder.encode(getContainer().getName(), "UTF-8") + "/" + URLEncoder.encode(getName(), "UTF-8");
-        } catch (Exception e) {
-            throw new CommandException("Unable to encode the object path: "+getContainer().getName()+"/"+getName());
-        }
+    @Override
+    public String getPathForEntity() throws UnsupportedEncodingException {
+        return getContainer().getPath() + "/" + URLEncoder.encode(getName(), "UTF-8");
     }
 
     public void setLastModified(Date date) {
@@ -137,7 +135,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         ((AbstractContainer)getContainer()).uploadSegmentedObjects(getName(), uploadInstructions);
         // The manifest file is the handle which allows the ObjectStore to piece the segments together as one file
         UploadInstructions manifest = new UploadInstructions(new byte[] {})
-                .setObjectManifest(new ObjectManifest(getPath()))
+                .setObjectManifest(new ObjectManifest(getPath().replaceFirst("/",""))) // Manifest does not accept preceding slash
                 .setContentType(uploadInstructions.getContentType());
         uploadObject(manifest);
     }

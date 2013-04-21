@@ -10,6 +10,6 @@ import org.javaswift.joss.model.Container;
 public abstract class AbstractContainerCommand<M extends HttpRequestBase, N> extends AbstractSecureCommand<M, N> {
 
     public AbstractContainerCommand(Account account, HttpClient httpClient, AccessImpl access, Container container) {
-        super(account, httpClient, access.getPublicURL() + "/" + container.getName(), access.getToken());
+        super(account, httpClient, getURL(access, container), access.getToken());
     }
 }

@@ -7,6 +7,7 @@ import org.javaswift.joss.headers.ConnectionKeepAlive;
 import org.javaswift.joss.headers.Token;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.ObjectStoreEntity;
 
 public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extends AbstractCommand<M, N> {
 
@@ -19,8 +20,8 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
         setConnectionKeepAlive();
     }
 
-    public AbstractSecureCommand(Account account, HttpClient httpClient, Access access) {
-        this(account, httpClient, access.getPublicURL(), access.getToken());
+    public static String getURL(Access access, ObjectStoreEntity entity) {
+        return access.getPublicURL() + entity.getPath();
     }
 
     @Override

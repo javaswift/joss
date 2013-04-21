@@ -90,7 +90,7 @@ public class UploadObjectCommandImplTest extends BaseCommandTest {
                                         .setContentType("image/bmp")
                                         .setDeleteAt(new DeleteAt("Sat, 22 Sep 2012 07:24:21 GMT"))
                                         .setDeleteAfter(new DeleteAfter(42))
-                                        .setObjectManifest(new ObjectManifest(getObject("some-big-file.dat").getPath()))).call();
+                                        .setObjectManifest(new ObjectManifest(getObject("some-big-file.dat").getPath().replaceFirst("/","")))).call();
         verifyHeaderValue("image/bmp", ObjectContentType.CONTENT_TYPE);
         verifyHeaderValue("cafebabe", Token.X_AUTH_TOKEN);
         verifyHeaderValue("ebabefac", Etag.ETAG);

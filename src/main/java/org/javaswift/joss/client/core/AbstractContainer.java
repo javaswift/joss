@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -182,4 +184,10 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         this.info = commandFactory.createContainerInformationCommand(getAccount(), this, allowErrorLog).call();
         this.setInfoRetrieved();
     }
+
+    @Override
+    public String getPathForEntity() throws UnsupportedEncodingException {
+        return "/" + URLEncoder.encode(getName(), "UTF-8");
+    }
+
 }

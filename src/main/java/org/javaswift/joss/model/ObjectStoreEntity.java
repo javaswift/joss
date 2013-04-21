@@ -20,4 +20,9 @@ public interface ObjectStoreEntity {
     */
     public Map<String, Object> getMetadata();
 
+    /**
+    * Returns the path to be appended to the host
+    * @return the path to append to the host
+    */
+    public String getPath();
 }
