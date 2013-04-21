@@ -33,7 +33,13 @@
 
             <h1>Release notes</h1>
 
-            <h2><a name="v083" class="anchor" href="#v082"><span class="mini-icon mini-icon-link"></span></a>v0.8.3</h2>
+            <h2><a name="v084" class="anchor" href="#v084"><span class="mini-icon mini-icon-link"></span></a>v0.8.4</h2>
+            <ul>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/16">Debug information</a></strong>; calls are logged with their headers at DEBUG level</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/20">Public URL instead of internal URL (revisited)</a></strong>; not all references to the internal were replaced. Now they are.</li>
+            </ul>
+
+            <h2><a name="v083" class="anchor" href="#v083"><span class="mini-icon mini-icon-link"></span></a>v0.8.3</h2>
             <ul>
                 <li><strong><a href="https://github.com/javaswift/joss/issues/17">Keep connection alive</a></strong>; the header "Connection: Keep-Alive" is passed to the ObjectStore. This forces HttpClient to keep the connection open.</li>
                 <li><strong><a href="https://github.com/javaswift/joss/issues/18">Account.list() and Container.list() hide implementation details</a></strong>; the ObjectStore returns a maximum of 10,000 containers or objects. When you called list(), you would get only this maxium and no more. To get it all, you had to use a Pagination map. With this release, you can call list() and it will return all containers/objects, hiding the max page size implementation detail.</li>
