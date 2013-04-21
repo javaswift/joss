@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ListContainersCommandImpl extends AbstractSecureCommand<HttpGet, Collection<Container>> implements ListContainersCommand {
+public class ListContainersCommandImpl extends AbstractAccountCommand<HttpGet, Collection<Container>> implements ListContainersCommand {
 
     protected Account account;
 

@@ -18,7 +18,7 @@ import org.javaswift.joss.model.Account;
 
 import java.io.IOException;
 
-public class AccountInformationCommandImpl extends AbstractSecureCommand<HttpHead, AccountInformation> implements AccountInformationCommand {
+public class AccountInformationCommandImpl extends AbstractAccountCommand<HttpHead, AccountInformation> implements AccountInformationCommand {
 
     public AccountInformationCommandImpl(Account account, HttpClient httpClient, AccessImpl access) {
         super(account, httpClient, access);

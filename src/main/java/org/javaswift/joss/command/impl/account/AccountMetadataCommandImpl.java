@@ -14,7 +14,7 @@ import org.javaswift.joss.model.Account;
 
 import java.util.Collection;
 
-public class AccountMetadataCommandImpl extends AbstractSecureCommand<HttpPost, Object> implements AccountMetadataCommand {
+public class AccountMetadataCommandImpl extends AbstractAccountCommand<HttpPost, Object> implements AccountMetadataCommand {
 
     public AccountMetadataCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Collection<? extends Header> headers) {
         super(account, httpClient, access);
