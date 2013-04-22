@@ -90,6 +90,7 @@
             <groupId>com.googlecode.jmockit</groupId>
             <artifactId>jmockit</artifactId>
             <version>${mockit.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- Used for unit testing -->
