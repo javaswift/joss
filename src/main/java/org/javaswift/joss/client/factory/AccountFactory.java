@@ -30,6 +30,7 @@ public class AccountFactory {
         return client
                 .authenticate(config.getTenant(), config.getUsername(), config.getPassword(), config.getAuthUrl())
                 .setPublicHost(config.getPublicHost())
+                .setPrivateHost(config.getPrivateHost())
                 .setAllowReauthenticate(config.isAllowReauthenticate());
     }
 

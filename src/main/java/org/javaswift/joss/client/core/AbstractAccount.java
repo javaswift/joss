@@ -57,12 +57,14 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return getPaginationMap(null, pageSize);
     }
 
+    @Override
     public AbstractAccount setPublicHost(String publicHost) {
         LOG.info("JOSS / Use public host: "+publicHost);
         this.commandFactory.setPublicHost(publicHost);
         return this;
     }
 
+    @Override
     public AbstractAccount setPrivateHost(String privateHost) {
         LOG.info("JOSS / Use private host: "+privateHost);
         this.commandFactory.setPrivateHost(privateHost);
