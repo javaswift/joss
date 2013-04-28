@@ -21,7 +21,8 @@ public class AccountConfigTest {
         config.setMockAllowEveryone(true);
         config.setMockAllowObjectDeleter(true);
         config.setMockOnFileObjectStore("/some/path");
-        config.setHost("http://localhost:8080/mock");
+        config.setPublicHost("http://localhost:8080/mock");
+        config.setPrivateHost("api");
         config.setSocketTimeout(1000);
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
@@ -34,7 +35,8 @@ public class AccountConfigTest {
         assertTrue(config.isAllowReauthenticate());
         assertTrue(config.isMockAllowEveryone());
         assertTrue(config.isMockAllowObjectDeleter());
-        assertEquals("http://localhost:8080/mock", config.getHost());
+        assertEquals("http://localhost:8080/mock", config.getPublicHost());
+        assertEquals("api", config.getPrivateHost());
         assertEquals(1000, config.getSocketTimeout());
     }
 }

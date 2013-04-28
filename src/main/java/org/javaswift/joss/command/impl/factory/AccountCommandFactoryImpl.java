@@ -24,7 +24,8 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     private final HttpClient httpClient;
     private AccessImpl access;
     private final AuthenticationCommand authCommand;
-    private String host;
+    private String publicHost;
+    private String privateHost;
 
     public AccountCommandFactoryImpl(HttpClient httpClient, AccessImpl access, AuthenticationCommand authCommand) {
         this.httpClient = httpClient;
@@ -33,16 +34,28 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
         this.containerCommandFactory = new ContainerCommandFactoryImpl(this);
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    @Override
+    public void setPublicHost(String publicHost) {
+        this.publicHost = publicHost;
+    }
+
+    @Override
+    public void setPrivateHost(String privateHost) {
+        this.privateHost = privateHost;
+    }
+
+    @Override
+    public String getPublicHost() {
+        return this.publicHost == null ? access.getPublicURL() : this.publicHost;
+    }
+
+    @Override
+    public String getPrivateHost() {
+        return this.privateHost == null ? access.getPublicURL() : this.privateHost;
     }
 
     public AccessImpl authenticate() {
         return access = authCommand.call();
-    }
-
-    public String getPublicURL() {
-        return this.host == null ? access.getPublicURL() : this.host;
     }
 
     @Override

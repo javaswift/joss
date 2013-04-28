@@ -45,7 +45,16 @@ public class AccountConfig {
     * from mock Swift, simulating a public URL. By default, the public URL returned by Keystone
     * will be used.
     */
-    private String host = null;
+    private String publicHost = null;
+
+    /**
+    * Since for content in private containers, you will need a Keystone authentication token, this
+    * cannot be fetched in the same way as content in public containers. A good practice is to use
+    * the application server as a proxy for the ObjectStore. In this case, the application server
+    * could choose to add a controller method which mimicks the ObjectStore REST API for downloading
+    * content. By setting privateHost, you can facilitate this approach.
+    */
+    private String privateHost = null;
 
     /**
     * If mock is turned off (default behaviour), then the real ObjectStore will be accessed. If not,
@@ -127,12 +136,20 @@ public class AccountConfig {
         return mock;
     }
 
-    public String getHost() {
-        return host;
+    public String getPublicHost() {
+        return publicHost;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setPublicHost(String publicHost) {
+        this.publicHost = publicHost;
+    }
+
+    public String getPrivateHost() {
+        return privateHost;
+    }
+
+    public void setPrivateHost(String privateHost) {
+        this.privateHost = privateHost;
     }
 
     public int getMockMillisDelay() {
@@ -190,4 +207,5 @@ public class AccountConfig {
     public void setSocketTimeout(int socketTimeout) {
         this.socketTimeout = socketTimeout;
     }
+
 }

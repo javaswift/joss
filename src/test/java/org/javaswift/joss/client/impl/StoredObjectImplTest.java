@@ -212,6 +212,17 @@ public class StoredObjectImplTest extends BaseCommandTest {
     }
 
     @Test
+    public void getPrivateUrl() {
+        account.setPrivateHost("api");
+        assertEquals("api/alpha/image.png", object.getPrivateURL());
+    }
+
+    @Test
+    public void getPrivateUrlObjectStore() {
+        assertEquals("http://someurl.public/alpha/image.png", object.getPrivateURL());
+    }
+
+    @Test
     public void setMetadata() throws IOException {
         expectStatusCode(202);
         Map<String, Object> metadata = new TreeMap<String, Object>();

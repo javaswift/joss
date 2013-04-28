@@ -30,7 +30,7 @@ public class AccountFactoryTest {
     public void getPublicUrl() {
         AccountConfig config = new AccountConfig();
         config.setMock(true);
-        config.setHost("http://find.me");
+        config.setPublicHost("http://find.me");
         AccountFactory factory = new AccountFactory(config);
         assertEquals("http://find.me", factory.createAccount().getPublicURL());
     }

@@ -29,7 +29,7 @@ public class AccountFactory {
         }
         return client
                 .authenticate(config.getTenant(), config.getUsername(), config.getPassword(), config.getAuthUrl())
-                .setHost(config.getHost())
+                .setPublicHost(config.getPublicHost())
                 .setAllowReauthenticate(config.isAllowReauthenticate());
     }
 
@@ -73,7 +73,7 @@ public class AccountFactory {
     }
 
     public AccountFactory setHost(String host) {
-        this.config.setHost(host);
+        this.config.setPublicHost(host);
         return this;
     }
 

@@ -27,18 +27,29 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
         this.containerCommandFactory = new ContainerCommandFactoryMock(this.swift);
     }
 
-    public void setHost(String host) {
-        this.swift.setHost(host);
+    @Override
+    public void setPublicHost(String publicHost) {
+        this.swift.setPublicHost(publicHost);
+    }
+
+    @Override
+    public void setPrivateHost(String privateHost) {
+        this.swift.setPrivateHost(privateHost);
+    }
+
+    @Override
+    public String getPublicHost() {
+        return swift.getPublicHost();
+    }
+
+    @Override
+    public String getPrivateHost() {
+        return swift.getPrivateHost();
     }
 
     @Override
     public AccessImpl authenticate() {
         return null;
-    }
-
-    @Override
-    public String getPublicURL() {
-        return swift.getPublicURL();
     }
 
     @Override

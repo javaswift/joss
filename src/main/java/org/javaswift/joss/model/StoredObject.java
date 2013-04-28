@@ -137,6 +137,12 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject
     public String getPublicURL();
 
     /**
+    * Returns the private URL through which the resource can be viewed
+    * @return the private URL of the resource
+    */
+    public String getPrivateURL();
+
+    /**
     * Checks whether a container exists
     * @return whether the container exists
     */

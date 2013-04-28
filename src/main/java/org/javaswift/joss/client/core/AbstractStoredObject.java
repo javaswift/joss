@@ -88,6 +88,11 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     }
 
     @Override
+    public String getPrivateURL() {
+        return getContainer().getAccount().getPrivateURL() + getPath();
+    }
+
+    @Override
     public String getPathForEntity() throws UnsupportedEncodingException {
         return getContainer().getPath() + "/" + URLEncoder.encode(getName(), "UTF-8");
     }

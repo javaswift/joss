@@ -40,7 +40,9 @@ public class Swift {
 
     private MockUserStore users = new MockUserStore();
 
-    private String publicUrl;
+    private String publicHost;
+
+    private String privateHost;
 
     private HeaderStore headers = new HeaderStore();
 
@@ -90,8 +92,13 @@ public class Swift {
         return this;
     }
 
-    public Swift setHost(String publicUrl) {
-        this.publicUrl = publicUrl;
+    public Swift setPublicHost(String publicHost) {
+        this.publicHost = publicHost;
+        return this;
+    }
+
+    public Swift setPrivateHost(String privateHost) {
+        this.privateHost = privateHost;
         return this;
     }
 
@@ -160,8 +167,12 @@ public class Swift {
         );
     }
 
-    public String getPublicURL() {
-        return this.publicUrl == null ? "" : this.publicUrl;
+    public String getPublicHost() {
+        return this.publicHost == null ? "" : this.publicHost;
+    }
+
+    public String getPrivateHost() {
+        return this.privateHost == null ? "" : this.privateHost;
     }
 
     public SwiftResult<AccountInformation> getAccountInformation() {

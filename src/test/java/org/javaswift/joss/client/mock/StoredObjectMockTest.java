@@ -63,10 +63,19 @@ public class StoredObjectMockTest {
     }
 
     @Test
-    public void mockUrl() {
-        AccountMock account = new AccountMock(new Swift().setHost("http://127.0.0.1"));
+    public void mockPublicHost() {
+        AccountMock account = new AccountMock();
+        account.setPublicHost("http://127.0.0.1");
         StoredObject object = account.getContainer("someContainer").getObject("someObject");
         assertEquals("http://127.0.0.1/someContainer/someObject", object.getPublicURL());
+    }
+
+    @Test
+    public void mockPrivateHost() {
+        AccountMock account = new AccountMock();
+        account.setPrivateHost("api");
+        StoredObject object = account.getContainer("someContainer").getObject("someObject");
+        assertEquals("api/someContainer/someObject", object.getPrivateURL());
     }
 
     @Test

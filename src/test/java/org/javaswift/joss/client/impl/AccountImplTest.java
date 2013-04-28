@@ -90,7 +90,7 @@ public class AccountImplTest extends BaseCommandTest {
     @Test
     public void getPublicUROverride() {
         account = new AccountImpl(null, httpClient, defaultAccess, true);
-        account.setHost("http://static.someurl.com");
+        account.setPublicHost("http://static.someurl.com");
         assertEquals("http://static.someurl.com", account.getPublicURL());
     }
 

@@ -34,6 +34,12 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     public String getPublicURL();
 
     /**
+    * Returns the private URL which is used for the underlying stored objects
+    * @return the private URL of the underlying stored objects
+    */
+    public String getPrivateURL();
+
+    /**
     * Force the Account to reload its metadata
     */
     public void reload();
@@ -64,7 +70,7 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     * @param host host of an object's public URL
     * @return instance of Account
     */
-    public Account setHost(String host);
+    public Account setPublicHost(String host);
 
     /**
     * Whether reauthentication on expiration of the authentication token is allowed, or this is done

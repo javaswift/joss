@@ -13,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountInformation> implements Account {
 
@@ -60,9 +57,15 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return getPaginationMap(null, pageSize);
     }
 
-    public AbstractAccount setHost(String host) {
-        LOG.info("JOSS / Use host: "+host);
-        this.commandFactory.setHost(host);
+    public AbstractAccount setPublicHost(String publicHost) {
+        LOG.info("JOSS / Use public host: "+publicHost);
+        this.commandFactory.setPublicHost(publicHost);
+        return this;
+    }
+
+    public AbstractAccount setPrivateHost(String privateHost) {
+        LOG.info("JOSS / Use private host: "+privateHost);
+        this.commandFactory.setPrivateHost(privateHost);
         return this;
     }
 
@@ -117,7 +120,12 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     @Override
     public String getPublicURL() {
-        return this.commandFactory.getPublicURL();
+        return this.commandFactory.getPublicHost();
+    }
+
+    @Override
+    public String getPrivateURL() {
+        return this.commandFactory.getPrivateHost();
     }
 
     @Override

@@ -14,9 +14,13 @@ public interface AccountCommandFactory {
 
     public AccessImpl authenticate();
 
-    public String getPublicURL();
+    public String getPublicHost();
 
-    public void setHost(String host);
+    public String getPrivateHost();
+
+    public void setPublicHost(String publicHost);
+
+    public void setPrivateHost(String privateHost);
 
     AccountInformationCommand createAccountInformationCommand(Account account);
 

@@ -59,10 +59,17 @@ public class SwiftTest {
     }
 
     @Test
-    public void getPublicUrl() {
-        assertEquals("", new Swift().getPublicURL());
-        swift = new Swift().setHost("http://localhost:8080/mock");
-        assertEquals("http://localhost:8080/mock", swift.getPublicURL());
+    public void getPublicHost() {
+        assertEquals("", new Swift().getPublicHost());
+        swift = new Swift().setPublicHost("http://localhost:8080/mock");
+        assertEquals("http://localhost:8080/mock", swift.getPublicHost());
+    }
+
+    @Test
+    public void getPrivateHost() {
+        assertEquals("", new Swift().getPublicHost());
+        swift = new Swift().setPrivateHost("api");
+        assertEquals("api", swift.getPrivateHost());
     }
 
     @Test
