@@ -33,6 +33,11 @@
 
             <h1>Release notes</h1>
 
+            <h2><a name="v086" class="anchor" href="#v086"><span class="mini-icon mini-icon-link"></span></a>v0.8.6</h2>
+            <ul>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/22">Account keeps track of Container instances</a></strong>; get the introduction of getURL(), a potential economy issue arises. Because getURL() wants to know whether a Container is public or private, a HEAD call to Container will have to be made. With this release, Account will keep track of its Container instances (ie, cache) and reuse them. This will minimize the number of server calls. Container Cache is enabled by default.</li>
+            </ul>
+
             <h2><a name="v085" class="anchor" href="#v085"><span class="mini-icon mini-icon-link"></span></a>v0.8.5</h2>
             <ul>
                 <li><strong><a href="https://github.com/javaswift/joss/issues/21">getPublicURL(), getPrivateURL(), getURL()</a></strong>; you can now pass publicHost and privateHost in your configuration. Note that publicHost replaces host (**API change!**). getPrivateURL() works in a similar manner to getPublicURL(), except it takes privateHost as its host. A new player is getURL(), which decides to either give back getPublicURL() or getPrivateURL() based on the privacy setting of the container. Be aware that a new Container instance will always make a HEAD call, some level of caching or reuse is advised.</li>
