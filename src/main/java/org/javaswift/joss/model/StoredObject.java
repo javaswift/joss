@@ -131,6 +131,14 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject
     public StoredObject setDeleteAt(Date date);
 
     /**
+    * This call checks the container privacy before deciding whether to use the configured public / private
+    * host or the default ObjectStore host. NOTE: this call needs to know the container's privacy settings
+    * and therefore, if it did not do so already, will make a HEAD call to fetch the container's metadata.
+    * @return the URL of the resource
+    */
+    public String getURL();
+
+    /**
     * Returns the public URL through which the resource can be viewed
     * @return the public URL of the resource
     */

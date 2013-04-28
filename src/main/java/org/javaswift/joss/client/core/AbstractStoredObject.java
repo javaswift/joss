@@ -83,6 +83,11 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     }
 
     @Override
+    public String getURL() {
+        return getContainer().isPublic() ? getPublicURL() : getPrivateURL();
+    }
+
+    @Override
     public String getPublicURL() {
         return getContainer().getAccount().getPublicURL() + getPath();
     }

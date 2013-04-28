@@ -79,6 +79,30 @@ public class StoredObjectMockTest {
     }
 
     @Test
+    public void getURLChoosesPrivateHost() {
+        assertUrl(false, "api/container/object.png");
+    }
+
+    @Test
+    public void getURLChoosesPublicHost() {
+        assertUrl(true, "http://localhost:8080/container/object.png");
+    }
+
+    protected void assertUrl(boolean publicContainer, String expectedUrl) {
+        Account account = new AccountMock()
+                .setPrivateHost("api")
+                .setPublicHost("http://localhost:8080");
+        Container container = account.getContainer("container");
+        container.create();
+        if (publicContainer) {
+            container.makePublic();
+        }
+        StoredObject object = container.getObject("object.png");
+        object.uploadObject(uploadBytes);
+        assertEquals(expectedUrl, object.getURL());
+    }
+
+    @Test
     public void saveObject() throws IOException {
         byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
         object.uploadObject(bytes);
