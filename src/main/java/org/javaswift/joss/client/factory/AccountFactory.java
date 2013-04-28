@@ -31,6 +31,7 @@ public class AccountFactory {
                 .authenticate(config.getTenant(), config.getUsername(), config.getPassword(), config.getAuthUrl())
                 .setPublicHost(config.getPublicHost())
                 .setPrivateHost(config.getPrivateHost())
+                .setAllowContainerCaching(config.isAllowContainerCaching())
                 .setAllowReauthenticate(config.isAllowReauthenticate());
     }
 
@@ -95,6 +96,11 @@ public class AccountFactory {
 
     public AccountFactory setAllowCaching(boolean allowCaching) {
         this.config.setAllowCaching(allowCaching);
+        return this;
+    }
+
+    public AccountFactory setAllowContainerCaching(boolean allowContainerCaching) {
+        this.config.setAllowContainerCaching(allowContainerCaching);
         return this;
     }
 

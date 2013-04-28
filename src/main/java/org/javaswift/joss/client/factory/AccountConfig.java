@@ -96,6 +96,12 @@ public class AccountConfig {
     */
     private int socketTimeout = -1;
 
+    /**
+    * If ContainerCaching is enabled, Account will keep track of its Container instances and reuse them. By default
+    * container caching is enabled.
+    */
+    private boolean allowContainerCaching = true;
+
     public void setTenant(String tenant) {
         this.tenant = tenant;
     }
@@ -208,4 +214,11 @@ public class AccountConfig {
         this.socketTimeout = socketTimeout;
     }
 
+    public boolean isAllowContainerCaching() {
+        return allowContainerCaching;
+    }
+
+    public void setAllowContainerCaching(boolean allowContainerCaching) {
+        this.allowContainerCaching = allowContainerCaching;
+    }
 }

@@ -16,7 +16,7 @@ public class AccountMock extends AbstractAccount {
     }
 
     @Override
-    public Container getContainer(String name) {
+    public Container createContainer(String name) {
         return new ContainerMock(this, name);
     }
 

@@ -23,9 +23,13 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private boolean allowReauthenticate = true;
 
+    private boolean allowContainerCaching = true;
+
     private int numberOfCalls = 0;
 
     private final AccountCommandFactory commandFactory;
+
+    private final ContainerCache containerCache = new ContainerCache();
 
     public AbstractAccount(AccountCommandFactory commandFactory, boolean allowCaching) {
         super(allowCaching);
@@ -77,8 +81,18 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return this;
     }
 
+    public AbstractAccount setAllowContainerCaching(boolean allowContainerCaching) {
+        LOG.info("JOSS / Allow Container caching: "+allowContainerCaching);
+        this.allowContainerCaching = allowContainerCaching;
+        return this;
+    }
+
     public boolean isAllowReauthenticate() {
         return this.allowReauthenticate;
+    }
+
+    public boolean isAllowContainerCaching() {
+        return this.allowContainerCaching;
     }
 
     public int getCount() {
@@ -143,6 +157,20 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     @Override
     public String getPathForEntity() throws UnsupportedEncodingException {
         return "";
+    }
+
+    protected abstract Container createContainer(String containerName);
+
+    @Override
+    public Container getContainer(String containerName) {
+        return isAllowContainerCaching() ?
+                this.containerCache.getContainer(this, containerName) :
+                createContainer(containerName);
+    }
+
+    @Override
+    public void resetContainerCache() {
+        this.containerCache.reset();
     }
 
 }

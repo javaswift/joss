@@ -56,6 +56,32 @@ public class AccountMockTest {
     }
 
     @Test
+    public void resetContainerCache() {
+        Account account = new AccountMock();
+        Container container1 = account.getContainer("town1");
+        account.resetContainerCache();
+        Container container2 = account.getContainer("town1");
+        assertNotSame(container1, container2);
+    }
+
+    @Test
+    public void useContainerCache() {
+        Account account = new AccountMock();
+        Container container1 = account.getContainer("town1");
+        Container container2 = account.getContainer("town1");
+        assertSame(container1, container2);
+    }
+
+    @Test
+    public void doNotUseContainerCache() {
+        Account account = new AccountMock()
+                .setAllowContainerCaching(false);
+        Container container1 = account.getContainer("town1");
+        Container container2 = account.getContainer("town1");
+        assertNotSame(container1, container2);
+    }
+
+    @Test
     public void createContainerAlreadyExists() {
         Account account = new AccountMock();
         Container container = account.getContainer("town1");

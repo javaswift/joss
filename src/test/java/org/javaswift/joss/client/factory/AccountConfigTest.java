@@ -24,6 +24,7 @@ public class AccountConfigTest {
         config.setPublicHost("http://localhost:8080/mock");
         config.setPrivateHost("api");
         config.setSocketTimeout(1000);
+        config.setAllowContainerCaching(false);
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
         assertEquals("tenant", config.getTenant());
@@ -38,5 +39,6 @@ public class AccountConfigTest {
         assertEquals("http://localhost:8080/mock", config.getPublicHost());
         assertEquals("api", config.getPrivateHost());
         assertEquals(1000, config.getSocketTimeout());
+        assertEquals(false, config.isAllowContainerCaching());
     }
 }

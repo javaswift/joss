@@ -13,7 +13,8 @@ public class AccountImpl extends AbstractAccount {
         super(new AccountCommandFactoryImpl(httpClient, access, command), allowCaching);
     }
 
-    public Container getContainer(String containerName) {
+    @Override
+    public Container createContainer(String containerName) {
         return new ContainerImpl(this, containerName, isAllowCaching());
     }
 

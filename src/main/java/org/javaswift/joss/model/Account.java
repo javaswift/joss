@@ -80,6 +80,16 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     public Account setPrivateHost(String host);
 
     /**
+    * If ContainerCaching is enabled, Account will keep track of its Container instances and reuse them.
+    */
+    public Account setAllowContainerCaching(boolean containerCaching);
+
+    /**
+    * Empties the Container Cache
+    */
+    public void resetContainerCache();
+
+    /**
     * Whether reauthentication on expiration of the authentication token is allowed, or this is done
     * manually by the client
     * @return whether reauthentication is allowed

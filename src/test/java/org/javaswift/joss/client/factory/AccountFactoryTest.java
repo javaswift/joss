@@ -53,6 +53,7 @@ public class AccountFactoryTest {
         new AccountFactory()
                 .setAllowCaching(true)
                 .setAllowReauthenticate(true)
+                .setAllowContainerCaching(false)
                 .setAuthUrl(null)
                 .setHttpClient(null)
                 .setMock(true)
