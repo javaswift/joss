@@ -54,7 +54,7 @@
                 <li><strong>Download</strong>; all download calls immediately start the download process with exactly <em>one call</em>.</li>
                 <li><strong><code>exists</code></strong>; makes exactly <em>one call</em> to the server to see if the instance exists. The result is cached.</li>
                 <li><strong>Move</strong>; ie, copy/delete, therefore <em>two calls</em>, relatively expensive.</li>
-                <li><strong>StoredObject.getURL()</strong>; requires to know whether a Container is public or private. If no HEAD call has been made yet, it will make one now. Note that AccountConfig.allowContainerCache=true (default) minimizes the number of HEAD calls made, because Container instances are reused.</li>
+                <li><strong><code>StoredObject.getURL()</code></strong>; requires to know whether a Container is public or private. If no HEAD call has been made yet, it will make one now. Note that AccountConfig.allowContainerCache=true (default) minimizes the number of HEAD calls made, because Container instances are reused.</li>
             </ul>
             <p>Account can be asked (with <code>getNumberOfCalls</code>) how many calls it placed to the server. </p>
         </section>
