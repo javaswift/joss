@@ -35,7 +35,7 @@
 
             <h2><a name="v085" class="anchor" href="#v085"><span class="mini-icon mini-icon-link"></span></a>v0.8.5</h2>
             <ul>
-                <li><strong><a href="https://github.com/javaswift/joss/issues/21">getPublicURL(), getPrivateURL(), getURL()</a></strong>; you can now pass publicHost and privateHost in your configuration. Note that publicHost replaces host (**API change!**). getPrivateURL() works in a similar manner to getPublicURL(), except it takes privateHost as its host. A new player is getURL(), which decides to either give back getPublicURL() or getPrivateURL() based on the privacy setting of the container.</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/21">getPublicURL(), getPrivateURL(), getURL()</a></strong>; you can now pass publicHost and privateHost in your configuration. Note that publicHost replaces host (**API change!**). getPrivateURL() works in a similar manner to getPublicURL(), except it takes privateHost as its host. A new player is getURL(), which decides to either give back getPublicURL() or getPrivateURL() based on the privacy setting of the container. Be aware that a new Container instance will always make a HEAD call, some level of caching or reuse is advised.</li>
             </ul>
 
             <h2><a name="v084" class="anchor" href="#v084"><span class="mini-icon mini-icon-link"></span></a>v0.8.4</h2>
