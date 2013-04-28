@@ -72,8 +72,13 @@ public class AccountFactory {
         return this;
     }
 
-    public AccountFactory setHost(String host) {
-        this.config.setPublicHost(host);
+    public AccountFactory setPublicHost(String publicHost) {
+        this.config.setPublicHost(publicHost);
+        return this;
+    }
+
+    public AccountFactory setPrivateHost(String privateHost) {
+        this.config.setPrivateHost(privateHost);
         return this;
     }
 

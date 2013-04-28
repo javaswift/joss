@@ -67,7 +67,7 @@ public class SwiftTest {
 
     @Test
     public void getPrivateHost() {
-        assertEquals("", new Swift().getPublicHost());
+        assertEquals("", new Swift().getPrivateHost());
         swift = new Swift().setPrivateHost("api");
         assertEquals("api", swift.getPrivateHost());
     }

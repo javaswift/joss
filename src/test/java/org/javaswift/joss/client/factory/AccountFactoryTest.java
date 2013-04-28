@@ -54,7 +54,6 @@ public class AccountFactoryTest {
                 .setAllowCaching(true)
                 .setAllowReauthenticate(true)
                 .setAuthUrl(null)
-                .setHost(null)
                 .setHttpClient(null)
                 .setMock(true)
                 .setMockAllowEveryone(true)
@@ -62,6 +61,8 @@ public class AccountFactoryTest {
                 .setMockMillisDelay(0)
                 .setMockOnFileObjectStore(null)
                 .setPassword(null)
+                .setPrivateHost(null)
+                .setPublicHost(null)
                 .setSocketTimeout(0)
                 .setTenant(null)
                 .setUsername(null);
