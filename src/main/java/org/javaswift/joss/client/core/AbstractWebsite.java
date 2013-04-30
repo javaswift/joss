@@ -4,8 +4,13 @@ import org.javaswift.joss.headers.website.*;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.model.Website;
+import org.javaswift.joss.util.FileAction;
+import org.javaswift.joss.util.FileReference;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractWebsite extends AbstractContainer implements Website {
@@ -77,7 +82,15 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
 
     @Override
     public void pushDirectory(File directory) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        List<FileReference> files = FileAction.listFiles(directory);
+
+        for (FileReference file : files) {
+            try {
+                System.out.println(file.getPath() + " -> " + FileAction.getMd5(file.getFile()));
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
     }
 
     @Override

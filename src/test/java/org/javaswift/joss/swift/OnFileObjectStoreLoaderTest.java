@@ -30,27 +30,4 @@ public class OnFileObjectStoreLoaderTest {
         assertEquals("image/png", object.getContentType());
     }
 
-    @Test
-    public void noDirectory() throws IOException, URISyntaxException {
-        OnFileObjectStoreLoader loader = new OnFileObjectStoreLoader();
-        ClassLoader classLoader = OnFileObjectStoreLoader.class.getClassLoader();
-        Enumeration<URL> urls = classLoader.getResources("object-store/container1/checkmark.png");
-        assertEquals(0, loader.listFiles(urls.nextElement()).length);
-    }
-
-    @Test
-    public void noUrl() throws URISyntaxException {
-        testUrl(null);
-    }
-
-    @Test
-    public void urlOfNoneFileType() throws URISyntaxException, MalformedURLException {
-        testUrl(new URL("http://java.sun.com/index.html"));
-    }
-
-    protected void testUrl(URL url) throws URISyntaxException {
-        OnFileObjectStoreLoader loader = new OnFileObjectStoreLoader();
-        assertEquals(0, loader.listFiles(url).length);
-    }
-
 }

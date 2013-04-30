@@ -1,8 +1,12 @@
 package org.javaswift.joss.client.mock;
 
+import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.model.Website;
+import org.javaswift.joss.swift.Swift;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -58,4 +62,15 @@ public class WebsiteMockTest {
         assertFalse(website.isListing());
     }
 
+    @Test
+    public void listDirectory() {
+        Swift swift = new Swift()
+                .setOnFileObjectStore("websites");
+        website = new WebsiteMock(new AccountMock(swift), "website");
+
+        for (StoredObject object : website.list()) {
+            System.out.println(object.getName());
+        }
+
+    }
 }

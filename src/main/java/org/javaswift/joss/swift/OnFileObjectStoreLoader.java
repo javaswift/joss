@@ -1,12 +1,15 @@
 package org.javaswift.joss.swift;
 
 import org.javaswift.joss.instructions.UploadInstructions;
+import org.javaswift.joss.util.FileAction;
+import org.javaswift.joss.util.FileReference;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,35 +21,22 @@ public class OnFileObjectStoreLoader {
         Map<String, SwiftContainer> containers = new TreeMap<String, SwiftContainer>();
         Enumeration<URL> urls = classLoader.getResources(onFileObjectStore);
         while (urls.hasMoreElements()) {
-            URL url = urls.nextElement();
-            for (File containerFile : listFiles(url)) {
-                SwiftContainer container = new SwiftContainer(containerFile.getName());
-                containers.put(container.getName(), container);
-                storeObjects(container, onFileObjectStore + "/" + containerFile.getName());
+            List<FileReference> files = FileAction.listFiles(urls.nextElement());
+            for (FileReference fileReference : files) {
+                // Create container
+                String containerName = fileReference.getFirstPart();
+                SwiftContainer container = containers.get(containerName);
+                if (container == null) {
+                    container = new SwiftContainer(containerName);
+                    containers.put(container.getName(), container);
+                }
+                // Create object
+                String objectName = fileReference.getPath(1);
+                SwiftStoredObject object = container.createObject(objectName);
+                object.uploadObject(new UploadInstructions(fileReference.getFile()));
             }
         }
         return containers;
-    }
-
-    public void storeObjects(SwiftContainer container, String containerLocation) throws IOException, URISyntaxException {
-        Enumeration<URL> containerUrls = classLoader.getResources(containerLocation);
-        while (containerUrls.hasMoreElements()) {
-            URL containerURL = containerUrls.nextElement();
-            for (File objectFile : listFiles(containerURL)) {
-                SwiftStoredObject object = container.createObject(objectFile.getName());
-                object.uploadObject(new UploadInstructions(objectFile));
-            }
-        }
-    }
-
-    public File[] listFiles(URL url) throws URISyntaxException {
-        if (url != null && url.getProtocol().equals("file")) {
-            File file = new File(url.toURI());
-            if (file.isDirectory()) {
-                return new File(url.toURI()).listFiles();
-            }
-        }
-        return new File[] {};
     }
 
 }
