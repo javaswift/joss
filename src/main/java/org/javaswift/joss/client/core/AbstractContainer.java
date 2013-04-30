@@ -37,9 +37,9 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
 
     private final ContainerCommandFactory commandFactory;
 
-    public AbstractContainer(ContainerCommandFactory commandFactory, Account account, String name, boolean allowCaching) {
+    public AbstractContainer(Account account, String name, boolean allowCaching) {
         super(allowCaching);
-        this.commandFactory = commandFactory;
+        this.commandFactory = ((AbstractAccount)account).getFactory().getContainerCommandFactory();
         this.name = name;
         this.account = account;
         this.info = new ContainerInformation();

@@ -1,11 +1,11 @@
 package org.javaswift.joss.client.mock;
 
-import org.javaswift.joss.client.core.AbstractContainer;
+import org.javaswift.joss.client.core.AbstractWebsite;
 import org.javaswift.joss.model.StoredObject;
 
-public class ContainerMock extends AbstractContainer {
+public class WebsiteMock extends AbstractWebsite {
 
-    public ContainerMock(AccountMock account, String name) {
+    public WebsiteMock(AccountMock account, String name) {
         super(account, name, ALLOW_CACHING);
     }
 
@@ -15,4 +15,3 @@ public class ContainerMock extends AbstractContainer {
     }
 
 }
-

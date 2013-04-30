@@ -27,9 +27,9 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     private final StoredObjectCommandFactory commandFactory;
 
-    public AbstractStoredObject(StoredObjectCommandFactory commandFactory, Container container, String name, boolean allowCaching) {
+    public AbstractStoredObject(Container container, String name, boolean allowCaching) {
         super(allowCaching);
-        this.commandFactory = commandFactory;
+        this.commandFactory = ((AbstractContainer)container).getFactory().getStoredObjectCommandFactory();
         this.container = container;
         this.name = name;
         this.info = new ObjectInformation();
