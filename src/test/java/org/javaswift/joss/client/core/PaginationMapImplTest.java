@@ -1,6 +1,5 @@
 package org.javaswift.joss.client.core;
 
-import mockit.Expectations;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import org.javaswift.joss.client.impl.AccountImpl;

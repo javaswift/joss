@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 public class FileAction {
@@ -38,14 +39,6 @@ public class FileAction {
         }
     }
 
-    public static List<FileReference> listFiles(URL url) throws URISyntaxException {
-        if (url != null && url.getProtocol().equals("file")) {
-            File file = new File(url.toURI());
-            return listFiles(file);
-        }
-        return new ArrayList<FileReference>();
-    }
-
     public static List<FileReference> listFiles(File root) {
         List<FileReference> files = new ArrayList<FileReference>();
         List<String> path = new ArrayList<String>();
@@ -72,6 +65,18 @@ public class FileAction {
         path.addAll(currentPath);
         path.add(extension);
         return path;
+    }
+
+    public static File getFile(String resource) throws IOException, URISyntaxException {
+        ClassLoader classLoader = FileAction.class.getClassLoader();
+        Enumeration<URL> urls = classLoader.getResources(resource);
+        while (urls.hasMoreElements()) {
+            URL url = urls.nextElement();
+            if (url.getProtocol().equals("file")) {
+                return new File(url.toURI());
+            }
+        }
+        return null;
     }
 
 }

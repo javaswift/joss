@@ -1,44 +1,54 @@
 package org.javaswift.joss.util;
 
+import mockit.Expectations;
+import mockit.Mocked;
+import mockit.NonStrict;
+import mockit.NonStrictExpectations;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.*;
 
 public class FileActionTest {
 
     @Test
-    public void testMd5() throws IOException {
+    public void md5() throws IOException {
         new FileAction();
         assertNotNull(FileAction.getMd5(new File("pom.xml")));
     }
 
-        @Test
-    public void noUrl() throws URISyntaxException {
-        testUrl(null);
+    @Test
+    public void listFilesNotADirectory() throws IOException, URISyntaxException {
+        assertEquals(0, FileAction.listFiles(FileAction.getFile("object-store/container1/checkmark.png")).size());
     }
 
     @Test
-    public void urlOfNoneFileType() throws URISyntaxException, MalformedURLException {
-        testUrl(new URL("http://java.sun.com/index.html"));
+    public void getFileDoesNotExist() throws IOException, URISyntaxException {
+        assertNull(FileAction.getFile("does-not-exist"));
     }
 
     @Test
-    public void noDirectory() throws IOException, URISyntaxException {
-        ClassLoader classLoader = FileAction.class.getClassLoader();
-        Enumeration<URL> urls = classLoader.getResources("object-store/container1/checkmark.png");
-        assertEquals(0, FileAction.listFiles(urls.nextElement()).size());
-    }
-
-    protected void testUrl(URL url) throws URISyntaxException {
-        assertEquals(0, FileAction.listFiles(url).size());
+    public void noFileProtocol(@Mocked(methods={ "getResources"}) final ClassLoader classLoader) throws IOException, URISyntaxException {
+        new NonStrictExpectations() {
+            Enumeration<URL> urls;
+            URL url; {
+            classLoader.getResources("");
+            result = urls;
+            urls.hasMoreElements();
+            returns(true, false);
+            urls.nextElement();
+            result = url;
+            url.getProtocol();
+            result = "not-file";
+        }};
+        assertNull(FileAction.getFile(""));
     }
 
 }

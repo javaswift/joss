@@ -3,10 +3,17 @@ package org.javaswift.joss.client.mock;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.model.Website;
 import org.javaswift.joss.swift.Swift;
+import org.javaswift.joss.util.FileAction;
+import org.javaswift.joss.util.FileReference;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -63,14 +70,22 @@ public class WebsiteMockTest {
     }
 
     @Test
-    public void listDirectory() {
+    public void listDirectory() throws IOException, URISyntaxException {
         Swift swift = new Swift()
                 .setOnFileObjectStore("websites");
         website = new WebsiteMock(new AccountMock(swift), "website");
 
         for (StoredObject object : website.list()) {
-            System.out.println(object.getName());
+            System.out.println(object.getName()+" -> "+object.getEtag());
         }
+
+        File file = FileAction.getFile("websites");
+        System.out.println(file.getPath());
+
+//            List<FileReference> files = FileAction.listFiles(url);
+//            for (FileReference file : files) {
+//                System.out.println(file.getPath());
+//            }
 
     }
 }
