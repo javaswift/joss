@@ -16,7 +16,9 @@ public class LocalFileObject extends AbstractFileObject<ObjectStoreFileObject> {
     public LocalFileObject(FileReference file) {
         this.file = file;
         try {
-            this.md5 = FileAction.getMd5(getFile());
+            if (file.hasPath()) {
+                this.md5 = FileAction.getMd5(getFile());
+            }
         } catch (IOException e) {
             throw new CommandException("Unable to determine the MD5 of file "+file.getPath(), e);
         }
@@ -28,6 +30,7 @@ public class LocalFileObject extends AbstractFileObject<ObjectStoreFileObject> {
         getFile().delete();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void save(ObjectStoreFileObject sourceFile) {
         sourceFile.getObject().downloadObject(getFile());

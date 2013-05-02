@@ -1,8 +1,6 @@
 package org.javaswift.joss.util;
 
-import mockit.Expectations;
 import mockit.Mocked;
-import mockit.NonStrict;
 import mockit.NonStrictExpectations;
 import org.junit.Test;
 
@@ -10,9 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 
 import static junit.framework.Assert.*;
 

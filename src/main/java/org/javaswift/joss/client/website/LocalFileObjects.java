@@ -16,9 +16,15 @@ public class LocalFileObjects extends AbstractFileObjects {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public LocalFileObject create(String path) {
-        return new LocalFileObject(new FileReference(new File(rootDirectory.getPath() + "/" + path), null));
+        FileReference fileReference = new FileReference(new File(rootDirectory.getPath() + "/" + path), null);
+        if (path.lastIndexOf("/") > -1) {
+            String pathExcludingFile = path.substring(0, path.lastIndexOf("/"));
+            new File(rootDirectory.getPath() + "/" + pathExcludingFile).mkdirs();
+        }
+        return new LocalFileObject(fileReference);
     }
 
 }

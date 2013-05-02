@@ -1,13 +1,18 @@
 package org.javaswift.joss.client.mock;
 
+import org.apache.commons.io.FileUtils;
 import org.javaswift.joss.model.Website;
 import org.javaswift.joss.swift.Swift;
 import org.javaswift.joss.util.FileAction;
+import org.javaswift.joss.util.FileReference;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import static junit.framework.Assert.*;
 
@@ -15,10 +20,21 @@ public class WebsiteMockTest {
 
     private Website website;
 
+    File writeDir;
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Before
-    public void setup() {
+    public void setup() throws IOException, URISyntaxException {
         this.website = new WebsiteMock(new AccountMock(), "website");
         this.website.create();
+        this.writeDir = new File(FileAction.getFile("websites").getPath().replaceAll("/websites", "/temp"));
+        writeDir.mkdir();
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @After
+    public void tearDown() throws IOException {
+        FileUtils.deleteDirectory(writeDir);
     }
 
     @Test
@@ -76,26 +92,44 @@ public class WebsiteMockTest {
                 .setOnFileObjectStore("websites");
         website = new WebsiteMock(new AccountMock(swift), "website");
         website.pushDirectory(FileAction.getFile("object-store/container1"));
+        String lastModified1 = website.getObject("checkmark.png").getLastModified();
         website.pushDirectory(FileAction.getFile("object-store/container1"));
+        String lastModified2 = website.getObject("checkmark.png").getLastModified();
+        assertEquals(lastModified1, lastModified2);
         assertEquals(2, website.list().size());
     }
 
-//    @Test
-//    public void listDirectory() throws IOException, URISyntaxException {
-//        Swift swift = new Swift()
-//                .setOnFileObjectStore("websites");
-//        website = new WebsiteMock(new AccountMock(swift), "website");
-//
-//        website.pushDirectory(new File("/workspace/xxxxxx/site"));
-//
-//        for (StoredObject object : website.list()) {
-//            System.out.println(object.getName()+" -> "+object.getEtag());
-//        }
-//
-////            List<FileReference> files = FileAction.listFiles(url);
-////            for (FileReference file : files) {
-////                System.out.println(file.getPath());
-////            }
-//
-//    }
+    @Test
+    public void pushAndUpdate() throws IOException, URISyntaxException {
+        Swift swift = new Swift()
+                .setOnFileObjectStore("websites");
+        website = new WebsiteMock(new AccountMock(swift), "website");
+        website.pushDirectory(FileAction.getFile("websites/website"));
+        assertEquals(7, website.list().size());
+        website.pushDirectory(FileAction.getFile("websites/website2"));
+        assertEquals(6, website.list().size());
+    }
+
+    @Test
+    public void pullWebsite() throws IOException, URISyntaxException {
+        Swift swift = new Swift()
+                .setOnFileObjectStore("websites");
+        website = new WebsiteMock(new AccountMock(swift), "website");
+        website.pullDirectory(this.writeDir);
+        assertEquals(12, FileUtils.sizeOfDirectory(writeDir)); // 5 directories, 7 files
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Test
+    public void pullDifferentWebsites() throws IOException, URISyntaxException {
+        Swift swift = new Swift()
+                .setOnFileObjectStore("object-store");
+        website = new WebsiteMock(new AccountMock(swift), "container1");
+        website.pullDirectory(this.writeDir);
+        assertEquals(2, writeDir.listFiles().length); // 2 files
+        website = new WebsiteMock(new AccountMock(swift), "container2");
+        website.pullDirectory(this.writeDir);
+        assertEquals(5, writeDir.listFiles().length); // 5 files
+    }
+
 }

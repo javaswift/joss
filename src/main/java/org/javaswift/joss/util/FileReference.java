@@ -14,6 +14,10 @@ public class FileReference {
         this.pathAndFile = pathAndFile;
     }
 
+    public boolean hasPath() {
+        return pathAndFile != null;
+    }
+
     public String getFirstPart() {
         return pathAndFile.get(0);
     }
