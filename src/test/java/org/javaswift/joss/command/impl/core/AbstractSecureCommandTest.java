@@ -1,13 +1,11 @@
 package org.javaswift.joss.command.impl.core;
 
 import mockit.Expectations;
-import mockit.Injectable;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import org.apache.http.Header;
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.command.impl.container.CreateContainerCommandImpl;
-import org.javaswift.joss.command.impl.identity.AuthenticationCommandImpl;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.exception.UnauthorizedException;

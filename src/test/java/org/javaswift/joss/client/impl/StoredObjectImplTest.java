@@ -11,7 +11,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
-import org.javaswift.joss.client.core.AbstractContainer;
 import org.javaswift.joss.client.core.AbstractStoredObject;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.command.impl.object.AbstractDownloadObjectCommand;

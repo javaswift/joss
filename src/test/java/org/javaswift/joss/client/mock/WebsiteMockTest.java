@@ -4,7 +4,6 @@ import org.apache.commons.io.FileUtils;
 import org.javaswift.joss.model.Website;
 import org.javaswift.joss.swift.Swift;
 import org.javaswift.joss.util.FileAction;
-import org.javaswift.joss.util.FileReference;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import static junit.framework.Assert.*;
 
@@ -110,13 +108,14 @@ public class WebsiteMockTest {
         assertEquals(6, website.list().size());
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void pullWebsite() throws IOException, URISyntaxException {
         Swift swift = new Swift()
                 .setOnFileObjectStore("websites");
         website = new WebsiteMock(new AccountMock(swift), "website");
         website.pullDirectory(this.writeDir);
-        assertEquals(12, FileUtils.sizeOfDirectory(writeDir)); // 5 directories, 7 files
+        assertEquals(5, writeDir.listFiles().length);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -138,7 +137,7 @@ public class WebsiteMockTest {
                 .setOnFileObjectStore("websites");
         website = new WebsiteMock(new AccountMock(swift), "website");
         website.pullDirectory(this.writeDir);
-        assertTrue(new File(writeDir.getPath()+"/script/modb").exists());
+        assertTrue(new File(writeDir.getPath() + "/script/modb").exists());
         website = new WebsiteMock(new AccountMock(swift), "website2");
         website.pullDirectory(this.writeDir);
         assertFalse(new File(writeDir.getPath()+"/script/modb").exists());

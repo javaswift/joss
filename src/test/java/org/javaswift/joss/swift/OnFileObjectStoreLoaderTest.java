@@ -7,10 +7,7 @@ import org.javaswift.joss.model.StoredObject;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Enumeration;
 
 import static junit.framework.Assert.assertEquals;
 

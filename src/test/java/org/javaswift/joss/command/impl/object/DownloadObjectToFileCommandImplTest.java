@@ -1,6 +1,9 @@
 package org.javaswift.joss.command.impl.object;
 
-import mockit.*;
+import mockit.Expectations;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
+import mockit.Verifications;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
@@ -10,7 +13,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 

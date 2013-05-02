@@ -16,7 +16,6 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.swift.Swift;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

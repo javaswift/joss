@@ -7,7 +7,6 @@ import org.javaswift.joss.information.AbstractInformation;
 import org.javaswift.joss.model.ObjectStoreEntity;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Map;
 import java.util.TreeMap;
 

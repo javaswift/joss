@@ -1,6 +1,7 @@
 package org.javaswift.joss.instructions;
 
-import mockit.*;
+import mockit.Injectable;
+import mockit.NonStrictExpectations;
 import org.junit.After;
 import org.junit.Test;
 

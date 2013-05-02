@@ -7,8 +7,6 @@ import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.model.Website;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
 
 public abstract class AbstractWebsite extends AbstractContainer implements Website {
