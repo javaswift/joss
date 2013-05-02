@@ -12,10 +12,12 @@ public abstract class AbstractFileObjects implements FileObjects {
         this.fileObjects.put(path, fileObject);
     }
 
+    @Override
     public Collection<String> keys() {
         return this.fileObjects.keySet();
     }
 
+    @Override
     public FileObject get(String path) {
         return this.fileObjects.get(path);
     }

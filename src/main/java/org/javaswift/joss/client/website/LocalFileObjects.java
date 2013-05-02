@@ -27,4 +27,18 @@ public class LocalFileObjects extends AbstractFileObjects {
         return new LocalFileObject(fileReference);
     }
 
+    @Override
+    public void cleanup() {
+        deleteEmptyDirectories(rootDirectory);
+    }
+
+    protected void deleteEmptyDirectories(File directory) {
+        for (File file : directory.listFiles()) {
+            if (file.isDirectory()) {
+                deleteEmptyDirectories(file);
+                file.delete();
+            }
+        }
+    }
+
 }

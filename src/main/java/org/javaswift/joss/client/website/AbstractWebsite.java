@@ -97,6 +97,8 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
         saveObjects(source, target);
         // Delete all files in the target directory that do not exist in the source directory
         deleteObjects(source, target);
+        // If target is folder-based, make sure the empty folders are removed
+        target.cleanup();
     }
 
     private void deleteObjects(FileObjects source, FileObjects target) {

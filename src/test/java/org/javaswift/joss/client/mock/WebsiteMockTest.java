@@ -132,4 +132,16 @@ public class WebsiteMockTest {
         assertEquals(5, writeDir.listFiles().length); // 5 files
     }
 
+    @Test
+    public void deleteEmptyFolders() throws IOException, URISyntaxException {
+        Swift swift = new Swift()
+                .setOnFileObjectStore("websites");
+        website = new WebsiteMock(new AccountMock(swift), "website");
+        website.pullDirectory(this.writeDir);
+        assertTrue(new File(writeDir.getPath()+"/script/modb").exists());
+        website = new WebsiteMock(new AccountMock(swift), "website2");
+        website.pullDirectory(this.writeDir);
+        assertFalse(new File(writeDir.getPath()+"/script/modb").exists());
+    }
+
 }

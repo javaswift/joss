@@ -10,4 +10,6 @@ public interface FileObjects {
 
     FileObject create(String path);
 
+    void cleanup();
+
 }

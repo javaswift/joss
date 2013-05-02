@@ -19,4 +19,7 @@ public class ObjectStoreFileObjects extends AbstractFileObjects {
         return new ObjectStoreFileObject(website.getObject(path));
     }
 
+    @Override
+    public void cleanup() { /* Swift has no folders, therefore no empty folders */ }
+
 }
