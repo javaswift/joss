@@ -1,16 +1,14 @@
-package org.javaswift.joss.client.core;
+package org.javaswift.joss.client.website;
 
+import org.javaswift.joss.client.core.AbstractContainer;
 import org.javaswift.joss.headers.website.*;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.model.Website;
-import org.javaswift.joss.util.FileAction;
-import org.javaswift.joss.util.FileReference;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 public abstract class AbstractWebsite extends AbstractContainer implements Website {
@@ -82,20 +80,46 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
 
     @Override
     public void pushDirectory(File directory) {
-        List<FileReference> files = FileAction.listFiles(directory);
-
-        for (FileReference file : files) {
-            try {
-                System.out.println(file.getPath() + " -> " + FileAction.getMd5(file.getFile()));
-            } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-        }
+        syncDirectory(
+                new LocalFileObjects(directory),    // source
+                new ObjectStoreFileObjects(this));  // target
     }
 
     @Override
     public void pullDirectory(File directory) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        syncDirectory(
+                new ObjectStoreFileObjects(this),   // target
+                new LocalFileObjects(directory));   // source
+    }
+
+    protected void syncDirectory(FileObjects source, FileObjects target) {
+        // Copy all new & changed files from the source to the target directory
+        saveObjects(source, target);
+        // Delete all files in the target directory that do not exist in the source directory
+        deleteObjects(source, target);
+    }
+
+    private void deleteObjects(FileObjects source, FileObjects target) {
+        for (String targetPath : target.keys()) {
+            FileObject targetObject = target.get(targetPath);
+            if (source.get(targetPath) == null) {
+                targetObject.delete();
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void saveObjects(FileObjects source, FileObjects target) {
+        for (String sourcePath : source.keys()) {
+            FileObject sourceObject = source.get(sourcePath);
+            FileObject targetObject = target.get(sourcePath);
+            if (targetObject == null) {
+                targetObject = target.create(sourcePath);
+            } else if (sourceObject.getMd5().equals(targetObject.getMd5())) {
+                continue; // objects are equal, no action required
+            }
+            targetObject.save(sourceObject);
+        }
     }
 
 }

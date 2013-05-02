@@ -1,6 +1,6 @@
 package org.javaswift.joss.client.impl;
 
-import org.javaswift.joss.client.core.AbstractWebsite;
+import org.javaswift.joss.client.website.AbstractWebsite;
 import org.javaswift.joss.model.StoredObject;
 
 public class WebsiteImpl extends AbstractWebsite {
