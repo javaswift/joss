@@ -1,6 +1,8 @@
 package org.javaswift.joss.client.mock;
 
 import org.apache.commons.io.FileUtils;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.model.Website;
 import org.javaswift.joss.swift.Swift;
 import org.javaswift.joss.util.FileAction;
@@ -33,6 +35,14 @@ public class WebsiteMockTest {
     @After
     public void tearDown() throws IOException {
         FileUtils.deleteDirectory(writeDir);
+    }
+
+    @Test
+    public void getObject() {
+        Account account = new AccountMock();
+        Website website = account.getWebsite("website");
+        StoredObject object = website.getObject("index.html");
+        assertTrue(object instanceof StoredObjectMock);
     }
 
     @Test

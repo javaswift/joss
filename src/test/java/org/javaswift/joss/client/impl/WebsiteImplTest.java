@@ -20,7 +20,7 @@ public class WebsiteImplTest extends BaseCommandTest {
 
     @Test
     public void getObject() {
-        Website website = new WebsiteImpl(account, "website", true);
+        Website website = account.getWebsite("website");
         StoredObject object = website.getObject("index.html");
         assertTrue(object instanceof StoredObjectImpl);
     }
