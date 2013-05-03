@@ -38,6 +38,14 @@ public class WebsiteMockTest {
     }
 
     @Test
+    public void create() {
+        Account account = new AccountMock();
+        Website website = account.getWebsite("website");
+        website.create();
+        assertTrue(website.isPublic());
+    }
+
+    @Test
     public void getObject() {
         Account account = new AccountMock();
         Website website = account.getWebsite("website");
