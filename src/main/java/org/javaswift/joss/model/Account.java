@@ -20,6 +20,14 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     public Container getContainer(String name);
 
     /**
+    * Returns a handle for a website. Note that this method DOES NOT create a website in the Object Store
+    * or otherwise place a call to the Object Store
+    * @param name name of the website to create a handle for
+    * @return the website handle
+    */
+    public Website getWebsite(String name);
+
+    /**
     * Trigger the authentication against Object Store. There are two use cases for this method. The first is
     * triggered pro-actively by the user by calling authenticate on the client. The second is when the token
     * has expired and AbstractSecureCommand triggers a re-authentication.

@@ -9,6 +9,7 @@ import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.PaginationMap;
+import org.javaswift.joss.model.Website;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,16 +24,19 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private boolean allowReauthenticate = true;
 
-    private boolean allowContainerCaching = true;
-
     private int numberOfCalls = 0;
 
     private final AccountCommandFactory commandFactory;
 
-    private final ContainerCache containerCache = new ContainerCache();
+    private final ContainerCache<Container> containerCache;
 
-    public AbstractAccount(AccountCommandFactory commandFactory, boolean allowCaching) {
+    private final ContainerCache<Website> websiteCache;
+
+    public AbstractAccount(AccountCommandFactory commandFactory, ContainerFactory<Container> containerFactory,
+                           ContainerFactory<Website> websiteFactory, boolean allowCaching) {
         super(allowCaching);
+        this.containerCache = new ContainerCache<Container>(this, containerFactory);
+        this.websiteCache = new ContainerCache<Website>(this, websiteFactory);
         this.commandFactory = commandFactory;
         this.info = new AccountInformation();
     }
@@ -83,16 +87,13 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     public AbstractAccount setAllowContainerCaching(boolean allowContainerCaching) {
         LOG.info("JOSS / Allow Container caching: "+allowContainerCaching);
-        this.allowContainerCaching = allowContainerCaching;
+        this.containerCache.setCacheEnabled(allowContainerCaching);
+        this.websiteCache.setCacheEnabled(allowContainerCaching);
         return this;
     }
 
     public boolean isAllowReauthenticate() {
         return this.allowReauthenticate;
-    }
-
-    public boolean isAllowContainerCaching() {
-        return this.allowContainerCaching;
     }
 
     public int getCount() {
@@ -159,13 +160,14 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return "";
     }
 
-    protected abstract Container createContainer(String containerName);
-
     @Override
     public Container getContainer(String containerName) {
-        return isAllowContainerCaching() ?
-                this.containerCache.getContainer(this, containerName) :
-                createContainer(containerName);
+        return this.containerCache.getContainer(containerName);
+    }
+
+    @Override
+    public Website getWebsite(String containerName) {
+        return this.websiteCache.getContainer(containerName);
     }
 
     @Override
