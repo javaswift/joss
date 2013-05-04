@@ -62,6 +62,28 @@
                 <li>Method for asking whether an object's metadata has been read</li>
             </ul>
 
+            <h2><a name="grizzly" class="anchor" href="https://wiki.openstack.org/wiki/ReleaseNotes/Grizzly#Key_New_Features"><span class="mini-icon mini-icon-link"></span>Grizzly</a></h2>
+            <ul>
+                <li>Added support for large objects with static manifests: <a href="http://docs.openstack.org/developer/swift/misc.html#module-swift.common.middleware.slo">http://docs.openstack.org/developer/swift/misc.html#module-swift.common.middleware.slo</a></li>
+                <li>Support for the OPTIONS verb: Clients can use the OPTIONS verb as defined in <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html">http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html</a></li>
+                <li>Added support for CORS requests: <a href="http://www.w3.org/TR/cors/">http://www.w3.org/TR/cors/</a></li>
+                <li>Bulk requests
+                    <ul>
+                        <li>Added support for auto-extracting archive uploads: A client can upload an archive file (ie a .tar file) and the contents will be stored individually in the cluster</li>
+                        <li>Added support for bulk deletes: A client can delete many objects with one delete request</li>
+                    </ul>
+                </li>
+                <li>Support for multi-range requests: Clients can request multiple ranges from an object with just one request</li>
+                <li>Quotas
+                    <ul>
+                        <li>Added user-managed container quotas</li>
+                        <li>Added support for account-level quotas (managed by an auth reseller)</li>
+                    </ul>
+                </li>
+                <li>Swift now returns 406 if it cannot satisfy the Accept header</li>
+            </ul>
+
+
         </section>
 
           <aside id="sidebar">
