@@ -175,4 +175,9 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         this.containerCache.reset();
     }
 
+    @Override
+    public String getOriginalHost() {
+        return this.commandFactory.getOriginalHost();
+    }
+
 }

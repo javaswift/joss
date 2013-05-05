@@ -54,6 +54,11 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
         return this.privateHost == null ? access.getPublicURL() : this.privateHost;
     }
 
+    @Override
+    public String getOriginalHost() {
+        return access.getPublicURL();
+    }
+
     public AccessImpl authenticate() {
         return access = authCommand.call();
     }

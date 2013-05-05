@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 public class WebsiteImplTest extends BaseCommandTest {
@@ -24,4 +25,11 @@ public class WebsiteImplTest extends BaseCommandTest {
         StoredObject object = website.getObject("index.html");
         assertTrue(object instanceof StoredObjectImpl);
     }
+
+    @Test
+    public void getHost() {
+        Website website = account.getWebsite("website");
+        assertEquals("website.someurl.public", website.getHost());
+    }
+
 }

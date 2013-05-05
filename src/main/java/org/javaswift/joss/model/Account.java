@@ -116,4 +116,10 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     */
     public int getNumberOfCalls();
 
+    /**
+    * Returns the original host, regardless of the configured public and private host settings
+    * @return original public host
+    */
+    public String getOriginalHost();
+
 }

@@ -161,4 +161,12 @@ public class WebsiteMockTest {
         assertFalse(new File(writeDir.getPath()+"/script/modb").exists());
     }
 
+    @Test
+    public void getHost() {
+        Swift swift = new Swift()
+                .setPublicHost("configured.public.url");
+        website = new WebsiteMock(new AccountMock(swift), "my");
+        assertEquals("my.configured.public.url", website.getHost());
+    }
+
 }

@@ -48,6 +48,11 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
     }
 
     @Override
+    public String getOriginalHost() {
+        return swift.getPublicHost();
+    }
+
+    @Override
     public AccessImpl authenticate() {
         return null;
     }

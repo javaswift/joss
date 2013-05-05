@@ -133,4 +133,10 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
         }
     }
 
+    @Override
+    public String getHost() {
+        String strippedHost = this.getAccount().getOriginalHost().replaceAll("http://", "").replaceAll("https://", "");
+        return getName() + "." + strippedHost;
+    }
+
 }

@@ -130,4 +130,10 @@ public class AccountImplTest extends BaseCommandTest {
         account.increaseCallCounter();
         assertEquals(1, account.getNumberOfCalls());
     }
+
+    @Test
+    public void getOriginalHost() {
+        account.setPublicHost("not.the.right.url");
+        assertEquals("http://someurl.public", account.getOriginalHost());
+    }
 }

@@ -61,6 +61,13 @@ public interface Website extends Container {
     public void setListingCSS(StoredObject listingCSS);
 
     /**
+    * Get the original host, which is a combination of the container and the original (non-configured) public
+    * host. This host can be used to configure a CNAME in your DNS settings.
+    * @return host of the website
+    */
+    public String getHost();
+
+    /**
     * Compares a local directory to the contents of the Container on the basis of MD5 hashes (ie, Etag).
     * It makes a couple of potentially far-reaching decision, so be careful:
     * <ul>

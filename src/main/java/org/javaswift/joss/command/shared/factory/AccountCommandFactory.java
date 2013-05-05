@@ -18,6 +18,8 @@ public interface AccountCommandFactory {
 
     public String getPrivateHost();
 
+    public String getOriginalHost();
+
     public void setPublicHost(String publicHost);
 
     public void setPrivateHost(String privateHost);

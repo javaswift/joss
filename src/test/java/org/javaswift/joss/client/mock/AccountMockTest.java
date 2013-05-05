@@ -231,4 +231,12 @@ public class AccountMockTest {
         container.getCount();
     }
 
+    @Test
+    public void getOriginalHost() {
+        Swift swift = new Swift();
+        swift.setPublicHost("http://configured.url.because.there.is.no.other");
+        Account account = new AccountMock(swift);
+        assertEquals("http://configured.url.because.there.is.no.other", account.getOriginalHost());
+    }
+
 }
