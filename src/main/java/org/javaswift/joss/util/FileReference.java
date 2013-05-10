@@ -27,6 +27,10 @@ public class FileReference {
     }
 
     public String getPath(int startFrom) {
+        return getPath(startFrom, pathAndFile);
+    }
+
+    public static String getPath(int startFrom, List<String> pathAndFile) {
         StringBuilder path = new StringBuilder();
         int count = 0;
         for (String currentPart : pathAndFile) {

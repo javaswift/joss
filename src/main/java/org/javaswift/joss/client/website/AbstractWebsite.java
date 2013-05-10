@@ -12,8 +12,16 @@ import java.util.Map;
 
 public abstract class AbstractWebsite extends AbstractContainer implements Website {
 
+    private String[] ignoreFilters = new String[] {};
+
     public AbstractWebsite(Account account, String name, boolean allowCaching) {
         super(account, name, allowCaching);
+    }
+
+    @Override
+    public Website setIgnoreFilters(String[] ignoreFilters) {
+        this.ignoreFilters = ignoreFilters;
+        return this;
     }
 
     @Override
@@ -90,7 +98,7 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
     @Override
     public void pushDirectory(File directory) {
         syncDirectory(
-                new LocalFileObjects(directory),    // source
+                new LocalFileObjects(directory, ignoreFilters),    // source
                 new ObjectStoreFileObjects(this));  // target
     }
 
@@ -98,7 +106,7 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
     public void pullDirectory(File directory) {
         syncDirectory(
                 new ObjectStoreFileObjects(this),   // target
-                new LocalFileObjects(directory));   // source
+                new LocalFileObjects(directory, ignoreFilters ));   // source
     }
 
     protected void syncDirectory(FileObjects source, FileObjects target) {
@@ -112,6 +120,9 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
 
     private void deleteObjects(FileObjects source, FileObjects target) {
         for (String targetPath : target.keys()) {
+            if (target.ignore(targetPath)) {
+                continue;
+            }
             FileObject targetObject = target.get(targetPath);
             if (source.get(targetPath) == null) {
                 targetObject.delete();

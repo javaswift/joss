@@ -91,4 +91,12 @@ public interface Website extends Container {
     */
     public void pullDirectory(File directory);
 
+    /**
+    * Passes a number of files and directories that must be ignored by the push/pull mechanism. Use normal
+    * path notation using the root directory as the root path.
+    * @param ignoreFilters files/directories to be ignored
+    * @return instance of Website
+    */
+    public Website setIgnoreFilters(String[] ignoreFilters);
+
 }

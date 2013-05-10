@@ -12,4 +12,6 @@ public interface FileObjects {
 
     void cleanup();
 
+    public boolean ignore(String path);
+
 }

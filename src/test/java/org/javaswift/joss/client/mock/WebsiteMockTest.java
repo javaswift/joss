@@ -162,6 +162,31 @@ public class WebsiteMockTest {
     }
 
     @Test
+    public void ignoreFoldersOnPushing() throws IOException, URISyntaxException {
+        Swift swift = new Swift()
+                .setOnFileObjectStore("websites");
+        website = new WebsiteMock(new AccountMock(swift), "website")
+                .setIgnoreFilters(new String[] {"script"} );
+        website.pushDirectory(FileAction.getFile("websites/website"));
+        assertEquals(4, website.list().size());
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Test
+    public void ignoreFileOnPulling() throws IOException, URISyntaxException {
+        Swift swift = new Swift()
+                .setOnFileObjectStore("object-store");
+        website = new WebsiteMock(new AccountMock(swift), "container1");
+        website.pullDirectory(this.writeDir);
+        assertEquals(2, writeDir.listFiles().length); // 2 files
+        website = new WebsiteMock(new AccountMock(swift), "container2")
+                .setIgnoreFilters(new String[] {"checkmark.png"});
+        website.pullDirectory(this.writeDir);
+        assertEquals(6, writeDir.listFiles().length); // 6 files, checkmark.png has not been removed
+    }
+
+
+    @Test
     public void getHost() {
         Swift swift = new Swift()
                 .setPublicHost("configured.public.url");

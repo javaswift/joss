@@ -40,24 +40,41 @@ public class FileAction {
     }
 
     public static List<FileReference> listFiles(File root) {
+        return listFiles(root, new String[] {});
+    }
+
+    public static List<FileReference> listFiles(File root, String[] ignoreFilters) {
         List<FileReference> files = new ArrayList<FileReference>();
         List<String> path = new ArrayList<String>();
         if (root.isDirectory()) {
-            listFiles(files, path, root);
+            listFiles(files, path, root, ignoreFilters);
         }
         return files;
     }
 
     @SuppressWarnings("ConstantConditions")
-    protected static void listFiles(List<FileReference> files, List<String> path, File directoryFile) {
+    protected static void listFiles(List<FileReference> files, List<String> path, File directoryFile, String[] ignoreFilters) {
         for (File currentFile : directoryFile.listFiles()) {
+            if (ignore(path, ignoreFilters)) {
+                continue;
+            }
             List<String> currentPath = getPath(path, currentFile.getName());
             if (currentFile.isDirectory()) {
-                listFiles(files, currentPath, currentFile);
+                listFiles(files, currentPath, currentFile, ignoreFilters);
             } else {
                 files.add(new FileReference(currentFile, currentPath));
             }
         }
+    }
+
+    protected static boolean ignore(List<String> pathAndFile, String[] ignoreFilters) {
+        String path = FileReference.getPath(0, pathAndFile);
+        for (String ignoreFilter : ignoreFilters) {
+            if (path.equals(ignoreFilter)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected static List<String> getPath(List<String> currentPath, String extension) {

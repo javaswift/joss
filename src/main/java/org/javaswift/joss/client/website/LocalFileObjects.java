@@ -4,14 +4,17 @@ import org.javaswift.joss.util.FileAction;
 import org.javaswift.joss.util.FileReference;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocalFileObjects extends AbstractFileObjects {
 
     private final File rootDirectory;
 
-    public LocalFileObjects(File rootDirectory) {
+    public LocalFileObjects(File rootDirectory, final String[] ignoreFilters) {
+        super(ignoreFilters);
         this.rootDirectory = rootDirectory;
-        for (FileReference file : FileAction.listFiles(this.rootDirectory)) {
+        for (FileReference file : FileAction.listFiles(this.rootDirectory, ignoreFilters)) {
             add(file.getPath(), new LocalFileObject(file));
         }
     }
@@ -32,6 +35,7 @@ public class LocalFileObjects extends AbstractFileObjects {
         deleteEmptyDirectories(rootDirectory);
     }
 
+    @SuppressWarnings({"ConstantConditions", "ResultOfMethodCallIgnored"})
     protected void deleteEmptyDirectories(File directory) {
         for (File file : directory.listFiles()) {
             if (file.isDirectory()) {
