@@ -12,7 +12,7 @@ public class MockUserStore {
 
     private Map<String, String> users = new TreeMap<String, String>();
 
-    public boolean authenticate(String tenant, String username, String password) {
+    public boolean authenticate(String tenantName, String tenantId, String username, String password) {
         String expectedPassword = users.get(username);
         if (expectedPassword == null || !expectedPassword.equals(password)) {
             LOG.warn("JOSS / Failed to authenticate with user '"+username+"'");

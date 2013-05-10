@@ -8,9 +8,9 @@ import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 public class AuthenticationCommandFactoryImpl implements AuthenticationCommandFactory {
 
     @Override
-    public AuthenticationCommand createAuthenticationCommand(HttpClient httpClient, String url, String tenant,
-                                                             String username, String password) {
-        return new AuthenticationCommandImpl(httpClient, url, tenant, username, password);
+    public AuthenticationCommand createAuthenticationCommand(HttpClient httpClient, String url, String tenantName,
+                                                             String tenantId, String username, String password) {
+        return new AuthenticationCommandImpl(httpClient, url, tenantName, tenantId, username, password);
     }
 
 }

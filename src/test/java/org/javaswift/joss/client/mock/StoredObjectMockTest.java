@@ -128,7 +128,7 @@ public class StoredObjectMockTest {
     @Test
     public void setDeleteAtDayFromNow() {
         ClientMock client = new ClientMock().setAllowEveryone(true);
-        Account account = client.authenticate("","","","");
+        Account account = client.authenticate("","","","","");
         Container container = account.getContainer("images");
         container.create();
         StoredObject object = container.getObject("some-image.jpg");
@@ -140,7 +140,7 @@ public class StoredObjectMockTest {
 
     @Test
     public void setDeleteAfterWithNoObjectDeleter() {
-        Account account = new ClientMock().setAllowObjectDeleter(false).setAllowEveryone(true).authenticate(null, null, null, null);
+        Account account = new ClientMock().setAllowObjectDeleter(false).setAllowEveryone(true).authenticate(null, null, null, null, null);
         Container container = account.getContainer("alpha");
         container.create();
         StoredObject object = container.getObject("somefile.png");

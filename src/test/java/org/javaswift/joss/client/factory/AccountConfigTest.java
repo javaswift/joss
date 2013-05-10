@@ -12,7 +12,8 @@ public class AccountConfigTest {
         AccountConfig config = new AccountConfig();
         config.setAuthUrl("auth");
         config.setPassword("pwd");
-        config.setTenant("tenant");
+        config.setTenantName("tenant");
+        config.setTenantId("tenantId");
         config.setUsername("user");
         config.setMock(true);
         config.setMockMillisDelay(10);
@@ -27,7 +28,8 @@ public class AccountConfigTest {
         config.setAllowContainerCaching(false);
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
-        assertEquals("tenant", config.getTenant());
+        assertEquals("tenant", config.getTenantName());
+        assertEquals("tenantId", config.getTenantId());
         assertEquals("user", config.getUsername());
         assertEquals("/some/path", config.getMockOnFileObjectStore());
         assertEquals(10, config.getMockMillisDelay());

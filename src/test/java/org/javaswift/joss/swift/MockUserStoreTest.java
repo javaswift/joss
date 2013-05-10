@@ -17,16 +17,16 @@ public class MockUserStoreTest {
 
     @Test
     public void authenticateSuccess() {
-        assertTrue(users.authenticate("", "richard", "test123"));
+        assertTrue(users.authenticate("", "", "richard", "test123"));
     }
 
     @Test
     public void userDoesNotExist() {
-        assertFalse(users.authenticate("", "charlie", "123test"));
+        assertFalse(users.authenticate("", "", "charlie", "123test"));
     }
 
     @Test
     public void userHasWrongPassword() {
-        assertFalse(users.authenticate("", "richard", "321tset"));
+        assertFalse(users.authenticate("", "", "richard", "321tset"));
     }
 }

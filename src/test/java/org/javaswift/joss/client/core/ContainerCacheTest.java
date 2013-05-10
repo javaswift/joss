@@ -13,7 +13,7 @@ public class ContainerCacheTest {
     @Test
     public void getContainerWithCacheEnabled() {
         AbstractAccount account = new ClientMock()
-                .authenticate(null, null, null, null);
+                .authenticate(null, null, null, null, null);
         ContainerCache cache = new ContainerCache<Container>(account, new ContainerFactoryMock());
         cache.getContainer("alpha");
         cache.getContainer("alpha");
@@ -23,7 +23,7 @@ public class ContainerCacheTest {
     @Test
     public void getContainerWithCacheDisabled() {
         AbstractAccount account = new ClientMock()
-                .authenticate(null, null, null, null);
+                .authenticate(null, null, null, null, null);
         ContainerCache cache = new ContainerCache<Container>(account, new ContainerFactoryMock());
         cache.setCacheEnabled(false);
         Container container1 = cache.getContainer("alpha");
@@ -34,7 +34,7 @@ public class ContainerCacheTest {
     @Test
     public void reset() {
         AbstractAccount account = new ClientMock()
-                .authenticate(null, null, null, null);
+                .authenticate(null, null, null, null, null);
         ContainerCache cache = new ContainerCache<Container>(account, new ContainerFactoryMock());
         cache.getContainer("alpha");
         account.getContainer("alpha");

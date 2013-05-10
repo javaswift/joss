@@ -14,8 +14,8 @@ public class AuthenticationTest {
     public void testMarshalling() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-        Authentication auth = new Authentication("testtenant", "testuser", "testpassword");
-        assertEquals("{\"auth\":{\"passwordCredentials\":{\"username\":\"testuser\",\"password\":\"testpassword\"},\"tenantName\":\"testtenant\"}}", mapper.writeValueAsString(auth));
+        Authentication auth = new Authentication("testtenant", "testtenantid", "testuser", "testpassword");
+        assertEquals("{\"auth\":{\"passwordCredentials\":{\"username\":\"testuser\",\"password\":\"testpassword\"},\"tenantName\":\"testtenant\",\"tenantId\":\"testtenantid\"}}", mapper.writeValueAsString(auth));
     }
 
 }

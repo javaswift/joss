@@ -22,7 +22,7 @@ public class AbstractCommandTest extends BaseCommandTest {
             httpClient.execute((HttpRequestBase)any);
             result = new IOException("Mocked HTTP client error");
         }};
-        new AuthenticationCommandImpl(httpClient, "http://some.url", "some-tenant", "some-user", "some-pwd").call();
+        new AuthenticationCommandImpl(httpClient, "http://some.url", "some-tenant", "tenant-id", "some-user", "some-pwd").call();
     }
 
     @Test(expected = CommandException.class)
@@ -32,7 +32,7 @@ public class AbstractCommandTest extends BaseCommandTest {
             httpClient.execute((HttpRequestBase)any);
             result = new CommandException("Something went wrong", exc);
         }};
-        new AuthenticationCommandImpl(httpClient, "http://some.url", "some-tenant", "some-user", "some-pwd").call();
+        new AuthenticationCommandImpl(httpClient, "http://some.url", "some-tenant", "tenant-id", "some-user", "some-pwd").call();
     }
 
 }

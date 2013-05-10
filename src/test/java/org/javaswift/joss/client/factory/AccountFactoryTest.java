@@ -41,7 +41,7 @@ public class AccountFactoryTest {
         AccountFactory factory = new AccountFactory(config);
 
         new Expectations() {{
-            client.authenticate(anyString, anyString, anyString, anyString);
+            client.authenticate(anyString, anyString, anyString, anyString, anyString);
             result = account;
         }};
 
@@ -65,7 +65,8 @@ public class AccountFactoryTest {
                 .setPrivateHost(null)
                 .setPublicHost(null)
                 .setSocketTimeout(0)
-                .setTenant(null)
+                .setTenantName(null)
+                .setTenantId(null)
                 .setUsername(null);
     }
 

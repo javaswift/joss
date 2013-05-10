@@ -17,14 +17,14 @@ import java.io.IOException;
 
 public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, AccessImpl> implements AuthenticationCommand {
 
-    public AuthenticationCommandImpl(HttpClient httpClient, String url, String tenant, String username, String password) {
+    public AuthenticationCommandImpl(HttpClient httpClient, String url, String tenantName, String tenantId, String username, String password) {
         super(httpClient, url);
-        setAuthenticationHeader(tenant, username, password);
+        setAuthenticationHeader(tenantName, tenantId, username, password);
     }
 
-    private void setAuthenticationHeader(String tenant, String username, String password) {
+    private void setAuthenticationHeader(String tenantName, String tenantId, String username, String password) {
         try {
-            Authentication auth = new Authentication(tenant, username, password);
+            Authentication auth = new Authentication(tenantName, tenantId, username, password);
             String jsonString = createObjectMapper(true).writeValueAsString(auth);
             StringEntity input = new StringEntity(jsonString);
             input.setContentType("application/json");

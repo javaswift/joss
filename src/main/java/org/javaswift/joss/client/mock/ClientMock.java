@@ -22,11 +22,11 @@ public class ClientMock implements Client<AccountMock> {
 
     private long millisDelay = 0;
 
-    public AccountMock authenticate(String tenant, String username, String password, String authUrl) {
-        return authenticate(tenant, username, password, authUrl, null);
+    public AccountMock authenticate(String tenantName, String tenantId, String username, String password, String authUrl) {
+        return authenticate(tenantName, tenantId, username, password, authUrl, null);
     }
 
-    public AccountMock authenticate(String tenant, String username, String password, String authUrl, String preferredRegion) {
+    public AccountMock authenticate(String tenantName, String tenantId, String username, String password, String authUrl, String preferredRegion) {
         LOG.info("JOSS / MOCK mode");
         LOG.info("JOSS / Creating mock account instance");
         LOG.info("JOSS / * Check credentials: "+!allowEveryone);
@@ -40,8 +40,8 @@ public class ClientMock implements Client<AccountMock> {
                 .setMillisDelay(millisDelay);
         if (!allowEveryone) {
             AuthenticationCommandFactory authenticationCommandFactory = new AuthenticationCommandFactoryMock(swift);
-            LOG.info("JOSS / Attempting authentication with tenant: " + tenant + ", username: " + username + ", Auth URL: " + authUrl);
-            authenticationCommandFactory.createAuthenticationCommand(null, null, tenant, username, password).call();
+            LOG.info("JOSS / Attempting authentication with tenant name: " + tenantName + ", tenant ID: "+tenantId+", username: " + username + ", Auth URL: " + authUrl);
+            authenticationCommandFactory.createAuthenticationCommand(null, null, tenantName, tenantId, username, password).call();
         }
         return new AccountMock(swift);
     }

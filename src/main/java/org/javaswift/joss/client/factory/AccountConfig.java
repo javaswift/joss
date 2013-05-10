@@ -3,9 +3,14 @@ package org.javaswift.joss.client.factory;
 public class AccountConfig {
 
     /**
-    * ObjectStore tenant. This is most often equated with the project
+    * ObjectStore tenant name. This is most often equated with the project
     */
-    private String tenant;
+    private String tenantName;
+
+    /**
+    * ObjectStore tenant ID. This is most often equated with the project
+    */
+    private String tenantId;
 
     /**
     * The ObjectStore username
@@ -102,12 +107,20 @@ public class AccountConfig {
     */
     private boolean allowContainerCaching = true;
 
-    public void setTenant(String tenant) {
-        this.tenant = tenant;
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
     }
 
-    public String getTenant() {
-        return tenant;
+    public String getTenantName() {
+        return this.tenantName;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
+
+    public String getTenantId() {
+        return this.tenantId;
     }
 
     public void setUsername(String username) {

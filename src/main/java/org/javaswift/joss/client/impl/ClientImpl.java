@@ -43,13 +43,13 @@ public class ClientImpl implements Client<AccountImpl> {
         }
     }
 
-    public AccountImpl authenticate(String tenant, String username, String password, String authUrl) {
-        return authenticate(tenant, username, password, authUrl, null);
+    public AccountImpl authenticate(String tenantName, String tenantId, String username, String password, String authUrl) {
+        return authenticate(tenantName, tenantId, username, password, authUrl, null);
     }
 
-    public AccountImpl authenticate(String tenant, String username, String password, String authUrl, String preferredRegion) {
-        LOG.info("JOSS / Attempting authentication with tenant: "+tenant+", username: "+username+", Auth URL: "+authUrl);
-        AuthenticationCommand command = commandFactory.createAuthenticationCommand(httpClient, authUrl, tenant, username, password);
+    public AccountImpl authenticate(String tenantName, String tenantId, String username, String password, String authUrl, String preferredRegion) {
+        LOG.info("JOSS / Attempting authentication with tenant name: "+tenantName+", tenant ID: "+tenantId+", username: "+username+", Auth URL: "+authUrl);
+        AuthenticationCommand command = commandFactory.createAuthenticationCommand(httpClient, authUrl, tenantName, tenantId, username, password);
         AccessImpl access = command.call();
         LOG.info("JOSS / Successfully authenticated");
         access.setPreferredRegion(preferredRegion);

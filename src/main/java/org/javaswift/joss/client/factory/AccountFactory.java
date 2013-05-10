@@ -28,7 +28,7 @@ public class AccountFactory {
             client = createClientImpl();
         }
         return client
-                .authenticate(config.getTenant(), config.getUsername(), config.getPassword(), config.getAuthUrl())
+                .authenticate(config.getTenantName(), config.getTenantId(), config.getUsername(), config.getPassword(), config.getAuthUrl())
                 .setPublicHost(config.getPublicHost())
                 .setPrivateHost(config.getPrivateHost())
                 .setAllowContainerCaching(config.isAllowContainerCaching())
@@ -49,8 +49,13 @@ public class AccountFactory {
                 .setAllowCaching(config.isAllowCaching());
     }
 
-    public AccountFactory setTenant(String tenant) {
-        this.config.setTenant(tenant);
+    public AccountFactory setTenantName(String tenantName) {
+        this.config.setTenantName(tenantName);
+        return this;
+    }
+
+    public AccountFactory setTenantId(String tenantId) {
+        this.config.setTenantId(tenantId);
         return this;
     }
 

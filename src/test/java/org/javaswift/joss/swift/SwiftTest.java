@@ -74,7 +74,7 @@ public class SwiftTest {
 
     @Test
     public void unauthenticated() {
-        assertEquals(HttpStatus.SC_UNAUTHORIZED, swift.authenticate("", "", "").getStatus());
+        assertEquals(HttpStatus.SC_UNAUTHORIZED, swift.authenticate("", "", "", "").getStatus());
     }
 
     @Test

@@ -5,7 +5,7 @@ import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 
 public interface AuthenticationCommandFactory {
 
-    AuthenticationCommand createAuthenticationCommand(HttpClient httpClient, String url, String tenant,
-                                                      String username, String password);
+    AuthenticationCommand createAuthenticationCommand(HttpClient httpClient, String url, String tenantName,
+                                                      String tenantId, String username, String password);
 
 }

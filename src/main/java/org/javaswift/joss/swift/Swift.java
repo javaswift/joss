@@ -137,8 +137,8 @@ public class Swift {
         return this.statusGenerator.getStatus(clazz);
     }
 
-    public SwiftResult<AccessImpl> authenticate(String tenant, String username, String password) {
-        if (users.authenticate(tenant, username, password)) {
+    public SwiftResult<AccessImpl> authenticate(String tenantName, String tenantId, String username, String password) {
+        if (users.authenticate(tenantName, tenantId, username, password)) {
             return new SwiftResult<AccessImpl>(null, HttpStatus.SC_OK);
         } else {
             return new SwiftResult<AccessImpl>(HttpStatus.SC_UNAUTHORIZED);

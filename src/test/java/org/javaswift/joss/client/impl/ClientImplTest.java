@@ -25,7 +25,7 @@ public class ClientImplTest extends BaseCommandTest {
     @Test
     public void authenticate() throws IOException {
         loadSampleJson("/sample-access.json");
-        Account account = client.authenticate("sometenant", "superuser", "somepwd", "http://auth-url");
+        Account account = client.authenticate("sometenant", "tenantid", "superuser", "somepwd", "http://auth-url");
         assertNotNull(account);
         assertFalse(((AccountImpl)account).isAllowCaching());
         assertEquals("http://bfo000024.og.cloudvps.com:80", account.getPublicURL());
@@ -34,7 +34,7 @@ public class ClientImplTest extends BaseCommandTest {
     @Test
     public void authenticateWithAPreferredRegion() throws IOException {
         loadSampleJson("/sample-access.json");
-        Account account = client.authenticate("sometenant", "superuser", "somepwd", "http://auth-url", "AMS-02");
+        Account account = client.authenticate("sometenant", "tenantid", "superuser", "somepwd", "http://auth-url", "AMS-02");
         assertNotNull(account);
         assertEquals("http://some-other-url", account.getPublicURL());
     }

@@ -11,20 +11,22 @@ import org.javaswift.joss.swift.SwiftResult;
 
 public class AuthenticationCommandMock extends CommandMock<AccessImpl> implements AuthenticationCommand {
 
-    private final String tenant;
+    private final String tenantName;
+    private final String tenantId;
     private final String username;
     private final String password;
 
-    public AuthenticationCommandMock(Swift swift, String url, String tenant, String username, String password) {
+    public AuthenticationCommandMock(Swift swift, String url, String tenantName, String tenantId, String username, String password) {
         super(swift, null, null, null);
-        this.tenant = tenant;
+        this.tenantName = tenantName;
+        this.tenantId = tenantId;
         this.username = username;
         this.password = password;
     }
 
     @Override
     public SwiftResult<AccessImpl> callSwift() {
-        return swift.authenticate(tenant, username, password);
+        return swift.authenticate(tenantName, tenantId, username, password);
     }
 
     @Override
