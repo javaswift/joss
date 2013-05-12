@@ -92,6 +92,10 @@ public class Swift {
         return this;
     }
 
+    public MockUserStore getUserStore() {
+        return this.users;
+    }
+
     public Swift setPublicHost(String publicHost) {
         this.publicHost = publicHost;
         return this;

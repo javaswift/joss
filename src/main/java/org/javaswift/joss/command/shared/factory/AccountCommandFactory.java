@@ -35,4 +35,6 @@ public interface AccountCommandFactory {
 
     ContainerCommandFactory getContainerCommandFactory();
 
+    public boolean isTenantSupplied();
+
 }

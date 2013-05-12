@@ -3,6 +3,7 @@ package org.javaswift.joss.client.mock;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.apache.commons.io.IOUtils;
+import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
@@ -127,7 +128,9 @@ public class StoredObjectMockTest {
 
     @Test
     public void setDeleteAtDayFromNow() {
-        ClientMock client = new ClientMock().setAllowEveryone(true);
+        AccountConfig config = new AccountConfig();
+        config.setMockAllowEveryone(true);
+        ClientMock client = new ClientMock(config);
         Account account = client.authenticate("","","","","");
         Container container = account.getContainer("images");
         container.create();
@@ -140,7 +143,11 @@ public class StoredObjectMockTest {
 
     @Test
     public void setDeleteAfterWithNoObjectDeleter() {
-        Account account = new ClientMock().setAllowObjectDeleter(false).setAllowEveryone(true).authenticate(null, null, null, null, null);
+        AccountConfig config = new AccountConfig();
+        config.setMockAllowObjectDeleter(false);
+        config.setMockAllowEveryone(true);
+        Account account = new ClientMock(config)
+                .authenticate(null, null, null, null, null);
         Container container = account.getContainer("alpha");
         container.create();
         StoredObject object = container.getObject("somefile.png");

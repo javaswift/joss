@@ -5,6 +5,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.javaswift.joss.client.core.AbstractClient;
+import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.impl.factory.AuthenticationCommandFactoryImpl;
 import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
@@ -16,22 +18,15 @@ import org.javaswift.joss.model.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClientImpl implements Client<AccountImpl> {
+public class ClientImpl extends AbstractClient<AccountImpl> {
 
     public static final Logger LOG = LoggerFactory.getLogger(ClientImpl.class);
 
     private HttpClient httpClient;
 
-    private boolean allowCaching = true;
-
-    private AuthenticationCommandFactory commandFactory = new AuthenticationCommandFactoryImpl();
-
-    public ClientImpl(int socketTimeout) {
-        initHttpClient(socketTimeout);
-    }
-
-    public ClientImpl() {
-        initHttpClient(-1);
+    public ClientImpl(AccountConfig accountConfig) {
+        super(accountConfig);
+        initHttpClient(accountConfig.getSocketTimeout());
     }
 
     private void initHttpClient(int socketTimeout) {
@@ -46,31 +41,25 @@ public class ClientImpl implements Client<AccountImpl> {
         }
     }
 
-    public AccountImpl authenticate(String tenantName, String tenantId, String username, String password, String authUrl) {
-        return authenticate(tenantName, tenantId, username, password, authUrl, null);
+    @Override
+    protected void logSettings() {
+        LOG.info("JOSS / Creating real account instance");
+        LOG.info("JOSS / * Allow caching: "+accountConfig.isAllowCaching());
     }
 
-    public AccountImpl authenticate(String tenantName, String tenantId, String username, String password, String authUrl, String preferredRegion) {
+    @Override
+    protected AuthenticationCommandFactory createFactory() {
+        return new AuthenticationCommandFactoryImpl();
+    }
+
+    protected AccountImpl createAccount(String tenantName, String tenantId, String username, String password, String authUrl, String preferredRegion) {
+        AuthenticationCommand command = this.factory.createAuthenticationCommand(httpClient, authUrl, tenantName, tenantId, username, password);
         LOG.info("JOSS / Attempting authentication with tenant name: "+tenantName+", tenant ID: "+tenantId+", username: "+username+", Auth URL: "+authUrl);
-        AuthenticationCommand command = commandFactory.createAuthenticationCommand(httpClient, authUrl, tenantName, tenantId, username, password);
         AccessImpl access = command.call();
         LOG.info("JOSS / Successfully authenticated");
-        if (!access.isTenantSupplied()) {
-            LOG.info("JOSS / No tenant supplied, attempting auto-discovery");
-            command = autoDiscoverTenant(new AccountImpl(command, httpClient, access, allowCaching), authUrl, username, password);
-            access = command.call();
-            LOG.info("JOSS / Successfully authenticated with auto-discovered tenant");
-        }
         access.setPreferredRegion(preferredRegion);
         LOG.info("JOSS / Applying preferred region: "+(preferredRegion == null ? "none" : preferredRegion));
-        return new AccountImpl(command, httpClient, access, allowCaching);
-    }
-
-    public AuthenticationCommand autoDiscoverTenant(Account account, String authUrl, String username, String password) {
-        Tenants tenants = account.getTenants();
-        Tenant tenant = tenants.getTenant();
-        LOG.info("JOSS / Found tenant with name "+tenant.name+" and ID "+tenant.id);
-        return commandFactory.createAuthenticationCommand(httpClient, authUrl, tenant.name, tenant.id, username, password);
+        return new AccountImpl(command, httpClient, access, accountConfig.isAllowCaching());
     }
 
     public ClientImpl setHttpClient(HttpClient httpClient) {
@@ -78,12 +67,6 @@ public class ClientImpl implements Client<AccountImpl> {
             LOG.info("JOSS / Use HTTP client set by client (overrides previous HttpClient settings)");
             this.httpClient = httpClient;
         }
-        return this;
-    }
-
-    public ClientImpl setAllowCaching(boolean allowCaching) {
-        LOG.info("JOSS / Allow caching: "+allowCaching);
-        this.allowCaching = allowCaching;
         return this;
     }
 

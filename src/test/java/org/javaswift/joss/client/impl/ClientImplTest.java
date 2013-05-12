@@ -1,5 +1,6 @@
 package org.javaswift.joss.client.impl;
 
+import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.model.Account;
 import org.junit.Before;
@@ -17,9 +18,10 @@ public class ClientImplTest extends BaseCommandTest {
     @Override
     public void setup() throws IOException {
         super.setup();
-        client = new ClientImpl();
+        AccountConfig config = new AccountConfig();
+        config.setAllowCaching(false);
+        client = new ClientImpl(config);
         client.setHttpClient(httpClient);
-        client.setAllowCaching(false);
     }
 
     @Test
@@ -53,7 +55,9 @@ public class ClientImplTest extends BaseCommandTest {
     @Test
     public void coverSetters() {
         client.setHttpClient(null);
-        new ClientImpl(1000);
+        AccountConfig config = new AccountConfig();
+        config.setSocketTimeout(1000);
+        new ClientImpl(config);
     }
 
 

@@ -84,6 +84,12 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
         return this.containerCommandFactory;
     }
 
+    @Override
+    public boolean isTenantSupplied() {
+        // @TODO -- implement mock part for tenant discovery
+        return true;
+    }
+
     public Swift getSwift() {
         return this.swift;
     }

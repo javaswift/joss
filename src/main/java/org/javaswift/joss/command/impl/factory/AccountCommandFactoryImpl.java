@@ -90,6 +90,11 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
         return this.containerCommandFactory;
     }
 
+    @Override
+    public boolean isTenantSupplied() {
+        return this.access.isTenantSupplied();
+    }
+
     public HttpClient getHttpClient() {
         return this.httpClient;
     }

@@ -162,6 +162,11 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     }
 
     @Override
+    public boolean isTenantSupplied() {
+        return this.commandFactory.isTenantSupplied();
+    }
+
+    @Override
     public String getPathForEntity() throws UnsupportedEncodingException {
         return "";
     }

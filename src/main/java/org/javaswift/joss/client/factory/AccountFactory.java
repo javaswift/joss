@@ -36,17 +36,12 @@ public class AccountFactory {
     }
 
     public Client createClientMock() {
-        return new ClientMock()
-                .setOnFileObjectStore(config.getMockOnFileObjectStore())
-                .setAllowObjectDeleter(config.isMockAllowObjectDeleter())
-                .setAllowEveryone(config.isMockAllowEveryone())
-                .setMillisDelay(config.getMockMillisDelay());
+        return new ClientMock(config);
     }
 
     public Client createClientImpl() {
-        return new ClientImpl(config.getSocketTimeout())
-                .setHttpClient(this.httpClient)
-                .setAllowCaching(config.isAllowCaching());
+        return new ClientImpl(config)
+                .setHttpClient(this.httpClient);
     }
 
     public AccountFactory setTenantName(String tenantName) {

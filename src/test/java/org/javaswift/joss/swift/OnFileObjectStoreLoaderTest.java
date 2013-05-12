@@ -1,5 +1,6 @@
 package org.javaswift.joss.swift;
 
+import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.client.mock.ClientMock;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Client;
@@ -15,11 +16,11 @@ public class OnFileObjectStoreLoaderTest {
 
     @Test
     public void loadFromFile() throws IOException, URISyntaxException {
-
-        Client client = new ClientMock()
-                .setAllowEveryone(true)
-                .setOnFileObjectStore("object-store");
-        Account account = client.authenticate(null, null, null, null, null);
+        AccountConfig config = new AccountConfig();
+        config.setMockAllowEveryone(true);
+        config.setMockOnFileObjectStore("object-store");
+        Account account = new ClientMock(config)
+                .authenticate(null, null, null, null, null);
         assertEquals(2, account.getContainer("container1").list().size());
         assertEquals(5, account.getContainer("container2").list().size());
         StoredObject object = account.getContainer("container2").getObject("logo.png");

@@ -131,4 +131,10 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     */
     public Tenants getTenants();
 
+    /**
+    * Checks whether a tenant ID and/or name were supplied. If not, the account can only be used to retrieve
+    * a list of tenants.
+    */
+    public boolean isTenantSupplied();
+
 }
