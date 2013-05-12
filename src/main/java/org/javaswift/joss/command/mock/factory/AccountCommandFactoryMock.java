@@ -86,8 +86,7 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
 
     @Override
     public boolean isTenantSupplied() {
-        // @TODO -- implement mock part for tenant discovery
-        return true;
+        return this.swift.isTenantSupplied();
     }
 
     public Swift getSwift() {

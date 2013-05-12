@@ -4,6 +4,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.tenant.Tenant;
+import org.javaswift.joss.command.shared.identity.tenant.Tenants;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.account.AccountBytesUsed;
@@ -51,6 +53,8 @@ public class Swift {
     private int objectDeleterStartAfterSeconds = 10;
 
     private int objectDeleterIntervalSeconds = 10;
+
+    private boolean tenantSupplied = false;
 
     StatusGenerator statusGenerator = new StatusGenerator();
 
@@ -119,6 +123,21 @@ public class Swift {
     public Swift setObjectDeleterIntervalSeconds(int objectDeleterIntervalSeconds) {
         this.objectDeleterIntervalSeconds = objectDeleterIntervalSeconds;
         return this;
+    }
+
+    public Swift setTenantSupplied(String tenantId, String tenantName) {
+        this.tenantSupplied = tenantId != null || tenantName != null;
+        return this;
+    }
+
+    public SwiftResult<Tenants> getTenant() {
+        Tenants tenants = new Tenants();
+        Tenant tenant = new Tenant();
+        tenant.id = "mock-id";
+        tenant.name = "mock-name";
+        tenant.enabled = true;
+        tenants.tenants.add(tenant);
+        return new SwiftResult<Tenants>(tenants, HttpStatus.SC_OK);
     }
 
     public void addIgnore() {
@@ -445,6 +464,10 @@ public class Swift {
 
     public long getMillisDelay() {
         return millisDelay;
+    }
+
+    public boolean isTenantSupplied() {
+        return tenantSupplied;
     }
 
 }

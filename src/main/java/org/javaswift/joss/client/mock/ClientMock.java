@@ -33,7 +33,8 @@ public class ClientMock extends AbstractClient<AccountMock> {
                     .setAllowObjectDeleter(accountConfig.isMockAllowObjectDeleter())
                     .setOnFileObjectStore(accountConfig.getMockOnFileObjectStore())
                     .setUserStore(users)
-                    .setMillisDelay(accountConfig.getMockMillisDelay());
+                    .setMillisDelay(accountConfig.getMockMillisDelay())
+                    .setTenantSupplied(accountConfig.getTenantId(), accountConfig.getTenantName());
         }
         return this.swift;
     }

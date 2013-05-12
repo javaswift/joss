@@ -240,6 +240,27 @@ public class SwiftTest {
         assertEquals(HttpStatus.SC_NOT_FOUND, swift.getObjectInformation(container, object).getStatus());
     }
 
+    @Test
+    public void bothTenantFieldsSupplied() {
+        Swift swift = new Swift();
+        swift.setTenantSupplied("alpha", "beta");
+        assertTrue(swift.isTenantSupplied());
+    }
+
+    @Test
+    public void oneTenantFieldSupplied() {
+        Swift swift = new Swift();
+        swift.setTenantSupplied(null, "beta");
+        assertTrue(swift.isTenantSupplied());
+    }
+
+    @Test
+    public void noTenantSupplied() {
+        Swift swift = new Swift();
+        swift.setTenantSupplied(null, null);
+        assertFalse(swift.isTenantSupplied());
+    }
+
     protected Swift createObjectDeleterSwift() {
         return new Swift()
                 .setAllowObjectDeleter(true)
