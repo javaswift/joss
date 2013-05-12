@@ -1,0 +1,24 @@
+{
+    "access": {
+        "token": {
+            "expires": "2012-08-31T06:01:48Z",
+            "id": "a376b74fbdb64a4986cd3234647ff6f8",
+            "tenant": {
+                "enabled": true,
+                "id": "bfo000024",
+                "name": "bfo000024"
+            }
+        },
+        "serviceCatalog": [],
+        "user": {
+            "username": "Robert Bor",
+            "roles_links": [],
+            "id": "DRB000010",
+            "roles": [{
+                "id": "swiftoperator",
+                "name": "swiftoperator"
+            }],
+            "name": "Robert Bor"
+        }
+    }
+}

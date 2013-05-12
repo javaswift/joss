@@ -3,11 +3,13 @@ package org.javaswift.joss.command.mock.factory;
 import org.javaswift.joss.command.mock.account.AccountInformationCommandMock;
 import org.javaswift.joss.command.mock.account.AccountMetadataCommandMock;
 import org.javaswift.joss.command.mock.account.ListContainersCommandMock;
+import org.javaswift.joss.command.mock.account.TenantCommandMock;
 import org.javaswift.joss.command.shared.account.AccountInformationCommand;
 import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
 import org.javaswift.joss.command.shared.account.ListContainersCommand;
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
+import org.javaswift.joss.command.shared.account.TenantCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
@@ -70,6 +72,11 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
     @Override
     public ListContainersCommand createListContainersCommand(Account account, ListInstructions listInstructions) {
         return new ListContainersCommandMock(swift, account, listInstructions);
+    }
+
+    @Override
+    public TenantCommand createTenantCommand(Account account) {
+        return new TenantCommandMock(swift, account);
     }
 
     @Override

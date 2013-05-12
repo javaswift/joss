@@ -27,8 +27,12 @@ public class AccessImpl implements Access {
     @JsonIgnore
     private EndPoint currentEndPoint;
 
+    private boolean tenantSupplied;
+
+    private String preferredRegion;
+
     public void setPreferredRegion(String preferredRegion) {
-        this.currentEndPoint = getObjectStoreCatalog().getRegion(preferredRegion);
+        this.preferredRegion = preferredRegion;
     }
 
     public String getToken() {
@@ -44,25 +48,40 @@ public class AccessImpl implements Access {
         return null;
     }
 
+    public boolean isTenantSupplied() {
+        return this.tenantSupplied;
+    }
+
+    public AccessImpl setTenantSupplied(boolean tenantSupplied) {
+        this.tenantSupplied = tenantSupplied;
+        return this;
+    }
+
     @SuppressWarnings("ConstantConditions")
-    public AccessImpl initCurrentEndPoint() {
+    protected EndPoint getCurrentEndPoint() {
+        if (!isTenantSupplied()) {
+            HttpStatusExceptionUtil.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_TENANT_SUPPLIED);
+        }
+        if (currentEndPoint != null) {
+            return currentEndPoint;
+        }
         ServiceCatalog objectStoreCatalog = getObjectStoreCatalog();
         if (objectStoreCatalog == null) {
             HttpStatusExceptionUtil.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_SERVICE_CATALOG_FOUND);
         }
-        this.currentEndPoint = objectStoreCatalog.getRegion(null);
+        this.currentEndPoint = objectStoreCatalog.getRegion(preferredRegion);
         if (this.currentEndPoint == null) {
             HttpStatusExceptionUtil.throwException(HttpStatus.SC_NOT_FOUND, CommandExceptionError.NO_END_POINT_FOUND);
         }
-        return this;
+        return this.currentEndPoint;
     }
 
     public String getInternalURL() {
-        return currentEndPoint.internalURL;
+        return getCurrentEndPoint().internalURL;
     }
 
     public String getPublicURL() {
-        return currentEndPoint.publicURL;
+        return getCurrentEndPoint().publicURL;
     }
 
 }

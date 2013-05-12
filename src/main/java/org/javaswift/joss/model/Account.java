@@ -1,5 +1,7 @@
 package org.javaswift.joss.model;
 
+import org.javaswift.joss.command.shared.identity.tenant.Tenants;
+
 /**
  * Account is the root entity in Object Store. It allows you access to the various containers underneath. Note
  * that you need to call {@link #getContainer(String) getContainer} to work on Containers. The method returns
@@ -121,5 +123,12 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     * @return original public host
     */
     public String getOriginalHost();
+
+    /**
+    * Returns the tenants of the account. Note that this is the only Account method that interacts with the object
+    * store and will work when no tenant has been set. All others will throw an exception.
+    * @return the tenants belonging to the Account
+    */
+    public Tenants getTenants();
 
 }

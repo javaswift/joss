@@ -23,6 +23,17 @@ public class ClientImplTest extends BaseCommandTest {
     }
 
     @Test
+    public void noTenantSupplied() throws IOException {
+        loadSampleJson(new String[] {
+                "/sample-access-no-tenant.json",
+                "/sample-tenants.json",
+                "/sample-access.json",
+        });
+        Account account = client.authenticate(null, null, "superuser", "somepwd", "http://auth-url");
+        assertEquals("http://bfo000024.og.cloudvps.com:80", account.getPublicURL()); // Requires the endpoints
+    }
+
+    @Test
     public void authenticate() throws IOException {
         loadSampleJson("/sample-access.json");
         Account account = client.authenticate("sometenant", "tenantid", "superuser", "somepwd", "http://auth-url");

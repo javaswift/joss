@@ -17,9 +17,23 @@ import java.io.IOException;
 
 public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, AccessImpl> implements AuthenticationCommand {
 
+    private boolean tenantSupplied;
+
+    private String url;
+
     public AuthenticationCommandImpl(HttpClient httpClient, String url, String tenantName, String tenantId, String username, String password) {
         super(httpClient, url);
         setAuthenticationHeader(tenantName, tenantId, username, password);
+        setTenantSupplied(tenantName, tenantId);
+        this.url = url;
+    }
+
+    private void setTenantSupplied(String tenantName, String tenantId) {
+        this.tenantSupplied = tenantName != null || tenantId != null;
+    }
+
+    private boolean isTenantSupplied() {
+        return this.tenantSupplied;
     }
 
     private void setAuthenticationHeader(String tenantName, String tenantId, String username, String password) {
@@ -38,7 +52,7 @@ public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, AccessI
     public AccessImpl getReturnObject(HttpResponse response) throws IOException {
         return createObjectMapper(true)
                 .readValue(response.getEntity().getContent(), AccessImpl.class)
-                .initCurrentEndPoint(); // If only this would exist: http://jira.codehaus.org/browse/JACKSON-645
+                .setTenantSupplied(isTenantSupplied()); // If only this would exist: http://jira.codehaus.org/browse/JACKSON-645
     }
 
     @Override
@@ -51,5 +65,10 @@ public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, AccessI
         return new HttpStatusChecker[] {
             new HttpStatusSuccessCondition(new HttpStatusRange(200, 299))
         };
+    }
+
+    @Override
+    public String getUrl() {
+        return this.url;
     }
 }

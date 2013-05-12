@@ -1,0 +1,9 @@
+{
+    "tenants_links": [],
+    "tenants": [{
+        "description": "Auto created account",
+        "enabled": true,
+        "id": "bfo000024",
+        "name": "bfo000024"
+    }]
+}

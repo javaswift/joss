@@ -2,6 +2,7 @@ package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.tenant.Tenants;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.headers.account.AccountMetadata;
 import org.javaswift.joss.information.AccountInformation;
@@ -80,7 +81,7 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     }
 
     public AbstractAccount setAllowReauthenticate(boolean allowReauthenticate) {
-        LOG.info("JOSS / Allow reauthentication: "+allowReauthenticate);
+        LOG.info("JOSS / Allow reauthentication: " + allowReauthenticate);
         this.allowReauthenticate = allowReauthenticate;
         return this;
     }
@@ -153,6 +154,11 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     protected void getInfo(boolean allowErrorLog) {
         this.info = commandFactory.createAccountInformationCommand(this).call();
         this.setInfoRetrieved();
+    }
+
+    @Override
+    public Tenants getTenants() {
+        return this.commandFactory.createTenantCommand(this).call();
     }
 
     @Override

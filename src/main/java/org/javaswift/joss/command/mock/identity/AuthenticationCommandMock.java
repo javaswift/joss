@@ -36,4 +36,9 @@ public class AuthenticationCommandMock extends CommandMock<AccessImpl> implement
         };
     }
 
+    @Override
+    public String getUrl() {
+        return null;
+    }
+
 }

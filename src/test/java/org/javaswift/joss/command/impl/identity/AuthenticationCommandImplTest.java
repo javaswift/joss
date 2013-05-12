@@ -4,6 +4,7 @@ import mockit.Expectations;
 import mockit.Mocked;
 import org.apache.http.entity.StringEntity;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
+import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.UnauthorizedException;
@@ -13,6 +14,8 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 public class AuthenticationCommandImplTest extends BaseCommandTest {
 
@@ -20,6 +23,26 @@ public class AuthenticationCommandImplTest extends BaseCommandTest {
     public void setup() throws IOException {
         super.setup();
         loadSampleJson("/sample-access.json");
+    }
+
+    @Test
+    public void getUrl() {
+        AuthenticationCommand command = new AuthenticationCommandImpl(httpClient, "someurl", null, null, "user", "pwd");
+        assertEquals("someurl", command.getUrl());
+    }
+
+    @Test
+    public void noTenantSupplied() throws IOException {
+        AuthenticationCommand command = new AuthenticationCommandImpl(httpClient, "someurl", null, null, "user", "pwd");
+        AccessImpl access = command.call();
+        assertFalse(access.isTenantSupplied());
+    }
+
+    @Test
+    public void noTenantNameSupplied() throws IOException {
+        AuthenticationCommand command = new AuthenticationCommandImpl(httpClient, "someurl", null, "tenantid", "user", "pwd");
+        AccessImpl access = command.call();
+        assertTrue(access.isTenantSupplied());
     }
 
     @Test

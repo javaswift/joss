@@ -19,6 +19,7 @@ import org.javaswift.joss.util.ClasspathTemplateResource;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.*;
@@ -94,6 +95,17 @@ public abstract class BaseCommandTest {
             response.getAllHeaders();
             result = headers.toArray(new Header[headers.size()]);
         }};
+    }
+
+    protected void loadSampleJson(final String[] jsonFiles) throws IOException {
+        new NonStrictExpectations() {{
+            httpEntity.getContent();
+            List<String> results = new ArrayList<String>();
+            for (String json : jsonFiles) {
+                result = IOUtils.toInputStream(new ClasspathTemplateResource(json).loadTemplate());
+            }
+        }};
+
     }
 
     protected void loadSampleJson(final String json) throws IOException {
