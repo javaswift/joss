@@ -27,21 +27,28 @@ public abstract class AbstractClient<A extends Account> implements Client<A> {
 
     protected abstract AuthenticationCommandFactory createFactory();
 
-    protected abstract A createAccount(String tenantName, String tenantId, String username, String password, String authUrl, String preferredRegion);
+    protected abstract A createAccount(String preferredRegion);
 
     @Override
-    public A authenticate(String tenantName, String tenantId, String username, String password, String authUrl) {
-        return authenticate(tenantName, tenantId, username, password, authUrl, null);
+    public A authenticate() {
+        return authenticate(null);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public A authenticate(String tenantName, String tenantId, String username, String password, String authUrl, String preferredRegion) {
-        A account = createAccount(tenantName, tenantId, username, password, authUrl, preferredRegion);
+    public A authenticate(String preferredRegion) {
+        A account = createAccount(preferredRegion);
         if (!account.isTenantSupplied()) {
             Tenant tenant = autoDiscoverTenant(account);
-            account = createAccount(tenant.name, tenant.id, username, password, authUrl, preferredRegion);
+            accountConfig.setTenantId(tenant.id);
+            accountConfig.setTenantId(tenant.name);
+            account = createAccount(preferredRegion);
         }
-        return account;
+        return (A)account
+                .setPublicHost(accountConfig.getPublicHost())
+                .setPrivateHost(accountConfig.getPrivateHost())
+                .setAllowContainerCaching(accountConfig.isAllowContainerCaching())
+                .setAllowReauthenticate(accountConfig.isAllowReauthenticate());
     }
 
     protected Tenant autoDiscoverTenant(Account account) {

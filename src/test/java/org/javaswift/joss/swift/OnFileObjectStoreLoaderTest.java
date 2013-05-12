@@ -19,8 +19,7 @@ public class OnFileObjectStoreLoaderTest {
         AccountConfig config = new AccountConfig();
         config.setMockAllowEveryone(true);
         config.setMockOnFileObjectStore("object-store");
-        Account account = new ClientMock(config)
-                .authenticate(null, null, null, null, null);
+        Account account = new ClientMock(config).authenticate();
         assertEquals(2, account.getContainer("container1").list().size());
         assertEquals(5, account.getContainer("container2").list().size());
         StoredObject object = account.getContainer("container2").getObject("logo.png");

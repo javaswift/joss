@@ -131,7 +131,7 @@ public class StoredObjectMockTest {
         AccountConfig config = new AccountConfig();
         config.setMockAllowEveryone(true);
         ClientMock client = new ClientMock(config);
-        Account account = client.authenticate("","","","","");
+        Account account = client.authenticate();
         Container container = account.getContainer("images");
         container.create();
         StoredObject object = container.getObject("some-image.jpg");
@@ -146,8 +146,7 @@ public class StoredObjectMockTest {
         AccountConfig config = new AccountConfig();
         config.setMockAllowObjectDeleter(false);
         config.setMockAllowEveryone(true);
-        Account account = new ClientMock(config)
-                .authenticate(null, null, null, null, null);
+        Account account = new ClientMock(config).authenticate();
         Container container = account.getContainer("alpha");
         container.create();
         StoredObject object = container.getObject("somefile.png");

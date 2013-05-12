@@ -14,11 +14,13 @@ public class ClientImplTest extends BaseCommandTest {
 
     private ClientImpl client;
 
+    private AccountConfig config;
+
     @Before
     @Override
     public void setup() throws IOException {
         super.setup();
-        AccountConfig config = new AccountConfig();
+        config = new AccountConfig();
         config.setAllowCaching(false);
         client = new ClientImpl(config);
         client.setHttpClient(httpClient);
@@ -31,14 +33,22 @@ public class ClientImplTest extends BaseCommandTest {
                 "/sample-tenants.json",
                 "/sample-access.json",
         });
-        Account account = client.authenticate(null, null, "superuser", "somepwd", "http://auth-url");
+        config.setUsername("superuser");
+        config.setPassword("somepwd");
+        config.setAuthUrl("http://auth-url");
+        Account account = client.authenticate();
         assertEquals("http://bfo000024.og.cloudvps.com:80", account.getPublicURL()); // Requires the endpoints
     }
 
     @Test
     public void authenticate() throws IOException {
         loadSampleJson("/sample-access.json");
-        Account account = client.authenticate("sometenant", "tenantid", "superuser", "somepwd", "http://auth-url");
+        config.setTenantName("sometenant");
+        config.setTenantId("tenantid");
+        config.setUsername("superuser");
+        config.setPassword("somepwd");
+        config.setAuthUrl("http://auth-url");
+        Account account = client.authenticate();
         assertNotNull(account);
         assertFalse(((AccountImpl)account).isAllowCaching());
         assertEquals("http://bfo000024.og.cloudvps.com:80", account.getPublicURL());
@@ -47,7 +57,12 @@ public class ClientImplTest extends BaseCommandTest {
     @Test
     public void authenticateWithAPreferredRegion() throws IOException {
         loadSampleJson("/sample-access.json");
-        Account account = client.authenticate("sometenant", "tenantid", "superuser", "somepwd", "http://auth-url", "AMS-02");
+        config.setTenantName("sometenant");
+        config.setTenantId("tenantid");
+        config.setUsername("superuser");
+        config.setPassword("somepwd");
+        config.setAuthUrl("http://auth-url");
+        Account account = client.authenticate("AMS-02");
         assertNotNull(account);
         assertEquals("http://some-other-url", account.getPublicURL());
     }

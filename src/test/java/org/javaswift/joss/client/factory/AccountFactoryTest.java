@@ -41,7 +41,7 @@ public class AccountFactoryTest {
         AccountFactory factory = new AccountFactory(config);
 
         new Expectations() {{
-            client.authenticate(anyString, anyString, anyString, anyString, anyString);
+            client.authenticate();
             result = account;
         }};
 

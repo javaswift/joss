@@ -52,9 +52,20 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
         return new AuthenticationCommandFactoryImpl();
     }
 
-    protected AccountImpl createAccount(String tenantName, String tenantId, String username, String password, String authUrl, String preferredRegion) {
-        AuthenticationCommand command = this.factory.createAuthenticationCommand(httpClient, authUrl, tenantName, tenantId, username, password);
-        LOG.info("JOSS / Attempting authentication with tenant name: "+tenantName+", tenant ID: "+tenantId+", username: "+username+", Auth URL: "+authUrl);
+    @Override
+    protected AccountImpl createAccount(String preferredRegion) {
+        AuthenticationCommand command = this.factory.createAuthenticationCommand(
+                httpClient,
+                accountConfig.getAuthUrl(),
+                accountConfig.getTenantName(),
+                accountConfig.getTenantId(),
+                accountConfig.getUsername(),
+                accountConfig.getPassword());
+        LOG.info(
+                "JOSS / Attempting authentication with tenant name: " + accountConfig.getTenantName()+
+                        ", tenant ID: "+accountConfig.getTenantId()+
+                        ", username: " +accountConfig.getUsername()+
+                        ", Auth URL: " +accountConfig.getAuthUrl());
         AccessImpl access = command.call();
         LOG.info("JOSS / Successfully authenticated");
         access.setPreferredRegion(preferredRegion);

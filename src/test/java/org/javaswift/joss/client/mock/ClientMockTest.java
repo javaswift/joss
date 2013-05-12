@@ -19,10 +19,12 @@ public class ClientMockTest {
         users.addUser("richard", "test123");
         AccountConfig config = new AccountConfig();
         config.setMockAllowEveryone(false);
+        config.setUsername("richard");
+        config.setPassword("test123");
         ClientMock client = new ClientMock(config);
         client.setUsers(users);
         client.getUsers(); // ignore
-        Account account = client.authenticate("", "", "richard", "test123", "");
+        Account account = client.authenticate();
         assertNotNull(account);
     }
 
@@ -31,7 +33,7 @@ public class ClientMockTest {
         AccountConfig config = new AccountConfig();
         config.setMockAllowEveryone(true);
         ClientMock client = new ClientMock(config);
-        assertNotNull(client.authenticate(null, null, null, null, null));
+        assertNotNull(client.authenticate());
     }
 
     @Test
@@ -39,8 +41,7 @@ public class ClientMockTest {
         AccountConfig config = new AccountConfig();
         config.setMockAllowObjectDeleter(false);
         config.setMockAllowEveryone(true);
-        AccountMock account = new ClientMock(config)
-                .authenticate(null, null, null, null, null);
+        AccountMock account = new ClientMock(config).authenticate();
         Swift swift = ((AccountCommandFactoryMock)account.getFactory()).getSwift();
         assertNull(swift.getCurrentObjectDeleter());
     }

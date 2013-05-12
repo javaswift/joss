@@ -27,12 +27,7 @@ public class AccountFactory {
         } else {
             client = createClientImpl();
         }
-        return client
-                .authenticate(config.getTenantName(), config.getTenantId(), config.getUsername(), config.getPassword(), config.getAuthUrl())
-                .setPublicHost(config.getPublicHost())
-                .setPrivateHost(config.getPrivateHost())
-                .setAllowContainerCaching(config.isAllowContainerCaching())
-                .setAllowReauthenticate(config.isAllowReauthenticate());
+        return client.authenticate();
     }
 
     public Client createClientMock() {

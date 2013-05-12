@@ -49,10 +49,20 @@ public class ClientMock extends AbstractClient<AccountMock> {
     }
 
     @Override
-    protected AccountMock createAccount(String tenantName, String tenantId, String username, String password, String authUrl, String preferredRegion) {
+    protected AccountMock createAccount(String preferredRegion) {
         if (!accountConfig.isMockAllowEveryone()) {
-            LOG.info("JOSS / Attempting authentication with tenant name: " + tenantName + ", tenant ID: "+tenantId+", username: " + username + ", Auth URL: " + authUrl);
-            this.factory.createAuthenticationCommand(null, null, tenantName, tenantId, username, password).call();
+            LOG.info(
+                    "JOSS / Attempting authentication with tenant name: " + accountConfig.getTenantName()+
+                    ", tenant ID: "+accountConfig.getTenantId()+
+                    ", username: " +accountConfig.getUsername()+
+                    ", Auth URL: " +accountConfig.getAuthUrl());
+            this.factory.createAuthenticationCommand(
+                    null,
+                    null,
+                    accountConfig.getTenantName(),
+                    accountConfig.getTenantId(),
+                    accountConfig.getUsername(),
+                    accountConfig.getPassword()).call();
         }
         return new AccountMock(swift);
     }
