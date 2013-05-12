@@ -27,22 +27,17 @@ public abstract class AbstractClient<A extends Account> implements Client<A> {
 
     protected abstract AuthenticationCommandFactory createFactory();
 
-    protected abstract A createAccount(String preferredRegion);
-
-    @Override
-    public A authenticate() {
-        return authenticate(null);
-    }
+    protected abstract A createAccount();
 
     @SuppressWarnings("unchecked")
     @Override
-    public A authenticate(String preferredRegion) {
-        A account = createAccount(preferredRegion);
+    public A authenticate() {
+        A account = createAccount();
         if (!account.isTenantSupplied()) {
             Tenant tenant = autoDiscoverTenant(account);
             accountConfig.setTenantId(tenant.id);
             accountConfig.setTenantId(tenant.name);
-            account = createAccount(preferredRegion);
+            account = createAccount();
         }
         return (A)account
                 .setPublicHost(accountConfig.getPublicHost())

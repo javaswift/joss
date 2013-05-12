@@ -26,6 +26,7 @@ public class AccountConfigTest {
         config.setPrivateHost("api");
         config.setSocketTimeout(1000);
         config.setAllowContainerCaching(false);
+        config.setPreferredRegion("AMS-01");
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
         assertEquals("tenant", config.getTenantName());
@@ -42,5 +43,6 @@ public class AccountConfigTest {
         assertEquals("api", config.getPrivateHost());
         assertEquals(1000, config.getSocketTimeout());
         assertEquals(false, config.isAllowContainerCaching());
+        assertEquals("AMS-01", config.getPreferredRegion());
     }
 }

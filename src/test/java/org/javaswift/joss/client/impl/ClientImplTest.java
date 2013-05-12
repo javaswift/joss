@@ -62,7 +62,8 @@ public class ClientImplTest extends BaseCommandTest {
         config.setUsername("superuser");
         config.setPassword("somepwd");
         config.setAuthUrl("http://auth-url");
-        Account account = client.authenticate("AMS-02");
+        config.setPreferredRegion("AMS-02");
+        Account account = client.authenticate();
         assertNotNull(account);
         assertEquals("http://some-other-url", account.getPublicURL());
     }
@@ -74,7 +75,6 @@ public class ClientImplTest extends BaseCommandTest {
         config.setSocketTimeout(1000);
         new ClientImpl(config);
     }
-
 
 }
 

@@ -20,13 +20,4 @@ public interface Client<A extends Account> {
     */
     public A authenticate();
 
-    /**
-     * Calls the identity module of the OpenStack implementation to authenticate itself against. If
-     * successful, it returns the internal URL to work with and the authentication token, which will
-     * automatically be added to all calls made by the client henceforth.
-     * @param preferredRegion the end point region that is preferred. Note that this end point is not guaranteed. If
-     *                        it is not available, another end point will be returned.
-     */
-    public A authenticate(String preferredRegion);
-
 }

@@ -107,6 +107,12 @@ public class AccountConfig {
     */
     private boolean allowContainerCaching = true;
 
+    /**
+    * The preferred region will determine what Swift end-point will be chosen. If no preferred region is
+    * set (default), the first applicable end-point will be selected.
+    */
+    private String preferredRegion;
+
     public void setTenantName(String tenantName) {
         this.tenantName = tenantName;
     }
@@ -234,4 +240,13 @@ public class AccountConfig {
     public void setAllowContainerCaching(boolean allowContainerCaching) {
         this.allowContainerCaching = allowContainerCaching;
     }
+
+    public String getPreferredRegion() {
+        return preferredRegion;
+    }
+
+    public void setPreferredRegion(String preferredRegion) {
+        this.preferredRegion = preferredRegion;
+    }
+
 }

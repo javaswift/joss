@@ -119,6 +119,11 @@ public class AccountFactory {
         return this;
     }
 
+    public AccountFactory setPreferredRegion(String preferredRegion) {
+        this.config.setPreferredRegion(preferredRegion);
+        return this;
+    }
+
     public AccountFactory setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
         return this;

@@ -49,7 +49,7 @@ public class ClientMock extends AbstractClient<AccountMock> {
     }
 
     @Override
-    protected AccountMock createAccount(String preferredRegion) {
+    protected AccountMock createAccount() {
         if (!accountConfig.isMockAllowEveryone()) {
             LOG.info(
                     "JOSS / Attempting authentication with tenant name: " + accountConfig.getTenantName()+

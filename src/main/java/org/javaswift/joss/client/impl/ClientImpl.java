@@ -53,7 +53,7 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
     }
 
     @Override
-    protected AccountImpl createAccount(String preferredRegion) {
+    protected AccountImpl createAccount() {
         AuthenticationCommand command = this.factory.createAuthenticationCommand(
                 httpClient,
                 accountConfig.getAuthUrl(),
@@ -68,8 +68,8 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
                         ", Auth URL: " +accountConfig.getAuthUrl());
         AccessImpl access = command.call();
         LOG.info("JOSS / Successfully authenticated");
-        access.setPreferredRegion(preferredRegion);
-        LOG.info("JOSS / Applying preferred region: "+(preferredRegion == null ? "none" : preferredRegion));
+        access.setPreferredRegion(accountConfig.getPreferredRegion());
+        LOG.info("JOSS / Applying preferred region: "+(accountConfig.getPreferredRegion() == null ? "none" : accountConfig.getPreferredRegion()));
         return new AccountImpl(command, httpClient, access, accountConfig.isAllowCaching());
     }
 

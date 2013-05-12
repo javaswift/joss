@@ -62,6 +62,7 @@ public class AccountFactoryTest {
                 .setMockMillisDelay(0)
                 .setMockOnFileObjectStore(null)
                 .setPassword(null)
+                .setPreferredRegion(null)
                 .setPrivateHost(null)
                 .setPublicHost(null)
                 .setSocketTimeout(0)
