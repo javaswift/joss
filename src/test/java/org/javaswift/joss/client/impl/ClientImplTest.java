@@ -37,6 +37,8 @@ public class ClientImplTest extends BaseCommandTest {
         config.setPassword("somepwd");
         config.setAuthUrl("http://auth-url");
         Account account = client.authenticate();
+        assertEquals("bfo000024id", config.getTenantId());
+        assertEquals("bfo000024name", config.getTenantName());
         assertEquals("http://bfo000024.og.cloudvps.com:80", account.getPublicURL()); // Requires the endpoints
     }
 

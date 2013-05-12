@@ -36,7 +36,7 @@ public abstract class AbstractClient<A extends Account> implements Client<A> {
         if (!account.isTenantSupplied()) {
             Tenant tenant = autoDiscoverTenant(account);
             accountConfig.setTenantId(tenant.id);
-            accountConfig.setTenantId(tenant.name);
+            accountConfig.setTenantName(tenant.name);
             account = createAccount();
         }
         return (A)account

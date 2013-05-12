@@ -3,7 +3,7 @@
     "tenants": [{
         "description": "Auto created account",
         "enabled": true,
-        "id": "bfo000024",
-        "name": "bfo000024"
+        "id": "bfo000024id",
+        "name": "bfo000024name"
     }]
 }
