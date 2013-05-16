@@ -1,5 +1,13 @@
 package org.javaswift.joss.client.mock;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import org.apache.commons.io.FileUtils;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
@@ -9,12 +17,6 @@ import org.javaswift.joss.util.FileAction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import static junit.framework.Assert.*;
 
 public class WebsiteMockTest {
 
@@ -27,7 +29,7 @@ public class WebsiteMockTest {
     public void setup() throws IOException, URISyntaxException {
         this.website = new WebsiteMock(new AccountMock(), "website");
         this.website.create();
-        this.writeDir = new File(FileAction.getFile("websites").getPath().replaceAll("/websites", "/temp"));
+        this.writeDir = new File(FileAction.getFile("websites").getPath().replaceAll(File.separator + "websites", File.separator + "temp"));
         writeDir.mkdir();
     }
 
