@@ -9,10 +9,10 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.exception.HttpStatusExceptionUtil;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
 
@@ -25,9 +25,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
     public static final String ETAG             = "ETag";
     public static final String CONTENT_LENGTH   = "Content-Length";
 
-    private DownloadInstructions downloadInstructions;
-
-    public AbstractDownloadObjectCommand(Account account, HttpClient httpClient, AccessImpl access,
+    public AbstractDownloadObjectCommand(Account account, HttpClient httpClient, Access access,
                                          StoredObject object, DownloadInstructions downloadInstructions) {
         super(account, httpClient, access, object);
         processDownloadInstructions(downloadInstructions);

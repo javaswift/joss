@@ -10,11 +10,7 @@ import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.impl.factory.AuthenticationCommandFactoryImpl;
 import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
-import org.javaswift.joss.command.shared.identity.tenant.Tenant;
-import org.javaswift.joss.command.shared.identity.tenant.Tenants;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Client;
+import org.javaswift.joss.model.Access;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +62,7 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
                         ", tenant ID: "+accountConfig.getTenantId()+
                         ", username: " +accountConfig.getUsername()+
                         ", Auth URL: " +accountConfig.getAuthUrl());
-        AccessImpl access = command.call();
+        Access access = command.call();
         LOG.info("JOSS / Successfully authenticated");
         access.setPreferredRegion(accountConfig.getPreferredRegion());
         LOG.info("JOSS / Applying preferred region: "+(accountConfig.getPreferredRegion() == null ? "none" : accountConfig.getPreferredRegion()));

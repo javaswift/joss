@@ -8,13 +8,13 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.container.CreateContainerCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 
 public class CreateContainerCommandImpl extends AbstractContainerCommand<HttpPut, Object> implements CreateContainerCommand {
 
-    public CreateContainerCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Container container) {
+    public CreateContainerCommandImpl(Account account, HttpClient httpClient, Access access, Container container) {
         super(account, httpClient, access, container);
     }
 

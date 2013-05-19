@@ -8,13 +8,13 @@ import org.javaswift.joss.command.impl.account.TenantCommandImpl;
 import org.javaswift.joss.command.shared.account.AccountInformationCommand;
 import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
 import org.javaswift.joss.command.shared.account.ListContainersCommand;
+import org.javaswift.joss.command.shared.account.TenantCommand;
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.command.shared.account.TenantCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 
 import java.util.Collection;
@@ -24,12 +24,12 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     private final ContainerCommandFactory containerCommandFactory;
 
     private final HttpClient httpClient;
-    private AccessImpl access;
+    private Access access;
     private final AuthenticationCommand authCommand;
     private String publicHost;
     private String privateHost;
 
-    public AccountCommandFactoryImpl(HttpClient httpClient, AccessImpl access, AuthenticationCommand authCommand) {
+    public AccountCommandFactoryImpl(HttpClient httpClient, Access access, AuthenticationCommand authCommand) {
         this.httpClient = httpClient;
         this.access = access;
         this.authCommand = authCommand;
@@ -61,7 +61,7 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
         return access.getPublicURL();
     }
 
-    public AccessImpl authenticate() {
+    public Access authenticate() {
         return access = authCommand.call();
     }
 
@@ -99,7 +99,7 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
         return this.httpClient;
     }
 
-    public AccessImpl getAccess() {
+    public Access getAccess() {
         return this.access;
     }
 

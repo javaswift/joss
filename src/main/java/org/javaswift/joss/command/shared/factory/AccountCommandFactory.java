@@ -4,16 +4,16 @@ import org.javaswift.joss.command.shared.account.AccountInformationCommand;
 import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
 import org.javaswift.joss.command.shared.account.ListContainersCommand;
 import org.javaswift.joss.command.shared.account.TenantCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 
 import java.util.Collection;
 
 public interface AccountCommandFactory {
 
-    public AccessImpl authenticate();
+    public Access authenticate();
 
     public String getPublicHost();
 

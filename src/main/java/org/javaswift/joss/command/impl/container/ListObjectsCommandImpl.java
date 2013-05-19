@@ -10,8 +10,8 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.container.ListObjectsCommand;
 import org.javaswift.joss.command.shared.container.StoredObjectListElement;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.instructions.ListInstructions;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
@@ -25,7 +25,7 @@ public class ListObjectsCommandImpl extends AbstractContainerCommand<HttpGet, Co
 
     protected Container container;
 
-    public ListObjectsCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Container container, ListInstructions listInstructions) {
+    public ListObjectsCommandImpl(Account account, HttpClient httpClient, Access access, Container container, ListInstructions listInstructions) {
         super(account, httpClient, access, container);
         this.container = container;
         modifyURI(listInstructions.getQueryParameters());

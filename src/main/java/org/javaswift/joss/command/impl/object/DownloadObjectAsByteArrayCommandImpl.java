@@ -5,9 +5,9 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.object.DownloadObjectAsByteArrayCommand;
 import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
 
@@ -17,7 +17,7 @@ public class DownloadObjectAsByteArrayCommandImpl extends AbstractDownloadObject
 
     private byte[] result;
 
-    public DownloadObjectAsByteArrayCommandImpl(Account account, HttpClient httpClient, AccessImpl access,
+    public DownloadObjectAsByteArrayCommandImpl(Account account, HttpClient httpClient, Access access,
                                                 StoredObject object, DownloadInstructions downloadInstructions) {
         super(account, httpClient, access, object, downloadInstructions);
     }

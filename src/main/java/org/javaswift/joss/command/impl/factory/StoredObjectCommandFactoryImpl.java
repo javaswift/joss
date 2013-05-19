@@ -3,11 +3,11 @@ package org.javaswift.joss.command.impl.factory;
 import org.apache.http.client.HttpClient;
 import org.javaswift.joss.command.impl.object.*;
 import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.object.*;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
@@ -67,7 +67,7 @@ public class StoredObjectCommandFactoryImpl implements StoredObjectCommandFactor
         return containerCommandFactory.getHttpClient();
     }
 
-    public AccessImpl getAccess() {
+    public Access getAccess() {
         return containerCommandFactory.getAccess();
     }
 

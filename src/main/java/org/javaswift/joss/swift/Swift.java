@@ -3,7 +3,6 @@ package org.javaswift.joss.swift;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.command.mock.core.CommandMock;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.identity.tenant.Tenant;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
 import org.javaswift.joss.exception.CommandException;
@@ -20,6 +19,7 @@ import org.javaswift.joss.information.ObjectInformation;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
@@ -160,11 +160,11 @@ public class Swift {
         return this.statusGenerator.getStatus(clazz);
     }
 
-    public SwiftResult<AccessImpl> authenticate(String tenantName, String tenantId, String username, String password) {
+    public SwiftResult<Access> authenticate(String tenantName, String tenantId, String username, String password) {
         if (users.authenticate(tenantName, tenantId, username, password)) {
-            return new SwiftResult<AccessImpl>(null, HttpStatus.SC_OK);
+            return new SwiftResult<Access>(null, HttpStatus.SC_OK);
         } else {
-            return new SwiftResult<AccessImpl>(HttpStatus.SC_UNAUTHORIZED);
+            return new SwiftResult<Access>(HttpStatus.SC_UNAUTHORIZED);
         }
     }
 

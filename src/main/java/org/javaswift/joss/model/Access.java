@@ -35,4 +35,10 @@ public interface Access {
     */
     public String getPublicURL();
 
+    /**
+    * Ascertains whether tenant ID and/or name were supplied.
+    * @return true if tenant ID and/or name were supplied before the authentication call
+    */
+    public boolean isTenantSupplied();
+
 }

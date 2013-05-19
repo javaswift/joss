@@ -5,11 +5,11 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.swift.Swift;
 import org.javaswift.joss.swift.SwiftResult;
 
-public class AuthenticationCommandMock extends CommandMock<AccessImpl> implements AuthenticationCommand {
+public class AuthenticationCommandMock extends CommandMock<Access> implements AuthenticationCommand {
 
     private final String tenantName;
     private final String tenantId;
@@ -25,7 +25,7 @@ public class AuthenticationCommandMock extends CommandMock<AccessImpl> implement
     }
 
     @Override
-    public SwiftResult<AccessImpl> callSwift() {
+    public SwiftResult<Access> callSwift() {
         return swift.authenticate(tenantName, tenantId, username, password);
     }
 

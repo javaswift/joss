@@ -7,12 +7,12 @@ import org.javaswift.joss.command.mock.account.TenantCommandMock;
 import org.javaswift.joss.command.shared.account.AccountInformationCommand;
 import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
 import org.javaswift.joss.command.shared.account.ListContainersCommand;
+import org.javaswift.joss.command.shared.account.TenantCommand;
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
-import org.javaswift.joss.command.shared.account.TenantCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.swift.Swift;
 
@@ -55,7 +55,7 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
     }
 
     @Override
-    public AccessImpl authenticate() {
+    public Access authenticate() {
         return null;
     }
 

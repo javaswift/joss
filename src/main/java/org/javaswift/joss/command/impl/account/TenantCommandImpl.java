@@ -7,15 +7,15 @@ import org.apache.http.client.methods.HttpGet;
 import org.javaswift.joss.command.impl.core.AbstractSecureCommand;
 import org.javaswift.joss.command.impl.core.httpstatus.*;
 import org.javaswift.joss.command.shared.account.TenantCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 
 import java.io.IOException;
 
 public class TenantCommandImpl extends AbstractSecureCommand<HttpGet, Tenants> implements TenantCommand {
 
-    public TenantCommandImpl(Account account, HttpClient httpClient, AccessImpl access, String url) {
+    public TenantCommandImpl(Account account, HttpClient httpClient, Access access, String url) {
         super(account, httpClient, modifyUrl(url), access.getToken());
     }
 

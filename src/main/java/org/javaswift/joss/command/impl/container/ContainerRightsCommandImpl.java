@@ -8,14 +8,14 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.container.ContainerRightsCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.container.ContainerRights;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 
 public class ContainerRightsCommandImpl extends AbstractContainerCommand<HttpPut, String[]> implements ContainerRightsCommand {
 
-    public ContainerRightsCommandImpl(Account account, HttpClient httpClient, AccessImpl access, Container container, boolean publicContainer) {
+    public ContainerRightsCommandImpl(Account account, HttpClient httpClient, Access access, Container container, boolean publicContainer) {
         super(account, httpClient, access, container);
         setHeader(new ContainerRights(publicContainer));
     }

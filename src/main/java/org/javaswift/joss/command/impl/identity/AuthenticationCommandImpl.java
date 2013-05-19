@@ -12,10 +12,11 @@ import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.command.shared.identity.authentication.Authentication;
 import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.model.Access;
 
 import java.io.IOException;
 
-public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, AccessImpl> implements AuthenticationCommand {
+public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, Access> implements AuthenticationCommand {
 
     private boolean tenantSupplied;
 
@@ -49,7 +50,7 @@ public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, AccessI
     }
 
     @Override
-    public AccessImpl getReturnObject(HttpResponse response) throws IOException {
+    public Access getReturnObject(HttpResponse response) throws IOException {
         return createObjectMapper(true)
                 .readValue(response.getEntity().getContent(), AccessImpl.class)
                 .setTenantSupplied(isTenantSupplied()); // If only this would exist: http://jira.codehaus.org/browse/JACKSON-645

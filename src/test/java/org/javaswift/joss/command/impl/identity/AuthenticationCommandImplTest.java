@@ -8,6 +8,7 @@ import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.UnauthorizedException;
+import org.javaswift.joss.model.Access;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,20 +35,20 @@ public class AuthenticationCommandImplTest extends BaseCommandTest {
     @Test
     public void noTenantSupplied() throws IOException {
         AuthenticationCommand command = new AuthenticationCommandImpl(httpClient, "someurl", null, null, "user", "pwd");
-        AccessImpl access = command.call();
+        Access access = command.call();
         assertFalse(access.isTenantSupplied());
     }
 
     @Test
     public void noTenantNameSupplied() throws IOException {
         AuthenticationCommand command = new AuthenticationCommandImpl(httpClient, "someurl", null, "tenantid", "user", "pwd");
-        AccessImpl access = command.call();
+        Access access = command.call();
         assertTrue(access.isTenantSupplied());
     }
 
     @Test
     public void authenticateSuccessful() throws IOException {
-        AccessImpl access = new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd").call();
+        Access access = new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd").call();
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
     }
 

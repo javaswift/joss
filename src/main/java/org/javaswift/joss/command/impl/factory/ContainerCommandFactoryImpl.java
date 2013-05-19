@@ -5,9 +5,9 @@ import org.javaswift.joss.command.impl.container.*;
 import org.javaswift.joss.command.shared.container.*;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 
@@ -58,7 +58,7 @@ public class ContainerCommandFactoryImpl implements ContainerCommandFactory {
         return accountCommandFactory.getHttpClient();
     }
 
-    public AccessImpl getAccess() {
+    public Access getAccess() {
         return accountCommandFactory.getAccess();
     }
 
