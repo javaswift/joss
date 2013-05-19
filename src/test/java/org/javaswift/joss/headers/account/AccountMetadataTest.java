@@ -24,4 +24,10 @@ public class AccountMetadataTest extends AbstractHeaderTest {
         assertEquals("Log-All-Entities", metadata.getName());
     }
 
+    @Test
+    public void onlyCapitalizeTheFirstCharacter() {
+        AccountMetadata metadata = new AccountMetadata("log all entities", "mostdef");
+        assertEquals("Log all entities", metadata.getName());
+    }
+
 }
