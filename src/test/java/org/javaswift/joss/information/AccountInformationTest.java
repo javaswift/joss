@@ -25,7 +25,7 @@ public class AccountInformationTest {
     public void metadata() {
         AccountInformation info = new AccountInformation();
         info.addMetadata(new AccountMetadata("some-name", "some-value"));
-        assertEquals("some-value", info.getMetadata("some-name"));
+        assertEquals("some-value", info.getMetadata("Some-Name"));
         assertEquals(null, info.getMetadata("some-nonexisting-name"));
     }
 }

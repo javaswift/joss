@@ -43,8 +43,8 @@ public class AccountMockTest {
         metadata.put("name", "Alpha");
         metadata.put("year", 1969);
         account.setMetadata(metadata);
-        assertEquals("Alpha", account.getMetadata().get("name"));
-        assertEquals("1969", account.getMetadata().get("year"));
+        assertEquals("Alpha", account.getMetadata().get("Name"));
+        assertEquals("1969", account.getMetadata().get("Year"));
     }
 
     @Test
