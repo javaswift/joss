@@ -18,9 +18,13 @@ public interface AccountCommandFactory {
 
     public String getOriginalHost();
 
+    public String getHashPassword();
+
     public void setPublicHost(String publicHost);
 
     public void setPrivateHost(String privateHost);
+
+    public void setHashPassword(String hashPassword);
 
     AccountInformationCommand createAccountInformationCommand(Account account);
 
@@ -30,7 +34,7 @@ public interface AccountCommandFactory {
 
     TenantCommand createTenantCommand(Account account);
 
-    HashPasswordCommand createHashPasswordCommand(Account account, String password);
+    HashPasswordCommand createHashPasswordCommand(Account account);
 
     ContainerCommandFactory getContainerCommandFactory();
 

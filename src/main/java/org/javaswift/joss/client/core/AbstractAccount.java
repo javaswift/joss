@@ -63,6 +63,13 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     }
 
     @Override
+    public AbstractAccount setHashPassword(String hashPassword) {
+        LOG.info("JOSS / Setting hash password");
+        this.commandFactory.setHashPassword(hashPassword);
+        return this;
+    }
+
+    @Override
     public AbstractAccount setPublicHost(String publicHost) {
         LOG.info("JOSS / Use public host: "+publicHost);
         this.commandFactory.setPublicHost(publicHost);
@@ -158,8 +165,8 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     }
 
     @Override
-    public void setHashPassword(String password) {
-        this.commandFactory.createHashPasswordCommand(this, password).call();
+    public void saveHashPassword() {
+        this.commandFactory.createHashPasswordCommand(this).call();
     }
 
     @Override

@@ -113,6 +113,14 @@ public class AccountConfig {
     */
     private String preferredRegion;
 
+    /**
+    * The hash password is used to create hashes for the TempURL (both GET and PUT), which is used to compose a public
+    * URL that can be used to fetch the object. The server uses the same hash password to create (hopefully) the same
+    * hash. Comparison of these hashes is the first test to see if the TempURL is valid. Note that the ObjectStore is
+    * notified of the hash password to use by invoking Account.saveHashPassword().
+    */
+    private String hashPassword;
+
     public void setTenantName(String tenantName) {
         this.tenantName = tenantName;
     }
@@ -249,4 +257,11 @@ public class AccountConfig {
         this.preferredRegion = preferredRegion;
     }
 
+    public String getHashPassword() {
+        return hashPassword;
+    }
+
+    public void setHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
+    }
 }

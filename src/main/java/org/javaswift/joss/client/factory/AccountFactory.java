@@ -124,6 +124,11 @@ public class AccountFactory {
         return this;
     }
 
+    public AccountFactory setHashPassword(String hashPassword) {
+        this.config.setHashPassword(hashPassword);
+        return this;
+    }
+
     public AccountFactory setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
         return this;

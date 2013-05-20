@@ -55,6 +55,7 @@ public class AccountFactoryTest {
                 .setAllowReauthenticate(true)
                 .setAllowContainerCaching(false)
                 .setAuthUrl(null)
+                .setHashPassword(null)
                 .setHttpClient(null)
                 .setMock(true)
                 .setMockAllowEveryone(true)

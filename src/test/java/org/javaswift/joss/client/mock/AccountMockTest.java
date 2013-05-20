@@ -2,10 +2,13 @@ package org.javaswift.joss.client.mock;
 
 import mockit.Expectations;
 import mockit.Mocked;
+import org.javaswift.joss.client.factory.AccountFactory;
 import org.javaswift.joss.command.mock.container.ContainerInformationCommandMock;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
+import org.javaswift.joss.headers.account.AccountMetadata;
+import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.PaginationMap;
@@ -244,7 +247,18 @@ public class AccountMockTest {
         Swift swift = new Swift();
         Account account = new AccountMock(swift);
         account.setHashPassword("somepwd");
+        account.saveHashPassword();
         assertEquals("somepwd", swift.getHashPassword());
+    }
+
+    @Test
+    public void setHashPasswordThroughConfig() {
+        Account account = new AccountFactory()
+                .setMock(true)
+                .setHashPassword("somepwd")
+                .createAccount();
+        account.saveHashPassword();
+        assertEquals("somepwd", account.getMetadata().get(HashPassword.X_ACCOUNT_TEMP_URL_KEY));
     }
 
 }

@@ -15,6 +15,7 @@ public class AccountConfigTest {
         config.setTenantName("tenant");
         config.setTenantId("tenantId");
         config.setUsername("user");
+        config.setHashPassword("somepwd");
         config.setMock(true);
         config.setMockMillisDelay(10);
         config.setAllowCaching(true);
@@ -39,6 +40,7 @@ public class AccountConfigTest {
         assertTrue(config.isAllowReauthenticate());
         assertTrue(config.isMockAllowEveryone());
         assertTrue(config.isMockAllowObjectDeleter());
+        assertEquals("somepwd", config.getHashPassword());
         assertEquals("http://localhost:8080/mock", config.getPublicHost());
         assertEquals("api", config.getPrivateHost());
         assertEquals(1000, config.getSocketTimeout());

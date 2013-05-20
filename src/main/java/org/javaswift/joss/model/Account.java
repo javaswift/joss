@@ -91,8 +91,24 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
 
     /**
     * If ContainerCaching is enabled, Account will keep track of its Container instances and reuse them.
+    * @param containerCaching whether container caching is allowed
     */
     public Account setAllowContainerCaching(boolean containerCaching);
+
+    /**
+    * Makes sure that a hash password is known to Account. This call does NOT save to the ObjectStore. If you
+    * want to save the password to the ObjectStore, you must use Account.saveHashPassword().
+    * @param hashPassword the password to use for generating the hashes
+    */
+    public Account setHashPassword(String hashPassword);
+
+    /**
+    * Saves the password to the Account. The password will be used to create server side hashes. This is required for
+    * TempURL (both GET and PUT). The server will match a generated hash against the hash that is passed in a
+    * tempURL. If identical, it passed the first test. Note that if password is not set, TempURLs will not work.
+    * Note that the password saved is the one set either in AccountConfig, or set with Account.setHashPassword(String).
+    */
+    public void saveHashPassword();
 
     /**
     * Empties the Container Cache
@@ -136,13 +152,5 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     * a list of tenants.
     */
     public boolean isTenantSupplied();
-
-    /**
-    * Sets the password on the account that will be used to create server side hashes. This is required for
-    * TempURL (both GET and PUT). The server will match a generated hash against the hash that is passed in a
-    * tempURL. If identical, it passed the first test. Note that if password is not set, TempURLs will not work.
-    * @param password the password to use for generating the hashes
-    */
-    public void setHashPassword(String password);
 
 }
