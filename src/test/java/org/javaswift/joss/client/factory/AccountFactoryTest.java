@@ -67,6 +67,7 @@ public class AccountFactoryTest {
                 .setPrivateHost(null)
                 .setPublicHost(null)
                 .setSocketTimeout(0)
+                .setTempUrlHashPrefixSource(null)
                 .setTenantName(null)
                 .setTenantId(null)
                 .setUsername(null);

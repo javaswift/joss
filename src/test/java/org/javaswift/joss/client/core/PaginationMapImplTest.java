@@ -33,7 +33,7 @@ public class PaginationMapImplTest extends BaseCommandTest {
     public void buildMap(@Mocked final AccountImpl account) {
         new NonStrictExpectations() {{
             account.getCount(); result = 9;
-            account.getFactory(); result = new AccountCommandFactoryImpl(null, null, null);
+            account.getFactory(); result = new AccountCommandFactoryImpl(null, null, null, null);
         }};
         whenList(account, null, new String[]{ "A", "B" });
         whenList(account, "B", new String[]{ "C", "D" });

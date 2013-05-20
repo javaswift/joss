@@ -333,7 +333,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
     }
 
     protected StoredObject createStoredObject(String name) {
-        AccountImpl account = new AccountImpl(null, null, null, false);
+        AccountImpl account = new AccountImpl(null, null, null, false, null);
         ContainerImpl container = new ContainerImpl(account, "", false);
         return new StoredObjectImpl(container, "alpha", true);
     }

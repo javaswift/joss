@@ -129,6 +129,11 @@ public class AccountFactory {
         return this;
     }
 
+    public AccountFactory setTempUrlHashPrefixSource(TempUrlHashPrefixSource source) {
+        this.config.setTempUrlHashPrefixSource(source);
+        return this;
+    }
+
     public AccountFactory setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
         return this;

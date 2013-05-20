@@ -7,7 +7,6 @@ import org.javaswift.joss.command.mock.container.ContainerInformationCommandMock
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
-import org.javaswift.joss.headers.account.AccountMetadata;
 import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;

@@ -66,7 +66,8 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
         LOG.info("JOSS / Successfully authenticated");
         access.setPreferredRegion(accountConfig.getPreferredRegion());
         LOG.info("JOSS / Applying preferred region: "+(accountConfig.getPreferredRegion() == null ? "none" : accountConfig.getPreferredRegion()));
-        return new AccountImpl(command, httpClient, access, accountConfig.isAllowCaching());
+        LOG.info("JOSS / Using TempURL hash prefix source: "+accountConfig.getTempUrlHashPrefixSource());
+        return new AccountImpl(command, httpClient, access, accountConfig.isAllowCaching(), accountConfig.getTempUrlHashPrefixSource());
     }
 
     public ClientImpl setHttpClient(HttpClient httpClient) {

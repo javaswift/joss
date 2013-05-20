@@ -2,6 +2,7 @@ package org.javaswift.joss.command.shared.identity.access;
 
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.model.Access;
@@ -88,6 +89,48 @@ public class AccessTest {
         } catch (NotFoundException err) {
             assertEquals(CommandExceptionError.NO_SERVICE_CATALOG_FOUND, err.getError());
         }
+    }
+
+    @Test
+    public void noPrefixSource() {
+        Access access = setUpAccessWithURLwithPaths();
+        assertEquals("", access.getTempUrlPrefix(null));
+    }
+
+    @Test
+    public void prefixSourceIsPublicUrl() {
+        Access access = setUpAccessWithURLwithPaths();
+        assertEquals("/public/path", access.getTempUrlPrefix(TempUrlHashPrefixSource.PUBLIC_URL_PATH));
+    }
+
+    @Test
+    public void prefixSourceIsInternalUrl() {
+        Access access = setUpAccessWithURLwithPaths();
+        assertEquals("/internal/path", access.getTempUrlPrefix(TempUrlHashPrefixSource.INTERNAL_URL_PATH));
+    }
+
+    @Test
+    public void prefixSourceIsAdminUrl() {
+        Access access = setUpAccessWithURLwithPaths();
+        assertEquals("/admin/path", access.getTempUrlPrefix(TempUrlHashPrefixSource.ADMIN_URL_PATH));
+    }
+
+    protected AccessTenant setUpAccessWithURLwithPaths() {
+        AccessTenant access = new AccessTenant();
+        List<EndPoint> endPoints = new ArrayList<EndPoint>();
+        endPoints.add(new EndPointBuilder()
+                .setPublicURL("http://www.somewhere.com:80/public/path")
+                .setInternalURL("http://www.somewhere.com:80/internal/path")
+                .setAdminURL("http://www.somewhere.com:80/admin/path")
+                .getEndPoint());
+        access.serviceCatalog.add(createServiceCatalog("swift", "object-store", endPoints));
+        return access;
+    }
+
+    @Test
+    public void prefixSourceForNoTenant() {
+        Access access = new AccessNoTenant();
+        assertEquals("", access.getTempUrlPrefix(null));
     }
 
     @Test

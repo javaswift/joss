@@ -62,6 +62,10 @@ public class ContainerCommandFactoryImpl implements ContainerCommandFactory {
         return accountCommandFactory.getAccess();
     }
 
+    public AccountCommandFactoryImpl getAccountCommandFactory() {
+        return this.accountCommandFactory;
+    }
+
     @Override
     public StoredObjectCommandFactory getStoredObjectCommandFactory() {
         return this.storedObjectCommandFactory;

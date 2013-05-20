@@ -1,6 +1,7 @@
 package org.javaswift.joss.command.impl.factory;
 
 import org.apache.http.client.HttpClient;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.command.impl.object.*;
 import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
 import org.javaswift.joss.command.shared.object.*;
@@ -61,6 +62,12 @@ public class StoredObjectCommandFactoryImpl implements StoredObjectCommandFactor
     @Override
     public UploadObjectCommand createUploadObjectCommand(Account account, Container container, StoredObject target, UploadInstructions uploadInstructions) {
         return new UploadObjectCommandImpl(account, getHttpClient(), getAccess(), target, uploadInstructions);
+    }
+
+    @Override
+    public String getTempUrlPrefix() {
+        TempUrlHashPrefixSource source = containerCommandFactory.getAccountCommandFactory().getTempUrlHashPrefixSource();
+        return "";
     }
 
     public HttpClient getHttpClient() {

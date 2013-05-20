@@ -4,6 +4,8 @@ import org.apache.http.HttpStatus;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
+import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.HttpStatusExceptionUtil;
 
@@ -31,6 +33,19 @@ public class AccessTenant extends AbstractAccess {
     @Override
     public boolean isTenantSupplied() {
         return true;
+    }
+
+    @Override
+    public String getTempUrlPrefix(TempUrlHashPrefixSource tempUrlHashPrefixSource) {
+        if (tempUrlHashPrefixSource == null) {
+            return "";
+        } else if (tempUrlHashPrefixSource == TempUrlHashPrefixSource.PUBLIC_URL_PATH) {
+            return TempUrlHashPrefixSource.getPath(getCurrentEndPoint().publicURL);
+        } else if (tempUrlHashPrefixSource == TempUrlHashPrefixSource.INTERNAL_URL_PATH) {
+            return TempUrlHashPrefixSource.getPath(getCurrentEndPoint().internalURL);
+        } else {
+            return TempUrlHashPrefixSource.getPath(getCurrentEndPoint().adminURL);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")

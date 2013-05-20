@@ -16,6 +16,7 @@ public class AccountConfigTest {
         config.setTenantId("tenantId");
         config.setUsername("user");
         config.setHashPassword("somepwd");
+        config.setTempUrlHashPrefixSource("PUBLIC_URL_PATH");
         config.setMock(true);
         config.setMockMillisDelay(10);
         config.setAllowCaching(true);
@@ -41,6 +42,7 @@ public class AccountConfigTest {
         assertTrue(config.isMockAllowEveryone());
         assertTrue(config.isMockAllowObjectDeleter());
         assertEquals("somepwd", config.getHashPassword());
+        assertEquals(TempUrlHashPrefixSource.PUBLIC_URL_PATH, config.getTempUrlHashPrefixSource());
         assertEquals("http://localhost:8080/mock", config.getPublicHost());
         assertEquals("api", config.getPrivateHost());
         assertEquals(1000, config.getSocketTimeout());

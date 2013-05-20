@@ -61,4 +61,10 @@ public class StoredObjectCommandFactoryMock implements StoredObjectCommandFactor
     public UploadObjectCommand createUploadObjectCommand(Account account, Container container, StoredObject target, UploadInstructions uploadInstructions) {
         return new UploadObjectCommandMock(swift, account, container, target, uploadInstructions);
     }
+
+    @Override
+    public String getTempUrlPrefix() {
+        return "";
+    }
+
 }

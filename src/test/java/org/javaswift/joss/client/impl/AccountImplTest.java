@@ -3,6 +3,7 @@ package org.javaswift.joss.client.impl;
 import mockit.Verifications;
 import org.apache.http.Header;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.model.Container;
@@ -97,14 +98,14 @@ public class AccountImplTest extends BaseCommandTest {
 
     @Test
     public void getPublicUROverride() {
-        account = new AccountImpl(null, httpClient, defaultAccess, true);
+        account = new AccountImpl(null, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH);
         account.setPublicHost("http://static.someurl.com");
         assertEquals("http://static.someurl.com", account.getPublicURL());
     }
 
     @Test
     public void isAllowCaching() throws IOException {
-        account = new AccountImpl(null, httpClient, defaultAccess, false); // Caching is turned off
+        account = new AccountImpl(null, httpClient, defaultAccess, false, TempUrlHashPrefixSource.PUBLIC_URL_PATH); // Caching is turned off
         prepareMetadata();
         account.getCount();
         account.getCount();

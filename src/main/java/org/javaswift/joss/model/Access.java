@@ -1,5 +1,7 @@
 package org.javaswift.joss.model;
 
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
+
 /**
 * Interface that determines the kind of access that was granted to the ObjectStore. It holds
 * the token, which must be passed to all secure calls. Also, you can get the internal and
@@ -40,5 +42,13 @@ public interface Access {
     * @return true if tenant ID and/or name were supplied before the authentication call
     */
     public boolean isTenantSupplied();
+
+    /**
+    * Returns the first part of the object path in a TempURL. This is determined by the URL that serves
+    * as the source; public, internal or admin
+    * @param tempUrlHashPrefixSource the source URL to server as the basis for the prefix
+    * @return temp URL object path prefix
+    */
+    public String getTempUrlPrefix(TempUrlHashPrefixSource tempUrlHashPrefixSource);
 
 }

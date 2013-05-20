@@ -11,6 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.command.shared.identity.access.AccessTenant;
 import org.javaswift.joss.headers.Token;
@@ -45,7 +46,7 @@ public abstract class BaseCommandTest {
 
     public void setup() throws IOException {
         final InputStream inputStream = IOUtils.toInputStream("[]");
-        account = new AccountImpl(null, httpClient, defaultAccess, true);
+        account = new AccountImpl(null, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH);
         new NonStrictExpectations() {{
             defaultAccess.getInternalURL(); result = "http://someurl.nowhere";
             defaultAccess.getPublicURL(); result = "http://someurl.public";

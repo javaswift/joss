@@ -37,4 +37,6 @@ public interface StoredObjectCommandFactory {
     UploadObjectCommand createUploadObjectCommand(Account account, Container container,
                                                   StoredObject target, UploadInstructions uploadInstructions);
 
+    String getTempUrlPrefix();
+
 }

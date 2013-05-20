@@ -4,6 +4,7 @@ import mockit.Expectations;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import org.apache.http.Header;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.command.impl.container.CreateContainerCommandImpl;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
@@ -49,7 +50,7 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
             statusLine.getStatusCode(); returns(401, 201);
             authCommand.call(); result = new AccessTenant();
         }};
-        this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true);
+        this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH);
         new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 
@@ -66,7 +67,7 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
         new Expectations() {{
             authCommand.call(); result = new AccessTenant();
         }};
-        this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true);
+        this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH);
         new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 }

@@ -1,6 +1,7 @@
 package org.javaswift.joss.command.impl.factory;
 
 import org.apache.http.client.HttpClient;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.command.impl.account.*;
 import org.javaswift.joss.command.shared.account.*;
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
@@ -23,12 +24,15 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     private String publicHost;
     private String privateHost;
     private String hashPassword;
+    private TempUrlHashPrefixSource tempUrlHashPrefixSource;
 
-    public AccountCommandFactoryImpl(HttpClient httpClient, Access access, AuthenticationCommand authCommand) {
+    public AccountCommandFactoryImpl(HttpClient httpClient, Access access, AuthenticationCommand authCommand,
+                                     TempUrlHashPrefixSource tempUrlHashPrefixSource) {
         this.httpClient = httpClient;
         this.access = access;
         this.authCommand = authCommand;
         this.containerCommandFactory = new ContainerCommandFactoryImpl(this);
+        this.tempUrlHashPrefixSource = tempUrlHashPrefixSource;
     }
 
     @Override
@@ -112,6 +116,10 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
 
     public Access getAccess() {
         return this.access;
+    }
+
+    public TempUrlHashPrefixSource getTempUrlHashPrefixSource() {
+        return tempUrlHashPrefixSource;
     }
 
 }

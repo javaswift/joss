@@ -28,6 +28,20 @@ public class AccountConfig {
     private String authUrl;
 
     /**
+    * The hash for a TempURL is based on the object path which consists of the the pure path to an
+    * object. Eg, /v1/AUTH_Account/Container/Object. The first part ("/v1/AUTH_Account") must be
+    * derived from one of the URLs in an Endpoint. By default this is the Public URL. However, sometimes
+    * the public URL is beautified, hiding the /v1 path. In this case, the URL must be derived from the
+    * Internal or Admin URL. Options:
+    * <ul>
+    *     <li>PUBLIC_URL_PATH (default)</li>
+    *     <li>INTERNAL_URL_PATH</li>
+    *     <li>ADMIN_URL_PATH</li>
+    * </ul>
+    */
+    private TempUrlHashPrefixSource tempUrlHashPrefixSource = TempUrlHashPrefixSource.PUBLIC_URL_PATH;
+
+    /**
     * ObjectStore tokens expire after 24 hours. If reauthentication is allowed (default behaviour),
     * after expiration, Account will reauthenticate itself and get a new authentication token. If
     * reauthentication is turned off, you will have to manually arrange reauthentication. This mode
@@ -264,4 +278,17 @@ public class AccountConfig {
     public void setHashPassword(String hashPassword) {
         this.hashPassword = hashPassword;
     }
+
+    public TempUrlHashPrefixSource getTempUrlHashPrefixSource() {
+        return tempUrlHashPrefixSource;
+    }
+
+    public void setTempUrlHashPrefixSource(TempUrlHashPrefixSource tempUrlHashPrefixSource) {
+        this.tempUrlHashPrefixSource = tempUrlHashPrefixSource;
+    }
+
+    public void setTempUrlHashPrefixSource(String tempUrlHashPrefixSource) {
+        setTempUrlHashPrefixSource(TempUrlHashPrefixSource.valueOf(tempUrlHashPrefixSource));
+    }
+
 }
