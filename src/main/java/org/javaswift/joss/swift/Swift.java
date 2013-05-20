@@ -7,9 +7,7 @@ import org.javaswift.joss.command.shared.identity.tenant.Tenant;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
-import org.javaswift.joss.headers.account.AccountBytesUsed;
-import org.javaswift.joss.headers.account.AccountContainerCount;
-import org.javaswift.joss.headers.account.AccountObjectCount;
+import org.javaswift.joss.headers.account.*;
 import org.javaswift.joss.headers.object.DeleteAfter;
 import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.headers.object.ObjectManifest;
@@ -160,6 +158,11 @@ public class Swift {
         return this.statusGenerator.getStatus(clazz);
     }
 
+    public String getHashPassword() {
+        Header header = this.headers.get(AccountMetadata.X_ACCOUNT_META_PREFIX+ HashPassword.X_ACCOUNT_TEMP_URL_KEY);
+        return header == null ? null : header.getHeaderValue();
+    }
+
     public SwiftResult<Access> authenticate(String tenantName, String tenantId, String username, String password) {
         if (users.authenticate(tenantName, tenantId, username, password)) {
             return new SwiftResult<Access>(null, HttpStatus.SC_OK);
@@ -221,6 +224,11 @@ public class Swift {
         for (Header header : headers) {
             this.headers.put(header);
         }
+        return new SwiftResult<Object>(HttpStatus.SC_NO_CONTENT);
+    }
+
+    public SwiftResult<Object> saveHashPassword(String hashPassword) {
+        this.headers.put(new HashPassword(hashPassword));
         return new SwiftResult<Object>(HttpStatus.SC_NO_CONTENT);
     }
 

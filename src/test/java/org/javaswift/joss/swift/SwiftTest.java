@@ -10,6 +10,8 @@ import org.javaswift.joss.command.mock.account.AccountInformationCommandMock;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
+import org.javaswift.joss.headers.account.AccountMetadata;
+import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
@@ -44,6 +46,17 @@ public class SwiftTest {
         this.container = new ContainerMock(account, "does-not-exist");
         this.object = new StoredObjectMock(container, "does-not-exist");
         this.instructions = new UploadInstructions(new byte[] { 0x01, 0x02, 0x03 });
+    }
+
+    @Test
+    public void saveHashPassword() {
+        assertEquals(HttpStatus.SC_NO_CONTENT, this.swift.saveHashPassword("somepwd").getStatus());
+        assertEquals("somepwd", this.swift.getHashPassword());
+    }
+
+    @Test
+    public void saveHashPasswordDoesNotExist() {
+        assertEquals(null, this.swift.getHashPassword());
     }
 
     @Test(expected = CommandException.class)

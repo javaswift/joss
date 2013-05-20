@@ -239,4 +239,12 @@ public class AccountMockTest {
         assertEquals("http://configured.url.because.there.is.no.other", account.getOriginalHost());
     }
 
+    @Test
+    public void setHashPassword() {
+        Swift swift = new Swift();
+        Account account = new AccountMock(swift);
+        account.setHashPassword("somepwd");
+        assertEquals("somepwd", swift.getHashPassword());
+    }
+
 }

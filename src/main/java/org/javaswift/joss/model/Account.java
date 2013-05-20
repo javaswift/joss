@@ -137,4 +137,12 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     */
     public boolean isTenantSupplied();
 
+    /**
+    * Sets the password on the account that will be used to create server side hashes. This is required for
+    * TempURL (both GET and PUT). The server will match a generated hash against the hash that is passed in a
+    * tempURL. If identical, it passed the first test. Note that if password is not set, TempURLs will not work.
+    * @param password the password to use for generating the hashes
+    */
+    public void setHashPassword(String password);
+
 }

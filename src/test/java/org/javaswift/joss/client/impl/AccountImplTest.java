@@ -4,6 +4,7 @@ import mockit.Verifications;
 import org.apache.http.Header;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
+import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.PaginationMap;
 import org.junit.Before;
@@ -44,6 +45,12 @@ public class AccountImplTest extends BaseCommandTest {
         prepareHeadersForRetrieval(response, headers);
         Collection<Container> containers = account.list();
         assertEquals(4, containers.size());
+    }
+
+    @Test
+    public void setHashPassword() throws IOException {
+        account.setHashPassword("somepwd");
+        verifyHeaderValue("somepwd", X_ACCOUNT_META_PREFIX + HashPassword.X_ACCOUNT_TEMP_URL_KEY, "POST");
     }
 
     @Test

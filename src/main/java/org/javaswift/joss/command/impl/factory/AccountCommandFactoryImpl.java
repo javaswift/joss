@@ -1,14 +1,8 @@
 package org.javaswift.joss.command.impl.factory;
 
 import org.apache.http.client.HttpClient;
-import org.javaswift.joss.command.impl.account.AccountInformationCommandImpl;
-import org.javaswift.joss.command.impl.account.AccountMetadataCommandImpl;
-import org.javaswift.joss.command.impl.account.ListContainersCommandImpl;
-import org.javaswift.joss.command.impl.account.TenantCommandImpl;
-import org.javaswift.joss.command.shared.account.AccountInformationCommand;
-import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
-import org.javaswift.joss.command.shared.account.ListContainersCommand;
-import org.javaswift.joss.command.shared.account.TenantCommand;
+import org.javaswift.joss.command.impl.account.*;
+import org.javaswift.joss.command.shared.account.*;
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
@@ -83,6 +77,11 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     @Override
     public TenantCommand createTenantCommand(Account account) {
         return new TenantCommandImpl(account, httpClient, access, authCommand.getUrl());
+    }
+
+    @Override
+    public HashPasswordCommand createHashPasswordCommand(Account account, String password) {
+        return new HashPasswordCommandImpl(account, httpClient, access, password);
     }
 
     @Override

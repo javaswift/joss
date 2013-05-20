@@ -158,6 +158,11 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     }
 
     @Override
+    public void setHashPassword(String password) {
+        this.commandFactory.createHashPasswordCommand(this, password).call();
+    }
+
+    @Override
     public boolean isTenantSupplied() {
         return this.commandFactory.isTenantSupplied();
     }
