@@ -12,7 +12,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.client.impl.AccountImpl;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessTenant;
 import org.javaswift.joss.headers.Token;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.util.ClasspathTemplateResource;
@@ -29,7 +29,7 @@ public abstract class BaseCommandTest {
     protected AccountImpl account;
 
     @Injectable
-    protected AccessImpl defaultAccess;
+    protected AccessTenant defaultAccess;
 
     @Injectable
     protected HttpClient httpClient;

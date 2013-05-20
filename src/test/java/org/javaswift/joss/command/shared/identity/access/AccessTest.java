@@ -4,6 +4,7 @@ import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
+import org.javaswift.joss.model.Access;
 import org.javaswift.joss.util.ClasspathTemplateResource;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class AccessTest {
         String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-        AccessImpl access = mapper.readValue(jsonString, AccessImpl.class).setTenantSupplied(true);
+        Access access = mapper.readValue(jsonString, AccessTenant.class);
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
         assertEquals("https://og.cloudvps.com:443/v1/AUTH_bfo000024", access.getInternalURL());
         assertEquals("http://bfo000024.og.cloudvps.com:80", access.getPublicURL());
@@ -30,23 +31,21 @@ public class AccessTest {
 
     @Test
     public void searchCatalogTypePreferredRegionWithUrl() {
-        AccessImpl access = setUpAccess();
+        AccessTenant access = setUpAccess();
         access.setPreferredRegion("AMS-03");
         assertEquals("http://www.somewhere.com:80", access.getInternalURL());
     }
 
     @Test
     public void searchCatalogTypePreferredRegionNullUrl() {
-        AccessImpl access = setUpAccess();
+        Access access = setUpAccess();
         access.setPreferredRegion("AMS-01");
         assertEquals(null, access.getInternalURL());
     }
 
     @Test
     public void searchCatalogTypeNoTenantSupplied() {
-        AccessImpl access = setUpAccess();
-        access.setTenantSupplied(false);
-        access.setPreferredRegion("AMS-01");
+        Access access = new AccessNoTenant();
         try {
             access.getInternalURL();
             fail("Should have thrown an exception");
@@ -55,8 +54,8 @@ public class AccessTest {
         }
     }
 
-    protected AccessImpl setUpAccess() {
-        AccessImpl access = new AccessImpl();
+    protected AccessTenant setUpAccess() {
+        AccessTenant access = new AccessTenant();
         access.serviceCatalog.add(createServiceCatalog("keystone", "identity", new ArrayList<EndPoint>()));
         access.serviceCatalog.add(createServiceCatalog("somethis", "clustering", new ArrayList<EndPoint>()));
         List<EndPoint> endPoints = new ArrayList<EndPoint>();
@@ -65,15 +64,13 @@ public class AccessTest {
         endPoints.add(new EndPointBuilder().setInternalURL("http://www.somewhere.com:80").setRegion("AMS-03").getEndPoint());
         access.serviceCatalog.add(createServiceCatalog("swift", "object-store", endPoints));
         access.serviceCatalog.add(createServiceCatalog("somethat", "sharding", new ArrayList<EndPoint>()));
-        access.setTenantSupplied(true);
         return access;
     }
 
     @Test
     public void noEndPoints() {
-        AccessImpl access = new AccessImpl();
+        AccessTenant access = new AccessTenant();
         access.serviceCatalog.add(createServiceCatalog("swift", "object-store", new ArrayList<EndPoint>()));
-        access.setTenantSupplied(true);
         try {
             access.getInternalURL();
             fail("Should have thrown an exception");
@@ -84,8 +81,7 @@ public class AccessTest {
 
     @Test
     public void noCatalogs() {
-        AccessImpl access = new AccessImpl()
-                .setTenantSupplied(true);
+        Access access = new AccessTenant();
         try {
             access.getInternalURL();
             fail("Should have thrown an exception");
@@ -93,4 +89,10 @@ public class AccessTest {
             assertEquals(CommandExceptionError.NO_SERVICE_CATALOG_FOUND, err.getError());
         }
     }
+
+    @Test
+    public void coverage() {
+        new AccessNoTenant().determineCurrentEndPoint();
+    }
+
 }

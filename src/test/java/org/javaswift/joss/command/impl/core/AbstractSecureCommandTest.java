@@ -7,7 +7,7 @@ import org.apache.http.Header;
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.command.impl.container.CreateContainerCommandImpl;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessTenant;
 import org.javaswift.joss.exception.UnauthorizedException;
 import org.javaswift.joss.headers.ConnectionKeepAlive;
 import org.javaswift.joss.headers.Token;
@@ -47,7 +47,7 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
     public void reauthenticateSuccess(@Mocked final AuthenticationCommand authCommand) {
         new NonStrictExpectations() {{
             statusLine.getStatusCode(); returns(401, 201);
-            authCommand.call(); result = new AccessImpl();
+            authCommand.call(); result = new AccessTenant();
         }};
         this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true);
         new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
@@ -64,7 +64,7 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
     public void reauthenticateFailTwice(@Mocked final AuthenticationCommand authCommand) {
         expectStatusCode(401, false);
         new Expectations() {{
-            authCommand.call(); result = new AccessImpl();
+            authCommand.call(); result = new AccessTenant();
         }};
         this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true);
         new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();

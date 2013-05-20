@@ -5,7 +5,6 @@ import mockit.Mocked;
 import org.apache.http.entity.StringEntity;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.UnauthorizedException;
 import org.javaswift.joss.model.Access;

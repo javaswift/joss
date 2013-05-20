@@ -9,7 +9,8 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.command.shared.identity.access.AccessImpl;
+import org.javaswift.joss.command.shared.identity.access.AccessNoTenant;
+import org.javaswift.joss.command.shared.identity.access.AccessTenant;
 import org.javaswift.joss.command.shared.identity.authentication.Authentication;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.model.Access;
@@ -51,9 +52,13 @@ public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, Access>
 
     @Override
     public Access getReturnObject(HttpResponse response) throws IOException {
-        return createObjectMapper(true)
-                .readValue(response.getEntity().getContent(), AccessImpl.class)
-                .setTenantSupplied(isTenantSupplied()); // If only this would exist: http://jira.codehaus.org/browse/JACKSON-645
+        if (isTenantSupplied()) {
+            return createObjectMapper(true)
+                    .readValue(response.getEntity().getContent(), AccessTenant.class);
+        } else { // This logic exists solely to support a Folsom glitch. See https://github.com/javaswift/joss/issues/33
+            return createObjectMapper(true)
+                    .readValue(response.getEntity().getContent(), AccessNoTenant.class);
+        }
     }
 
     @Override
