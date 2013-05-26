@@ -48,7 +48,7 @@ public abstract class BaseCommandTest {
         final InputStream inputStream = IOUtils.toInputStream("[]");
         account = new AccountImpl(null, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH);
         new NonStrictExpectations() {{
-            defaultAccess.getInternalURL(); result = "http://someurl.nowhere";
+            defaultAccess.getInternalURL(); result = "http://someurl.nowhere/v1/AUTH_Account";
             defaultAccess.getPublicURL(); result = "http://someurl.public";
             defaultAccess.getToken(); result = "cafebabe";
             httpEntity.getContent(); result = inputStream;

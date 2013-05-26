@@ -1,6 +1,5 @@
 package org.javaswift.joss.client.core;
 
-import org.javaswift.joss.command.impl.factory.AccountCommandFactoryImpl;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Metadata;

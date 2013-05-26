@@ -18,8 +18,6 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
 
     private final Swift swift;
 
-    private String hashPassword;
-
     public AccountCommandFactoryMock(Swift swift) {
         this.swift = swift;
         this.containerCommandFactory = new ContainerCommandFactoryMock(this.swift);
@@ -36,11 +34,6 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
     }
 
     @Override
-    public void setHashPassword(String hashPassword) {
-        this.hashPassword = hashPassword;
-    }
-
-    @Override
     public String getPublicHost() {
         return swift.getPublicHost();
     }
@@ -53,11 +46,6 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
     @Override
     public String getOriginalHost() {
         return swift.getPublicHost();
-    }
-
-    @Override
-    public String getHashPassword() {
-        return this.hashPassword;
     }
 
     @Override
@@ -86,8 +74,8 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
     }
 
     @Override
-    public HashPasswordCommand createHashPasswordCommand(Account account) {
-        return new HashPasswordCommandMock(swift, account, getHashPassword());
+    public HashPasswordCommand createHashPasswordCommand(Account account, String hashPassword) {
+        return new HashPasswordCommandMock(swift, account, hashPassword);
     }
 
     @Override

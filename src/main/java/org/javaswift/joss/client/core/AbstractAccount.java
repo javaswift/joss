@@ -4,6 +4,7 @@ import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.headers.account.AccountMetadata;
+import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.information.AccountInformation;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.*;
@@ -63,15 +64,24 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     }
 
     @Override
+    public String getHashPassword() {
+        return (String)getMetadata().get(HashPassword.X_ACCOUNT_TEMP_URL_KEY);
+    }
+
+    @Override
     public AbstractAccount setHashPassword(String hashPassword) {
         LOG.info("JOSS / Setting hash password");
-        this.commandFactory.setHashPassword(hashPassword);
+        if (hashPassword != null && !hashPassword.equals(getHashPassword())) {
+            LOG.info("JOSS / Hash password not yet saved, saving now");
+            this.commandFactory.createHashPasswordCommand(this, hashPassword).call();
+        }
+        this.invalidate(); // Make sure the metadata is refetched from the server
         return this;
     }
 
     @Override
     public AbstractAccount setPublicHost(String publicHost) {
-        LOG.info("JOSS / Use public host: "+publicHost);
+        LOG.info("JOSS / Use public host: " + publicHost);
         this.commandFactory.setPublicHost(publicHost);
         return this;
     }
@@ -162,11 +172,6 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     @Override
     public Tenants getTenants() {
         return this.commandFactory.createTenantCommand(this).call();
-    }
-
-    @Override
-    public void saveHashPassword() {
-        this.commandFactory.createHashPasswordCommand(this).call();
     }
 
     @Override

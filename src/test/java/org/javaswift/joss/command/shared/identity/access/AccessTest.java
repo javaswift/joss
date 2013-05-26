@@ -115,7 +115,29 @@ public class AccessTest {
         assertEquals("/admin/path", access.getTempUrlPrefix(TempUrlHashPrefixSource.ADMIN_URL_PATH));
     }
 
-    protected AccessTenant setUpAccessWithURLwithPaths() {
+    @Test
+    public void pathIsASlash() {
+        Access access = setUpAccessWithPublicURL("http://www.somewhere.com:80/");
+        assertEquals("", access.getTempUrlPrefix(TempUrlHashPrefixSource.PUBLIC_URL_PATH));
+    }
+
+    @Test
+    public void pathEndsWithSlash() {
+        Access access = setUpAccessWithPublicURL("http://www.somewhere.com:80/v1/AUTH_Account/");
+        assertEquals("/v1/AUTH_Account", access.getTempUrlPrefix(TempUrlHashPrefixSource.PUBLIC_URL_PATH));
+    }
+
+    public static AccessTenant setUpAccessWithPublicURL(String url) {
+        AccessTenant access = new AccessTenant();
+        List<EndPoint> endPoints = new ArrayList<EndPoint>();
+        endPoints.add(new EndPointBuilder()
+                .setPublicURL(url)
+                .getEndPoint());
+        access.serviceCatalog.add(createServiceCatalog("swift", "object-store", endPoints));
+        return access;
+    }
+
+    public static AccessTenant setUpAccessWithURLwithPaths() {
         AccessTenant access = new AccessTenant();
         List<EndPoint> endPoints = new ArrayList<EndPoint>();
         endPoints.add(new EndPointBuilder()

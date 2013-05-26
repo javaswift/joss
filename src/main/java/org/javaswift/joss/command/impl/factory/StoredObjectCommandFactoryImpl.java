@@ -67,7 +67,7 @@ public class StoredObjectCommandFactoryImpl implements StoredObjectCommandFactor
     @Override
     public String getTempUrlPrefix() {
         TempUrlHashPrefixSource source = containerCommandFactory.getAccountCommandFactory().getTempUrlHashPrefixSource();
-        return "";
+        return getAccess().getTempUrlPrefix(source);
     }
 
     public HttpClient getHttpClient() {

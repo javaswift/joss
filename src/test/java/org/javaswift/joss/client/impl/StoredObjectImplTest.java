@@ -1,6 +1,7 @@
 package org.javaswift.joss.client.impl;
 
 import mockit.Expectations;
+import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import mockit.Verifications;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -12,13 +13,18 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
 import org.javaswift.joss.client.core.AbstractStoredObject;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.command.impl.object.AbstractDownloadObjectCommand;
+import org.javaswift.joss.command.shared.identity.access.AccessTest;
 import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.account.AccountMetadata;
+import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.headers.object.CopyFrom;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.util.HashSignature;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,6 +87,47 @@ public class StoredObjectImplTest extends BaseCommandTest {
             response.getEntity();
             result = httpEntity;
         }};
+    }
+
+    @Test
+    public void getTempPutUrl() {
+        testTempUrl("GET");
+    }
+
+    @Test
+    public void getTempGetUrl() {
+        testTempUrl("PUT");
+    }
+
+    protected void testTempUrl(final String method) {
+        final String password = "welkom#42";
+        final long today = 1369581129861L;
+        final long oneDay = 86400L;
+        final long tomorrow = today + oneDay;
+
+        account = new AccountImpl(null, httpClient, AccessTest.setUpAccessWithURLwithPaths(), true, TempUrlHashPrefixSource.INTERNAL_URL_PATH);
+        List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, AccountMetadata.X_ACCOUNT_META_PREFIX+ HashPassword.X_ACCOUNT_TEMP_URL_KEY, password, headers);
+        prepareHeadersForRetrieval(response, headers);
+        account.setHashPassword("welkom#42");
+        Container container = account.getContainer("alpha");
+        final AbstractStoredObject object = (AbstractStoredObject)container.getObject("some-image.jpg");
+        // Make sure that a fixed date is used
+        new NonStrictExpectations(object) {{
+            object.currentTime();
+            result = today;
+        }};
+        // Check whether the secure URL contains the right signature and expiry date
+        final String secureUrl;
+        if (method.equals("GET")) {
+            secureUrl = object.getTempGetUrl(oneDay);
+        } else {
+            secureUrl = object.getTempPutUrl(oneDay);
+        }
+        assertTrue("Does not contain the timestamp of 'tomorrow'", secureUrl.contains(Long.toString(tomorrow)));
+        String plainText = method+"\n"+tomorrow+"\n/internal/path/alpha/some-image.jpg";
+        String signature = HashSignature.getSignature(password, plainText);
+        assertTrue("The signature of the secure URL", secureUrl.contains(signature));
     }
 
     @Test
@@ -335,7 +382,14 @@ public class StoredObjectImplTest extends BaseCommandTest {
     protected StoredObject createStoredObject(String name) {
         AccountImpl account = new AccountImpl(null, null, null, false, null);
         ContainerImpl container = new ContainerImpl(account, "", false);
-        return new StoredObjectImpl(container, "alpha", true);
+        return new StoredObjectImpl(container, name, true);
+    }
+
+    @Test
+    public void currentTime() {
+        long rightNow = new Date().getTime();
+        long currentTime = ((AbstractStoredObject)object).currentTime();
+        assertTrue(rightNow <= currentTime);
     }
 
 }

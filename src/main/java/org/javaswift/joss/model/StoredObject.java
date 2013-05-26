@@ -215,8 +215,25 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject
     * @return date when the StoredObject will be deleted (as a String)
     */
     public String getDeleteAt();
-    public String getPath();
 
+    /**
+    * Returns a temporary GET URL to an Object. Note that for this method to work Account.saveHashPassword must
+    * have been set.
+    * @param seconds number of seconds for the temporary URL to be valid
+    * @return temporary GET URL to the object
+    */
+    public String getTempGetUrl(long seconds);
+
+    /**
+    * Returns a temporary POST URL to an Object, allowing one to directly upload content to the ObjectStore.
+    * The object does not yet have to exist for this method to be invoked. Note that for this method to work
+    * Account.saveHashPassword must have been set.
+    * @param seconds number of seconds for the temporary URL to be valid
+    * @return temporary POST URL to the object
+    */
+    public String getTempPutUrl(long seconds);
+
+    public String getPath();
     public void setLastModified(Date date);
     public void setLastModified(String date);
     public void setEtag(String etag);

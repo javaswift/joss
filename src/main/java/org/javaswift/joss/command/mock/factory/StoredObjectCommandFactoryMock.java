@@ -16,7 +16,7 @@ import java.util.Collection;
 
 public class StoredObjectCommandFactoryMock implements StoredObjectCommandFactory {
 
-    private Swift swift;
+    private final Swift swift;
 
     public StoredObjectCommandFactoryMock(Swift swift) {
         this.swift = swift;

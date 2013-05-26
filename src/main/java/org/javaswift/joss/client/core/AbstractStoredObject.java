@@ -10,6 +10,8 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.InputStream;
@@ -19,7 +21,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.javaswift.joss.util.HashSignature.getSignature;
+
 public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject {
+
+    public static final Logger LOG = LoggerFactory.getLogger(AbstractStoredObject.class);
 
     protected String name;
 
@@ -256,6 +262,28 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     protected void getInfo(boolean allowErrorLog) {
         this.info = commandFactory.createObjectInformationCommand(getAccount(), getContainer(), this, allowErrorLog).call();
         this.setInfoRetrieved();
+    }
+
+    @Override
+    public String getTempGetUrl(long durationInSeconds) {
+        return getTempUrl("GET", durationInSeconds);
+    }
+
+    @Override
+    public String getTempPutUrl(long durationInSeconds) {
+        return getTempUrl("PUT", durationInSeconds);
+    }
+
+    protected String getTempUrl(String method, long durationInSeconds) {
+        String objectPath = commandFactory.getTempUrlPrefix() + getPath();
+        long seconds = currentTime() + durationInSeconds;
+        String plainText = method + "\n" + seconds + "\n" + objectPath;
+        LOG.debug("Text to hash for the signature (CRLF replaced by readable \\n): "+plainText.replaceAll("\n", "\\n"));
+        return getPublicURL()+"?temp_url_sig="+getSignature(getContainer().getAccount().getHashPassword(), plainText)+";temp_url_expires="+seconds;
+    }
+
+    public long currentTime() {
+        return new Date().getTime();
     }
 
 }

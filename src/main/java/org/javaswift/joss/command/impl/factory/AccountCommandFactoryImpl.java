@@ -23,7 +23,6 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     private final AuthenticationCommand authCommand;
     private String publicHost;
     private String privateHost;
-    private String hashPassword;
     private TempUrlHashPrefixSource tempUrlHashPrefixSource;
 
     public AccountCommandFactoryImpl(HttpClient httpClient, Access access, AuthenticationCommand authCommand,
@@ -46,11 +45,6 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     }
 
     @Override
-    public void setHashPassword(String hashPassword) {
-        this.hashPassword = hashPassword;
-    }
-
-    @Override
     public String getPublicHost() {
         return this.publicHost == null ? access.getPublicURL() : this.publicHost;
     }
@@ -63,11 +57,6 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     @Override
     public String getOriginalHost() {
         return access.getPublicURL();
-    }
-
-    @Override
-    public String getHashPassword() {
-        return this.hashPassword;
     }
 
     @Override
@@ -96,8 +85,8 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     }
 
     @Override
-    public HashPasswordCommand createHashPasswordCommand(Account account) {
-        return new HashPasswordCommandImpl(account, httpClient, access, getHashPassword());
+    public HashPasswordCommand createHashPasswordCommand(Account account, String hashPassword) {
+        return new HashPasswordCommandImpl(account, httpClient, access, hashPassword);
     }
 
     @Override

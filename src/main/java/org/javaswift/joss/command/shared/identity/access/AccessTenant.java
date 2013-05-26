@@ -37,15 +37,17 @@ public class AccessTenant extends AbstractAccess {
 
     @Override
     public String getTempUrlPrefix(TempUrlHashPrefixSource tempUrlHashPrefixSource) {
+        final String tempUrlPrefix;
         if (tempUrlHashPrefixSource == null) {
-            return "";
+            tempUrlPrefix = "";
         } else if (tempUrlHashPrefixSource == TempUrlHashPrefixSource.PUBLIC_URL_PATH) {
-            return TempUrlHashPrefixSource.getPath(getCurrentEndPoint().publicURL);
+            tempUrlPrefix = TempUrlHashPrefixSource.getPath(getCurrentEndPoint().publicURL);
         } else if (tempUrlHashPrefixSource == TempUrlHashPrefixSource.INTERNAL_URL_PATH) {
-            return TempUrlHashPrefixSource.getPath(getCurrentEndPoint().internalURL);
+            tempUrlPrefix = TempUrlHashPrefixSource.getPath(getCurrentEndPoint().internalURL);
         } else {
-            return TempUrlHashPrefixSource.getPath(getCurrentEndPoint().adminURL);
+            tempUrlPrefix = TempUrlHashPrefixSource.getPath(getCurrentEndPoint().adminURL);
         }
+        return tempUrlPrefix.endsWith("/") ? tempUrlPrefix.substring(0, tempUrlPrefix.length()-1) : tempUrlPrefix;
     }
 
     @SuppressWarnings("ConstantConditions")

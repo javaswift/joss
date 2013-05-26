@@ -51,7 +51,6 @@ public class AccountImplTest extends BaseCommandTest {
     @Test
     public void setHashPassword() throws IOException {
         account.setHashPassword("somepwd");
-        account.saveHashPassword();
         verifyHeaderValue("somepwd", X_ACCOUNT_META_PREFIX + HashPassword.X_ACCOUNT_TEMP_URL_KEY, "POST");
     }
 

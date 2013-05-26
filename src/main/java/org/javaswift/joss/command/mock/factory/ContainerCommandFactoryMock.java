@@ -57,4 +57,5 @@ public class ContainerCommandFactoryMock implements ContainerCommandFactory {
     public StoredObjectCommandFactory getStoredObjectCommandFactory() {
         return this.storedObjectCommandFactory;
     }
+
 }

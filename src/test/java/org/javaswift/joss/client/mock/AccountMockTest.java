@@ -246,7 +246,6 @@ public class AccountMockTest {
         Swift swift = new Swift();
         Account account = new AccountMock(swift);
         account.setHashPassword("somepwd");
-        account.saveHashPassword();
         assertEquals("somepwd", swift.getHashPassword());
     }
 
@@ -256,7 +255,6 @@ public class AccountMockTest {
                 .setMock(true)
                 .setHashPassword("somepwd")
                 .createAccount();
-        account.saveHashPassword();
         assertEquals("somepwd", account.getMetadata().get(HashPassword.X_ACCOUNT_TEMP_URL_KEY));
     }
 
