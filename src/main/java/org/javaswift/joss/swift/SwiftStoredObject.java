@@ -112,10 +112,7 @@ public class SwiftStoredObject implements ListSubject {
     }
 
     public SwiftResult<Object> saveMetadata(Collection<? extends Header> headers) {
-        this.headers.clear();
-        for (Header header : headers) {
-            this.headers.put(header);
-        }
+        this.headers.saveMetadata(headers);
         return new SwiftResult<Object>(HttpStatus.SC_ACCEPTED);
     }
 

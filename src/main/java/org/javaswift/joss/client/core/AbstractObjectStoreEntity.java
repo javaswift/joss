@@ -32,6 +32,7 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
             info.addMetadata(createMetadataEntry(key, metadata.get(key).toString()));
         }
         saveMetadata();
+        invalidate();
     }
 
     protected abstract Metadata createMetadataEntry(String name, String value);

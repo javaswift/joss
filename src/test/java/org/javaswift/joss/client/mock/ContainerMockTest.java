@@ -3,9 +3,11 @@ package org.javaswift.joss.client.mock;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
+import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.PaginationMap;
 import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.swift.Swift;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
 
 public class ContainerMockTest {
 
@@ -33,6 +36,47 @@ public class ContainerMockTest {
     @Test
     public void getOrCreateDoesNotExist() {
         assertFalse(container.getObject("somevalue").exists());
+    }
+
+    @Test
+    public void fetchMetadataAfterSet() {
+        Swift swift = new Swift();
+        Account account = new AccountMock(swift)
+                .setAllowContainerCaching(false);
+        Container container = account.getContainer("use-this");
+        container.create();
+        container.setMetadata(convertToMetadata(new String[][] { { "Field-1", "value 1" } } ));
+        Container container2 = account.getContainer("use-this");
+        container2.setMetadata(convertToMetadata(new String[][] { { "Field-2", "value 2" } } ));
+        assertEquals(2, container2.getMetadata().size());
+    }
+
+    @Test
+    public void mustNotDeleteExistingMetadata() {
+        Account account = new AccountMock();
+        Container container = account.getContainer("use-this");
+        container.create();
+        container.setMetadata(convertToMetadata(new String[][]{{"Field-1", "value 1"}}));
+        container.setMetadata(convertToMetadata(new String[][]{{"Field-2", "value 2"}}));
+        assertEquals(2, container.getMetadata().size());
+    }
+
+    @Test
+    public void mustDeleteEmptyMetadata() {
+        Account account = new AccountMock();
+        Container container = account.getContainer("use-this");
+        container.create();
+        container.setMetadata(convertToMetadata(new String[][]{{"Field-1", "value 1"}}));
+        container.setMetadata(convertToMetadata(new String[][]{{"Field-1", ""}}));
+        assertEquals(0, container.getMetadata().size());
+    }
+
+    protected Map<String, Object> convertToMetadata(String[][] keyValuePairs) {
+        Map<String, Object> metadata = new TreeMap<String, Object>();
+        for (String[] keyValuePair : keyValuePairs) {
+            metadata.put(keyValuePair[0], keyValuePair[1]);
+        }
+        return metadata;
     }
 
     @Test
