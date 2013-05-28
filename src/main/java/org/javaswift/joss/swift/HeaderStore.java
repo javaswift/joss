@@ -39,7 +39,7 @@ public class HeaderStore {
 
     public void saveMetadata(Collection<? extends Header> headers) {
         for (Header header : headers) {
-            if (header.getHeaderValue() == null || header.getHeaderValue().equals("")) {
+            if (header.getHeaderValue().equals("")) {
                 remove(header);
             } else {
                 put(header);
