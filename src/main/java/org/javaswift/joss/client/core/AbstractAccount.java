@@ -2,17 +2,20 @@ package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
+import org.javaswift.joss.headers.DateHeader;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.headers.account.AccountMetadata;
 import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.information.AccountInformation;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.*;
+import org.javaswift.joss.util.LocalTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
+import java.util.Date;
 
 public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountInformation> implements Account {
 
@@ -110,19 +113,36 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return this.allowReauthenticate;
     }
 
+    @Override
     public int getCount() {
         checkForInfo();
         return info.getContainerCount();
     }
 
+    @Override
     public long getBytesUsed() {
         checkForInfo();
         return info.getBytesUsed();
     }
 
+    @Override
     public int getObjectCount() {
         checkForInfo();
         return info.getObjectCount();
+    }
+
+    @Override
+    public long getServerTime() {
+        checkForInfo();
+        return info.getServerDate();
+    }
+
+    @Override
+    public void synchronizeWithServerTime() {
+        long serverTime = getServerTime();
+        long localTime = LocalTime.currentTime();
+        LOG.info("JOSS / Server time is "+ DateHeader.convertDateToString(new Date(serverTime)));
+        LOG.info("JOSS / Local time is "+ DateHeader.convertDateToString(new Date(localTime)));
     }
 
     protected Metadata createMetadataEntry(String name, String value) {

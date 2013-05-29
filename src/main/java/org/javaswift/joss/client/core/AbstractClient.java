@@ -4,10 +4,13 @@ import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.shared.factory.AuthenticationCommandFactory;
 import org.javaswift.joss.command.shared.identity.tenant.Tenant;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
+import org.javaswift.joss.headers.DateHeader;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Date;
 
 public abstract class AbstractClient<A extends Account> implements Client<A> {
 
@@ -39,6 +42,7 @@ public abstract class AbstractClient<A extends Account> implements Client<A> {
             accountConfig.setTenantName(tenant.name);
             account = createAccount();
         }
+        account.synchronizeWithServerTime();
         return (A)account
                 .setPublicHost(accountConfig.getPublicHost())
                 .setPrivateHost(accountConfig.getPrivateHost())

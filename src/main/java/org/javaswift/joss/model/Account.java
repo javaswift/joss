@@ -67,6 +67,18 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     public int getObjectCount();
 
     /**
+    * Returns the server time in milliseconds since 1970
+    * @return server time
+    */
+    public long getServerTime();
+
+    /**
+    * Compares the local time to the server time and maintains a number of milliseconds to account for the
+    * difference. This number is taken into account when an absolute expiry time is passed to the server.
+    */
+    public void synchronizeWithServerTime();
+
+    /**
     * An ObjectStore authentication token will expire after 24 hours. In a long-living web application,
     * the account instance may exist longer than that. If reauthentication is allowed, a new token will
     * be fetched once the existing one has expired.

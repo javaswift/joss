@@ -2,6 +2,7 @@ package org.javaswift.joss.swift.scheduled;
 
 import org.javaswift.joss.swift.SwiftContainer;
 import org.javaswift.joss.swift.SwiftStoredObject;
+import org.javaswift.joss.util.LocalTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +42,7 @@ public class ObjectDeleter implements Runnable {
     public void run() {
         LOG.debug("OD.run");
 
-        Date now = new Date();
+        Date now = LocalTime.currentDate();
         List<ScheduledForDeletion> objectsToDeleteNow = new ArrayList<ScheduledForDeletion>();
         for (ScheduledForDeletion scheduledForDeletion : objectsToDelete) {
             if (scheduledForDeletion.deleteIf(now)) {

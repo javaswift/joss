@@ -10,6 +10,7 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.util.LocalTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -276,14 +277,10 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     protected String getTempUrl(String method, long durationInSeconds) {
         String objectPath = commandFactory.getTempUrlPrefix() + getPath();
-        long seconds = currentTime() + durationInSeconds;
+        long seconds = LocalTime.currentTime() + durationInSeconds;
         String plainText = method + "\n" + seconds + "\n" + objectPath;
         LOG.debug("Text to hash for the signature (CRLF replaced by readable \\n): "+plainText.replaceAll("\n", "\\n"));
         return getPublicURL()+"?temp_url_sig="+getSignature(getContainer().getAccount().getHashPassword(), plainText)+";temp_url_expires="+seconds;
-    }
-
-    public long currentTime() {
-        return new Date().getTime();
     }
 
 }

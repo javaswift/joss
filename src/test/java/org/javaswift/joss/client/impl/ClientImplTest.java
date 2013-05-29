@@ -1,5 +1,7 @@
 package org.javaswift.joss.client.impl;
 
+import mockit.NonStrictExpectations;
+import org.apache.http.Header;
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.model.Account;
@@ -7,8 +9,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.Assert.*;
+import static org.javaswift.joss.headers.account.AccountBytesUsed.X_ACCOUNT_BYTES_USED;
+import static org.javaswift.joss.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
+import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
+import static org.javaswift.joss.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
+import static org.javaswift.joss.headers.account.ServerDate.DATE;
 
 public class ClientImplTest extends BaseCommandTest {
 
@@ -24,6 +33,21 @@ public class ClientImplTest extends BaseCommandTest {
         config.setAllowCaching(false);
         client = new ClientImpl(config);
         client.setHttpClient(httpClient);
+        prepareMetadata();
+    }
+
+    private void prepareMetadata() {
+        final List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, X_ACCOUNT_META_PREFIX + "Description", "Photo album", headers);
+        prepareHeader(response, X_ACCOUNT_META_PREFIX + "Year", "1984", headers);
+        prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "7", headers);
+        prepareHeader(response, X_ACCOUNT_OBJECT_COUNT, "123", headers);
+        prepareHeader(response, X_ACCOUNT_BYTES_USED, "654321", headers);
+        prepareHeader(response, DATE, "Tue, 28 May 2013 12:17:28 GMT", headers);
+        new NonStrictExpectations() {{
+            response.getAllHeaders();
+            result = headers.toArray(new Header[headers.size()]);
+        }};
     }
 
     @Test

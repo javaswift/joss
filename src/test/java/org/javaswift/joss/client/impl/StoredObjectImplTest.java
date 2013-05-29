@@ -25,6 +25,7 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.util.HashSignature;
+import org.javaswift.joss.util.LocalTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -90,16 +91,16 @@ public class StoredObjectImplTest extends BaseCommandTest {
     }
 
     @Test
-    public void getTempPutUrl() {
-        testTempUrl("GET");
+    public void getTempPutUrl(@Mocked(stubOutClassInitialization = true) final LocalTime localTime) {
+        testTempUrl("GET", localTime);
     }
 
     @Test
-    public void getTempGetUrl() {
-        testTempUrl("PUT");
+    public void getTempGetUrl(@Mocked(stubOutClassInitialization = true) final LocalTime localTime) {
+        testTempUrl("PUT", localTime);
     }
 
-    protected void testTempUrl(final String method) {
+    protected void testTempUrl(final String method, final LocalTime localTime) {
         final String password = "welkom#42";
         final long today = 1369581129861L;
         final long oneDay = 86400L;
@@ -114,7 +115,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
         final AbstractStoredObject object = (AbstractStoredObject)container.getObject("some-image.jpg");
         // Make sure that a fixed date is used
         new NonStrictExpectations(object) {{
-            object.currentTime();
+            localTime.currentTime();
             result = today;
         }};
         // Check whether the secure URL contains the right signature and expiry date
@@ -387,8 +388,9 @@ public class StoredObjectImplTest extends BaseCommandTest {
 
     @Test
     public void currentTime() {
+        new LocalTime();
         long rightNow = new Date().getTime();
-        long currentTime = ((AbstractStoredObject)object).currentTime();
+        long currentTime = LocalTime.currentTime();
         assertTrue(rightNow <= currentTime);
     }
 

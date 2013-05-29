@@ -9,6 +9,7 @@ import org.javaswift.joss.information.ObjectInformation;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.ListSubject;
+import org.javaswift.joss.util.LocalTime;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.IOException;
@@ -74,7 +75,7 @@ public class SwiftStoredObject implements ListSubject {
 
     public SwiftResult<Object> uploadObject(UploadInstructions uploadInstructions) {
         try {
-            this.lastModified = new Date();
+            this.lastModified = LocalTime.currentDate();
             this.content = IOUtils.toByteArray(uploadInstructions.getEntity().getContent());
             this.objectManifest = uploadInstructions.getObjectManifest();
             this.etag = new Etag(uploadInstructions.getMd5() != null ?

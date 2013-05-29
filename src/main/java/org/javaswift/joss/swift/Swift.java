@@ -23,6 +23,7 @@ import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.swift.scheduled.ObjectDeleter;
 import org.javaswift.joss.swift.statusgenerator.StatusGenerator;
+import org.javaswift.joss.util.LocalTime;
 
 import java.io.*;
 import java.util.*;
@@ -215,7 +216,7 @@ public class Swift {
         accountInformation.setContainerCount(new AccountContainerCount(Integer.toString(containerCount)));
         accountInformation.setObjectCount(new AccountObjectCount(Integer.toString(objectCount)));
         accountInformation.setBytesUsed(new AccountBytesUsed(Long.toString(bytesUsed)));
-        accountInformation.setServerDate(new ServerDate(new Date()));
+        accountInformation.setServerDate(new ServerDate(LocalTime.currentTime()));
 
         return new SwiftResult<AccountInformation>(accountInformation, HttpStatus.SC_NO_CONTENT);
     }
@@ -360,7 +361,7 @@ public class Swift {
         if (deleteAt == null) {
             DeleteAfter deleteAfter = getSpecificHeader(headers, DeleteAfter.class);
             if (deleteAfter != null) {
-                deleteAt = new DeleteAt(new Date(new Date().getTime() + deleteAfter.getExpireAfterSeconds() * 1000));
+                deleteAt = new DeleteAt(new Date(LocalTime.currentTime() + deleteAfter.getExpireAfterSeconds() * 1000));
             }
         }
         if (deleteAt != null) {
