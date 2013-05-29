@@ -233,6 +233,14 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<StoredObject
     */
     public String getTempPutUrl(long seconds);
 
+    /**
+    * Creates a hash using the server's hash password and compares it to the signature. If right, expiry will
+    * be checked against the server time. If all matches, a go is given. This method is useful for supporting
+    * TempURLs in a mock context.
+    * @return true if the TempURL is valid, false if not
+    */
+    public boolean verifyTempUrl(String method, String signature, long expiry);
+
     public String getPath();
     public void setLastModified(Date date);
     public void setLastModified(String date);

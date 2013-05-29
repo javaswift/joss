@@ -106,18 +106,9 @@ public class StoredObjectImplTest extends BaseCommandTest {
         final long oneDayInSeconds = 86400L;
         final long tomorrowInSeconds = todayInMS / 1000 + oneDayInSeconds;
 
-        account = new AccountImpl(null, httpClient, AccessTest.setUpAccessWithURLwithPaths(), true, TempUrlHashPrefixSource.INTERNAL_URL_PATH);
-        List<Header> headers = new ArrayList<Header>();
-        prepareHeader(response, AccountMetadata.X_ACCOUNT_META_PREFIX + HashPassword.X_ACCOUNT_TEMP_URL_KEY, password, headers);
-        prepareHeadersForRetrieval(response, headers);
-        account.setHashPassword("welkom#42");
-        Container container = account.getContainer("alpha");
-        final AbstractStoredObject object = (AbstractStoredObject)container.getObject("some-image.jpg");
+        final AbstractStoredObject object = createStoredObjectForTempURL(password);
         // Make sure that a fixed date is used
-        new NonStrictExpectations(object) {{
-            localTime.currentTime();
-            result = todayInMS;
-        }};
+        useFixedDateForToday(localTime, todayInMS);
         // Check whether the secure URL contains the right signature and expiry date
         final String secureUrl;
         if (method.equals("GET")) {
@@ -130,6 +121,63 @@ public class StoredObjectImplTest extends BaseCommandTest {
         String signature = HashSignature.getSignature(password, plainText);
         assertTrue("The signature of the secure URL", secureUrl.contains(signature));
     }
+
+    @Test
+    public void verifyNullSignature(@Mocked(stubOutClassInitialization = true) final LocalTime localTime) {
+        final AbstractStoredObject object = createStoredObjectForTempURL("welkom#42");
+        assertFalse("This signature is null and therefore invalid", object.verifyTempUrl("GET", null, 123456789));
+    }
+
+    @Test
+    public void verifyValidTempURL(@Mocked(stubOutClassInitialization = true) final LocalTime localTime) {
+        final long expiryInSeconds= 1369581300L; // Later than the server time, therefore ok
+        final String method = "GET";
+        String plainText = method+"\n"+expiryInSeconds+"\n/internal/path/alpha/some-image.jpg";
+        assertTrue("Expecting the signature + expiry to be valid", verifyTempURL(localTime, method, plainText, expiryInSeconds));
+    }
+
+    @Test
+    public void verifyTempURLWithInvalidSignature(@Mocked(stubOutClassInitialization = true) final LocalTime localTime) {
+        final long expiryInSeconds= 1369581109L;
+        final String method = "GET";
+        String plainText = method+"\n"+expiryInSeconds+"\n/internal/THIS_IS_NOT_RIGHT/alpha/some-image.jpg"; // Plaintext not right
+        assertFalse("This signature is supposed to be invalid", verifyTempURL(localTime, method, plainText, expiryInSeconds));
+    }
+
+    @Test
+    public void verifyExpiredTempURL(@Mocked(stubOutClassInitialization = true) final LocalTime localTime) {
+        final long expiryInSeconds= 1269581109L; // Before the server time, therefore expired
+        final String method = "GET";
+        String plainText = method+"\n"+expiryInSeconds+"\n/internal/path/alpha/some-image.jpg";
+        assertFalse("The TempURL is supposed to have been expired", verifyTempURL(localTime, method, plainText, expiryInSeconds));
+    }
+
+    protected boolean verifyTempURL(final LocalTime localTime, final String method, String plainText, long expiryInSeconds) {
+        final String password = "welkom#42";
+        final long todayInMS = 1369581129861L;
+        final AbstractStoredObject object = createStoredObjectForTempURL(password);
+        useFixedDateForToday(localTime, todayInMS);
+        String signature = HashSignature.getSignature(password, plainText);
+        return object.verifyTempUrl(method, signature, expiryInSeconds);
+    }
+
+    protected void useFixedDateForToday(final LocalTime localTime, final long todayInMS) {
+        new NonStrictExpectations(object) {{
+            localTime.currentTime();
+            result = todayInMS;
+        }};
+    }
+
+    protected AbstractStoredObject createStoredObjectForTempURL(String password) {
+        account = new AccountImpl(null, httpClient, AccessTest.setUpAccessWithURLwithPaths(), true, TempUrlHashPrefixSource.INTERNAL_URL_PATH);
+        List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, AccountMetadata.X_ACCOUNT_META_PREFIX + HashPassword.X_ACCOUNT_TEMP_URL_KEY, password, headers);
+        prepareHeadersForRetrieval(response, headers);
+        account.setHashPassword("welkom#42");
+        Container container = account.getContainer("alpha");
+        return (AbstractStoredObject)container.getObject("some-image.jpg");
+    }
+
 
     @Test
     public void downloadAsByteArray() {

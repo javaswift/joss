@@ -25,8 +25,6 @@ import static org.javaswift.joss.util.HashSignature.getSignature;
 
 public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject {
 
-    public static final Logger LOG = LoggerFactory.getLogger(AbstractStoredObject.class);
-
     protected String name;
 
     private Container container;
@@ -275,11 +273,17 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     }
 
     protected String getTempUrl(String method, long durationInSeconds) {
-        String objectPath = commandFactory.getTempUrlPrefix() + getPath();
-        long seconds = getAccount().getActualServerTimeInSeconds(durationInSeconds);
-        String plainText = method + "\n" + seconds + "\n" + objectPath;
-        LOG.debug("Text to hash for the signature (CRLF replaced by readable \\n): "+plainText.replaceAll("\n", "\\n"));
-        return getPublicURL()+"?temp_url_sig="+getSignature(getContainer().getAccount().getHashPassword(), plainText)+"&temp_url_expires="+seconds;
+        return new TempURL(method, commandFactory.getTempUrlPrefix(), this)
+                .setServerTimeExpiry(durationInSeconds)
+                .getTempUrl();
+    }
+
+    @SuppressWarnings("SimplifiableIfStatement")
+    @Override
+    public boolean verifyTempUrl(String method, String signature, long expiry) {
+        return new TempURL(method, commandFactory.getTempUrlPrefix(), this)
+                .setFixedExpiry(expiry)
+                .verify(signature, expiry);
     }
 
 }
