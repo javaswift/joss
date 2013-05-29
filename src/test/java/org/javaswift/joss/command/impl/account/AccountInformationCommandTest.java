@@ -19,6 +19,7 @@ import static org.javaswift.joss.headers.account.AccountBytesUsed.X_ACCOUNT_BYTE
 import static org.javaswift.joss.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
 import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
 import static org.javaswift.joss.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
+import static org.javaswift.joss.headers.account.ServerDate.DATE;
 
 public class AccountInformationCommandTest extends BaseCommandTest {
 
@@ -35,6 +36,7 @@ public class AccountInformationCommandTest extends BaseCommandTest {
         prepareHeader(response, X_ACCOUNT_CONTAINER_COUNT, "7", headers);
         prepareHeader(response, X_ACCOUNT_OBJECT_COUNT, "123", headers);
         prepareHeader(response, X_ACCOUNT_BYTES_USED, "654321", headers);
+        prepareHeader(response, DATE, "Tue, 28 May 2013 12:17:28 GMT", headers);
         new NonStrictExpectations() {{
             response.getAllHeaders();
             result = headers.toArray(new Header[headers.size()]);
@@ -50,6 +52,7 @@ public class AccountInformationCommandTest extends BaseCommandTest {
         assertEquals(7, info.getContainerCount());
         assertEquals(123, info.getObjectCount());
         assertEquals(654321, info.getBytesUsed());
+        assertEquals(1369743448000L, info.getServerDate());
     }
 
     @Test (expected = CommandException.class)

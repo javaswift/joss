@@ -7,10 +7,7 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.account.AccountInformationCommand;
-import org.javaswift.joss.headers.account.AccountBytesUsed;
-import org.javaswift.joss.headers.account.AccountContainerCount;
-import org.javaswift.joss.headers.account.AccountMetadata;
-import org.javaswift.joss.headers.account.AccountObjectCount;
+import org.javaswift.joss.headers.account.*;
 import org.javaswift.joss.information.AccountInformation;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
@@ -30,6 +27,7 @@ public class AccountInformationCommandImpl extends AbstractAccountCommand<HttpHe
         info.setContainerCount(AccountContainerCount.fromResponse(response));
         info.setObjectCount(AccountObjectCount.fromResponse(response));
         info.setBytesUsed(AccountBytesUsed.fromResponse(response));
+        info.setServerDate(ServerDate.fromResponse(response));
         return info;
     }
 

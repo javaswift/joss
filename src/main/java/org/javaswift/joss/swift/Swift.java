@@ -215,6 +215,7 @@ public class Swift {
         accountInformation.setContainerCount(new AccountContainerCount(Integer.toString(containerCount)));
         accountInformation.setObjectCount(new AccountObjectCount(Integer.toString(objectCount)));
         accountInformation.setBytesUsed(new AccountBytesUsed(Long.toString(bytesUsed)));
+        accountInformation.setServerDate(new ServerDate(new Date()));
 
         return new SwiftResult<AccountInformation>(accountInformation, HttpStatus.SC_NO_CONTENT);
     }
