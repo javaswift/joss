@@ -79,6 +79,14 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     public void synchronizeWithServerTime();
 
     /**
+    * Calculate the server time taking into account the number of seconds passed. This method makes use
+    * of the server time modifier which is calculated in synchronizeWithServerTime().
+    * @param seconds number of seconds after the actual server time
+    * @return calculated server time, including the number of seconds in the future
+    */
+    public long getActualServerTimeInSeconds(long seconds);
+
+    /**
     * An ObjectStore authentication token will expire after 24 hours. In a long-living web application,
     * the account instance may exist longer than that. If reauthentication is allowed, a new token will
     * be fetched once the existing one has expired.

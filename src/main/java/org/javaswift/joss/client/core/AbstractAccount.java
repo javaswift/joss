@@ -33,6 +33,8 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private final ContainerCache<Website> websiteCache;
 
+    private ServerTime serverTime = new ServerTime(0);
+
     public AbstractAccount(AccountCommandFactory commandFactory, ContainerFactory<Container> containerFactory,
                            ContainerFactory<Website> websiteFactory, boolean allowCaching) {
         super(allowCaching);
@@ -138,11 +140,13 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     }
 
     @Override
+    public long getActualServerTimeInSeconds(long seconds) {
+        return this.serverTime.getServerTime(seconds);
+    }
+
+    @Override
     public void synchronizeWithServerTime() {
-        long serverTime = getServerTime();
-        long localTime = LocalTime.currentTime();
-        LOG.info("JOSS / Server time is "+ DateHeader.convertDateToString(new Date(serverTime)));
-        LOG.info("JOSS / Local time is "+ DateHeader.convertDateToString(new Date(localTime)));
+        this.serverTime = ServerTime.create(getServerTime(), LocalTime.currentTime());
     }
 
     protected Metadata createMetadataEntry(String name, String value) {

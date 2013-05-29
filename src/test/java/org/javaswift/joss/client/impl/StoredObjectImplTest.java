@@ -102,13 +102,13 @@ public class StoredObjectImplTest extends BaseCommandTest {
 
     protected void testTempUrl(final String method, final LocalTime localTime) {
         final String password = "welkom#42";
-        final long today = 1369581129861L;
-        final long oneDay = 86400L;
-        final long tomorrow = today + oneDay;
+        final long todayInMS = 1369581129861L;
+        final long oneDayInSeconds = 86400L;
+        final long tomorrowInSeconds = todayInMS / 1000 + oneDayInSeconds;
 
         account = new AccountImpl(null, httpClient, AccessTest.setUpAccessWithURLwithPaths(), true, TempUrlHashPrefixSource.INTERNAL_URL_PATH);
         List<Header> headers = new ArrayList<Header>();
-        prepareHeader(response, AccountMetadata.X_ACCOUNT_META_PREFIX+ HashPassword.X_ACCOUNT_TEMP_URL_KEY, password, headers);
+        prepareHeader(response, AccountMetadata.X_ACCOUNT_META_PREFIX + HashPassword.X_ACCOUNT_TEMP_URL_KEY, password, headers);
         prepareHeadersForRetrieval(response, headers);
         account.setHashPassword("welkom#42");
         Container container = account.getContainer("alpha");
@@ -116,17 +116,17 @@ public class StoredObjectImplTest extends BaseCommandTest {
         // Make sure that a fixed date is used
         new NonStrictExpectations(object) {{
             localTime.currentTime();
-            result = today;
+            result = todayInMS;
         }};
         // Check whether the secure URL contains the right signature and expiry date
         final String secureUrl;
         if (method.equals("GET")) {
-            secureUrl = object.getTempGetUrl(oneDay);
+            secureUrl = object.getTempGetUrl(oneDayInSeconds);
         } else {
-            secureUrl = object.getTempPutUrl(oneDay);
+            secureUrl = object.getTempPutUrl(oneDayInSeconds);
         }
-        assertTrue("Does not contain the timestamp of 'tomorrow'", secureUrl.contains(Long.toString(tomorrow)));
-        String plainText = method+"\n"+tomorrow+"\n/internal/path/alpha/some-image.jpg";
+        assertTrue("Does not contain the timestamp of 'tomorrow'", secureUrl.contains(Long.toString(tomorrowInSeconds)));
+        String plainText = method+"\n"+tomorrowInSeconds+"\n/internal/path/alpha/some-image.jpg";
         String signature = HashSignature.getSignature(password, plainText);
         assertTrue("The signature of the secure URL", secureUrl.contains(signature));
     }
