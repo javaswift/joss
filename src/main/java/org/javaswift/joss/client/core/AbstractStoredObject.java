@@ -279,7 +279,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         long seconds = getAccount().getActualServerTimeInSeconds(durationInSeconds);
         String plainText = method + "\n" + seconds + "\n" + objectPath;
         LOG.debug("Text to hash for the signature (CRLF replaced by readable \\n): "+plainText.replaceAll("\n", "\\n"));
-        return getPublicURL()+"?temp_url_sig="+getSignature(getContainer().getAccount().getHashPassword(), plainText)+";temp_url_expires="+seconds;
+        return getPublicURL()+"?temp_url_sig="+getSignature(getContainer().getAccount().getHashPassword(), plainText)+"&temp_url_expires="+seconds;
     }
 
 }

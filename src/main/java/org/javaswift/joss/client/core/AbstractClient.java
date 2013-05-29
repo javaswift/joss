@@ -52,10 +52,10 @@ public abstract class AbstractClient<A extends Account> implements Client<A> {
     }
 
     protected Tenant autoDiscoverTenant(Account account) {
-        LOG.info("JOSS / No tenant supplied, attempting auto-discovery");
+        LOG.warn("JOSS / No tenant supplied, attempting auto-discovery");
         Tenants tenants = account.getTenants();
         Tenant tenant = tenants.getTenant();
-        LOG.info("JOSS / Found tenant with name "+tenant.name+" and ID "+tenant.id);
+        LOG.warn("JOSS / Found tenant with name "+tenant.name+" and ID "+tenant.id);
         return tenant;
     }
 
