@@ -70,7 +70,7 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     @Override
     public String getHashPassword() {
-        return (String)getMetadata().get(HashPassword.X_ACCOUNT_TEMP_URL_KEY);
+        return (String)getMetadata(HashPassword.X_ACCOUNT_TEMP_URL_KEY);
     }
 
     @Override

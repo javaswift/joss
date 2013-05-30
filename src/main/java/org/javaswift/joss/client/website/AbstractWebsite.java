@@ -35,8 +35,7 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
     }
 
     protected Object getHeader(String metadataHeaderName) {
-        Map<String, Object> metadata = getMetadata();
-        return metadata.get(metadataHeaderName);
+        return getMetadata(metadataHeaderName);
     }
 
     protected StoredObject getStoredObject(String metadataHeaderName) {
@@ -45,9 +44,7 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
     }
 
     protected void setHeader(WebsiteHeader header) {
-        Map<String, Object> metadata = getMetadata();
-        metadata.put(header.getMetadataHeader(), header.getHeaderValue());
-        setMetadata(metadata);
+        setAndSaveMetadata(header.getMetadataHeader(), header.getHeaderValue());
     }
 
     public String getMetadataHeader(String websiteHeader) {
