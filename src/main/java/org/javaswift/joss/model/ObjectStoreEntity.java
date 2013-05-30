@@ -43,6 +43,13 @@ public interface ObjectStoreEntity {
     public void removeAndDoNotSaveMetadata(String key);
 
     /**
+    * Returns a single value of the designated key, or null if it does not exist.
+    * @param key the key of the key/value pair
+    * @return the value belonging to the key
+    */
+    public Object getMetadata(String key);
+
+    /**
     * Places a call to the server to save all metadata, previously set with setMetadata excluding the save option
     */
     public void saveMetadata();

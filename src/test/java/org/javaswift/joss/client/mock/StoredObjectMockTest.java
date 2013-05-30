@@ -197,6 +197,20 @@ public class StoredObjectMockTest {
     }
 
     @Test
+    public void getMetadataSinglePair() {
+        uploadSomeBytes();
+        object.setAndSaveMetadata("Year", "1989");
+        assertEquals("1989", object.getMetadata("Year"));
+    }
+
+    @Test
+    public void getMetadataSinglePairDifferentCases() {
+        uploadSomeBytes();
+        object.setAndSaveMetadata("year", "1989");
+        assertEquals("1989", object.getMetadata("year"));
+    }
+
+    @Test
     public void exists() throws IOException {
         assertFalse(object.exists());
         object.uploadObject(uploadBytes);

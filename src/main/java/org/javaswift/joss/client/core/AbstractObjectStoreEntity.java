@@ -67,6 +67,11 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
     protected abstract void saveSpecificMetadata();
 
     @Override
+    public Object getMetadata(String key) {
+        return getMetadata().get(Metadata.capitalize(key));
+    }
+
+    @Override
     public Map<String, Object> getMetadata() {
         checkForInfo();
         Map<String, Object> metadataValues = new TreeMap<String, Object>();

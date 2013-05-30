@@ -8,12 +8,16 @@ public abstract class Metadata extends SimpleHeader {
 
     public Metadata(String name, String value) {
         super(value);
-        name = name.replaceAll("_", "-");
-        this.name = WordUtils.capitalize(name, new char[] { '-' } );
+        this.name = capitalize(name);
     }
 
     public String getName() {
         return this.name;
+    }
+
+    public static String capitalize(String key) {
+        key = key.replaceAll("_", "-");
+        return WordUtils.capitalize(key, new char[]{'-'});
     }
 
 }
