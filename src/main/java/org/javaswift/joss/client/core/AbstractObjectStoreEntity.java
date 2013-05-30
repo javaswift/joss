@@ -26,19 +26,47 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
         this.allowCaching = allowCaching;
     }
 
+    @Override
     public void setMetadata(Map<String, Object> metadata) {
         info.clear();
         for (String key : metadata.keySet()) {
-            info.addMetadata(createMetadataEntry(key, metadata.get(key).toString()));
+            setAndDoNotSaveMetadata(key, metadata.get(key));
         }
         saveMetadata();
-        invalidate();
+    }
+
+    @Override
+    public void setAndSaveMetadata(String key, Object value) {
+        setAndDoNotSaveMetadata(key, value);
+        saveMetadata();
+    }
+
+    @Override
+    public void setAndDoNotSaveMetadata(String key, Object value) {
+        info.addMetadata(createMetadataEntry(key, value.toString()));
+    }
+
+    @Override
+    public void removeAndSaveMetadata(String key) {
+        setAndSaveMetadata(key, "");
+    }
+
+    @Override
+    public void removeAndDoNotSaveMetadata(String key) {
+        setAndDoNotSaveMetadata(key, "");
     }
 
     protected abstract Metadata createMetadataEntry(String name, String value);
 
-    protected abstract void saveMetadata();
+    @Override
+    public void saveMetadata() {
+        saveSpecificMetadata();
+        invalidate();
+    }
 
+    protected abstract void saveSpecificMetadata();
+
+    @Override
     public Map<String, Object> getMetadata() {
         checkForInfo();
         Map<String, Object> metadataValues = new TreeMap<String, Object>();

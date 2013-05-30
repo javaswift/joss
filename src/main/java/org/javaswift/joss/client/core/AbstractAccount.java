@@ -184,7 +184,7 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     }
 
     @Override
-    protected void saveMetadata() {
+    protected void saveSpecificMetadata() {
         commandFactory.createAccountMetadataCommand(this, info.getMetadata()).call();
     }
 

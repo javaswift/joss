@@ -10,8 +10,6 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.InputStream;
@@ -20,8 +18,6 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static org.javaswift.joss.util.HashSignature.getSignature;
 
 public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject {
 
@@ -244,7 +240,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     public StoredObject setDeleteAt(Date date) {
         checkForInfo();
         info.setDeleteAt(new DeleteAt(date));
-        saveMetadata();
+        saveSpecificMetadata();
         return this;
     }
 
@@ -253,7 +249,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     }
 
     @Override
-    protected void saveMetadata() {
+    protected void saveSpecificMetadata() {
         commandFactory.createObjectMetadataCommand(getAccount(), getContainer(), this, info.getHeaders()).call();
     }
 

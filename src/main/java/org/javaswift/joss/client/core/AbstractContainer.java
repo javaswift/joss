@@ -174,7 +174,7 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     }
 
     @Override
-    protected void saveMetadata() {
+    protected void saveSpecificMetadata() {
         commandFactory.createContainerMetadataCommand(getAccount(), this, info.getMetadata()).call();
     }
 

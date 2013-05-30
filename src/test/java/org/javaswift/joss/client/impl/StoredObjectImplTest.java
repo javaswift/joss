@@ -329,6 +329,40 @@ public class StoredObjectImplTest extends BaseCommandTest {
     }
 
     @Test
+    public void setAndSaveMetadata() throws IOException {
+        expectStatusCode(202);
+        object.setAndSaveMetadata("Year", "1989");
+        verifyHeaderValue("1989", X_OBJECT_META_PREFIX + "Year");
+    }
+
+    @Test
+    public void setAndDoNotSaveMetadata() throws IOException {
+        expectStatusCode(202);
+        object.setAndDoNotSaveMetadata("Year", "1989");
+        object.setAndDoNotSaveMetadata("Company", "42 BV");
+        object.saveMetadata();
+        verifyHeaderValue("1989", X_OBJECT_META_PREFIX + "Year");
+        verifyHeaderValue("42 BV", X_OBJECT_META_PREFIX + "Company");
+    }
+
+    @Test
+    public void removeAndSaveMetadata() throws IOException {
+        expectStatusCode(202);
+        object.removeAndSaveMetadata("Year");
+        verifyHeaderValue("", X_OBJECT_META_PREFIX + "Year");
+    }
+
+    @Test
+    public void removeAndDoNotSaveMetadata() throws IOException {
+        expectStatusCode(202);
+        object.removeAndDoNotSaveMetadata("Year");
+        object.removeAndDoNotSaveMetadata("Company");
+        object.saveMetadata();
+        verifyHeaderValue("", X_OBJECT_META_PREFIX + "Year");
+        verifyHeaderValue("", X_OBJECT_META_PREFIX + "Company");
+    }
+
+    @Test
     public void getMetadata() throws IOException, DateParseException {
         expectStatusCode(202);
         prepareMetadata();
