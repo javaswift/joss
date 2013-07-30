@@ -25,4 +25,6 @@ public interface ContainerCommandFactory {
 
     StoredObjectCommandFactory getStoredObjectCommandFactory();
 
+    public String getTempUrlPrefix();
+
 }

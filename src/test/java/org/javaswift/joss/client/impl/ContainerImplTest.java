@@ -1,10 +1,19 @@
 package org.javaswift.joss.client.impl;
 
+import mockit.NonStrictExpectations;
 import org.apache.http.Header;
+import org.javaswift.joss.client.core.AbstractContainer;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
+import org.javaswift.joss.command.shared.identity.access.AccessTest;
+import org.javaswift.joss.headers.account.AccountMetadata;
+import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.headers.container.ContainerRights;
 import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.FormPost;
 import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.util.HashSignature;
+import org.javaswift.joss.util.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -105,6 +114,42 @@ public class ContainerImplTest extends BaseCommandTest {
         assertEquals(container1.getName(), containers.get(container1));
         assertEquals(container2.getName(), containers.get(container2));
         assertEquals(container1.getName().hashCode(), container1.hashCode());
+    }
+
+    @Test
+    public void getFormPost(final String method, final LocalTime localTime) {
+        final String redirectUrl = "http://do.not.follow/me";
+        final long maxFileSize = 104857600;
+        final long maxFileCount = 10;
+        final String password = "welkom#42";
+        final long todayInMS = 1369581129861L;
+        final long oneDayInSeconds = 86400L;
+
+        final AbstractContainer container = createContainerForFormPost(password);
+        // Make sure that a fixed date is used
+        useFixedDateForToday(localTime, todayInMS);
+        // Check whether the secure URL contains the right signature and expiry date
+        FormPost formPost = container.getFormPost(redirectUrl, maxFileSize, maxFileCount, oneDayInSeconds);
+        String plainText = "/internal/path/alpha\n"+redirectUrl+"\n"+maxFileSize+"\n"+maxFileCount+"\n"+formPost.expires;
+        String signature = HashSignature.getSignature(password, plainText);
+        assertEquals("The signature must match", signature, formPost.signature);
+    }
+
+    protected void useFixedDateForToday(final LocalTime localTime, final long todayInMS) {
+        new NonStrictExpectations(container) {{
+            localTime.currentTime();
+            result = todayInMS;
+        }};
+    }
+
+    protected AbstractContainer createContainerForFormPost(String password) {
+        account = new AccountImpl(null, httpClient, AccessTest.setUpAccessWithURLwithPaths(), true, TempUrlHashPrefixSource.INTERNAL_URL_PATH);
+        List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, AccountMetadata.X_ACCOUNT_META_PREFIX + HashPassword.X_ACCOUNT_TEMP_URL_KEY, password, headers);
+        prepareHeadersForRetrieval(response, headers);
+        account.setHashPassword("welkom#42");
+        Container container = account.getContainer("alpha");
+        return (AbstractContainer)container;
     }
 
 }

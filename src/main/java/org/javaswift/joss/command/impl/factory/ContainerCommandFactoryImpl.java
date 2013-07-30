@@ -1,6 +1,7 @@
 package org.javaswift.joss.command.impl.factory;
 
 import org.apache.http.client.HttpClient;
+import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.command.impl.container.*;
 import org.javaswift.joss.command.shared.container.*;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
@@ -62,12 +63,15 @@ public class ContainerCommandFactoryImpl implements ContainerCommandFactory {
         return accountCommandFactory.getAccess();
     }
 
-    public AccountCommandFactoryImpl getAccountCommandFactory() {
-        return this.accountCommandFactory;
-    }
-
     @Override
     public StoredObjectCommandFactory getStoredObjectCommandFactory() {
         return this.storedObjectCommandFactory;
     }
+
+    @Override
+    public String getTempUrlPrefix() {
+        TempUrlHashPrefixSource source = accountCommandFactory.getTempUrlHashPrefixSource();
+        return getAccess().getTempUrlPrefix(source);
+    }
+
 }

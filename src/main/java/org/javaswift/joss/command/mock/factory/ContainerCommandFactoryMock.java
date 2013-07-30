@@ -58,4 +58,9 @@ public class ContainerCommandFactoryMock implements ContainerCommandFactory {
         return this.storedObjectCommandFactory;
     }
 
+    @Override
+    public String getTempUrlPrefix() {
+        return "";
+    }
+
 }

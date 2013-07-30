@@ -81,6 +81,17 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
     */
     public long getBytesUsed();
 
+    /**
+    * Returns a signature that can be used to upload files directly from the browser, using a basic form
+    * element.
+    * @param redirect redirection URL after the upload has succeeded
+    * @param maxFileSize max number of bytes allowed to upload
+    * @param maxFileCount max number of files allowed to upload
+    * @param seconds number of seconds for the temporary URL to be valid
+    * @return FormPost signature for uploading an object directly from the browser
+    */
+    public FormPost getFormPost(String redirect, long maxFileSize, long maxFileCount, long seconds);
+
     public boolean isPublic();
 
     public void setCount(int count);

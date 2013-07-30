@@ -10,10 +10,8 @@ import org.javaswift.joss.information.ContainerInformation;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.SegmentationPlan;
 import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Container;
-import org.javaswift.joss.model.PaginationMap;
-import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.model.*;
+import org.javaswift.joss.util.HashSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,6 +81,23 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     public long getBytesUsed() {
         checkForInfoAndAllowHeaderSet();
         return info.getBytesUsed();
+    }
+
+    @Override
+    public FormPost getFormPost(String redirect, long maxFileSize, long maxFileCount, long seconds) {
+        String path = commandFactory.getTempUrlPrefix() + getPath();
+        long expires = getAccount().getActualServerTimeInSeconds(seconds);
+        String plainText =
+                path+"\n"+
+                redirect+"\n"+
+                maxFileSize+"\n"+
+                maxFileCount+"\n"+
+                expires;
+
+        FormPost formPost = new FormPost();
+        formPost.expires = expires;
+        formPost.signature = HashSignature.getSignature(getAccount().getHashPassword(), plainText);
+        return formPost;
     }
 
     public void setCount(int count) {
