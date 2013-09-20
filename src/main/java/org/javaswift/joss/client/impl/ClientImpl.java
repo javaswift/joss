@@ -1,6 +1,19 @@
 package org.javaswift.joss.client.impl;
 
+import java.security.GeneralSecurityException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 import org.apache.http.client.HttpClient;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.HttpConnectionParams;
@@ -29,6 +42,18 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
         PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
         connectionManager.setMaxTotal(50);
         connectionManager.setDefaultMaxPerRoute(25);
+        
+        if(accountConfig.isDisableSslValidation()) {
+            try {
+                connectionManager.getSchemeRegistry().register(
+                        new Scheme("https", 443,
+                                new SSLSocketFactory(createGullibleSslContext(),
+                                        SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER)));
+            } catch (GeneralSecurityException e) {
+                throw new RuntimeException("Could not initialize SSL Context: " + e, e);
+            }
+        }
+        
         this.httpClient = new DefaultHttpClient(connectionManager);
         if (socketTimeout != -1) {
             LOG.info("JOSS / Set socket timeout on HttpClient: "+socketTimeout);
@@ -77,5 +102,36 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
         }
         return this;
     }
+    
+    public static TrustManager[] gullibleManagers = new TrustManager[]{
+        new X509TrustManager() {
+            @Override
+            public void checkClientTrusted( X509Certificate[] x509Certificates, String s ) throws CertificateException {
+            }
+
+            @Override
+            public void checkServerTrusted( X509Certificate[] x509Certificates, String s ) throws CertificateException {
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+        }
+    };
+    
+    public static HostnameVerifier gullibleVerifier = new HostnameVerifier() {
+        @Override
+        public boolean verify( String s, SSLSession sslSession ) {
+            return true;
+        }
+    };
+    
+    public static SSLContext createGullibleSslContext() throws GeneralSecurityException {
+        SSLContext ctx = SSLContext.getInstance( "SSL" );
+        ctx.init( null, gullibleManagers, new SecureRandom() );
+        return ctx;
+    }
+
 
 }

@@ -8,6 +8,7 @@ import org.javaswift.joss.command.impl.core.AbstractSecureCommand;
 import org.javaswift.joss.command.impl.core.httpstatus.*;
 import org.javaswift.joss.command.shared.account.TenantCommand;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
+import org.javaswift.joss.headers.Accept;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 
@@ -17,6 +18,7 @@ public class TenantCommandImpl extends AbstractSecureCommand<HttpGet, Tenants> i
 
     public TenantCommandImpl(Account account, HttpClient httpClient, Access access, String url) {
         super(account, httpClient, modifyUrl(url), access.getToken());
+        setHeader(new Accept("application/json"));
     }
 
     protected static String modifyUrl(String authUrl) {
