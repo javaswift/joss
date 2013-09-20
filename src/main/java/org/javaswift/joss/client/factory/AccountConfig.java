@@ -134,6 +134,16 @@ public class AccountConfig {
     * notified of the hash password to use by invoking Account.saveHashPassword().
     */
     private String hashPassword;
+    
+    /**
+     * In development environments, self-signed SSL certificates may be used in place of
+     * certificates from a registered Certificate Authority.  Also, if you are connecting
+     * with SSL to an IP address instead of a hostname, the name on the certificate
+     * will not be validated.  You can bypass these checks by setting this to true.
+     * <em>This is not suitable for production use</em> since it is trivial to implement
+     * a man-in-the-middle attack if the SSL certificate is not strongly validated.
+     */
+    private boolean disableSslValidation = false;
 
     public void setTenantName(String tenantName) {
         this.tenantName = tenantName;
@@ -289,6 +299,14 @@ public class AccountConfig {
 
     public void setTempUrlHashPrefixSource(String tempUrlHashPrefixSource) {
         setTempUrlHashPrefixSource(TempUrlHashPrefixSource.valueOf(tempUrlHashPrefixSource));
+    }
+
+    public boolean isDisableSslValidation() {
+        return disableSslValidation;
+    }
+
+    public void setDisableSslValidation(boolean disableSslValidation) {
+        this.disableSslValidation = disableSslValidation;
     }
 
 }
