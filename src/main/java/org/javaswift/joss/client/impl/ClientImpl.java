@@ -1,16 +1,5 @@
 package org.javaswift.joss.client.impl;
 
-import java.security.GeneralSecurityException;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
@@ -27,6 +16,14 @@ import org.javaswift.joss.model.Access;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.GeneralSecurityException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
 public class ClientImpl extends AbstractClient<AccountImpl> {
 
     public static final Logger LOG = LoggerFactory.getLogger(ClientImpl.class);
@@ -39,19 +36,10 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
     }
 
     private void initHttpClient(int socketTimeout) {
-        PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
-        connectionManager.setMaxTotal(50);
-        connectionManager.setDefaultMaxPerRoute(25);
+        PoolingClientConnectionManager connectionManager = initConnectionManager();
         
         if(accountConfig.isDisableSslValidation()) {
-            try {
-                connectionManager.getSchemeRegistry().register(
-                        new Scheme("https", 443,
-                                new SSLSocketFactory(createGullibleSslContext(),
-                                        SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER)));
-            } catch (GeneralSecurityException e) {
-                throw new RuntimeException("Could not initialize SSL Context: " + e, e);
-            }
+            disableSslValidation(connectionManager);
         }
         
         this.httpClient = new DefaultHttpClient(connectionManager);
@@ -59,6 +47,24 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
             LOG.info("JOSS / Set socket timeout on HttpClient: "+socketTimeout);
             HttpParams params = this.httpClient.getParams();
             HttpConnectionParams.setSoTimeout(params, socketTimeout);
+        }
+    }
+
+    protected PoolingClientConnectionManager initConnectionManager() {
+        PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
+        connectionManager.setMaxTotal(50);
+        connectionManager.setDefaultMaxPerRoute(25);
+        return connectionManager;
+    }
+
+    protected void disableSslValidation(PoolingClientConnectionManager connectionManager) {
+        try {
+            connectionManager.getSchemeRegistry().register(
+                    new Scheme("https", 443,
+                            new SSLSocketFactory(createGullibleSslContext(),
+                                    SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER)));
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException("Could not initialize SSL Context: " + e, e);
         }
     }
 
@@ -120,18 +126,10 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
         }
     };
     
-    public static HostnameVerifier gullibleVerifier = new HostnameVerifier() {
-        @Override
-        public boolean verify( String s, SSLSession sslSession ) {
-            return true;
-        }
-    };
-    
     public static SSLContext createGullibleSslContext() throws GeneralSecurityException {
         SSLContext ctx = SSLContext.getInstance( "SSL" );
         ctx.init( null, gullibleManagers, new SecureRandom() );
         return ctx;
     }
-
 
 }

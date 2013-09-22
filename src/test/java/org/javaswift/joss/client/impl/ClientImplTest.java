@@ -2,13 +2,16 @@ package org.javaswift.joss.client.impl;
 
 import mockit.NonStrictExpectations;
 import org.apache.http.Header;
+import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.model.Account;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +103,27 @@ public class ClientImplTest extends BaseCommandTest {
         AccountConfig config = new AccountConfig();
         config.setSocketTimeout(1000);
         new ClientImpl(config);
+    }
+
+    @Test
+    public void coverSslValidationDisabled() throws GeneralSecurityException {
+        ((X509TrustManager)ClientImpl.gullibleManagers[0]).checkClientTrusted(null, null);
+        ((X509TrustManager)ClientImpl.gullibleManagers[0]).checkServerTrusted(null, null);
+        ((X509TrustManager)ClientImpl.gullibleManagers[0]).getAcceptedIssuers();
+        assertNotNull(ClientImpl.createGullibleSslContext());
+        config = new AccountConfig();
+        config.setDisableSslValidation(true);
+        new ClientImpl(config);
+    }
+
+    @Test (expected = RuntimeException.class)
+    public void throwSecurityException() throws GeneralSecurityException {
+        final PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
+        new NonStrictExpectations(connectionManager) {{
+            connectionManager.getSchemeRegistry();
+            result = new GeneralSecurityException();
+        }};
+        client.disableSslValidation(connectionManager);
     }
 
 }
