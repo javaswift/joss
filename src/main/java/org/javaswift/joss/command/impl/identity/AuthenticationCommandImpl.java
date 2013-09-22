@@ -13,6 +13,7 @@ import org.javaswift.joss.command.shared.identity.access.AccessNoTenant;
 import org.javaswift.joss.command.shared.identity.access.AccessTenant;
 import org.javaswift.joss.command.shared.identity.authentication.Authentication;
 import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.Accept;
 import org.javaswift.joss.model.Access;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, Access>
         super(httpClient, url);
         setAuthenticationHeader(tenantName, tenantId, username, password);
         setTenantSupplied(tenantName, tenantId);
+        setHeader(new Accept("application/json"));
         this.url = url;
     }
 
