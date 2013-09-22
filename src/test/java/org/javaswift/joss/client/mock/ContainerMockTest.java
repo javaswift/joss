@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import static junit.framework.Assert.*;
-import static junit.framework.Assert.assertEquals;
 
 public class ContainerMockTest {
 

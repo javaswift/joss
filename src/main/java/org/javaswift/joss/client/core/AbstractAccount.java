@@ -2,7 +2,6 @@ package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
-import org.javaswift.joss.headers.DateHeader;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.headers.account.AccountMetadata;
 import org.javaswift.joss.headers.account.HashPassword;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
-import java.util.Date;
 
 public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountInformation> implements Account {
 

@@ -4,8 +4,6 @@ import org.javaswift.joss.util.FileAction;
 import org.javaswift.joss.util.FileReference;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LocalFileObjects extends AbstractFileObjects {
 

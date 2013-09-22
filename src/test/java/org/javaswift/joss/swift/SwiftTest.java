@@ -10,8 +10,6 @@ import org.javaswift.joss.command.mock.account.AccountInformationCommandMock;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
-import org.javaswift.joss.headers.account.AccountMetadata;
-import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;

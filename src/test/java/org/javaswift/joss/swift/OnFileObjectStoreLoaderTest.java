@@ -3,7 +3,6 @@ package org.javaswift.joss.swift;
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.client.mock.ClientMock;
 import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Client;
 import org.javaswift.joss.model.StoredObject;
 import org.junit.Test;
 

@@ -3,12 +3,10 @@ package org.javaswift.joss.client.website;
 import org.javaswift.joss.client.core.AbstractContainer;
 import org.javaswift.joss.headers.website.*;
 import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.model.Website;
 
 import java.io.File;
-import java.util.Map;
 
 public abstract class AbstractWebsite extends AbstractContainer implements Website {
 

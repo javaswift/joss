@@ -1,6 +1,8 @@
 package org.javaswift.joss.client.website;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class AbstractFileObjects implements FileObjects {
 

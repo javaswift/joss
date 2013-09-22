@@ -7,9 +7,7 @@ import org.javaswift.joss.swift.MockUserStore;
 import org.javaswift.joss.swift.Swift;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertSame;
+import static junit.framework.Assert.*;
 
 public class ClientMockTest {
 
