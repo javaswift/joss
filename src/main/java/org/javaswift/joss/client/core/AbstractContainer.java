@@ -112,6 +112,15 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         checkForInfo();
         return info.isPublicContainer();
     }
+    
+    public String getContainerReadPermission() {
+        checkForInfo();
+        return info.getReadPermissions();
+    }
+    public String getcontainerWritePermission() {
+        checkForInfo();
+        return info.getWritePermissions();
+    }
 
     public String getName() {
         return name;
@@ -177,6 +186,12 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     public void setContainerRights(boolean publicContainer) {
         commandFactory.createContainerRightsCommand(getAccount(), this, publicContainer).call();
         this.info.setPublicContainer(publicContainer);
+    }
+    
+    public void setContainerRights(String writePermissions, String readPermissions) {
+        commandFactory.createContainerRightsCommand(getAccount(), this, writePermissions, readPermissions).call();
+        this.info.setWritePermissions(writePermissions);
+        this.info.setReadPermissions(readPermissions);
     }
 
     public Container create() {

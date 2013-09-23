@@ -63,4 +63,11 @@ public class ContainerCommandFactoryMock implements ContainerCommandFactory {
         return "";
     }
 
+    @Override
+    public ContainerRightsCommand createContainerRightsCommand(Account account,
+            Container container, String writePermission, String readPermission) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

@@ -16,6 +16,8 @@ public interface ContainerCommandFactory {
                                                             Collection<? extends Header> headers);
 
     ContainerRightsCommand createContainerRightsCommand(Account account, Container container, boolean publicContainer);
+    
+    ContainerRightsCommand createContainerRightsCommand(Account account, Container container, String writePermission, String readPermission);
 
     CreateContainerCommand createCreateContainerCommand(Account account, Container container);
 
