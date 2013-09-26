@@ -1,5 +1,9 @@
 package org.javaswift.joss.model;
 
+import java.util.Collection;
+
+import org.javaswift.joss.headers.Header;
+
 /**
  * A Container is the entity that holds StoredObjects. This handle allows you to access those objects and set/get
  * information on the container itself. To make sure a Container exists, you can call {@link #exists() exists} which
@@ -104,4 +108,17 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
 
     public String getContainerReadPermission();
     public String getcontainerWritePermission();
+    
+    /**
+     * Sets custom headers to be passed when creating a container.  This allows you to
+     * set implementation-dependent create options to the service.
+     * 
+     * @param headers the set of headers to pass in the create request.
+     */
+    public void setCustomHeaders(Collection<Header> headers);
+    
+    /**
+     * Gets the custom headers on this container.
+     */
+    public Collection<Header> getCustomHeaders();
 }

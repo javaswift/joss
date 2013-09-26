@@ -2,6 +2,7 @@ package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
 import org.javaswift.joss.headers.container.ContainerMetadata;
@@ -32,6 +33,8 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     private final Account account;
 
     private final ContainerCommandFactory commandFactory;
+
+    private Collection<Header> customHeaders;
 
     public AbstractContainer(Account account, String name, boolean allowCaching) {
         super(allowCaching);
@@ -217,5 +220,17 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
     public String getPathForEntity() throws UnsupportedEncodingException {
         return "/" + URLEncoder.encode(getName(), "UTF-8");
     }
+
+    @Override
+    public void setCustomHeaders(Collection<Header> headers) {
+        customHeaders = headers;
+    }
+
+    @Override
+    public Collection<Header> getCustomHeaders() {
+        return customHeaders;
+    }
+    
+    
 
 }
