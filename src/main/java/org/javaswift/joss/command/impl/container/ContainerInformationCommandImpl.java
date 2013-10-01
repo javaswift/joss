@@ -9,7 +9,9 @@ import org.javaswift.joss.command.shared.container.ContainerInformationCommand;
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
 import org.javaswift.joss.headers.container.ContainerMetadata;
 import org.javaswift.joss.headers.container.ContainerObjectCount;
+import org.javaswift.joss.headers.container.ContainerReadPermissions;
 import org.javaswift.joss.headers.container.ContainerRights;
+import org.javaswift.joss.headers.container.ContainerWritePermissions;
 import org.javaswift.joss.information.ContainerInformation;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
@@ -31,6 +33,8 @@ public class ContainerInformationCommandImpl extends AbstractContainerCommand<Ht
         info.setObjectCount(ContainerObjectCount.fromResponse(response));
         info.setBytesUsed(ContainerBytesUsed.fromResponse(response));
         info.setPublicContainer(ContainerRights.fromResponse(response));
+        info.setWritePermissions(ContainerWritePermissions.fromResponse(response));
+        info.setReadPermissions(ContainerReadPermissions.fromResponse(response));
         return info;
     }
 

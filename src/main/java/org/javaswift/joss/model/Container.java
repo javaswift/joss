@@ -98,5 +98,10 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
     public void setBytesUsed(long bytesUsed);
 
     public abstract Account getAccount();
+    
+    
+    public void setContainerRights(String writePermissions, String readPermissions);
 
+    public String getContainerReadPermission();
+    public String getcontainerWritePermission();
 }
