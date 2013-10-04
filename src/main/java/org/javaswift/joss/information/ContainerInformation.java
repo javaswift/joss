@@ -14,8 +14,9 @@ public class ContainerInformation extends AbstractInformation {
 
     private ContainerRights containerRights;
     
-    private String readPermissions;
-    private String writePermissions;
+    private ContainerReadPermissions readPermissions;
+
+    private ContainerWritePermissions writePermissions;
 
     public ContainerInformation() {
         this.containerRights = new ContainerRights(false);
@@ -50,26 +51,26 @@ public class ContainerInformation extends AbstractInformation {
     }
 
     public String getReadPermissions() {
-        return readPermissions;
+        return readPermissions.getHeaderValue();
     }
 
     public void setReadPermissions(String readPermissions) {
-        this.readPermissions = readPermissions;
+        setReadPermissions(new ContainerReadPermissions(readPermissions));
     }
     
     public void setReadPermissions(ContainerReadPermissions readPermissions) {
-        this.readPermissions = readPermissions.getHeaderValue();
+        this.readPermissions = readPermissions;
     }
 
     public String getWritePermissions() {
-        return writePermissions;
+        return writePermissions.getHeaderValue();
     }
 
     public void setWritePermissions(String writePermissions) {
-        this.writePermissions = writePermissions;
+        setWritePermissions(new ContainerWritePermissions(writePermissions));
     }
     
     public void setWritePermissions(ContainerWritePermissions writePermissions) {
-        this.writePermissions = writePermissions.getHeaderValue();
+        this.writePermissions = writePermissions;
     }
 }

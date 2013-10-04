@@ -25,6 +25,7 @@ import static org.javaswift.joss.headers.container.ContainerBytesUsed.X_CONTAINE
 import static org.javaswift.joss.headers.container.ContainerMetadata.X_CONTAINER_META_PREFIX;
 import static org.javaswift.joss.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
 import static org.javaswift.joss.headers.container.ContainerRights.X_CONTAINER_READ;
+import static org.javaswift.joss.headers.container.ContainerWritePermissions.X_CONTAINER_WRITE;
 
 public class ContainerImplTest extends BaseCommandTest {
 
@@ -69,6 +70,14 @@ public class ContainerImplTest extends BaseCommandTest {
         expectStatusCode(202);
         container.makePrivate();
         verifyHeaderValue("", X_CONTAINER_READ);
+    }
+
+    @Test
+    public void setContainerRights() throws IOException {
+        expectStatusCode(202);
+        container.setContainerRights("4,3,1", "1,3,4");
+        verifyHeaderValue("4,3,1", X_CONTAINER_WRITE);
+        verifyHeaderValue("1,3,4", X_CONTAINER_READ);
     }
 
     @Test
