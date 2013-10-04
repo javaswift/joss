@@ -7,7 +7,7 @@ public class ContainerReadPermissions extends SimpleHeader {
     public static final String X_CONTAINER_READ = "X-Container-Read";
     
     public ContainerReadPermissions(String value) {
-        super(value);
+        super(value == null ? "" : value);
     }
 
     @Override

@@ -24,9 +24,6 @@ public class ContainerRightsCommandImpl extends AbstractContainerCommand<HttpPut
     
     public ContainerRightsCommandImpl(Account account, HttpClient httpClient, Access access, Container container, String writePermissions, String readPermissions) {
         super(account, httpClient, access, container);
-        if(writePermissions == null) writePermissions = "";
-        if(readPermissions == null) readPermissions = "";
-        
         setHeader(new ContainerWritePermissions(writePermissions));
         setHeader(new ContainerReadPermissions(readPermissions));
     }

@@ -7,7 +7,7 @@ public class ContainerWritePermissions extends SimpleHeader {
     public static final String X_CONTAINER_WRITE = "X-Container-Write";
 
     public ContainerWritePermissions(String value) {
-        super(value);
+        super(value == null ? "" : value);
     }
 
     @Override

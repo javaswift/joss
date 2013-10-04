@@ -43,6 +43,7 @@ public class ContainerImplTest extends BaseCommandTest {
         prepareHeader(response, X_CONTAINER_META_PREFIX + "Year", "1989", headers);
         prepareHeader(response, X_CONTAINER_META_PREFIX + "Company", "42 BV", headers);
         prepareHeader(response, X_CONTAINER_READ, ContainerRights.PUBLIC_CONTAINER, headers);
+        prepareHeader(response, X_CONTAINER_WRITE, "1,4,3", headers);
         prepareHeader(response, X_CONTAINER_OBJECT_COUNT, "123", headers);
         prepareHeader(response, X_CONTAINER_BYTES_USED, "654321", headers);
         prepareHeadersForRetrieval(response, headers);
@@ -106,6 +107,8 @@ public class ContainerImplTest extends BaseCommandTest {
         assertEquals("1989", container.getMetadata().get("Year"));
         assertEquals("42 BV", container.getMetadata().get("Company"));
         assertTrue(container.isPublic());
+        assertEquals(ContainerRights.PUBLIC_CONTAINER, container.getContainerReadPermission());
+        assertEquals("1,4,3", container.getcontainerWritePermission());
         assertEquals(123, container.getCount());
         assertEquals(654321, container.getBytesUsed());
     }
