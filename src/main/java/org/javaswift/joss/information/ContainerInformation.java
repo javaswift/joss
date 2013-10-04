@@ -2,7 +2,9 @@ package org.javaswift.joss.information;
 
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
 import org.javaswift.joss.headers.container.ContainerObjectCount;
+import org.javaswift.joss.headers.container.ContainerReadPermissions;
 import org.javaswift.joss.headers.container.ContainerRights;
+import org.javaswift.joss.headers.container.ContainerWritePermissions;
 
 public class ContainerInformation extends AbstractInformation {
 
@@ -11,6 +13,9 @@ public class ContainerInformation extends AbstractInformation {
     private ContainerBytesUsed bytesUsed;
 
     private ContainerRights containerRights;
+    
+    private String readPermissions;
+    private String writePermissions;
 
     public ContainerInformation() {
         this.containerRights = new ContainerRights(false);
@@ -42,5 +47,29 @@ public class ContainerInformation extends AbstractInformation {
 
     public void setPublicContainer(ContainerRights containerRights) {
         this.containerRights = containerRights;
+    }
+
+    public String getReadPermissions() {
+        return readPermissions;
+    }
+
+    public void setReadPermissions(String readPermissions) {
+        this.readPermissions = readPermissions;
+    }
+    
+    public void setReadPermissions(ContainerReadPermissions readPermissions) {
+        this.readPermissions = readPermissions.getHeaderValue();
+    }
+
+    public String getWritePermissions() {
+        return writePermissions;
+    }
+
+    public void setWritePermissions(String writePermissions) {
+        this.writePermissions = writePermissions;
+    }
+    
+    public void setWritePermissions(ContainerWritePermissions writePermissions) {
+        this.writePermissions = writePermissions.getHeaderValue();
     }
 }
