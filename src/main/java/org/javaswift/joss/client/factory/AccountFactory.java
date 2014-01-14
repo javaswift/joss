@@ -134,6 +134,11 @@ public class AccountFactory {
         return this;
     }
 
+    public AccountFactory setAuthenticationMethod(AuthenticationMethod authenticationMethod) {
+        this.config.setAuthenticationMethod(authenticationMethod);
+        return this;
+    }
+
     public AccountFactory setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
         return this;

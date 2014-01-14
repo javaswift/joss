@@ -1,5 +1,7 @@
 package org.javaswift.joss.client.factory;
 
+import static org.javaswift.joss.client.factory.AuthenticationMethod.*;
+
 public class AccountConfig {
 
     /**
@@ -144,6 +146,22 @@ public class AccountConfig {
      * a man-in-the-middle attack if the SSL certificate is not strongly validated.
      */
     private boolean disableSslValidation = false;
+
+    /**
+     * The method of authentication. Various options:
+     * <ul>
+     *     <li>
+     *         <b>BASIC</b>; authenticate against Swift itself. Authentication URL, username and password
+     *         must be passed.
+     *     </li>
+     *     <li>
+     *         <b>KEYSTONE</b> (default); makes use of OpenStack Compute. Authentication URL, username and
+     *         password must be passed. Ideally, tenant ID and/or name are passed as well. JOSS can auto-
+     *         discover the tenant if none is passed and if it can be resolved (one tenant for user).
+     *     </li>
+     * </ul>
+     */
+    private AuthenticationMethod authenticationMethod = KEYSTONE;
 
     public void setTenantName(String tenantName) {
         this.tenantName = tenantName;
@@ -307,6 +325,18 @@ public class AccountConfig {
 
     public void setDisableSslValidation(boolean disableSslValidation) {
         this.disableSslValidation = disableSslValidation;
+    }
+
+    public AuthenticationMethod getAuthenticationMethod() {
+        return authenticationMethod;
+    }
+
+    public void setAuthenticationMethod(AuthenticationMethod authenticationMethod) {
+        this.authenticationMethod = authenticationMethod;
+    }
+
+    public void setAuthenticationMethod(String authenticationMethod) {
+        setAuthenticationMethod(AuthenticationMethod.valueOf(authenticationMethod));
     }
 
 }
