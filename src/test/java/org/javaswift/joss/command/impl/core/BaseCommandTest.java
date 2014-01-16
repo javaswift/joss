@@ -1,14 +1,8 @@
 package org.javaswift.joss.command.impl.core;
 
-import mockit.Expectations;
-import mockit.Injectable;
-import mockit.NonStrictExpectations;
-import mockit.Verifications;
+import mockit.*;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
+import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
@@ -80,10 +74,12 @@ public abstract class BaseCommandTest {
 
     public static void prepareHeader(final HttpResponse response, final String name, final String value,
                                      final List<Header> headers) {
-        new NonStrictExpectations() {
-            @Injectable Header header; {
-            header.getName(); result = name;
-            header.getValue(); result = value;
+        new NonStrictExpectations() {{
+            Header header = new Header() {
+                @Override public String getName() { return name; }
+                @Override public String getValue() { return value; }
+                @Override public HeaderElement[] getElements() throws ParseException { return null; }
+            };
             response.getHeaders(name); result = new Header[] { header };
         }};
         if (headers != null) {

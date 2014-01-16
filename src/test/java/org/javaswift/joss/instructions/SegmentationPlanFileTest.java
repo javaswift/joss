@@ -9,7 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class SegmentationPlanFileTest extends SegmentationPlanTest {
+public class SegmentationPlanFileTest extends SegmentationPlanTestBase {
 
     private File file = new File("test.txt");
 

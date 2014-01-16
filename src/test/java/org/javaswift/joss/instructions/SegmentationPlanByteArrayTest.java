@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
 
-public class SegmentationPlanByteArrayTest extends SegmentationPlanTest {
+public class SegmentationPlanByteArrayTest extends SegmentationPlanTestBase {
 
     @Test
     public void getSegmentNumber() throws IOException {

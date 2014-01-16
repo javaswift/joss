@@ -1,8 +1,6 @@
 package org.javaswift.joss.client.factory;
 
-import mockit.Cascading;
-import mockit.Expectations;
-import mockit.NonStrict;
+import mockit.*;
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.client.impl.ClientImpl;
 import org.junit.Test;
@@ -14,9 +12,9 @@ import static junit.framework.Assert.assertNotNull;
 
 public class AccountFactoryTest {
 
-    @NonStrict @Cascading ClientImpl client;
+    @Mocked @Cascading ClientImpl client;
 
-    @NonStrict @Cascading AccountImpl account;
+    @Mocked @Cascading AccountImpl account;
 
     @Test
     public void constructMock() {
@@ -40,7 +38,7 @@ public class AccountFactoryTest {
         AccountConfig config = new AccountConfig();
         AccountFactory factory = new AccountFactory(config);
 
-        new Expectations() {{
+        new NonStrictExpectations() {{
             client.authenticate();
             result = account;
         }};

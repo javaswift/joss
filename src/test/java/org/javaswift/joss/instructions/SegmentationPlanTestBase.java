@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 import static junit.framework.Assert.assertEquals;
 
-public class SegmentationPlanTest {
+public class SegmentationPlanTestBase {
 
     protected void assertTextEquals(SegmentationPlan plan, String assertText) throws IOException {
         StringBuilder stringBuffer = new StringBuilder();
