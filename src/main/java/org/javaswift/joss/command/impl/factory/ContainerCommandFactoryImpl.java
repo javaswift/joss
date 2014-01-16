@@ -39,6 +39,11 @@ public class ContainerCommandFactoryImpl implements ContainerCommandFactory {
     public ContainerRightsCommand createContainerRightsCommand(Account account, Container container, boolean publicContainer) {
         return new ContainerRightsCommandImpl(account, getHttpClient(), getAccess(), container, publicContainer);
     }
+    
+    @Override
+    public ContainerRightsCommand createContainerRightsCommand(Account account, Container container, String writePermissions, String readPermissions) {
+        return new ContainerRightsCommandImpl(account, getHttpClient(), getAccess(), container, writePermissions, readPermissions);
+    }
 
     @Override
     public CreateContainerCommand createCreateContainerCommand(Account account, Container container) {

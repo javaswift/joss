@@ -18,6 +18,7 @@ import static org.javaswift.joss.headers.container.ContainerBytesUsed.X_CONTAINE
 import static org.javaswift.joss.headers.container.ContainerMetadata.X_CONTAINER_META_PREFIX;
 import static org.javaswift.joss.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
 import static org.javaswift.joss.headers.container.ContainerRights.X_CONTAINER_READ;
+import static org.javaswift.joss.headers.container.ContainerWritePermissions.X_CONTAINER_WRITE;
 
 public class ContainerInformationCommandImplTest extends BaseCommandTest {
 
@@ -34,6 +35,7 @@ public class ContainerInformationCommandImplTest extends BaseCommandTest {
         prepareHeader(response, X_CONTAINER_OBJECT_COUNT, "123", headers);
         prepareHeader(response, X_CONTAINER_BYTES_USED, "654321", headers);
         prepareHeader(response, X_CONTAINER_READ, ".r:*", headers);
+        prepareHeader(response, X_CONTAINER_WRITE, "3,1,4", headers);
         prepareHeadersForRetrieval(response, headers);
     }
 
@@ -45,6 +47,8 @@ public class ContainerInformationCommandImplTest extends BaseCommandTest {
         assertEquals("1984", info.getMetadata("Year"));
         assertEquals(123, info.getObjectCount());
         assertEquals(654321, info.getBytesUsed());
+        assertEquals(".r:*", info.getReadPermissions());
+        assertEquals("3,1,4", info.getWritePermissions());
         assertTrue(info.isPublicContainer());
     }
 
