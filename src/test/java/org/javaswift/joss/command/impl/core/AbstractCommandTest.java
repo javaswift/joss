@@ -2,7 +2,7 @@ package org.javaswift.joss.command.impl.core;
 
 import mockit.Expectations;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.javaswift.joss.command.impl.identity.AuthenticationCommandImpl;
+import org.javaswift.joss.command.impl.identity.KeystoneAuthenticationCommandImpl;
 import org.javaswift.joss.exception.CommandException;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class AbstractCommandTest extends BaseCommandTest {
             httpClient.execute((HttpRequestBase)any);
             result = new IOException("Mocked HTTP client error");
         }};
-        new AuthenticationCommandImpl(httpClient, "http://some.url", "some-tenant", "tenant-id", "some-user", "some-pwd").call();
+        new KeystoneAuthenticationCommandImpl(httpClient, "http://some.url", "some-tenant", "tenant-id", "some-user", "some-pwd").call();
     }
 
     @Test(expected = CommandException.class)
@@ -32,7 +32,7 @@ public class AbstractCommandTest extends BaseCommandTest {
             httpClient.execute((HttpRequestBase)any);
             result = new CommandException("Something went wrong", exc);
         }};
-        new AuthenticationCommandImpl(httpClient, "http://some.url", "some-tenant", "tenant-id", "some-user", "some-pwd").call();
+        new KeystoneAuthenticationCommandImpl(httpClient, "http://some.url", "some-tenant", "tenant-id", "some-user", "some-pwd").call();
     }
 
 }

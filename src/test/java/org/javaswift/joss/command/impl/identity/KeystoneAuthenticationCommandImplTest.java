@@ -15,7 +15,7 @@ import java.io.IOException;
 
 import static junit.framework.Assert.*;
 
-public class AuthenticationCommandImplTest extends BaseCommandTest {
+public class KeystoneAuthenticationCommandImplTest extends BaseCommandTest {
 
     @Before
     public void setup() throws IOException {
@@ -25,38 +25,38 @@ public class AuthenticationCommandImplTest extends BaseCommandTest {
 
     @Test
     public void getUrl() {
-        AuthenticationCommand command = new AuthenticationCommandImpl(httpClient, "someurl", null, null, "user", "pwd");
+        AuthenticationCommand command = new KeystoneAuthenticationCommandImpl(httpClient, "someurl", null, null, "user", "pwd");
         assertEquals("someurl", command.getUrl());
     }
 
     @Test
     public void noTenantSupplied() throws IOException {
-        AuthenticationCommand command = new AuthenticationCommandImpl(httpClient, "someurl", null, null, "user", "pwd");
+        AuthenticationCommand command = new KeystoneAuthenticationCommandImpl(httpClient, "someurl", null, null, "user", "pwd");
         Access access = command.call();
         assertFalse(access.isTenantSupplied());
     }
 
     @Test
     public void noTenantNameSupplied() throws IOException {
-        AuthenticationCommand command = new AuthenticationCommandImpl(httpClient, "someurl", null, "tenantid", "user", "pwd");
+        AuthenticationCommand command = new KeystoneAuthenticationCommandImpl(httpClient, "someurl", null, "tenantid", "user", "pwd");
         Access access = command.call();
         assertTrue(access.isTenantSupplied());
     }
 
     @Test
     public void authenticateSuccessful() throws IOException {
-        Access access = new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd").call();
+        Access access = new KeystoneAuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd").call();
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
     }
 
     @Test (expected = UnauthorizedException.class)
     public void authenticateFail() throws IOException {
-        checkForError(401, new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd"));
+        checkForError(401, new KeystoneAuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd"));
     }
 
     @Test (expected = CommandException.class)
     public void unknownError() throws IOException {
-        checkForError(500, new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd"));
+        checkForError(500, new KeystoneAuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd"));
     }
 
     @Test(expected = CommandException.class)
@@ -65,6 +65,6 @@ public class AuthenticationCommandImplTest extends BaseCommandTest {
             new StringEntity(anyString);
             result = new IOException();
         }};
-        new AuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd");
+        new KeystoneAuthenticationCommandImpl(httpClient, "someurl", "sometenant", "tenantid", "user", "pwd");
     }
 }

@@ -83,6 +83,7 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
     protected AccountImpl createAccount() {
         AuthenticationCommand command = this.factory.createAuthenticationCommand(
                 httpClient,
+                accountConfig.getAuthenticationMethod(),
                 accountConfig.getAuthUrl(),
                 accountConfig.getTenantName(),
                 accountConfig.getTenantId(),

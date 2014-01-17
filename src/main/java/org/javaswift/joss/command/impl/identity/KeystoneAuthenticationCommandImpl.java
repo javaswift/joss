@@ -18,13 +18,13 @@ import org.javaswift.joss.model.Access;
 
 import java.io.IOException;
 
-public class AuthenticationCommandImpl extends AbstractCommand<HttpPost, Access> implements AuthenticationCommand {
+public class KeystoneAuthenticationCommandImpl extends AbstractCommand<HttpPost, Access> implements AuthenticationCommand {
 
     private boolean tenantSupplied;
 
     private String url;
 
-    public AuthenticationCommandImpl(HttpClient httpClient, String url, String tenantName, String tenantId, String username, String password) {
+    public KeystoneAuthenticationCommandImpl(HttpClient httpClient, String url, String tenantName, String tenantId, String username, String password) {
         super(httpClient, url);
         setAuthenticationHeader(tenantName, tenantId, username, password);
         setTenantSupplied(tenantName, tenantId);

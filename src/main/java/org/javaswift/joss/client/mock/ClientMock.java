@@ -58,6 +58,7 @@ public class ClientMock extends AbstractClient<AccountMock> {
                     ", Auth URL: " +accountConfig.getAuthUrl());
             this.factory.createAuthenticationCommand(
                     null,
+                    accountConfig.getAuthenticationMethod(),
                     null,
                     accountConfig.getTenantName(),
                     accountConfig.getTenantId(),

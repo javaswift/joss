@@ -62,14 +62,6 @@ public class ListContainersCommandTest extends BaseCommandTest {
                 String uri = request.getURI().toString();
                 assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
             }
-//            httpClient.execute((HttpRequestBase)any);
-//            forEachInvocation = new Object() {
-//                public void validate(HttpRequestBase request) {
-//                    String assertQueryParameters = "?prefix=tst-&marker=dogs&limit=10";
-//                    String uri = request.getURI().toString();
-//                    assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
-//                }
-//            };
         }};
     }
 

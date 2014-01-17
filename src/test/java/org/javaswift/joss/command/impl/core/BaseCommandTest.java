@@ -75,16 +75,20 @@ public abstract class BaseCommandTest {
     public static void prepareHeader(final HttpResponse response, final String name, final String value,
                                      final List<Header> headers) {
         new NonStrictExpectations() {{
-            Header header = new Header() {
-                @Override public String getName() { return name; }
-                @Override public String getValue() { return value; }
-                @Override public HeaderElement[] getElements() throws ParseException { return null; }
-            };
+            Header header = createHeader(name, value);
             response.getHeaders(name); result = new Header[] { header };
         }};
         if (headers != null) {
             headers.add(response.getHeaders(name)[0]);
         }
+    }
+
+    public static Header createHeader(final String name, final String value) {
+        return new Header() {
+            @Override public String getName() { return name; }
+            @Override public String getValue() { return value; }
+            @Override public HeaderElement[] getElements() throws ParseException { return null; }
+        };
     }
 
     public static void prepareHeadersForRetrieval(final HttpResponse response, final List<Header> headers) {
