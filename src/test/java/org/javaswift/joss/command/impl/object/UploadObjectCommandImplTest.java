@@ -20,6 +20,8 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -60,12 +62,11 @@ public class UploadObjectCommandImplTest extends BaseCommandTest {
         verifyHeaderValue("cafebabe", Token.X_AUTH_TOKEN);
         // USE_EXPECT_CONTINUE is essential for uploading, since the Object Store requires it
         new Verifications() {{
-            httpClient.execute((HttpRequestBase)any);
-            forEachInvocation = new Object() {
-                public void validate(HttpRequestBase request) {
-                    assertTrue(Boolean.valueOf(request.getParams().getParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE).toString()));
-                }
-            };
+            List<HttpRequestBase> requests = new ArrayList<>();
+            httpClient.execute(withCapture(requests));
+            for (HttpRequestBase request : requests) {
+                assertTrue(Boolean.valueOf(request.getParams().getParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE).toString()));
+            }
         }};
         inputStream.close();
     }

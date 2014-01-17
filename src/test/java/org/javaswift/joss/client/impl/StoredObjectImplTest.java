@@ -226,13 +226,12 @@ public class StoredObjectImplTest extends BaseCommandTest {
 
     protected void verifyUploadContent(final byte[] bytes) throws IOException {
         new Verifications() {{
-            httpClient.execute((HttpRequestBase)any);
-            forEachInvocation = new Object() {
-                public void validate(HttpRequestBase request) throws IOException {
-                    byte[] result = IOUtils.toByteArray(((HttpPut)request).getEntity().getContent());
-                    assertTrue(Arrays.equals(bytes, result));
-                }
-            };
+            List<HttpRequestBase> requests = new ArrayList<>();
+            httpClient.execute(withCapture(requests));
+            for (HttpRequestBase request : requests) {
+                byte[] result = IOUtils.toByteArray(((HttpPut)request).getEntity().getContent());
+                assertTrue(Arrays.equals(bytes, result));
+            }
         }};
     }
 

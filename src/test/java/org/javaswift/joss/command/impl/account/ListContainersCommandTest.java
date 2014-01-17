@@ -10,7 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -53,14 +55,21 @@ public class ListContainersCommandTest extends BaseCommandTest {
         new ListContainersCommandImpl(this.account, httpClient, defaultAccess,
                 new ListInstructions().setPrefix("tst-").setMarker("dogs").setLimit(10)).call();
         new Verifications() {{
-            httpClient.execute((HttpRequestBase)any);
-            forEachInvocation = new Object() {
-                public void validate(HttpRequestBase request) {
-                    String assertQueryParameters = "?prefix=tst-&marker=dogs&limit=10";
-                    String uri = request.getURI().toString();
-                    assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
-                }
-            };
+            List<HttpRequestBase> requests = new ArrayList<>();
+            httpClient.execute(withCapture(requests));
+            for (HttpRequestBase request : requests) {
+                String assertQueryParameters = "?prefix=tst-&marker=dogs&limit=10";
+                String uri = request.getURI().toString();
+                assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
+            }
+//            httpClient.execute((HttpRequestBase)any);
+//            forEachInvocation = new Object() {
+//                public void validate(HttpRequestBase request) {
+//                    String assertQueryParameters = "?prefix=tst-&marker=dogs&limit=10";
+//                    String uri = request.getURI().toString();
+//                    assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
+//                }
+//            };
         }};
     }
 

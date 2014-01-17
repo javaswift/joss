@@ -142,18 +142,17 @@ public abstract class BaseCommandTest {
 
     protected void verifyHeaderValue(final String expectedValue, final String header, final String matchHttpMethod) throws IOException {
         new Verifications() {{
-            httpClient.execute((HttpRequestBase)any);
-            forEachInvocation = new Object() {
-                public void validate(HttpRequestBase request) {
-                    if (matchHttpMethod == null || matchHttpMethod.equals(request.getMethod())) {
-                        if (expectedValue == null) {
-                            assertNull(request.getFirstHeader(header));
-                        } else {
-                            assertEquals(expectedValue, request.getFirstHeader(header).getValue());
-                        }
+            List<HttpRequestBase> requests = new ArrayList<>();
+            httpClient.execute(withCapture(requests));
+            for (HttpRequestBase request : requests) {
+                if (matchHttpMethod == null || matchHttpMethod.equals(request.getMethod())) {
+                    if (expectedValue == null) {
+                        assertNull(request.getFirstHeader(header));
+                    } else {
+                        assertEquals(expectedValue, request.getFirstHeader(header).getValue());
                     }
                 }
-            };
+            }
         }};
     }
 
