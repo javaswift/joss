@@ -146,7 +146,7 @@ public abstract class BaseCommandTest {
 
     protected void verifyHeaderValue(final String expectedValue, final String header, final String matchHttpMethod) throws IOException {
         new Verifications() {{
-            List<HttpRequestBase> requests = new ArrayList<>();
+            List<HttpRequestBase> requests = new ArrayList<HttpRequestBase>();
             httpClient.execute(withCapture(requests));
             for (HttpRequestBase request : requests) {
                 if (matchHttpMethod == null || matchHttpMethod.equals(request.getMethod())) {

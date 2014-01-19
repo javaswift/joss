@@ -55,7 +55,7 @@ public class ListContainersCommandTest extends BaseCommandTest {
         new ListContainersCommandImpl(this.account, httpClient, defaultAccess,
                 new ListInstructions().setPrefix("tst-").setMarker("dogs").setLimit(10)).call();
         new Verifications() {{
-            List<HttpRequestBase> requests = new ArrayList<>();
+            List<HttpRequestBase> requests = new ArrayList<HttpRequestBase>();
             httpClient.execute(withCapture(requests));
             for (HttpRequestBase request : requests) {
                 String assertQueryParameters = "?prefix=tst-&marker=dogs&limit=10";

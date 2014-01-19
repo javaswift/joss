@@ -61,7 +61,7 @@ public class ListObjectsCommandImplTest extends BaseCommandTest {
         new ListObjectsCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName"),
                 new ListInstructions().setMarker("dogs").setLimit(10)).call();
         new Verifications() {{
-            List<HttpRequestBase> requests = new ArrayList<>();
+            List<HttpRequestBase> requests = new ArrayList<HttpRequestBase>();
             httpClient.execute(withCapture(requests));
             for (HttpRequestBase request : requests) {
                 String assertQueryParameters = "?marker=dogs&limit=10";

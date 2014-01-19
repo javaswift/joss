@@ -62,7 +62,7 @@ public class UploadObjectCommandImplTest extends BaseCommandTest {
         verifyHeaderValue("cafebabe", Token.X_AUTH_TOKEN);
         // USE_EXPECT_CONTINUE is essential for uploading, since the Object Store requires it
         new Verifications() {{
-            List<HttpRequestBase> requests = new ArrayList<>();
+            List<HttpRequestBase> requests = new ArrayList<HttpRequestBase>();
             httpClient.execute(withCapture(requests));
             for (HttpRequestBase request : requests) {
                 assertTrue(Boolean.valueOf(request.getParams().getParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE).toString()));

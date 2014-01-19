@@ -19,7 +19,9 @@ public class QueryParameterTest {
 
     @Test
     public void getQueryWithEncodedValue() {
-        QueryParameter qp = new QueryParameter("märker", "a \"Rose\" by any other Name");
+        // 0x00E4
+
+        QueryParameter qp = new QueryParameter("m\u00e4rker", "a \"Rose\" by any other Name");
         assertEquals("m%C3%A4rker=a+%22Rose%22+by+any+other+Name", qp.getQuery());
     }
 

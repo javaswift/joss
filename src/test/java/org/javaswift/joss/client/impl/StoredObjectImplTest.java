@@ -226,7 +226,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
 
     protected void verifyUploadContent(final byte[] bytes) throws IOException {
         new Verifications() {{
-            List<HttpRequestBase> requests = new ArrayList<>();
+            List<HttpRequestBase> requests = new ArrayList<HttpRequestBase>();
             httpClient.execute(withCapture(requests));
             for (HttpRequestBase request : requests) {
                 byte[] result = IOUtils.toByteArray(((HttpPut)request).getEntity().getContent());
@@ -294,7 +294,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
     @Test
     public void getPublicUrlEncoded() {
         Container container = account.getContainer("alpha");
-        object = container.getObject("a nämü with spaces.png");
+        object = container.getObject("a n\u00e4m\u00fc with spaces.png");
         expectPublicUrl("http://static.resource.com");
         assertEquals("http://static.resource.com/alpha/a+n%C3%A4m%C3%BC+with+spaces.png", object.getPublicURL());
     }
