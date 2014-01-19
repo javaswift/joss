@@ -10,6 +10,7 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.util.SpaceURLEncoder;
 
 import java.io.File;
 import java.io.InputStream;
@@ -99,7 +100,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     @Override
     public String getPathForEntity() throws UnsupportedEncodingException {
-        return getContainer().getPath() + "/" + URLEncoder.encode(getName(), "UTF-8");
+        return getContainer().getPath() + "/" + SpaceURLEncoder.encode(getName());
     }
 
     public void setLastModified(Date date) {

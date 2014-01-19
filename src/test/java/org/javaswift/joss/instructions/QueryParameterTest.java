@@ -22,7 +22,7 @@ public class QueryParameterTest {
         // 0x00E4
 
         QueryParameter qp = new QueryParameter("m\u00e4rker", "a \"Rose\" by any other Name");
-        assertEquals("m%C3%A4rker=a+%22Rose%22+by+any+other+Name", qp.getQuery());
+        assertEquals("m%C3%A4rker=a%20%22Rose%22%20by%20any%20other%20Name", qp.getQuery());
     }
 
     @Test

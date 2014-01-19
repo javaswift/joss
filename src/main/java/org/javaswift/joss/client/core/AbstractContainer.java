@@ -12,6 +12,7 @@ import org.javaswift.joss.instructions.SegmentationPlan;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.*;
 import org.javaswift.joss.util.HashSignature;
+import org.javaswift.joss.util.SpaceURLEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -215,7 +216,7 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
 
     @Override
     public String getPathForEntity() throws UnsupportedEncodingException {
-        return "/" + URLEncoder.encode(getName(), "UTF-8");
+        return "/" + SpaceURLEncoder.encode(getName());
     }
 
 }

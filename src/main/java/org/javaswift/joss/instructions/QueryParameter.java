@@ -1,6 +1,7 @@
 package org.javaswift.joss.instructions;
 
 import org.apache.http.NameValuePair;
+import org.javaswift.joss.util.SpaceURLEncoder;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -32,7 +33,7 @@ public class QueryParameter implements NameValuePair {
 
     private String urlEncode(String value) {
         try {
-            return URLEncoder.encode(value, "UTF-8");
+            return SpaceURLEncoder.encode(value);
         } catch (UnsupportedEncodingException e) {
             throw new IllegalArgumentException(e);
         }

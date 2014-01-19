@@ -296,7 +296,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
         Container container = account.getContainer("alpha");
         object = container.getObject("a n\u00e4m\u00fc with spaces.png");
         expectPublicUrl("http://static.resource.com");
-        assertEquals("http://static.resource.com/alpha/a+n%C3%A4m%C3%BC+with+spaces.png", object.getPublicURL());
+        assertEquals("http://static.resource.com/alpha/a%20n%C3%A4m%C3%BC%20with%20spaces.png", object.getPublicURL());
     }
 
     @Test

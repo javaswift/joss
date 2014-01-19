@@ -33,7 +33,9 @@ public class TempURL {
     }
 
     protected String getSignaturePlainText() {
-        String objectPath = this.prefix + this.object.getPath();
+        // Note that we're not making use here of the standard getPath() because we don't want the URL encoded names,
+        // but the pure names. Swift uses the same approach to compose a signature plaintext with container/object names.
+        String objectPath = this.prefix + "/" + this.object.getContainer().getName() + "/" + this.object.getName();
         return this.method + "\n" + this.expiry + "\n" + objectPath;
     }
 
