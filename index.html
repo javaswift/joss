@@ -51,7 +51,7 @@
           <p>Your Object Store provider will have provided you with the following information in order to authenticate yourself:</p>
 
           <ul>
-              <li>tenant</li>
+              <li>tenantId (or tenantName)</li>
               <li>username</li>
               <li>password</li>
               <li>authentication URL</li>
@@ -61,7 +61,7 @@
             <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">setTenant</span><span class="o">(</span><span class="n">tenant</span><span class="o">);</span>
+            <span class="o">.</span><span class="na">setTenantId</span><span class="o">(</span><span class="n">tenantId</span><span class="o">);</span>
     <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
 </pre></div>
 
@@ -148,7 +148,7 @@
             <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">setTenant</span><span class="o">(</span><span class="n">tenant</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setTenantId</span><span class="o">(</span><span class="n">tenantId</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setMock</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
     <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
 </pre></div>
