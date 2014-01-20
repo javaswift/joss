@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/joss.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>JOSS / Authentication</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+          <h1><img src="images/joss-logo.png" title="JOSS"/></h1>
+        <h2>Java library for OpenStack Storage, aka Swift</h2>
+        <a href="https://github.com/javaswift/joss" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+
+            <h1>Authentication</h1>
+
+            <p>JOSS supports two modes of authentication:</p>
+            <ul>
+                <li><a href="#basic">Basic authentication</a>; authenticates against the Swift container</li>
+                <li><a href="#keystone">Keystone authentication</a>; authenticates against a <a href="http://docs.openstack.org/api/openstack-identity-service/2.0/content/POST_authenticate_v2.0_tokens_.html">Keystone</a> instance</li>
+            </ul>
+            <p>Important! Keystone authentication is the JOSS default.</p>
+
+            <h2 id="basic">Basic authentication</h2>
+            <p>
+                Basic authentication uses swift as its authentication resource. A call with username and password is
+                made directly to Swift. Swift will authenticate the user and send back the endpoint (URL on Swift for
+                the Swift REST API) and the token (passed to Swift with each call).
+            </p>
+            <img src="images/basic-authentication.png" width="60%"/>
+
+            <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthenticationMethod</span><span class="o">(</span><span class="n">AuthenticationMethod.BASIC</span><span class="o">);</span>
+    <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
+</pre></div>
+
+            <h2 id="keystone">Keystone authentication</h2>
+
+            <p>
+                Keystone authentication uses Keystone as its authentication resource. A call with username and password
+                is made to Keystone. Keystone will authenticate the user and send back the various Swift endpoints and
+                the token (passed to Swift with each call). Keystone is the JOSS default.
+            </p>
+            <img src="images/keystone-authentication.png" width="60%"/>
+
+            <p>
+                Keystone knows the concept of tenants, which is best compared to a project or space. JOSS needs to know
+                the tenant. You have four options for identifying the tenant:
+            </p>
+
+            <ul>
+                <li><a href="#tenant-id">pass the tenant ID</a></li>
+                <li><a href="#tenant-name">pass the tenant name</a></li>
+                <li><a href="#tenant-id-and-name">pass both the tenant ID and the tenant name</a></li>
+                <li><a href="#tenant-ask-joss">ask JOSS to identify the tenant</a></li>
+            </ul>
+
+            <h3 id="tenant-id">Pass the tenant ID</h3>
+            <p>Pass just the tenant ID and use that to look up the tenant.</p>
+
+            <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setTenantId</span><span class="o">(</span><span class="n">tenantId</span><span class="o">);</span>
+    <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
+</pre></div>
+
+            <h3 id="tenant-name">Pass the tenant name</h3>
+            <p>Pass just the tenant name and use that to look up the tenant.</p>
+
+            <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setTenantName</span><span class="o">(</span><span class="n">tenantName</span><span class="o">);</span>
+    <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
+</pre></div>
+
+            <h3 id="tenant-id-and-name">Pass the tenant ID and the tenant name</h3>
+            <p>Pass both tenant ID and name and use both for looking up the tenant.</p>
+
+            <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setTenantId</span><span class="o">(</span><span class="n">tenantId</span><span class="o">);</span>
+            <span class="o">.</span><span class="na">setTenantName</span><span class="o">(</span><span class="n">tenantName</span><span class="o">);</span>
+    <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
+</pre></div>
+
+            <h3 id="tenant-ask-joss">Ask JOSS to identify the tenant</h3>
+            <p>
+                JOSS can ask Keystone for a list of tenants belonging to the username/password. It will then pick the
+                one tenant it finds. With the username, password and tenant, JOSS will authenticate against Keystone.
+                This only works if the username has exactly one tenant!
+            </p>
+
+            <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthenticationMethod</span><span class="o">(</span><span class="n">AuthenticationMethod.KEYSTONE</span><span class="o">);</span>
+    <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
+</pre></div>
+
+        </section>
+
+          <aside id="sidebar">
+
+              <p class="site-link"><a href="index.html">Home</a></p>
+              <p class="site-link">Tutorials</p>
+              <p class="site-link-sub"><a href="authentication.html">Authentication</a></p>
+              <p class="site-link-sub"><a href="pagination.html">Pagination</a></p>
+              <p class="site-link-sub"><a href="spring.html">Wiring to Spring</a></p>
+              <p class="site-link-sub"><a href="economy.html">Economy of server calls</a></p>
+              <p class="site-link-sub"><a href="http://javadocs.joss.javaswift.org">Javadocs</a></p>
+              <p class="site-link">Roadmap</p>
+              <p class="site-link-sub"><a href="release-notes.html">Release notes</a></p>
+              <p class="site-link-sub"><a href="feature-matrix.html">Supported Swift features</a></p>
+              <p class="site-link-sub"><a href="future-features.html">Future features</a></p>
+              <p class="site-link"><a href="http://javaswift.org">Javaswift</a></p>
+              <p class="site-link-sub"><a href="http://joss.javaswift.org">JOSS</a></p>
+              <p class="site-link-sub"><a href="http://cloudie.javaswift.org">Cloudie</a></p>
+
+              <hr>
+
+              <a href="https://github.com/javaswift/joss/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/javaswift/joss/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/javaswift/joss"></a> is maintained by <a href="https://github.com/javaswift">javaswift</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-39343905-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>

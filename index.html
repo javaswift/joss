@@ -55,15 +55,19 @@
               <li>username</li>
               <li>password</li>
               <li>authentication URL</li>
-          </ul><p>We start by opening up a stateful client and <strong>authenticating</strong> ourselves:</p>
+          </ul>
+          <p>We start by opening up a stateful client and <a href="authentication.html"><strong>authenticating</strong></a> ourselves:</p>
 
           <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
             <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setTenantId</span><span class="o">(</span><span class="n">tenantId</span><span class="o">);</span>
+            <span class="o">.</span><span class="na">setTenantName</span><span class="o">(</span><span class="n">tenantName</span><span class="o">);</span>
     <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
 </pre></div>
+
+          <p>Note that you do not have to pass both tenant ID and tenant name; passing either tenant ID or tenant name is sufficient.</p>
 
           <p>On failure, the client will throw an exception. On success, the account can now be used to execute actions on the Object Store. The account takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire after 24 hours. The client will get a new token when it encounters a 401 and retry the original command just once.</p>
 
@@ -252,6 +256,7 @@
 
             <p class="site-link"><a href="index.html">Home</a></p>
             <p class="site-link">Tutorials</p>
+            <p class="site-link-sub"><a href="authentication.html">Authentication</a></p>
             <p class="site-link-sub"><a href="pagination.html">Pagination</a></p>
             <p class="site-link-sub"><a href="spring.html">Wiring to Spring</a></p>
             <p class="site-link-sub"><a href="economy.html">Economy of server calls</a></p>
