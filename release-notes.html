@@ -33,6 +33,23 @@
 
             <h1>Release notes</h1>
 
+            <h2><a name="v093" class="anchor" href="#v093"><span class="mini-icon mini-icon-link"></span></a>v0.9.3</h2>
+            <ul>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/44">Fixed URL encoding bug</a></strong>;
+                    Java's default URLEncoder codifies spaces as '+', whereas %20 codes are required. An encoding call to
+                    URLEncoder is now supplemented with a replace("+","%20"). More nefariously, URLEncoder.encode was also
+                    called on the TempURL plaintext signature. This caused matching errors on temporary GET/PUT urls,
+                    because Swift uses the pure name (including spaces and unicode characters).</li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/49">Basic authentication</a></strong>;
+                    Before, JOSS only supported Keystone authentication. Now, you can also use
+                    <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/authentication-object-dev-guide.html">
+                    Basic authentication</a>. Call .setAuthenticationMethod(AuthenticationMethod.BASIC) on the AccountFactory
+                    and make sure to pass a username/password. Note that Swift does not require a tenant for this type of
+                    authentication.
+                </li>
+            </ul>
+            </h2>
+
             <h2><a name="v092" class="anchor" href="#v092"><span class="mini-icon mini-icon-link"></span></a>v0.9.2</h2>
             <ul>
                 <li><strong><a href="https://github.com/javaswift/joss/pull/46">EMC ViPR</a></strong>; compatibility with <a href="http://www.emc.com/data-center-management/vipr/index.htm">EMC ViPR</a></li>
