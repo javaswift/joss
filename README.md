@@ -17,21 +17,25 @@ You can also download the artifact on [Maven Search](http://search.maven.org)
 Getting Started
 ---------------
 Your Object Store provider will have provided you with the following information in order to authenticate yourself:
-* tenant
+* tenant ID
+* tenant name
 * username
 * password
 * authentication URL
 
-We start by opening up a stateful client and **authenticating** ourselves:
+We start by opening up a stateful client and [**authenticating**](http://joss.javaswift.org/authentication.html) ourselves:
 
 ```java
     Account account = new AccountFactory()
             .setUsername(username)
             .setPassword(password)
             .setAuthUrl(url)
-            .setTenant(tenant)
+            .setTenantId(tenantId)
+            .setTenantName(tenantName)
             .createAccount();
 ```
+
+Note that you do not have to pass both tenant ID and tenant name; passing either tenant ID or tenant name is sufficient.
 
 On failure, the client will throw an exception. On success, the account can now be used to execute actions on the Object Store. The account takes care of adding the token to the calls, so you don't have to worry about that. You should be aware, however, that tokens expire after 24 hours. The client will get a new token when it encounters a 401 and retry the original command just once.
 
