@@ -40,6 +40,8 @@
             </ul>
             <p>Important! Keystone authentication is the JOSS default.</p>
 
+            <p>The <a href="#architecture">JOSS authentication architecture</a> is based on stateful session.</p>
+
             <h2 id="basic">Basic authentication</h2>
             <p>
                 Basic authentication uses swift as its authentication resource. A call with username and password is
@@ -125,6 +127,24 @@
             <span class="o">.</span><span class="na">setAuthenticationMethod</span><span class="o">(</span><span class="n">AuthenticationMethod.KEYSTONE</span><span class="o">);</span>
     <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
 </pre></div>
+
+            <h2 id="architecture">Architecture</h2>
+            <p>
+                When you create an Account, you are holding a stateful session. It will remember the authentication token
+                and pass that on with every request to the Swift container. Normally, Keystone tokens are valid for 24 hours,
+                but this may differ per Swift implementation.
+            </p>
+
+            <p>
+                Whenever an Unauthorized exception is thrown (JOSS maps a 401 HTTP response to an UnauthorizedException),
+                JOSS will automatically try to reauthenticate. This functionality exists to support long-lived applications
+                that need to have a constant connection.
+            </p>
+
+            <p>
+                Reauthentication can be disallowed by setting .allowReauthenticate=false on the AccountConfig or
+                AccountFactory objects.
+            </p>
 
         </section>
 
