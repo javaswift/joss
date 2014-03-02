@@ -40,7 +40,7 @@
             </ul>
             <p>Important! Keystone authentication is the JOSS default.</p>
 
-            <p>The <a href="#architecture">JOSS authentication architecture</a> is based on stateful session.</p>
+            <p>The <a href="#architecture">JOSS authentication architecture</a> is based on a stateful session.</p>
 
             <h2 id="basic">Basic authentication</h2>
             <p>
@@ -117,7 +117,7 @@
             <p>
                 JOSS can ask Keystone for a list of tenants belonging to the username/password. It will then pick the
                 one tenant it finds. With the username, password and tenant, JOSS will authenticate against Keystone.
-                This only works if the username has exactly one tenant!
+                This only works if the user has exactly one tenant!
             </p>
 
             <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
