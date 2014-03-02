@@ -36,6 +36,7 @@
             <p>JOSS supports two modes of authentication:</p>
             <ul>
                 <li><a href="#basic">Basic authentication</a>; authenticates against the Swift container</li>
+                <li><a href="#tempauth">TempAuth authentication</a>; authenticates against the Swift TempAuth module</li>
                 <li><a href="#keystone">Keystone authentication</a>; authenticates against a <a href="http://docs.openstack.org/api/openstack-identity-service/2.0/content/POST_authenticate_v2.0_tokens_.html">Keystone</a> instance</li>
             </ul>
             <p>Important! Keystone authentication is the JOSS default.</p>
@@ -55,6 +56,23 @@
             <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setAuthenticationMethod</span><span class="o">(</span><span class="n">AuthenticationMethod.BASIC</span><span class="o">);</span>
+    <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
+</pre></div>
+
+            <h2 id="tempauth">TempAuth authentication</h2>
+
+            <p>
+                TempAuth authentication uses the TempAuth module as its authentication resource. Read more in the
+                <a href="https://github.com/openstack/swift/blob/master/swift/common/middleware/tempauth.py">TempAuth documentation</a>.
+                A call with username and password is made to TempAuth. The module will authenticate the user and send
+                back the endpoint (URL on Swift for the Swift REST API) and the token (passed to Swift with each call).
+            </p>
+
+            <div class="highlight"><pre>    <span class="n">AccountConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountConfig</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">setUsername</span><span class="o">(</span> <span class="n">username</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setAuthenticationMethod</span><span class="o">(</span><span class="n">AuthenticationMethod.TEMPAUTH</span><span class="o">);</span>
     <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
 </pre></div>
 
