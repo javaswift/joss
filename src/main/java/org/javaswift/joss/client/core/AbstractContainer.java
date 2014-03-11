@@ -57,6 +57,15 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
                 .setLimit(pageSize);
         return commandFactory.createListObjectsCommand(getAccount(), this, listInstructions).call();
     }
+    
+    public Collection<StoredObject> list(String prefix, String delimeter, String marker, int pageSize) {
+        ListInstructions listInstructions = new ListInstructions()
+                .setPrefix(prefix)
+                .setDelimiter(delimeter)
+                .setMarker(marker)
+                .setLimit(pageSize);
+        return commandFactory.createListObjectsCommand(getAccount(), this, listInstructions).call();
+    }
 
     public void metadataSetFromHeaders() {
         this.staleHeaders = false;
