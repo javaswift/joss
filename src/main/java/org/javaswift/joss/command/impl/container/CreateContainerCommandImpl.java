@@ -16,6 +16,9 @@ public class CreateContainerCommandImpl extends AbstractContainerCommand<HttpPut
 
     public CreateContainerCommandImpl(Account account, HttpClient httpClient, Access access, Container container) {
         super(account, httpClient, access, container);
+        if(container.getCustomHeaders() != null) {
+            addHeaders(container.getCustomHeaders());
+        }
     }
 
     @Override
