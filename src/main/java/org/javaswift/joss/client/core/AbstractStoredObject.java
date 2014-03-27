@@ -9,6 +9,7 @@ import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.Directory;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.util.SpaceURLEncoder;
 
@@ -283,4 +284,12 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
                 .verify(signature, expiry);
     }
 
+    public boolean isObject() { return true; }
+    public boolean isDirectory() { return false; }
+    @Override public Directory getAsDirectory() {
+        throw new UnsupportedOperationException("A StoredObject cannot be cast to a Directory");
+    }
+    @Override public StoredObject getAsObject() {
+        return this;
+    }
 }

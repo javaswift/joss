@@ -1,6 +1,5 @@
 package org.javaswift.joss.client.core;
 
-import org.javaswift.joss.model.ListHolder;
 import org.javaswift.joss.model.ListSubject;
 import org.javaswift.joss.model.PaginationMap;
 import org.slf4j.Logger;
@@ -15,21 +14,18 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
 
     public static final Logger LOG = LoggerFactory.getLogger(AbstractPaginationMap.class);
 
-    private ListHolder<Child> listHolder;
+    private int blockSize;
 
     private int pageSize;
 
     private Map<Integer, String> pageToMarker = new TreeMap<Integer, String>();
 
-    private int blockSize;
-
     private int numberOfRecords = 0;
 
     private String prefix;
 
-    public AbstractPaginationMap(ListHolder<Child> listHolder, String prefix, int pageSize) {
-        this.listHolder = listHolder;
-        this.blockSize = listHolder.getMaxPageSize();
+    public AbstractPaginationMap(String prefix, int pageSize, int maxPageSize) {
+        this.blockSize = maxPageSize;
         this.prefix = prefix;
         this.pageSize = pageSize;
     }
@@ -39,15 +35,19 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
         return this;
     }
 
+    public abstract Collection<Child> list(String prefix, String marker, int blockSize);
+
+    public abstract int getCount();
+
     public Collection<Child> listAllItems() {
         Collection<Child> allChildren = new ArrayList<Child>();
-        int recordsToGo = listHolder.getCount();
+        int recordsToGo = getCount();
         String marker = null;
         int page = 0;
         int locationInPage = 0;
         pageToMarker.put(page++, null); // First marker is always null
         while (recordsToGo > 0) {
-            Collection<Child> children = listHolder.list(prefix, marker, blockSize);
+            Collection<Child> children = list(prefix, marker, blockSize);
             for (Child child : children) {
                 marker = child.getName();
                 numberOfRecords++;

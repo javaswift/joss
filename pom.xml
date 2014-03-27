@@ -86,7 +86,7 @@
             <version>${commons.lang.version}</version>
         </dependency>
 
-        <!-- Used for loading test resources and converting a File to byte[] -->
+        <!-- Used for loading test resources and converting a DirectoryOrObject to byte[] -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

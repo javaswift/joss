@@ -4,6 +4,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class StoredObjectListElement {
 
+    public String subdir;
+
     public String name;
 
     public String hash;

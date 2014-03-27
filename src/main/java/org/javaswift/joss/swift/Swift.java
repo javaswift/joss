@@ -17,15 +17,13 @@ import org.javaswift.joss.information.ObjectInformation;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.Access;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Container;
-import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.model.*;
 import org.javaswift.joss.swift.scheduled.ObjectDeleter;
 import org.javaswift.joss.swift.statusgenerator.StatusGenerator;
 import org.javaswift.joss.util.LocalTime;
 
 import java.io.*;
+import java.io.File;
 import java.util.*;
 
 /**
@@ -294,6 +292,16 @@ public class Swift {
         } else {
             return swiftContainer.listObjects(container, listInstructions);
         }
+    }
+
+    public SwiftResult<Collection<DirectoryOrObject>> listDirectory(Container container, ListInstructions listInstructions) {
+            return new SwiftResult<Collection<DirectoryOrObject>>(HttpStatus.SC_NOT_FOUND);
+//        SwiftContainer swiftContainer = getContainer(container.getName());
+//        if (swiftContainer == null) {
+//              return new SwiftResult<Collection<org.javaswift.joss.model.DirectoryOrObject>>(HttpStatus.SC_NOT_FOUND);
+//        } else {
+//            return swiftContainer.listObjects(container, listInstructions);
+//        }
     }
 
     // +-----------------------------------------+

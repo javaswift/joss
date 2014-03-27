@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Collection;
 
 public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container {
@@ -57,14 +56,25 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
                 .setLimit(pageSize);
         return commandFactory.createListObjectsCommand(getAccount(), this, listInstructions).call();
     }
-    
-    public Collection<StoredObject> list(String prefix, String delimeter, String marker, int pageSize) {
+
+    @Override
+    public Collection<DirectoryOrObject> listDirectory(String prefix, Character delimiter, String marker, int pageSize) {
         ListInstructions listInstructions = new ListInstructions()
                 .setPrefix(prefix)
-                .setDelimiter(delimeter)
+                .setDelimiter(delimiter)
                 .setMarker(marker)
                 .setLimit(pageSize);
-        return commandFactory.createListObjectsCommand(getAccount(), this, listInstructions).call();
+        return commandFactory.createListDirectoryCommand(getAccount(), this, listInstructions).call();
+    }
+
+    @Override
+    public Collection<DirectoryOrObject> listDirectory(Directory directory) {
+        return new ContainerDirectoryPaginationMap(this, '/', directory == null ? null : directory.getPath(), MAX_PAGE_SIZE).listAllItems();
+    }
+
+    @Override
+    public Collection<DirectoryOrObject> listDirectory() {
+        return new ContainerDirectoryPaginationMap(this, '/', null, MAX_PAGE_SIZE).listAllItems();
     }
 
     public void metadataSetFromHeaders() {

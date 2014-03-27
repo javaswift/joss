@@ -1,5 +1,7 @@
 package org.javaswift.joss.model;
 
+import java.util.Collection;
+
 /**
  * A Container is the entity that holds StoredObjects. This handle allows you to access those objects and set/get
  * information on the container itself. To make sure a Container exists, you can call {@link #exists() exists} which
@@ -11,7 +13,7 @@ package org.javaswift.joss.model;
  * Store. It just returns a handle for a StoredObject.
  * @author Robert Bor
  */
-public interface Container extends ObjectStoreEntity, Comparable<Container>, ListHolder<StoredObject>, ListSubject {
+public interface Container extends ObjectStoreEntity, Comparable<Container>, ListHolder<StoredObject>, ListSubject{
 
     /**
     * Takes a single Container and makes it public. ALL (!) the objects in the Container are now public, so be
@@ -92,6 +94,31 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
     */
     public FormPost getFormPost(String redirect, long maxFileSize, long maxFileCount, long seconds);
 
+    /**
+    * Returns a number equal to pageSize of Container elements, starting with the first element
+    * after the Container named the same as marker. Note that elements are returned as DirectoryOrObject
+    * elements, because a delimiter is used.
+    * @param prefix show only the results starting with prefix
+    * @param delimiter limit the results on encountering the delimiter character (probably a slash)
+    * @param marker the last element on the previous page
+    * @param pageSize the number of elements to return
+    * @return collection of directories and objects
+    */
+    public Collection<DirectoryOrObject> listDirectory(String prefix, Character delimiter, String marker, int pageSize);
+
+    /**
+    * Reads a directory within the passed directory
+    * @param directory the directory to read
+    * @return collection of directories and objects within the directory
+    */
+    public Collection<DirectoryOrObject> listDirectory(Directory directory);
+
+    /**
+    * Reads all directories and object in the root of a container
+    * @return collection of directories and objects within the root
+    */
+    public Collection<DirectoryOrObject> listDirectory();
+
     public boolean isPublic();
 
     public void setCount(int count);
@@ -104,4 +131,5 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
 
     public String getContainerReadPermission();
     public String getcontainerWritePermission();
+
 }

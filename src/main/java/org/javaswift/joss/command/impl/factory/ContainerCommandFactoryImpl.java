@@ -60,6 +60,11 @@ public class ContainerCommandFactoryImpl implements ContainerCommandFactory {
         return new ListObjectsCommandImpl(account, getHttpClient(), getAccess(), container, listInstructions);
     }
 
+    @Override
+    public ListDirectoryCommand createListDirectoryCommand(Account account, Container container, ListInstructions listInstructions) {
+        return new ListDirectoryCommandImpl(account, getHttpClient(), getAccess(), container, listInstructions);
+    }
+
     public HttpClient getHttpClient() {
         return accountCommandFactory.getHttpClient();
     }

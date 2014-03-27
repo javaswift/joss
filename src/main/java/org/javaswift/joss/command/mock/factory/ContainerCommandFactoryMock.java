@@ -54,6 +54,11 @@ public class ContainerCommandFactoryMock implements ContainerCommandFactory {
     }
 
     @Override
+    public ListDirectoryCommand createListDirectoryCommand(Account account, Container container, ListInstructions listInstructions) {
+        return new ListDirectoryCommandMock(swift, account, container, listInstructions);
+    }
+
+    @Override
     public StoredObjectCommandFactory getStoredObjectCommandFactory() {
         return this.storedObjectCommandFactory;
     }

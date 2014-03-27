@@ -25,6 +25,8 @@ public interface ContainerCommandFactory {
 
     ListObjectsCommand createListObjectsCommand(Account account, Container container, ListInstructions listInstructions);
 
+    ListDirectoryCommand createListDirectoryCommand(Account account, Container container, ListInstructions listInstructions);
+
     StoredObjectCommandFactory getStoredObjectCommandFactory();
 
     public String getTempUrlPrefix();

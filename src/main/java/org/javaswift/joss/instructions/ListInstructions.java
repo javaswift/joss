@@ -16,7 +16,7 @@ public class ListInstructions {
 
     private String prefix;
     
-    private String delimiter;
+    private Character delimiter;
 
     public ListInstructions setMarker(String marker) {
         this.marker = marker;
@@ -33,7 +33,7 @@ public class ListInstructions {
         return this;
     }
     
-    public ListInstructions setDelimiter(String delimiter) {
+    public ListInstructions setDelimiter(Character delimiter) {
     	this.delimiter = delimiter;
     	return this;
     }
@@ -59,7 +59,7 @@ public class ListInstructions {
         return prefix;
     }
     
-    public String getDelimiter() {
+    public Character getDelimiter() {
     	return delimiter;
     }
 
