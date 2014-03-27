@@ -139,6 +139,11 @@ public class AccountFactory {
         return this;
     }
 
+    public AccountFactory setDelimiter(Character delimiter) {
+        this.config.setDelimiter(delimiter);
+        return this;
+    }
+
     public AccountFactory setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
         return this;

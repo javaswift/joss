@@ -76,4 +76,5 @@ public class StoredObjectCommandFactoryImpl implements StoredObjectCommandFactor
         return containerCommandFactory.getAccess();
     }
 
+    public Character getDelimiter() { return containerCommandFactory.getDelimiter(); }
 }

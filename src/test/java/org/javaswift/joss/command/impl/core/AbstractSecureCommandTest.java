@@ -50,7 +50,7 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
             statusLine.getStatusCode(); returns(401, 201);
             authCommand.call(); result = new AccessTenant();
         }};
-        this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH);
+        this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH, '/');
         new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 
@@ -67,7 +67,7 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
         new Expectations() {{
             authCommand.call(); result = new AccessTenant();
         }};
-        this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH);
+        this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH, '/');
         new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
     }
 }

@@ -39,4 +39,5 @@ public interface StoredObjectCommandFactory {
 
     String getTempUrlPrefix();
 
+    Character getDelimiter();
 }

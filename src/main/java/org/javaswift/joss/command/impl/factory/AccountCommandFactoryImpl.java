@@ -24,14 +24,16 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     private String publicHost;
     private String privateHost;
     private TempUrlHashPrefixSource tempUrlHashPrefixSource;
+    private Character delimiter;
 
     public AccountCommandFactoryImpl(HttpClient httpClient, Access access, AuthenticationCommand authCommand,
-                                     TempUrlHashPrefixSource tempUrlHashPrefixSource) {
+                                     TempUrlHashPrefixSource tempUrlHashPrefixSource, Character delimiter) {
         this.httpClient = httpClient;
         this.access = access;
         this.authCommand = authCommand;
         this.containerCommandFactory = new ContainerCommandFactoryImpl(this);
         this.tempUrlHashPrefixSource = tempUrlHashPrefixSource;
+        this.delimiter = delimiter;
     }
 
     @Override
@@ -110,5 +112,7 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
     public TempUrlHashPrefixSource getTempUrlHashPrefixSource() {
         return tempUrlHashPrefixSource;
     }
+
+    public Character getDelimiter() { return delimiter; }
 
 }

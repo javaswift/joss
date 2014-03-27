@@ -33,7 +33,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         this.commandFactory = ((AbstractContainer)container).getFactory().getStoredObjectCommandFactory();
         this.container = container;
         this.name = name;
-        this.bareName = Directory.bareName(name, '/');
+        this.bareName = Directory.bareName(name, commandFactory.getDelimiter());
         this.info = new ObjectInformation();
     }
 

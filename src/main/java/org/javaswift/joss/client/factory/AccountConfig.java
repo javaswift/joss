@@ -138,20 +138,29 @@ public class AccountConfig {
     private String hashPassword;
     
     /**
-     * In development environments, self-signed SSL certificates may be used in place of
-     * certificates from a registered Certificate Authority.  Also, if you are connecting
-     * with SSL to an IP address instead of a hostname, the name on the certificate
-     * will not be validated.  You can bypass these checks by setting this to true.
-     * <em>This is not suitable for production use</em> since it is trivial to implement
-     * a man-in-the-middle attack if the SSL certificate is not strongly validated.
-     */
+    * In development environments, self-signed SSL certificates may be used in place of
+    * certificates from a registered Certificate Authority.  Also, if you are connecting
+    * with SSL to an IP address instead of a hostname, the name on the certificate
+    * will not be validated.  You can bypass these checks by setting this to true.
+    * <em>This is not suitable for production use</em> since it is trivial to implement
+    * a man-in-the-middle attack if the SSL certificate is not strongly validated.
+    */
     private boolean disableSslValidation = false;
+
+    /**
+    * The delimiter is used to check for directory boundaries. The default will be a '/'.
+    */
+    private Character delimiter = '/';
 
     /**
      * The method of authentication. Various options:
      * <ul>
      *     <li>
      *         <b>BASIC</b>; authenticate against Swift itself. Authentication URL, username and password
+     *         must be passed.
+     *     </li>
+     *     <li>
+     *         <b>TEMPAUTH</b>; authenticate against Swift itself. Authentication URL, username and password
      *         must be passed.
      *     </li>
      *     <li>
@@ -339,4 +348,11 @@ public class AccountConfig {
         setAuthenticationMethod(AuthenticationMethod.valueOf(authenticationMethod));
     }
 
+    public Character getDelimiter() {
+        return delimiter;
+    }
+
+    public void setDelimiter(Character delimiter) {
+        this.delimiter = delimiter;
+    }
 }

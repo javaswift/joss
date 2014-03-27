@@ -53,6 +53,8 @@ public class Swift {
 
     private boolean tenantSupplied = false;
 
+    private Character delimiter = '/';
+
     StatusGenerator statusGenerator = new StatusGenerator();
 
     public Swift setOnFileObjectStore(String onFileObjectStore) {
@@ -127,6 +129,11 @@ public class Swift {
         return this;
     }
 
+    public Swift setDelimiter(Character delimiter) {
+        this.delimiter = delimiter;
+        return this;
+    }
+
     public SwiftResult<Tenants> getTenant() {
         Tenants tenants = new Tenants();
         Tenant tenant = new Tenant();
@@ -135,6 +142,10 @@ public class Swift {
         tenant.enabled = true;
         tenants.tenants.add(tenant);
         return new SwiftResult<Tenants>(tenants, HttpStatus.SC_OK);
+    }
+
+    public Character getDelimiter() {
+        return this.delimiter;
     }
 
     public void addIgnore() {

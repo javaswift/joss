@@ -99,7 +99,8 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
         access.setPreferredRegion(accountConfig.getPreferredRegion());
         LOG.info("JOSS / Applying preferred region: "+(accountConfig.getPreferredRegion() == null ? "none" : accountConfig.getPreferredRegion()));
         LOG.info("JOSS / Using TempURL hash prefix source: "+accountConfig.getTempUrlHashPrefixSource());
-        return new AccountImpl(command, httpClient, access, accountConfig.isAllowCaching(), accountConfig.getTempUrlHashPrefixSource());
+        return new AccountImpl(command, httpClient, access, accountConfig.isAllowCaching(),
+                               accountConfig.getTempUrlHashPrefixSource(), accountConfig.getDelimiter());
     }
 
     public ClientImpl setHttpClient(HttpClient httpClient) {

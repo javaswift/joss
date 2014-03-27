@@ -31,6 +31,7 @@ public class AccountConfigTest {
         config.setAllowContainerCaching(false);
         config.setPreferredRegion("AMS-01");
         config.setDisableSslValidation(true);
+        config.setDelimiter('\\');
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
         assertEquals("tenant", config.getTenantName());
@@ -52,5 +53,6 @@ public class AccountConfigTest {
         assertEquals(false, config.isAllowContainerCaching());
         assertEquals("AMS-01", config.getPreferredRegion());
         assertEquals(true, config.isDisableSslValidation());
+        assertEquals((Character)'\\', config.getDelimiter());
     }
 }

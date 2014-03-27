@@ -61,8 +61,9 @@ public class ContainerCommandFactoryImpl implements ContainerCommandFactory {
     }
 
     @Override
-    public ListDirectoryCommand createListDirectoryCommand(Account account, Container container, ListInstructions listInstructions) {
-        return new ListDirectoryCommandImpl(account, getHttpClient(), getAccess(), container, listInstructions);
+    public ListDirectoryCommand createListDirectoryCommand(Account account, Container container,
+                                                           ListInstructions listInstructions, Character delimiter) {
+        return new ListDirectoryCommandImpl(account, getHttpClient(), getAccess(), container, listInstructions, delimiter);
     }
 
     public HttpClient getHttpClient() {
@@ -82,6 +83,11 @@ public class ContainerCommandFactoryImpl implements ContainerCommandFactory {
     public String getTempUrlPrefix() {
         TempUrlHashPrefixSource source = accountCommandFactory.getTempUrlHashPrefixSource();
         return getAccess().getTempUrlPrefix(source);
+    }
+
+    @Override
+    public Character getDelimiter() {
+        return accountCommandFactory.getDelimiter();
     }
 
 }

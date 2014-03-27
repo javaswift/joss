@@ -14,8 +14,12 @@ import java.util.List;
 
 public class ListDirectoryCommandImpl extends AbstractListCommandImpl<Collection<DirectoryOrObject>> implements ListDirectoryCommand {
 
-    public ListDirectoryCommandImpl(Account account, HttpClient httpClient, Access access, Container container, ListInstructions listInstructions) {
+    private Character delimiter;
+
+    public ListDirectoryCommandImpl(Account account, HttpClient httpClient, Access access, Container container,
+                                    ListInstructions listInstructions, Character delimiter) {
         super(account, httpClient, access, container, listInstructions);
+        this.delimiter = delimiter;
     }
 
     protected Collection<DirectoryOrObject> getReturnObject(HttpResponse response) throws IOException {
@@ -25,7 +29,7 @@ public class ListDirectoryCommandImpl extends AbstractListCommandImpl<Collection
         List<DirectoryOrObject> files = new ArrayList<DirectoryOrObject>();
         for (StoredObjectListElement header : list) {
             if (header.subdir != null) {
-                files.add(new Directory(header.subdir));
+                files.add(new Directory(header.subdir, delimiter));
             } else {
                 files.add(getStoredObject(header));
             }

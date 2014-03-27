@@ -54,7 +54,8 @@ public class ContainerCommandFactoryMock implements ContainerCommandFactory {
     }
 
     @Override
-    public ListDirectoryCommand createListDirectoryCommand(Account account, Container container, ListInstructions listInstructions) {
+    public ListDirectoryCommand createListDirectoryCommand(Account account, Container container,
+                                                           ListInstructions listInstructions, Character delimiter) {
         return new ListDirectoryCommandMock(swift, account, container, listInstructions);
     }
 
@@ -66,6 +67,11 @@ public class ContainerCommandFactoryMock implements ContainerCommandFactory {
     @Override
     public String getTempUrlPrefix() {
         return "";
+    }
+
+    @Override
+    public Character getDelimiter() {
+        return swift.getDelimiter();
     }
 
     @Override

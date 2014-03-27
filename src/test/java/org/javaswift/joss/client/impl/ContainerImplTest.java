@@ -155,7 +155,7 @@ public class ContainerImplTest extends BaseCommandTest {
     }
 
     protected AbstractContainer createContainerForFormPost(String password) {
-        account = new AccountImpl(null, httpClient, AccessTest.setUpAccessWithURLwithPaths(), true, TempUrlHashPrefixSource.INTERNAL_URL_PATH);
+        account = new AccountImpl(null, httpClient, AccessTest.setUpAccessWithURLwithPaths(), true, TempUrlHashPrefixSource.INTERNAL_URL_PATH, '/');
         List<Header> headers = new ArrayList<Header>();
         prepareHeader(response, AccountMetadata.X_ACCOUNT_META_PREFIX + HashPassword.X_ACCOUNT_TEMP_URL_KEY, password, headers);
         prepareHeadersForRetrieval(response, headers);

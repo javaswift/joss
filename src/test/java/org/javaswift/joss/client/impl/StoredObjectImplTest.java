@@ -169,7 +169,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
     }
 
     protected AbstractStoredObject createStoredObjectForTempURL(String password) {
-        account = new AccountImpl(null, httpClient, AccessTest.setUpAccessWithURLwithPaths(), true, TempUrlHashPrefixSource.INTERNAL_URL_PATH);
+        account = new AccountImpl(null, httpClient, AccessTest.setUpAccessWithURLwithPaths(), true, TempUrlHashPrefixSource.INTERNAL_URL_PATH, '/');
         List<Header> headers = new ArrayList<Header>();
         prepareHeader(response, AccountMetadata.X_ACCOUNT_META_PREFIX + HashPassword.X_ACCOUNT_TEMP_URL_KEY, password, headers);
         prepareHeadersForRetrieval(response, headers);
@@ -462,7 +462,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
     }
 
     protected StoredObject createStoredObject(String name) {
-        AccountImpl account = new AccountImpl(null, null, null, false, null);
+        AccountImpl account = new AccountImpl(null, null, null, false, null, '/');
         ContainerImpl container = new ContainerImpl(account, "", false);
         return new StoredObjectImpl(container, name, true);
     }

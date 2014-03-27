@@ -64,17 +64,17 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
                 .setDelimiter(delimiter)
                 .setMarker(marker)
                 .setLimit(pageSize);
-        return commandFactory.createListDirectoryCommand(getAccount(), this, listInstructions).call();
+        return commandFactory.createListDirectoryCommand(getAccount(), this, listInstructions, commandFactory.getDelimiter()).call();
     }
 
     @Override
     public Collection<DirectoryOrObject> listDirectory(Directory directory) {
-        return new ContainerDirectoryPaginationMap(this, '/', directory == null ? null : directory.getPath(), MAX_PAGE_SIZE).listAllItems();
+        return new ContainerDirectoryPaginationMap(this, commandFactory.getDelimiter(), directory == null ? null : directory.getPath(), MAX_PAGE_SIZE).listAllItems();
     }
 
     @Override
     public Collection<DirectoryOrObject> listDirectory() {
-        return new ContainerDirectoryPaginationMap(this, '/', null, MAX_PAGE_SIZE).listAllItems();
+        return new ContainerDirectoryPaginationMap(this, commandFactory.getDelimiter(), null, MAX_PAGE_SIZE).listAllItems();
     }
 
     public void metadataSetFromHeaders() {

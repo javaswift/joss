@@ -67,4 +67,9 @@ public class StoredObjectCommandFactoryMock implements StoredObjectCommandFactor
         return "";
     }
 
+    @Override
+    public Character getDelimiter() {
+        return swift.getDelimiter();
+    }
+
 }

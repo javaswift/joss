@@ -40,7 +40,7 @@ public abstract class BaseCommandTest {
 
     public void setup() throws IOException {
         final InputStream inputStream = IOUtils.toInputStream("[]");
-        account = new AccountImpl(null, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH);
+        account = new AccountImpl(null, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH, '/');
         new NonStrictExpectations() {{
             defaultAccess.getInternalURL(); result = "http://someurl.nowhere/v1/AUTH_Account";
             defaultAccess.getPublicURL(); result = "http://someurl.public";

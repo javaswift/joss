@@ -6,19 +6,20 @@ public class Directory implements DirectoryOrObject {
 
     final private String bareName;
 
-    public Directory(String path) {
+    public Directory(String path, Character delimiter) {
         this.path = path;
-        this.bareName = bareName(path, '/');
+        this.bareName = bareName(path, delimiter);
     }
 
     public static String bareName(String name, Character delimiter) {
         if (name == null) {
             return null;
         }
-        if (name.lastIndexOf(delimiter) == name.length() - 1) {
+        int lastSlash = name.lastIndexOf(delimiter);
+        if (lastSlash != -1 && lastSlash == name.length() - 1) {
             name = name.substring(0, name.length()-1);
         }
-        int lastSlash = name.lastIndexOf('/');
+        lastSlash = name.lastIndexOf(delimiter);
         if (lastSlash != -1) {
             name = name.substring(lastSlash+1, name.length());
         }
