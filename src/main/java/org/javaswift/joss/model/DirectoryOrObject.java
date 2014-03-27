@@ -6,4 +6,5 @@ public interface DirectoryOrObject extends ListSubject {
     boolean isDirectory();
     Directory getAsDirectory();
     StoredObject getAsObject();
+    String getBareName();
 }

@@ -4,8 +4,25 @@ public class Directory implements DirectoryOrObject {
 
     final private String path;
 
-    public Directory(String directory) {
-        this.path = directory;
+    final private String bareName;
+
+    public Directory(String path) {
+        this.path = path;
+        this.bareName = bareName(path, '/');
+    }
+
+    public static String bareName(String name, Character delimiter) {
+        if (name == null) {
+            return null;
+        }
+        if (name.lastIndexOf(delimiter) == name.length() - 1) {
+            name = name.substring(0, name.length()-1);
+        }
+        int lastSlash = name.lastIndexOf('/');
+        if (lastSlash != -1) {
+            name = name.substring(lastSlash+1, name.length());
+        }
+        return name;
     }
 
     public String getPath() {
@@ -22,4 +39,10 @@ public class Directory implements DirectoryOrObject {
     }
     @Override public String getName() { return path; }
     @Override public void metadataSetFromHeaders() { /* ignore */ }
+
+    @Override
+    public String getBareName() {
+        return bareName;
+    }
+
 }

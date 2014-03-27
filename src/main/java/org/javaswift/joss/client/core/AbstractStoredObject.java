@@ -7,10 +7,7 @@ import org.javaswift.joss.headers.object.*;
 import org.javaswift.joss.information.ObjectInformation;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Container;
-import org.javaswift.joss.model.Directory;
-import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.model.*;
 import org.javaswift.joss.util.SpaceURLEncoder;
 
 import java.io.File;
@@ -25,6 +22,8 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     protected String name;
 
+    private String bareName;
+
     private Container container;
 
     private final StoredObjectCommandFactory commandFactory;
@@ -34,6 +33,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         this.commandFactory = ((AbstractContainer)container).getFactory().getStoredObjectCommandFactory();
         this.container = container;
         this.name = name;
+        this.bareName = Directory.bareName(name, '/');
         this.info = new ObjectInformation();
     }
 
@@ -291,5 +291,8 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     }
     @Override public StoredObject getAsObject() {
         return this;
+    }
+    @Override public String getBareName() {
+        return bareName;
     }
 }
