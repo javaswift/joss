@@ -8,10 +8,10 @@ import java.util.List;
 
 public class PageServer<Child extends ListSubject> {
 
-    public Collection<Child> createPage(Collection<Child> children, String prefix, String marker, int pageSize) {
+    public Collection<Child> createPage(Collection<Child> children, String prefix, String marker, Integer pageSize) {
         List<Child> page = new ArrayList<Child>();
         boolean foundMarker = marker == null;
-        int containersOnPage = 0;
+        Integer containersOnPage = 0;
         for (Child child : children) {
             if (foundMarker && (prefix == null || child.getName().startsWith(prefix))) {
                 page.add(child);

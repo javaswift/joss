@@ -6,6 +6,14 @@ import static org.junit.Assert.*;
 
 public class DirectoryTest {
 
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
+    @Test
+    public void equals() {
+        assertEquals(new Directory("abc", '/'), new Directory("abc", '/'));
+        assertFalse(new Directory("abc", '/').equals("huh?"));
+        assertFalse(new Directory("abc", '/').equals(new Directory("def", '/')));
+    }
+
     @Test
     public void nameNull() {
         Directory directory = new Directory(null, '/');

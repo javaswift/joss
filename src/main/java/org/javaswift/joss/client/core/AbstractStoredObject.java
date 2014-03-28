@@ -158,9 +158,9 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     }
 
     @SuppressWarnings("ConstantConditions")
-    public int compareTo(StoredObject o) {
+    public int compareTo(DirectoryOrObject o) {
         int compareValue = getName().compareTo(o.getName());
-        if (compareValue == 0) {
+        if (compareValue == 0 && o instanceof StoredObject) {
             compareValue = getContainer().compareTo(((AbstractStoredObject) o).getContainer());
         }
         return compareValue;

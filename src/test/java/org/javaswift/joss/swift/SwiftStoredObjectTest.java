@@ -4,6 +4,7 @@ import mockit.Expectations;
 import mockit.Mocked;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
+import org.javaswift.joss.client.mock.ContainerMock;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.junit.Test;
 
@@ -35,7 +36,13 @@ public class SwiftStoredObjectTest {
 
     @Test
     public void getCoverage() {
-        new SwiftStoredObject("").metadataSetFromHeaders();
+        SwiftStoredObject object = new SwiftStoredObject("");
+        object.metadataSetFromHeaders();
+        object.getBareName();
+        object.getAsObject();
+        object.getAsDirectory();
+        object.isDirectory();
+        object.isObject();
     }
 
 }

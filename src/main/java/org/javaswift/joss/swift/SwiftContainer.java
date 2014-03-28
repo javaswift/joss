@@ -8,6 +8,7 @@ import org.javaswift.joss.headers.container.ContainerRights;
 import org.javaswift.joss.information.ContainerInformation;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.DirectoryOrObject;
 import org.javaswift.joss.model.ListSubject;
 import org.javaswift.joss.model.StoredObject;
 
@@ -73,6 +74,20 @@ public class SwiftContainer implements ListSubject {
         return new SwiftResult<String[]>(HttpStatus.SC_ACCEPTED);
     }
 
+    public SwiftResult<Collection<DirectoryOrObject>> listDirectories(Container container, ListInstructions listInstructions) {
+
+        Collection<DirectoryOrObject> pagedObjects = new PageServer<DirectoryOrObject>().createPage(
+                SwiftStoredObject.convertToDirectories(container, objects.values(), listInstructions.getPrefix(), listInstructions.getDelimiter()),
+                listInstructions.getPrefix(),
+                listInstructions.getMarker(),
+                listInstructions.getLimit());
+
+        return new SwiftResult<Collection<DirectoryOrObject>>(
+                pagedObjects,
+                pagedObjects.size() == 0 ? HttpStatus.SC_NO_CONTENT : HttpStatus.SC_OK
+        );
+    }
+
     public SwiftResult<Collection<StoredObject>> listObjects(Container container, ListInstructions listInstructions) {
         Collection<SwiftStoredObject> pagedObjects = new PageServer<SwiftStoredObject>().createPage(
                 objects.values(),
@@ -82,13 +97,7 @@ public class SwiftContainer implements ListSubject {
 
         List<StoredObject> objects = new ArrayList<StoredObject>();
         for (SwiftStoredObject pagedObject : pagedObjects) {
-            StoredObject object = container.getObject(pagedObject.getName());
-            object.setContentLength(pagedObject.getBytesUsed());
-            object.setContentTypeWithoutSaving(pagedObject.getContentType().getHeaderValue());
-            object.setEtag(pagedObject.getEtag().getHeaderValue());
-            object.setLastModified(pagedObject.getLastModified());
-            object.metadataSetFromHeaders();
-            objects.add(object);
+            objects.add(pagedObject.copyToStoredObject(container.getObject(pagedObject.getName())));
         }
 
         return new SwiftResult<Collection<StoredObject>>(

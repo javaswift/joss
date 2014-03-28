@@ -306,13 +306,12 @@ public class Swift {
     }
 
     public SwiftResult<Collection<DirectoryOrObject>> listDirectory(Container container, ListInstructions listInstructions) {
+        SwiftContainer swiftContainer = getContainer(container.getName());
+        if (swiftContainer == null) {
             return new SwiftResult<Collection<DirectoryOrObject>>(HttpStatus.SC_NOT_FOUND);
-//        SwiftContainer swiftContainer = getContainer(container.getName());
-//        if (swiftContainer == null) {
-//              return new SwiftResult<Collection<org.javaswift.joss.model.DirectoryOrObject>>(HttpStatus.SC_NOT_FOUND);
-//        } else {
-//            return swiftContainer.listObjects(container, listInstructions);
-//        }
+        } else {
+            return swiftContainer.listDirectories(container, listInstructions);
+        }
     }
 
     // +-----------------------------------------+

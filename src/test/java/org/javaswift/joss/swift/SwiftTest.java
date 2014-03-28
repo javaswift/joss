@@ -12,8 +12,11 @@ import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.DirectoryOrObject;
+import org.javaswift.joss.model.StoredObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 
 import static junit.framework.Assert.*;
 
@@ -104,6 +108,11 @@ public class SwiftTest {
     }
 
     @Test
+    public void listDirectoryNotFound() {
+        assertEquals(HttpStatus.SC_NOT_FOUND, swift.listDirectory(container, null).getStatus());
+    }
+
+    @Test
     public void copySourceContainerDoesNotExist() {
         assertEquals(HttpStatus.SC_NOT_FOUND, swift.copyObject(container, null, null, null).getStatus());
     }
@@ -120,6 +129,45 @@ public class SwiftTest {
         object.uploadObject(new byte[]{});
         Container targetContainer = new ContainerMock(account, "the-target");
         assertEquals(HttpStatus.SC_NOT_FOUND, swift.copyObject(container, object, targetContainer, null).getStatus());
+    }
+
+    @Test
+    public void listEmptyDirectory() {
+        container.create();
+        assertEquals(HttpStatus.SC_NO_CONTENT, swift.listDirectory(container, new ListInstructions()).getStatus());
+    }
+
+    @Test
+    public void listDirectories() {
+        container.create();
+        createObject(container, "abc/alpha.jpg");
+        createObject(container, "abc/def/gamma.jpg");
+        createObject(container, "abc/def/beta.jpg");
+        createObject(container, "delta.jpg");
+        createObject(container, "epsilon.jpg");
+
+        assertDirectoryContent(container, null,   3, new String[]{"abc/", "delta.jpg", "epsilon.jpg"}, new boolean[] { true, false, false} );
+        assertDirectoryContent(container, "abc/", 2, new String[]{"abc/alpha.jpg", "abc/def/"},        new boolean[] { false, true } );
+    }
+
+    private void assertDirectoryContent(ContainerMock container, String prefix, int expectedResults,
+                                        String[] names, boolean[] isDirectory) {
+        Collection<DirectoryOrObject> files = swift.listDirectory(container, new ListInstructions().setDelimiter('/').setPrefix(prefix)).getPayload();
+        assertEquals(expectedResults, files.size());
+        Iterator<DirectoryOrObject> iterator = files.iterator();
+        int count = 0;
+        while (iterator.hasNext()) {
+            DirectoryOrObject file = iterator.next();
+            assertEquals(names[count], file.getName());
+            assertEquals(isDirectory[count], file.isDirectory());
+            count++;
+        }
+    }
+
+    protected StoredObject createObject(Container container, String path) {
+        StoredObject object = new StoredObjectMock(container, path);
+        object.uploadObject(new byte[] { } );
+        return object;
     }
 
     @Test

@@ -1,6 +1,6 @@
 package org.javaswift.joss.model;
 
-public class Directory implements DirectoryOrObject {
+public class Directory implements Comparable<DirectoryOrObject>, DirectoryOrObject {
 
     final private String path;
 
@@ -40,6 +40,17 @@ public class Directory implements DirectoryOrObject {
     @Override
     public String getBareName() {
         return bareName;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public boolean equals(Object o) {
+        return o instanceof DirectoryOrObject && compareTo((DirectoryOrObject) o) == 0;
+    }
+
+    @Override
+    @SuppressWarnings("ConstantConditions")
+    public int compareTo(DirectoryOrObject o) {
+        return getName().compareTo(o.getName());
     }
 
 }
