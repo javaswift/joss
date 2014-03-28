@@ -53,12 +53,12 @@ public class ListContainersCommandTest extends BaseCommandTest {
     public void queryParameters() throws IOException {
         expectStatusCode(204);
         new ListContainersCommandImpl(this.account, httpClient, defaultAccess,
-                new ListInstructions().setPrefix("tst-").setMarker("dogs").setLimit(10)).call();
+                new ListInstructions().setPrefix("tst-").setMarker("dogs").setDelimiter('/').setLimit(10)).call();
         new Verifications() {{
             List<HttpRequestBase> requests = new ArrayList<HttpRequestBase>();
             httpClient.execute(withCapture(requests));
             for (HttpRequestBase request : requests) {
-                String assertQueryParameters = "?prefix=tst-&marker=dogs&limit=10";
+                String assertQueryParameters = "?prefix=tst-&marker=dogs&limit=10&delimiter=%2F";
                 String uri = request.getURI().toString();
                 assertTrue(uri+" must contain "+assertQueryParameters, uri.contains(assertQueryParameters));
             }

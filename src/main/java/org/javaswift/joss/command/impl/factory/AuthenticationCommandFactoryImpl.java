@@ -16,14 +16,12 @@ public class AuthenticationCommandFactoryImpl implements AuthenticationCommandFa
     public AuthenticationCommand createAuthenticationCommand(HttpClient httpClient, AuthenticationMethod authenticationMethod,
                                                              String url, String tenantName, String tenantId,
                                                              String username, String password) {
-        switch (authenticationMethod) {
-            case BASIC :
-                return new BasicAuthenticationCommandImpl(httpClient, url, username, password);
-            case TEMPAUTH:
-                return new TempAuthAuthenticationCommandImpl(httpClient, url, username, password);
-            case KEYSTONE:
-            default:
-                return new KeystoneAuthenticationCommandImpl(httpClient, url, tenantName, tenantId, username, password);
+        if (authenticationMethod == BASIC) {
+            return new BasicAuthenticationCommandImpl(httpClient, url, username, password);
+        } else if (authenticationMethod == TEMPAUTH) {
+            return new TempAuthAuthenticationCommandImpl(httpClient, url, username, password);
+        } else { // KEYSTONE
+            return new KeystoneAuthenticationCommandImpl(httpClient, url, tenantName, tenantId, username, password);
         }
     }
 

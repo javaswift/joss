@@ -26,10 +26,6 @@ public class Directory implements DirectoryOrObject {
         return name;
     }
 
-    public String getPath() {
-        return this.path;
-    }
-
     @Override public boolean isObject() { return false; }
     @Override public boolean isDirectory() { return true; }
     @Override public Directory getAsDirectory() {

@@ -69,7 +69,7 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
 
     @Override
     public Collection<DirectoryOrObject> listDirectory(Directory directory) {
-        return new ContainerDirectoryPaginationMap(this, commandFactory.getDelimiter(), directory == null ? null : directory.getPath(), MAX_PAGE_SIZE).listAllItems();
+        return new ContainerDirectoryPaginationMap(this, commandFactory.getDelimiter(), directory == null ? null : directory.getName(), MAX_PAGE_SIZE).listAllItems();
     }
 
     @Override
