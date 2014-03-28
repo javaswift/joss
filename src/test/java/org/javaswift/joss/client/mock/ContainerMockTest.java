@@ -3,10 +3,7 @@ package org.javaswift.joss.client.mock;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
-import org.javaswift.joss.model.Account;
-import org.javaswift.joss.model.Container;
-import org.javaswift.joss.model.PaginationMap;
-import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.model.*;
 import org.javaswift.joss.swift.Swift;
 import org.junit.Before;
 import org.junit.Test;
@@ -107,6 +104,12 @@ public class ContainerMockTest {
     public void listObjects() throws IOException {
         addObjects(3);
         assertEquals(3, container.list().size());
+    }
+
+    @Test
+    public void listDirectory() throws IOException {
+        addObjects(3);
+        assertEquals(3, container.listDirectory(new Directory("", '/')).size());
     }
 
     @Test
