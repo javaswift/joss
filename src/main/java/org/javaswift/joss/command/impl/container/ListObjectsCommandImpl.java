@@ -26,13 +26,6 @@ public class ListObjectsCommandImpl extends AbstractListCommandImpl<Collection<S
                 .readValue(response.getEntity().getContent(), StoredObjectListElement[].class);
         List<StoredObject> objects = new ArrayList<StoredObject>();
         for (StoredObjectListElement header : list) {
-
-            // TEMP
-            if (header.subdir != null) {
-                System.out.println("Subdirectory: "+header.subdir);
-                continue;
-            }
-
             StoredObject object = getStoredObject(header);
             objects.add(object);
         }

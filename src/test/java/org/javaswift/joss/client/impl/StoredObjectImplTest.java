@@ -42,6 +42,8 @@ import static org.javaswift.joss.headers.object.ObjectContentLength.CONTENT_LENG
 import static org.javaswift.joss.headers.object.ObjectContentType.CONTENT_TYPE;
 import static org.javaswift.joss.headers.object.ObjectLastModified.LAST_MODIFIED;
 import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class StoredObjectImplTest extends BaseCommandTest {
 
@@ -473,6 +475,29 @@ public class StoredObjectImplTest extends BaseCommandTest {
         long rightNow = new Date().getTime();
         long currentTime = LocalTime.currentTime();
         assertTrue(rightNow <= currentTime);
+    }
+
+    @Test
+    public void getAsObject() {
+        assertNotNull(object.getAsObject());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void getAsDirectory() {
+        object.getAsDirectory();
+    }
+
+    @Test
+    public void whatItIs() {
+        assertTrue(object.isObject());
+        assertFalse(object.isDirectory());
+    }
+
+    @Test
+    public void getBareName() {
+        Container container = account.getContainer("alpha");
+        object = container.getObject("/abc/def/image.png");
+        assertEquals("image.png", object.getBareName());
     }
 
 }

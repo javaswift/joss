@@ -1,0 +1,9 @@
+[
+    {"subdir":"abc"},
+    {"name":"alpha.jpg","hash":"c8fc5698c0b3ca145f2c98937cbd9ff2","bytes":22979,"content_type":"image/jpeg", "last_modified":"2012-12-05T14:57:00.165930"},
+    {"name":"beta.jpg","hash":"c8fc5698c0b3ca145f2c98937cbd9ff3","bytes":22979,"content_type":"image/jpeg", "last_modified":"2012-12-05T14:57:00.165930"},
+    {"subdir":"def"},
+    {"name":"gamma.jpg","hash":"c8fc5698c0b3ca145f2c98937cbd9ff4","bytes":22979,"content_type":"image/jpeg", "last_modified":"2012-12-05T14:57:00.165930"},
+    {"name":"delta.jpg","hash":"c8fc5698c0b3ca145f2c98937cbd9ff5","bytes":22979,"content_type":"image/jpeg", "last_modified":"2012-12-05T14:57:00.165930"},
+    {"subdir":"geh"}
+]
