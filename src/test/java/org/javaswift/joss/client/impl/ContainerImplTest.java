@@ -10,6 +10,7 @@ import org.javaswift.joss.headers.account.AccountMetadata;
 import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.headers.container.ContainerRights;
 import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.DirectoryOrObject;
 import org.javaswift.joss.model.FormPost;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.util.HashSignature;
@@ -57,6 +58,16 @@ public class ContainerImplTest extends BaseCommandTest {
         prepareHeadersForRetrieval(response, headers);
         Collection<StoredObject> objects = container.list();
         assertEquals(4, objects.size());
+    }
+
+    @Test
+    public void listDirectory() throws IOException {
+        loadSampleJson("/sample-directory-or-object-list.json");
+        List<Header> headers = new ArrayList<Header>();
+        prepareHeader(response, X_CONTAINER_OBJECT_COUNT, "7", headers);
+        prepareHeadersForRetrieval(response, headers);
+        Collection<DirectoryOrObject> objects = container.listDirectory();
+        assertEquals(7, objects.size());
     }
 
     @Test
