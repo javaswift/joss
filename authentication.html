@@ -59,6 +59,9 @@
     <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
 </pre></div>
 
+            <p> If both username and tenantName are passed, they will be appended with a colon as delimiter. Ie, user:tenant.
+                If only username is passed, this value will be used.</p>
+
             <h2 id="tempauth">TempAuth authentication</h2>
 
             <p>
@@ -75,6 +78,9 @@
             <span class="o">.</span><span class="na">setAuthenticationMethod</span><span class="o">(</span><span class="n">AuthenticationMethod.TEMPAUTH</span><span class="o">);</span>
     <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
 </pre></div>
+
+            <p> If both username and tenantName are passed, they will be appended with a colon as delimiter. Ie, user:tenant.
+                If only username is passed, this value will be used.</p>
 
             <h2 id="keystone">Keystone authentication</h2>
 
