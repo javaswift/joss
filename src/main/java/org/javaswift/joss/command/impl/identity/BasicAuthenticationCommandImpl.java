@@ -6,9 +6,10 @@ import org.javaswift.joss.headers.identity.XAuthUser;
 
 public class BasicAuthenticationCommandImpl extends AbstractSimpleAuthenticationCommandImpl {
 
-    public BasicAuthenticationCommandImpl(HttpClient httpClient, String url, String username, String password) {
+    public BasicAuthenticationCommandImpl(HttpClient httpClient, String url, String username,
+                                          String password, String tenantName) {
         super(httpClient, url);
-        setHeader(new XAuthUser(username));
+        setHeader(new XAuthUser(determineCompoundUsername(username, tenantName)));
         setHeader(new XAuthKey(password));
     }
 

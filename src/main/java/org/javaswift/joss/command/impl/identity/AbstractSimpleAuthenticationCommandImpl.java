@@ -51,4 +51,9 @@ public abstract class AbstractSimpleAuthenticationCommandImpl extends AbstractCo
     public String getUrl() {
         return this.url;
     }
+
+    protected String determineCompoundUsername(String username, String tenantName) {
+        return tenantName == null ? username : username + ":" + tenantName;
+    }
+
 }

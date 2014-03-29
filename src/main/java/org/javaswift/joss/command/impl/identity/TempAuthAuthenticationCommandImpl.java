@@ -6,9 +6,10 @@ import org.javaswift.joss.headers.identity.XStorageUser;
 
 public class TempAuthAuthenticationCommandImpl extends AbstractSimpleAuthenticationCommandImpl {
 
-    public TempAuthAuthenticationCommandImpl(HttpClient httpClient, String url, String username, String password) {
+    public TempAuthAuthenticationCommandImpl(HttpClient httpClient, String url, String username,
+                                             String password, String tenantName) {
         super(httpClient, url);
-        setHeader(new XStorageUser(username));
+        setHeader(new XStorageUser(determineCompoundUsername(username, tenantName)));
         setHeader(new XStoragePass(password));
     }
 

@@ -28,7 +28,7 @@ public class BasicAuthenticationCommandImplTest extends BaseCommandTest {
 
     @Test
     public void getUrl() {
-        AuthenticationCommand command = new BasicAuthenticationCommandImpl(httpClient, "someurl", "user", "pwd");
+        AuthenticationCommand command = new BasicAuthenticationCommandImpl(httpClient, "someurl", "user", "pwd", null);
         assertEquals("someurl", command.getUrl());
     }
 
@@ -50,7 +50,7 @@ public class BasicAuthenticationCommandImplTest extends BaseCommandTest {
             httpClient.execute((HttpRequestBase)any); result = response;
         }};
 
-        Access access = new BasicAuthenticationCommandImpl(httpClient, authenticationUrl, user, key).call();
+        Access access = new BasicAuthenticationCommandImpl(httpClient, authenticationUrl, user, key, null).call();
         new Verifications() {{
             List<HttpRequestBase> requests = new ArrayList<HttpRequestBase>();
             httpClient.execute(withCapture(requests));

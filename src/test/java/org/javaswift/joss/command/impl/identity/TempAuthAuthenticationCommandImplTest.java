@@ -30,7 +30,7 @@ public class TempAuthAuthenticationCommandImplTest extends BaseCommandTest {
 
     @Test
     public void getUrl() {
-        AuthenticationCommand command = new BasicAuthenticationCommandImpl(httpClient, "someurl", "user", "pwd");
+        AuthenticationCommand command = new BasicAuthenticationCommandImpl(httpClient, "someurl", "user", "pwd", null);
         assertEquals("someurl", command.getUrl());
     }
 
@@ -40,6 +40,7 @@ public class TempAuthAuthenticationCommandImplTest extends BaseCommandTest {
         final String storageUrl = "http://www.store-files-here.com";
         final String user = "user";
         final String key = "key";
+        final String tenant = "tenant";
         final String authenticationUrl = "http://www.authenticate-here.com";
         final String token = "CAFEBABE";
 
@@ -52,12 +53,12 @@ public class TempAuthAuthenticationCommandImplTest extends BaseCommandTest {
             httpClient.execute((HttpRequestBase)any); result = response;
         }};
 
-        Access access = new TempAuthAuthenticationCommandImpl(httpClient, authenticationUrl, user, key).call();
+        Access access = new TempAuthAuthenticationCommandImpl(httpClient, authenticationUrl, user, key, tenant).call();
         new Verifications() {{
             List<HttpRequestBase> requests = new ArrayList<HttpRequestBase>();
             httpClient.execute(withCapture(requests));
             for (HttpRequestBase request : requests) {
-                assertEquals(user, request.getFirstHeader(XStorageUser.X_STORAGE_USER).getValue());
+                assertEquals(user + ":" + tenant, request.getFirstHeader(XStorageUser.X_STORAGE_USER).getValue());
                 assertEquals(key, request.getFirstHeader(XStoragePass.X_STORAGE_PASS).getValue());
             }
         }};

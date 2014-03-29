@@ -17,9 +17,9 @@ public class AuthenticationCommandFactoryImpl implements AuthenticationCommandFa
                                                              String url, String tenantName, String tenantId,
                                                              String username, String password) {
         if (authenticationMethod == BASIC) {
-            return new BasicAuthenticationCommandImpl(httpClient, url, username, password);
+            return new BasicAuthenticationCommandImpl(httpClient, url, username, password, tenantName);
         } else if (authenticationMethod == TEMPAUTH) {
-            return new TempAuthAuthenticationCommandImpl(httpClient, url, username, password);
+            return new TempAuthAuthenticationCommandImpl(httpClient, url, username, password, tenantName);
         } else { // KEYSTONE
             return new KeystoneAuthenticationCommandImpl(httpClient, url, tenantName, tenantId, username, password);
         }
