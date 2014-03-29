@@ -9,6 +9,8 @@ import org.javaswift.joss.command.shared.identity.access.AccessTest;
 import org.javaswift.joss.headers.account.AccountMetadata;
 import org.javaswift.joss.headers.account.HashPassword;
 import org.javaswift.joss.headers.container.ContainerRights;
+import org.javaswift.joss.headers.container.vipr.ProjectId;
+import org.javaswift.joss.headers.container.vipr.Vpool;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.DirectoryOrObject;
 import org.javaswift.joss.model.FormPost;
@@ -27,6 +29,8 @@ import static org.javaswift.joss.headers.container.ContainerMetadata.X_CONTAINER
 import static org.javaswift.joss.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
 import static org.javaswift.joss.headers.container.ContainerRights.X_CONTAINER_READ;
 import static org.javaswift.joss.headers.container.ContainerWritePermissions.X_CONTAINER_WRITE;
+import static org.javaswift.joss.headers.container.vipr.Vpool.VPOOL;
+import static org.javaswift.joss.headers.container.vipr.ProjectId.PROJECT_ID;
 
 public class ContainerImplTest extends BaseCommandTest {
 
@@ -156,6 +160,18 @@ public class ContainerImplTest extends BaseCommandTest {
         String plainText = "/internal/path/alpha\n"+redirectUrl+"\n"+maxFileSize+"\n"+maxFileCount+"\n"+formPost.expires;
         String signature = HashSignature.getSignature(password, plainText);
         assertEquals("The signature must match", signature, formPost.signature);
+    }
+
+    @Test
+    public void setCustomHeaders() throws IOException {
+        expectStatusCode(201);
+        List<org.javaswift.joss.headers.Header> customHeaders = new ArrayList<org.javaswift.joss.headers.Header>();
+        customHeaders.add(new Vpool("42"));
+        customHeaders.add(new ProjectId("1138"));
+        container.setCustomHeaders(customHeaders);
+        container.create();
+        verifyHeaderValue("42", VPOOL, "PUT");
+        verifyHeaderValue("1138", PROJECT_ID, "PUT");
     }
 
     protected void useFixedDateForToday(final LocalTime localTime, final long todayInMS) {

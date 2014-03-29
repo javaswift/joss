@@ -251,6 +251,4 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
         return customHeaders;
     }
     
-    
-
 }
