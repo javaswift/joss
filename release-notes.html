@@ -33,6 +33,33 @@
 
             <h1>Release notes</h1>
 
+            <h2><a name="v095" class="anchor" href="#v095"><span class="mini-icon mini-icon-link"></span></a>v0.9.5</h2>
+            <ul>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/54">Pseudo-hierarchy delimiters</a></strong>;
+                    in order to read Swift's pseudo-hierarchies as you would directories (that is, if you list within
+                    a folder, you will only see the contents of that folder, not the ones nested within, as would be the
+                    default for Swift's list commands). By either explicitly passing a delimiter (most likely the '/'
+                    character), or making use of JOSS' built-in listDirectory commands, you can make Swift treat your
+                    folders as real folders.
+                </li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/56">Custom headers</a></strong>;
+                    if JOSS is required to pass extra, custom headers to Swift, which do not fit the standard pattern,
+                    you can now add these to the Container. JOSS will then take care to set these headers on the create
+                    request for a container.
+                </li>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/57">Flexible Basic / TempAuth username determination</a></strong>;
+                    when both username and tenantname are passed, one username will be drafted with a colon as separator. If only
+                    the username is passed, only that will be used, assuming the user has already composed it.</li>
+            </ul>
+
+            <h2><a name="v094" class="anchor" href="#v094"><span class="mini-icon mini-icon-link"></span></a>v0.9.4</h2>
+            <ul>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/53">TempAuth</a></strong>;
+                    <a href="https://github.com/openstack/swift/blob/master/swift/common/middleware/tempauth.py">TempAuth</a>
+                    is a custom authentication module for Swift. It can be configured in JOSS by setting the authentication
+                    mechanism to TEMPAUTH.</li>
+            </ul>
+
             <h2><a name="v093" class="anchor" href="#v093"><span class="mini-icon mini-icon-link"></span></a>v0.9.3</h2>
             <ul>
                 <li><strong><a href="https://github.com/javaswift/joss/issues/44">Fixed URL encoding bug</a></strong>;
