@@ -25,6 +25,7 @@ public class AccountConfigTest {
         config.setMockAllowEveryone(true);
         config.setMockAllowObjectDeleter(true);
         config.setMockOnFileObjectStore("/some/path");
+        config.setMockOnFileObjectStoreIsAbsolutePath(true);
         config.setPublicHost("http://localhost:8080/mock");
         config.setPrivateHost("api");
         config.setSocketTimeout(1000);
@@ -38,6 +39,7 @@ public class AccountConfigTest {
         assertEquals("tenantId", config.getTenantId());
         assertEquals("user", config.getUsername());
         assertEquals("/some/path", config.getMockOnFileObjectStore());
+        assertTrue(config.isMockOnFileObjectStoreIsAbsolutePath());
         assertEquals(10, config.getMockMillisDelay());
         assertTrue(config.isMock());
         assertTrue(config.isAllowCaching());

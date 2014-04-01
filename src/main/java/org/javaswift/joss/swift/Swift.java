@@ -57,13 +57,13 @@ public class Swift {
 
     StatusGenerator statusGenerator = new StatusGenerator();
 
-    public Swift setOnFileObjectStore(String onFileObjectStore) {
+    public Swift setOnFileObjectStore(String onFileObjectStore, boolean absolutePath) {
         if (onFileObjectStore == null) {
             return this;
         }
         OnFileObjectStoreLoader loader = new OnFileObjectStoreLoader();
         try {
-            containers = loader.createContainers(onFileObjectStore);
+            containers = loader.createContainers(onFileObjectStore, absolutePath);
         } catch (Exception err) {
             throw new CommandException("Unable to load the object store from file: "+err.getMessage(), err);
         }

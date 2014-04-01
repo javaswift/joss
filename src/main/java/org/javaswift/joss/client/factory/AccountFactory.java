@@ -114,6 +114,11 @@ public class AccountFactory {
         return this;
     }
 
+    public AccountFactory setMockOnFileObjectStoreIsAbsolutePath(boolean absolutePath) {
+        this.config.setMockOnFileObjectStoreIsAbsolutePath(absolutePath);
+        return this;
+    }
+
     public AccountFactory setSocketTimeout(int socketTimeout) {
         this.config.setSocketTimeout(socketTimeout);
         return this;

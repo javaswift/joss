@@ -111,6 +111,12 @@ public class AccountConfig {
     private String mockOnFileObjectStore = null;
 
     /**
+    * Allow absolute paths for the mockOnFileObjectStore. The web application can then request
+    * the real path (getRealPath) from the ServletContext and pass this.
+    */
+    private boolean mockOnFileObjectStoreIsAbsolutePath = false;
+
+    /**
     * Socket timeout in milliseconds, ie the allowable idle time between packets. Default this will
     * not timeout. Note that this value will not be used if a custom HttpClient is supplied.
     * See also: http://hc.apache.org/httpcomponents-core-ga/httpcore/apidocs/org/apache/http/params/CoreConnectionPNames.html#SO_TIMEOUT
@@ -354,5 +360,13 @@ public class AccountConfig {
 
     public void setDelimiter(Character delimiter) {
         this.delimiter = delimiter;
+    }
+
+    public boolean isMockOnFileObjectStoreIsAbsolutePath() {
+        return mockOnFileObjectStoreIsAbsolutePath;
+    }
+
+    public void setMockOnFileObjectStoreIsAbsolutePath(boolean mockOnFileObjectStoreIsAbsolutePath) {
+        this.mockOnFileObjectStoreIsAbsolutePath = mockOnFileObjectStoreIsAbsolutePath;
     }
 }

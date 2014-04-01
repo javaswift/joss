@@ -96,7 +96,7 @@ public class WebsiteMockTest {
     @Test
     public void pushToEmptyWebsite() throws IOException, URISyntaxException {
         Swift swift = new Swift()
-                .setOnFileObjectStore("websites");
+                .setOnFileObjectStore("websites", false);
         website = new WebsiteMock(new AccountMock(swift), "website");
         website.pushDirectory(FileAction.getFile("object-store/container1"));
         assertEquals(2, website.list().size());
@@ -105,7 +105,7 @@ public class WebsiteMockTest {
     @Test
     public void pushTwiceToWebsite() throws IOException, URISyntaxException {
         Swift swift = new Swift()
-                .setOnFileObjectStore("websites");
+                .setOnFileObjectStore("websites", false);
         website = new WebsiteMock(new AccountMock(swift), "website");
         website.pushDirectory(FileAction.getFile("object-store/container1"));
         String lastModified1 = website.getObject("checkmark.png").getLastModified();
@@ -118,7 +118,7 @@ public class WebsiteMockTest {
     @Test
     public void pushAndUpdate() throws IOException, URISyntaxException {
         Swift swift = new Swift()
-                .setOnFileObjectStore("websites");
+                .setOnFileObjectStore("websites", false);
         website = new WebsiteMock(new AccountMock(swift), "website");
         website.pushDirectory(FileAction.getFile("websites/website"));
         assertEquals(7, website.list().size());
@@ -130,7 +130,7 @@ public class WebsiteMockTest {
     @Test
     public void pullWebsite() throws IOException, URISyntaxException {
         Swift swift = new Swift()
-                .setOnFileObjectStore("websites");
+                .setOnFileObjectStore("websites", false);
         website = new WebsiteMock(new AccountMock(swift), "website");
         website.pullDirectory(this.writeDir);
         assertEquals(5, writeDir.listFiles().length);
@@ -140,7 +140,7 @@ public class WebsiteMockTest {
     @Test
     public void pullDifferentWebsites() throws IOException, URISyntaxException {
         Swift swift = new Swift()
-                .setOnFileObjectStore("object-store");
+                .setOnFileObjectStore("object-store", false);
         website = new WebsiteMock(new AccountMock(swift), "container1");
         website.pullDirectory(this.writeDir);
         assertEquals(2, writeDir.listFiles().length); // 2 files
@@ -152,7 +152,7 @@ public class WebsiteMockTest {
     @Test
     public void deleteEmptyFolders() throws IOException, URISyntaxException {
         Swift swift = new Swift()
-                .setOnFileObjectStore("websites");
+                .setOnFileObjectStore("websites", false);
         website = new WebsiteMock(new AccountMock(swift), "website");
         website.pullDirectory(this.writeDir);
         assertTrue(new File(writeDir.getPath() + "/script/modb").exists());
@@ -164,7 +164,7 @@ public class WebsiteMockTest {
     @Test
     public void ignoreFoldersOnPushing() throws IOException, URISyntaxException {
         Swift swift = new Swift()
-                .setOnFileObjectStore("websites");
+                .setOnFileObjectStore("websites", false);
         website = new WebsiteMock(new AccountMock(swift), "website")
                 .setIgnoreFilters(new String[] {"script"} );
         website.pushDirectory(FileAction.getFile("websites/website"));
@@ -175,7 +175,7 @@ public class WebsiteMockTest {
     @Test
     public void ignoreFileOnPulling() throws IOException, URISyntaxException {
         Swift swift = new Swift()
-                .setOnFileObjectStore("object-store");
+                .setOnFileObjectStore("object-store", false);
         website = new WebsiteMock(new AccountMock(swift), "container1");
         website.pullDirectory(this.writeDir);
         assertEquals(2, writeDir.listFiles().length); // 2 files

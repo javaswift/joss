@@ -60,6 +60,7 @@ public class AccountFactoryTest {
                 .setMockAllowObjectDeleter(true)
                 .setMockMillisDelay(0)
                 .setMockOnFileObjectStore(null)
+                .setMockOnFileObjectStoreIsAbsolutePath(true)
                 .setPassword(null)
                 .setPreferredRegion(null)
                 .setPrivateHost(null)

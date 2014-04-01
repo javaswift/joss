@@ -13,9 +13,14 @@ import java.util.TreeMap;
 
 public class OnFileObjectStoreLoader {
 
-    public Map<String, SwiftContainer> createContainers(String onFileObjectStore) throws IOException, URISyntaxException {
+    public Map<String, SwiftContainer> createContainers(String onFileObjectStore, boolean absolutePath) throws IOException, URISyntaxException {
         Map<String, SwiftContainer> containers = new TreeMap<String, SwiftContainer>();
-        File file = FileAction.getFile(onFileObjectStore);
+        final File file;
+        if (absolutePath) {
+            file = new File(onFileObjectStore);
+        } else {
+            file = FileAction.getFile(onFileObjectStore);
+        }
         List<FileReference> files = FileAction.listFiles(file);
         for (FileReference fileReference : files) {
             // Create container
