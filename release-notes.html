@@ -33,6 +33,16 @@
 
             <h1>Release notes</h1>
 
+            <h2><a name="v096" class="anchor" href="#v096"><span class="mini-icon mini-icon-link"></span></a>v0.9.6</h2>
+            <ul>
+                <li><strong><a href="https://github.com/javaswift/joss/issues/59">Absolute paths for mock fileset</a></strong>;
+                    up till now, the only path that would be accepted would be a relative one. This would very likely
+                    translate to a target/classes folder when run locally. With the new setup, one can set setMockOnFileObjectStoreIsAbsolutePath
+                    to true and pass an absolute path. In a web container, this would very likely be a path determined
+                    with ServletContext.getRealPath().
+                </li>
+            </ul>
+
             <h2><a name="v095" class="anchor" href="#v095"><span class="mini-icon mini-icon-link"></span></a>v0.9.5</h2>
             <ul>
                 <li><strong><a href="https://github.com/javaswift/joss/issues/54">Pseudo-hierarchy delimiters</a></strong>;
