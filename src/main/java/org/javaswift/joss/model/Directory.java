@@ -42,6 +42,12 @@ public class Directory implements Comparable<DirectoryOrObject>, DirectoryOrObje
         return bareName;
     }
 
+    @Override
+	public int hashCode() {
+		return ((getName() == null) ? 31 : getName().hashCode()) ;
+	}
+
+    @Override
     @SuppressWarnings("ConstantConditions")
     public boolean equals(Object o) {
         return o instanceof DirectoryOrObject && compareTo((DirectoryOrObject) o) == 0;
