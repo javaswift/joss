@@ -28,6 +28,12 @@ public class DirectoryTest {
         assertEquals("geh", directory.getBareName());
     }
 
+    @Test
+    public void checkHashCode() {
+        assertEquals("/abc".hashCode(), new Directory("/abc", '/').hashCode());
+        assertEquals(31, new Directory(null, '/').hashCode());
+    }
+
     @Test(expected = UnsupportedOperationException.class)
     public void getAsObject() {
         new Directory(null, '/').getAsObject();

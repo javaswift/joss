@@ -44,8 +44,8 @@ public class Directory implements Comparable<DirectoryOrObject>, DirectoryOrObje
 
     @Override
 	public int hashCode() {
-		return ((getName() == null) ? 31 : getName().hashCode()) ;
-	}
+        return getName() == null ? 31 : getName().hashCode();
+    }
 
     @Override
     @SuppressWarnings("ConstantConditions")
