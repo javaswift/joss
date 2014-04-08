@@ -10,12 +10,12 @@ public class MidPartRange extends AbstractRange {
     }
 
     @Override
-    public int getFrom(int byteArrayLength) {
+    public long getFrom(int byteArrayLength) {
         return offset;
     }
 
     @Override
-    public int getTo(int byteArrayLength) {
+    public long getTo(int byteArrayLength) {
         return length;
     }
 }

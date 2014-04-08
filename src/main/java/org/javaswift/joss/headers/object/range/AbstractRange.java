@@ -19,11 +19,11 @@ public abstract class AbstractRange extends Header {
     public String RANGE_HEADER_NAME = "Range";
     public String RANGE_HEADER_VALUE_PREFIX = "bytes=";
 
-    protected int offset;
+    protected long offset;
 
-    protected int length;
+    protected long length;
 
-    protected AbstractRange(int offset, int length) {
+    protected AbstractRange(long offset, long length) {
         this.offset = offset;
         this.length = length;
     }
@@ -40,11 +40,12 @@ public abstract class AbstractRange extends Header {
         return RANGE_HEADER_NAME;
     }
 
-    public abstract int getFrom(int byteArrayLength);
+    public abstract long getFrom(int byteArrayLength);
 
-    public abstract int getTo(int byteArrayLength);
+    public abstract long getTo(int byteArrayLength);
 
+    // Only used by mock Swift
     public byte[] copy(byte[] original) {
-        return Arrays.copyOfRange(original, getFrom(original.length), getTo(original.length));
+        return Arrays.copyOfRange(original, (int)getFrom(original.length), (int)getTo(original.length));
     }
 }

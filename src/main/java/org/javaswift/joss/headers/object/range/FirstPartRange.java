@@ -9,12 +9,12 @@ public class FirstPartRange extends AbstractRange {
     }
 
     @Override
-    public int getFrom(int byteArrayLength) {
+    public long getFrom(int byteArrayLength) {
         return 0;
     }
 
     @Override
-    public int getTo(int byteArrayLength) {
+    public long getTo(int byteArrayLength) {
         return length;
     }
 }
