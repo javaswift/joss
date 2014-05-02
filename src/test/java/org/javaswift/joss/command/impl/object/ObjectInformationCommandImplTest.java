@@ -19,6 +19,7 @@ import static org.javaswift.joss.headers.object.ObjectContentLength.CONTENT_LENG
 import static org.javaswift.joss.headers.object.ObjectContentType.CONTENT_TYPE;
 import static org.javaswift.joss.headers.object.ObjectLastModified.LAST_MODIFIED;
 import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
+import static org.javaswift.joss.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
 
 public class ObjectInformationCommandImplTest extends BaseCommandTest {
 
@@ -37,6 +38,7 @@ public class ObjectInformationCommandImplTest extends BaseCommandTest {
         prepareHeader(response, CONTENT_LENGTH, "654321", headers);
         prepareHeader(response, CONTENT_TYPE, "image/png", headers);
         prepareHeader(response, X_DELETE_AT, "1339429105", headers);
+        prepareHeader(response, X_OBJECT_MANIFEST, "container_segments/object", headers);
         prepareHeadersForRetrieval(response, headers);
     }
 
@@ -58,6 +60,7 @@ public class ObjectInformationCommandImplTest extends BaseCommandTest {
         assertEquals(654321, info.getContentLength());
         assertEquals("image/png", info.getContentType());
         assertEquals("1339429105", info.getDeleteAt().getHeaderValue());
+        assertEquals("container_segments/object", info.getManifest());
     }
 
     @Test (expected = NotFoundException.class)
