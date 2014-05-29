@@ -4,6 +4,7 @@ import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.object.DeleteAfter;
 import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.headers.object.ObjectContentType;
+import org.javaswift.joss.headers.object.ObjectManifest;
 import org.javaswift.joss.headers.object.ObjectMetadata;
 import org.junit.Test;
 
@@ -23,6 +24,7 @@ public class ObjectInformationTest {
         info.setDeleteAfter(new DeleteAfter(42));
         info.setDeleteAt(new DeleteAt(new Date()));
         info.setContentType(new ObjectContentType("text/plain"));
+        info.setManifest(new ObjectManifest("container_segments/object"));
         Collection<Header> headers = info.getHeadersIncludingHeader(new ObjectContentType("image/png"));
         assertEquals(5, headers.size());
         for (Header header : headers) {
@@ -44,5 +46,11 @@ public class ObjectInformationTest {
         ObjectInformation info = new ObjectInformation();
         Collection<Header> headers = info.getHeaders();
         assertEquals(0, headers.size());
+    }
+    
+    @Test
+    public void getManifest() {
+        ObjectInformation info = new ObjectInformation();
+        assertNull(info.getManifest());
     }
 }

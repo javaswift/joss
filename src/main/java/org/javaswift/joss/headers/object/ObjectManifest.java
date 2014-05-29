@@ -1,5 +1,6 @@
 package org.javaswift.joss.headers.object;
 
+import org.apache.http.HttpResponse;
 import org.javaswift.joss.headers.SimpleHeader;
 
 public class ObjectManifest extends SimpleHeader {
@@ -23,4 +24,7 @@ public class ObjectManifest extends SimpleHeader {
         return this.getHeaderValue().substring(this.getHeaderValue().indexOf("/") + 1);
     }
 
+    public static ObjectManifest fromResponse(HttpResponse response) {
+    	return new ObjectManifest(convertResponseHeader(response, X_OBJECT_MANIFEST));
+    }
 }

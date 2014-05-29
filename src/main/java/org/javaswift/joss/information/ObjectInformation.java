@@ -15,6 +15,7 @@ public class ObjectInformation extends AbstractInformation {
     private ObjectContentType contentType;
     private DeleteAfter deleteAfter;
     private DeleteAt deleteAt;
+    private ObjectManifest manifest ;
 
     public Date getLastModifiedAsDate() {
         return lastModified == null ? null : lastModified.getDate();
@@ -77,6 +78,14 @@ public class ObjectInformation extends AbstractInformation {
             return;
         }
         headers.add(header);
+    }
+    
+    public String getManifest () {
+    	return (manifest == null) ? (null) : (manifest.getHeaderValue()) ;
+    }
+    
+    public void setManifest(ObjectManifest manifest) {
+        this.manifest = manifest;
     }
 
     public Collection<Header> getHeaders() {

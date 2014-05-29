@@ -405,4 +405,12 @@ public class StoredObjectMockTest {
         object.uploadObject(instructions);
     }
 
+    @Test
+    public void getManifest() {
+        Container manifests = account.getContainer("manifests").create();
+        StoredObject manifest = manifests.getObject("manifest");
+        manifest.uploadObject(new UploadInstructions(new byte[] {} ).setObjectManifest(new ObjectManifest("segments/segment")));
+
+        assertEquals("segments/segment", manifest.getManifest());
+    }
 }

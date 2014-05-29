@@ -55,6 +55,11 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         checkForInfoAndAllowHeaderSet();
         return info.getEtag();
     }
+    
+    public String getManifest() {
+        checkForInfoAndAllowHeaderSet();
+        return info.getManifest() ;
+    }
 
     public long getContentLength() {
         checkForInfoAndAllowHeaderSet();

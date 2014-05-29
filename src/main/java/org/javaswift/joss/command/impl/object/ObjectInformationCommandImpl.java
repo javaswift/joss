@@ -30,6 +30,7 @@ public class ObjectInformationCommandImpl extends AbstractObjectCommand<HttpHead
         info.setContentLength(ObjectContentLength.fromResponse(response));
         info.setContentType(ObjectContentType.fromResponse(response));
         info.setDeleteAt(DeleteAt.fromResponse(response));
+        info.setManifest(ObjectManifest.fromResponse(response));
         return info;
     }
 

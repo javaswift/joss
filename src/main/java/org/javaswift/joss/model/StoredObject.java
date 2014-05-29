@@ -187,6 +187,14 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * @return etag or hash of the StoredObject
     */
     public String getEtag();
+    
+    /**
+    * The manifest of the StoredObject (relevant for large objects that are segmented). 
+    * If the Container was read by Container.list, this value will not be refetched from 
+    * the server, unless caching is disabled.
+    * @return manifest of the StoredObject, or null if the object has no manifest
+    */
+    public String getManifest();
 
     /**
     * The number of the bytes used by the StoredObject. If the Container was read by Container.list, this
