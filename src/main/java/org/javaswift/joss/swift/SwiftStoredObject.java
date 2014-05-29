@@ -69,6 +69,7 @@ public class SwiftStoredObject implements ListSubject, DirectoryOrObject {
         objectInformation.setEtag(etag);
         objectInformation.setLastModified(new ObjectLastModified(lastModified));
         objectInformation.setDeleteAt(deleteAt);
+        objectInformation.setManifest(objectManifest);
         return objectInformation;
     }
 
