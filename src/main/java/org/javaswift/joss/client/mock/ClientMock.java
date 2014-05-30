@@ -66,7 +66,8 @@ public class ClientMock extends AbstractClient<AccountMock> {
                     accountConfig.getTenantName(),
                     accountConfig.getTenantId(),
                     accountConfig.getUsername(),
-                    accountConfig.getPassword()).call();
+                    accountConfig.getPassword(), 
+                    accountConfig.getAccessProvider()).call();
         }
         return new AccountMock(swift);
     }

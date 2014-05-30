@@ -1,5 +1,7 @@
 package org.javaswift.joss.client.factory;
 
+import org.javaswift.joss.model.Access;
+
 /**
  * <ul>
  *     <li>
@@ -14,10 +16,19 @@ package org.javaswift.joss.client.factory;
  *         <a href="https://github.com/openstack/swift/blob/master/swift/common/middleware/tempauth.py">TEMPAUTH</a>:
  *         if you have TempAuth enabled, you will use this option. Looks very similar to Basic authentication
  *     </li>
+ *     <li>
+ *         EXTERNAL:
+ *         an implementation of the interface AccessProvider must be provided
+ *     </li>
  * </ul>
  */
 public enum AuthenticationMethod {
     BASIC,
     KEYSTONE,
-    TEMPAUTH
+    TEMPAUTH,
+    EXTERNAL;
+    
+    public static interface AccessProvider {
+    	public Access authenticate () ;
+    }
 }

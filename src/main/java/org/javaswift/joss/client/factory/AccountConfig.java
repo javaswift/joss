@@ -174,9 +174,14 @@ public class AccountConfig {
      *         password must be passed. Ideally, tenant ID and/or name are passed as well. JOSS can auto-
      *         discover the tenant if none is passed and if it can be resolved (one tenant for user).
      *     </li>
+	 *     <li>
+	 *         <b>EXTERNAL</b>; an implementation of the interface AccessProvider must be provided.
+	 *     </li>
      * </ul>
      */
     private AuthenticationMethod authenticationMethod = KEYSTONE;
+    
+    private AuthenticationMethod.AccessProvider accessProvider = null ;
 
     public void setTenantName(String tenantName) {
         this.tenantName = tenantName;
@@ -345,9 +350,17 @@ public class AccountConfig {
     public AuthenticationMethod getAuthenticationMethod() {
         return authenticationMethod;
     }
-
+    
     public void setAuthenticationMethod(AuthenticationMethod authenticationMethod) {
         this.authenticationMethod = authenticationMethod;
+    }
+    
+    public AuthenticationMethod.AccessProvider getAccessProvider () {
+    	return accessProvider ;
+    }
+
+    public void setAccessProvider (AuthenticationMethod.AccessProvider accessProvider) {
+    	this.accessProvider = accessProvider ;
     }
 
     public void setAuthenticationMethod(String authenticationMethod) {
