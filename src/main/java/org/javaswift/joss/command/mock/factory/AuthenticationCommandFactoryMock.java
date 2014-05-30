@@ -18,7 +18,7 @@ public class AuthenticationCommandFactoryMock implements AuthenticationCommandFa
     @Override
     public AuthenticationCommand createAuthenticationCommand(HttpClient httpClient, AuthenticationMethod authenticationMethod,
                                                              String url, String tenantName, String tenantId,
-                                                             String username, String password) {
+                                                             String username, String password, AuthenticationMethod.AccessProvider accessProvier) {
         return new AuthenticationCommandMock(swift, url, tenantName, tenantId, username, password);
     }
 
