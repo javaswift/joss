@@ -88,7 +88,8 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
                 accountConfig.getTenantName(),
                 accountConfig.getTenantId(),
                 accountConfig.getUsername(),
-                accountConfig.getPassword());
+                accountConfig.getPassword(),
+                accountConfig.getAccessProvider());
         LOG.info(
                 "JOSS / Attempting authentication with tenant name: " + accountConfig.getTenantName()+
                         ", tenant ID: "+accountConfig.getTenantId()+
