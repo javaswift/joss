@@ -9,8 +9,6 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessBasic;
-import org.javaswift.joss.headers.identity.XAuthKey;
-import org.javaswift.joss.headers.identity.XAuthUser;
 import org.javaswift.joss.model.Access;
 
 import java.io.IOException;

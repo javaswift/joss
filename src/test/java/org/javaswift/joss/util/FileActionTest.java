@@ -1,15 +1,10 @@
 package org.javaswift.joss.util;
 
-import mockit.Mocked;
-import mockit.NonStrictExpectations;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Enumeration;
-
 import static junit.framework.Assert.*;
 
 public class FileActionTest {

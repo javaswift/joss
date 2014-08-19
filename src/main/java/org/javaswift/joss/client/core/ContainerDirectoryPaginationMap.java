@@ -2,8 +2,6 @@ package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.DirectoryOrObject;
-import org.javaswift.joss.model.StoredObject;
-
 import java.util.Collection;
 
 public class ContainerDirectoryPaginationMap extends AbstractPaginationMap<DirectoryOrObject> {

@@ -2,14 +2,11 @@ package org.javaswift.joss.command.impl.container;
 
 import mockit.Verifications;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.javaswift.joss.client.impl.StoredObjectImpl;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.DirectoryOrObject;
-import org.javaswift.joss.model.StoredObject;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,8 +18,6 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 
 public class ListDirectoryCommandImplTest extends BaseCommandTest {
 

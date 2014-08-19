@@ -5,8 +5,6 @@ import mockit.Verifications;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
-import org.javaswift.joss.headers.identity.XAuthKey;
-import org.javaswift.joss.headers.identity.XAuthUser;
 import org.javaswift.joss.headers.identity.XStoragePass;
 import org.javaswift.joss.headers.identity.XStorageUser;
 import org.javaswift.joss.model.Access;
