@@ -14,5 +14,6 @@ public class InputStreamWrapperTest {
     public void readFromWrapper() throws IOException {
         InputStream inputStream = new InputStreamWrapper(null, new ByteArrayInputStream(new byte[] { 0x01 }));
         assertEquals(0x01, inputStream.read());
+        inputStream.close();
     }
 }
