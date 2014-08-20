@@ -101,7 +101,6 @@ public abstract class BaseCommandTest {
     protected void loadSampleJson(final String[] jsonFiles) throws IOException {
         new NonStrictExpectations() {{
             httpEntity.getContent();
-            List<String> results = new ArrayList<String>();
             for (String json : jsonFiles) {
                 result = IOUtils.toInputStream(new ClasspathTemplateResource(json).loadTemplate());
             }
