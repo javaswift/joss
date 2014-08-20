@@ -110,7 +110,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
 
         final AbstractStoredObject object = createStoredObjectForTempURL(password);
         // Make sure that a fixed date is used
-        useFixedDateForToday(localTime, todayInMS);
+        useFixedDateForToday(todayInMS);
         // Check whether the secure URL contains the right signature and expiry date
         final String secureUrl;
         if (method.equals("GET")) {
@@ -158,14 +158,14 @@ public class StoredObjectImplTest extends BaseCommandTest {
         final String password = "welkom#42";
         final long todayInMS = 1369581129861L;
         final AbstractStoredObject object = createStoredObjectForTempURL(password);
-        useFixedDateForToday(localTime, todayInMS);
+        useFixedDateForToday(todayInMS);
         String signature = HashSignature.getSignature(password, plainText);
         return object.verifyTempUrl(method, signature, expiryInSeconds);
     }
 
-    protected void useFixedDateForToday(final LocalTime localTime, final long todayInMS) {
+    protected void useFixedDateForToday(final long todayInMS) {
         new NonStrictExpectations(object) {{
-            localTime.currentTime();
+            LocalTime.currentTime();
             result = todayInMS;
         }};
     }

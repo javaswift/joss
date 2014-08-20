@@ -154,7 +154,7 @@ public class ContainerImplTest extends BaseCommandTest {
 
         final AbstractContainer container = createContainerForFormPost(password);
         // Make sure that a fixed date is used
-        useFixedDateForToday(localTime, todayInMS);
+        useFixedDateForToday(todayInMS);
         // Check whether the secure URL contains the right signature and expiry date
         FormPost formPost = container.getFormPost(redirectUrl, maxFileSize, maxFileCount, oneDayInSeconds);
         String plainText = "/internal/path/alpha\n"+redirectUrl+"\n"+maxFileSize+"\n"+maxFileCount+"\n"+formPost.expires;
@@ -174,9 +174,9 @@ public class ContainerImplTest extends BaseCommandTest {
         verifyHeaderValue("1138", PROJECT_ID, "PUT");
     }
 
-    protected void useFixedDateForToday(final LocalTime localTime, final long todayInMS) {
+    protected void useFixedDateForToday(final long todayInMS) {
         new NonStrictExpectations(container) {{
-            localTime.currentTime();
+            LocalTime.currentTime();
             result = todayInMS;
         }};
     }
