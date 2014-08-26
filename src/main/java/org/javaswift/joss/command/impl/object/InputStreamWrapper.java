@@ -18,16 +18,24 @@ public class InputStreamWrapper extends InputStream {
 
     @Override
     public int read() throws IOException {
+        if (inputStream == null) {
+            throw new IOException("No input stream defined.");
+        }
         return inputStream.read();
     }
 
     @Override
     public int read(byte[] buffer) throws IOException {
+        if (inputStream == null) {
+            throw new IOException("No input stream defined.");
+        }
         return inputStream.read(buffer);
     }
 
     @Override
     public void close() throws IOException {
-        command.close();
+        if (command != null) {
+            command.close();
+        }
     }
 }
