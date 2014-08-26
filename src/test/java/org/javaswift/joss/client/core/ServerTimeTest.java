@@ -14,7 +14,7 @@ public class ServerTimeTest {
         final long today = 1369581120L;
         ServerTime serverTime = ServerTime.create((today + 10) * 1000, today);
         new NonStrictExpectations() {{
-            localTime.currentTime();
+            LocalTime.currentTime();
             result = today;
         }};
         assertEquals(today + 10, serverTime.getServerTimeInSeconds());
