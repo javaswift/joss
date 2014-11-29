@@ -123,9 +123,17 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     public StoredObject setDeleteAfter(long seconds);
 
     /**
+     * Schedules the object to be deleted after a fixed period of x seconds
+     * @param seconds the number of seconds to wait before deleting the content. If seconds is null delete after header
+     *                will be cleared
+     * @return this
+     */
+    public StoredObject setDeleteAfter(Long seconds);
+
+    /**
     * Schedules the object to be deleted at a fixed date. Be careful using this method, since the server's date
     * may be different from yours.
-    * @param date the date at which to delete the content
+    * @param date the date at which to delete the content. If date is null delete at header will be cleared
     * @return this
     */
     public StoredObject setDeleteAt(Date date);
