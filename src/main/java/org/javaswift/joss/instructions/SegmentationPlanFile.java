@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.nio.channels.Channels;
 
+import org.apache.commons.io.input.BoundedInputStream;
+
 public class SegmentationPlanFile extends SegmentationPlan {
 
     private RandomAccessFile randomAccessFile;
@@ -25,8 +27,9 @@ public class SegmentationPlanFile extends SegmentationPlan {
 
     @Override
     protected InputStream createSegment() throws IOException {
-        return new FixedLengthInputStream(
-            Channels.newInputStream(this.randomAccessFile.getChannel().position(currentSegment * segmentationSize)), segmentationSize);
+    	BoundedInputStream res = new BoundedInputStream(Channels.newInputStream(this.randomAccessFile.getChannel().position(currentSegment * segmentationSize)), segmentationSize);
+    	res.setPropagateClose(false) ;
+    	return res ;  
     }
 
     @Override
