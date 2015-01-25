@@ -64,6 +64,10 @@ public class UploadInstructions {
         this.uploadPayload = new UploadPayloadByteArray(fileToUpload);
     }
 
+	public UploadInstructions(InputStream inputStream, long length) {
+		this.uploadPayload = new UploadPayloadBoundedInputStream(inputStream, length);
+	}
+
     /**
      * Facade method for checking out the payload to see if must be segmented. Used
      * internally.
