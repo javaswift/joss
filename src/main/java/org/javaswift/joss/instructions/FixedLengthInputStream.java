@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 /**
 * The purpose of this class is to read a limited number of bytes. It is used to read from
-* a RandomAccessFile and it supports the segmentation strategy.
+ * a RandomAccessFile and it supports the segmentation strategy.
 * Inspired by http://stackoverflow.com/questions/2888335/how-can-i-create-constrained-inputstream-to-read-only-part-of-the-file
 */
 public class FixedLengthInputStream extends InputStream {
@@ -21,6 +21,22 @@ public class FixedLengthInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         return (length-- <= 0) ? -1 : decorated.read();
+    }
+
+    /**
+     * avoid super.read(byte[]b),because it call read() underlying
+     * @param b
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public int read(byte[] b) throws IOException {
+        return decorated.read(b);
+    }
+
+    @Override
+    public int read(byte[] b, int off, int len) throws IOException {
+        return decorated.read(b, off, len);
     }
 
 }
