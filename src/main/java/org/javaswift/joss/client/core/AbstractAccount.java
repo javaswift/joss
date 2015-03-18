@@ -33,6 +33,8 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private ServerTime serverTime = new ServerTime(0);
 
+	private boolean usePrivateURL = false;
+
     public AbstractAccount(AccountCommandFactory commandFactory, ContainerFactory<Container> containerFactory,
                            ContainerFactory<Website> websiteFactory, boolean allowCaching) {
         super(allowCaching);
@@ -226,4 +228,13 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return this.commandFactory.getOriginalHost();
     }
 
+	@Override
+	public void setUsePrivateURL(boolean b) {
+		this.usePrivateURL = b;
+	}
+
+	@Override
+	public boolean isUsePrivateURL() {
+		return this.usePrivateURL;
+	}
 }

@@ -10,7 +10,7 @@ import org.javaswift.joss.model.StoredObject;
 public abstract class AbstractObjectCommand<M extends HttpRequestBase, N> extends AbstractSecureCommand<M, N> {
 
     public AbstractObjectCommand(Account account, HttpClient httpClient, Access access, StoredObject object) {
-        super(account, httpClient, getURL(access, object), access.getToken());
+        super(account, httpClient, getURL(access, object, account.isUsePrivateURL()), access.getToken());
     }
 
 }

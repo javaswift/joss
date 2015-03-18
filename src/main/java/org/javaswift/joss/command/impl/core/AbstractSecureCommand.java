@@ -20,7 +20,10 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
         setConnectionKeepAlive();
     }
 
-    public static String getURL(Access access, ObjectStoreEntity entity) {
+    public static String getURL(Access access, ObjectStoreEntity entity, boolean usePrivateURL) {
+        if (usePrivateURL) {
+            return access.getInternalURL() + entity.getPath();
+        }
         return access.getPublicURL() + entity.getPath();
     }
 

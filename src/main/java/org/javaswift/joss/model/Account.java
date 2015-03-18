@@ -172,5 +172,8 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     * a list of tenants.
     */
     public boolean isTenantSupplied();
+	
+    public void setUsePrivateURL(boolean b);
 
+    public boolean isUsePrivateURL();
 }
