@@ -63,7 +63,10 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
 
     @Override
     public Access authenticate() {
-        return access = authCommand.call();
+        String oldRegion = access.getPreferredRegion();
+        access = authCommand.call();
+        access.setPreferredRegion(oldRegion);
+        return access;
     }
 
     @Override

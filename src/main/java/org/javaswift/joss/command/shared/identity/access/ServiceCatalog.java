@@ -5,10 +5,15 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceCatalog {
 
     public List<EndPoint> endpoints = new ArrayList<EndPoint>();
+
+    public static final Logger LOG = LoggerFactory.getLogger(ServiceCatalog.class);
 
 //    @JsonProperty(value = "endpoints_links")
 //    public List<EndPointLink> endpointsLinks = new ArrayList<EndPointLink>();
@@ -19,7 +24,9 @@ public class ServiceCatalog {
 
     public EndPoint getRegion(String regionName) {
         EndPoint firstEndPoint = null;
+        LOG.info("getRegion: regionName:" + regionName);
         for (EndPoint endPoint : endpoints) {
+            LOG.info("getRegion: iter endpoint ", endPoint.region);
             if (regionName == null) { // If no region is passed, return the first region
                 return endPoint;
             }
