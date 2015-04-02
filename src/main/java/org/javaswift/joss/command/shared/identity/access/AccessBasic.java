@@ -7,6 +7,7 @@ public class AccessBasic implements Access {
 
     private String url;
     private String token;
+    private String preferredRegion;
 
     public void setUrl(final String url) {
         this.url = url;
@@ -17,7 +18,14 @@ public class AccessBasic implements Access {
     }
 
     @Override
-    public void setPreferredRegion(String preferredRegion) {}
+    public void setPreferredRegion(String preferredRegion) {
+        this.preferredRegion = preferredRegion;
+    }
+
+    @Override
+    public String getPreferredRegion() {
+        return this.preferredRegion;
+    }
 
     @Override
     public String getToken() {
