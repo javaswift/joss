@@ -53,7 +53,7 @@ public class AccountCommandFactoryImpl implements AccountCommandFactory {
 
     @Override
     public String getPrivateHost() {
-        return this.privateHost == null ? access.getPublicURL() : this.privateHost;
+        return this.privateHost == null ? access.getInternalURL() : this.privateHost;
     }
 
     @Override
