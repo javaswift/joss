@@ -1,9 +1,10 @@
 package org.javaswift.joss.client.impl;
 
 import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -36,13 +37,18 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
     }
 
     private void initHttpClient(int socketTimeout) {
-        PoolingClientConnectionManager connectionManager = initConnectionManager();
+        final PoolingClientConnectionManager connectionManager = initConnectionManager();
         
         if(accountConfig.isDisableSslValidation()) {
             disableSslValidation(connectionManager);
         }
         
-        this.httpClient = new DefaultHttpClient(connectionManager);
+        this.httpClient = new SystemDefaultHttpClient() {
+		    @Override
+		    protected ClientConnectionManager createClientConnectionManager() {
+			    return connectionManager;
+			}
+		};
         if (socketTimeout != -1) {
             LOG.info("JOSS / Set socket timeout on HttpClient: "+socketTimeout);
             HttpParams params = this.httpClient.getParams();
