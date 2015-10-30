@@ -249,6 +249,15 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     */
     public String getTempPutUrl(long seconds);
 
+    public String getImageScaleUrl(int percentage);
+
+    public String getImageProcessUrl(String param_string);
+
+    public String getImageScaleTempUrl(int percentage, long expiredtime);
+
+    public String getImageProcessTempUrl(String param_string, long expiredtime);
+
+
     /**
     * Creates a hash using the server's hash password and compares it to the signature. If right, expiry will
     * be checked against the server time. If all matches, a go is given. This method is useful for supporting
