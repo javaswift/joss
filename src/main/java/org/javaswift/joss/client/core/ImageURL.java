@@ -64,10 +64,10 @@ public class ImageURL {
         String public_url_without_prefix;
         if (public_url.startsWith("http://")) {
             http_prefix = "http://";
-            public_url_without_prefix = public_url.substring(7);
+            public_url_without_prefix = public_url.substring(http_prefix.length());
         } else if (public_url.startsWith("https://")) {
             http_prefix = "https://";
-            public_url_without_prefix = public_url.substring(8);
+            public_url_without_prefix = public_url.substring(http_prefix.length());
         } else {
             public_url_without_prefix = public_url;
         }
