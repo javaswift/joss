@@ -7,6 +7,9 @@ import org.javaswift.joss.headers.object.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 /**
 * Specific instructions for uploading files. You can control the following aspects:
@@ -51,6 +54,8 @@ public class UploadInstructions {
 
     /** Size at which a file must be segmented into smaller pieces */
     private Long segmentationSize = MAX_SEGMENTATION_SIZE;
+
+    private Map<String, Object> metadata;
 
     public UploadInstructions(File fileToUpload) {
         this.uploadPayload = new UploadPayloadFile(fileToUpload);
@@ -103,6 +108,28 @@ public class UploadInstructions {
     public UploadInstructions setContentType(ObjectContentType contentType) {
         this.contentType = contentType;
         return this;
+    }
+
+    public UploadInstructions setMetadata(Map<String, Object> metadata) {
+        if (metadata == null) {
+            return this;
+        }
+
+        String key;
+        Object value;
+        if (this.metadata == null) {
+            this.metadata = new TreeMap<String, Object>();
+        }
+        for (Entry<String, Object> entry: metadata.entrySet()) {
+            key = entry.getKey();
+            value = entry.getValue();
+            this.metadata.put(key, value);
+        }
+        return this;
+    }
+
+    public Map<String, Object> getMetadata() {
+        return this.metadata;
     }
 
     public UploadInstructions setDeleteAfter(DeleteAfter deleteAfter) {
