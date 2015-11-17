@@ -15,6 +15,7 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.headers.object.ObjectMetadata;
 
 import java.io.IOException;
 import java.util.Map;
@@ -47,7 +48,8 @@ public class UploadObjectCommandImpl extends AbstractObjectCommand<HttpPut, Obje
             return;
         }
         for (Map.Entry<String, Object> entry: metadata.entrySet()) {
-            request.setHeader(entry.getKey(), entry.getValue().toString());
+            ObjectMetadata objectmetadata = new ObjectMetadata(entry.getKey(), entry.getValue().toString());
+            setHeader(objectmetadata);
         }
     }
 

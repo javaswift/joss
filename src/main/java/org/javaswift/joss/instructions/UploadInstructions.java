@@ -31,7 +31,6 @@ public class UploadInstructions {
     /** Maximum segmentation size allowed by the ObjectStore. */
     public static Long MAX_SEGMENTATION_SIZE = 5368709120L; // 5 GB, max object size
 
-    public static final String X_OBJECT_META_PREFIX = "X-Object-Meta-";
 
     /** Consists of either the File, InputStream or byte[] */
     private UploadPayload uploadPayload;
@@ -123,7 +122,7 @@ public class UploadInstructions {
             this.metadata = new TreeMap<String, Object>();
         }
         for (Entry<String, Object> entry: metadata.entrySet()) {
-            key = X_OBJECT_META_PREFIX + entry.getKey();
+            key = entry.getKey();
             value = entry.getValue();
             this.metadata.put(key, value);
         }
