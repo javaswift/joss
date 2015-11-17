@@ -154,4 +154,8 @@ public class AccountFactory {
         return this;
     }
 
+    public AccountFactory setUsePrivateURL(boolean b) {
+        this.config.usePrivateURL = b;
+        return this;
+    }
 }

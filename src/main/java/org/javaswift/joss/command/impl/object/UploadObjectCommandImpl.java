@@ -15,8 +15,10 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.headers.object.ObjectMetadata;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class UploadObjectCommandImpl extends AbstractObjectCommand<HttpPut, Object> implements UploadObjectCommand {
 
@@ -37,7 +39,18 @@ public class UploadObjectCommandImpl extends AbstractObjectCommand<HttpPut, Obje
         setHeader(uploadInstructions.getObjectManifest());
         setHeader(uploadInstructions.getEtag());
         setHeader(uploadInstructions.getContentType());
+        setUserMetadata(uploadInstructions.getMetadata());
         request.setEntity(entity);
+    }
+
+    protected void setUserMetadata(Map<String, Object> metadata) {
+        if (metadata == null) {
+            return;
+        }
+        for (Map.Entry<String, Object> entry: metadata.entrySet()) {
+            ObjectMetadata objectmetadata = new ObjectMetadata(entry.getKey(), entry.getValue().toString());
+            setHeader(objectmetadata);
+        }
     }
 
     @Override

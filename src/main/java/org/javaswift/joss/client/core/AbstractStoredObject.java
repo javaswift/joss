@@ -273,6 +273,31 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         return getTempUrl("GET", durationInSeconds);
     }
 
+    public String getImageScaleUrl(int percentage) {
+        if (percentage < 1 || percentage > 1000) {
+            throw new CommandException("Unable to scale image : " + String.valueOf(percentage));
+        }
+        return new ImageURL("GET", commandFactory.getTempUrlPrefix(), this).getImageScaleUrl(percentage);
+    }
+
+
+    public String getImageProcessUrl(String param_string) {
+        return new ImageURL("GET",commandFactory.getTempUrlPrefix(), this).getImageProcessUrl(param_string);
+    }
+
+    public String getImageScaleTempUrl(int percentage, long expiredtime) {
+        if (percentage < 1 || percentage > 1000) {
+            throw new CommandException("Unable to scale image : " + String.valueOf(percentage));
+        }
+        return new ImageURL("GET", commandFactory.getTempUrlPrefix(), this).setServerTimeExpiry(expiredtime).getImageScaleTempUrl(percentage);
+
+    }
+
+    public String getImageProcessTempUrl(String param_string, long expiredtime) {
+        return new ImageURL("GET", commandFactory.getTempUrlPrefix(), this).setServerTimeExpiry(expiredtime).getImageProcessTempUrl(param_string);
+
+    }
+
     @Override
     public String getTempPutUrl(long durationInSeconds) {
         return getTempUrl("PUT", durationInSeconds);

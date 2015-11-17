@@ -9,9 +9,14 @@ import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.ObjectStoreEntity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extends AbstractCommand<M, N> {
 
     private Account account;
+
+    public static final Logger LOG = LoggerFactory.getLogger(AbstractSecureCommand.class);
 
     public AbstractSecureCommand(Account account, HttpClient httpClient, String url, String token) {
         super(httpClient, url);
@@ -20,7 +25,10 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
         setConnectionKeepAlive();
     }
 
-    public static String getURL(Access access, ObjectStoreEntity entity) {
+    public static String getURL(Access access, ObjectStoreEntity entity, boolean usePrivateURL) {
+        if (usePrivateURL) {
+            return access.getInternalURL() + entity.getPath();
+        }
         return access.getPublicURL() + entity.getPath();
     }
 
@@ -31,6 +39,7 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
             return super.call();
         } catch (UnauthorizedException err) {
             if (account.isAllowReauthenticate()) {
+                LOG.info("Reauthenticate");
                 Access access = account.authenticate();
                 setToken(access.getToken());
                 return super.call();

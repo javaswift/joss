@@ -332,7 +332,8 @@ public class StoredObjectImplTest extends BaseCommandTest {
 
     @Test
     public void getPrivateUrlObjectStore() {
-        assertEquals("http://someurl.public/alpha/image.png", object.getPrivateURL());
+        //assertEquals("http://someurl.public/alpha/image.png", object.getPrivateURL());
+        assertEquals("http://someurl.nowhere/v1/AUTH_Account/alpha/image.png", object.getPrivateURL());
     }
 
     @Test

@@ -9,7 +9,7 @@ import org.javaswift.joss.model.Account;
 public abstract class AbstractAccountCommand<M extends HttpRequestBase, N> extends AbstractSecureCommand<M, N> {
 
     public AbstractAccountCommand(Account account, HttpClient httpClient, Access access) {
-        super(account, httpClient, getURL(access, account), access.getToken());
+        super(account, httpClient, getURL(access, account, account.isUsePrivateURL()), access.getToken());
     }
 
 }

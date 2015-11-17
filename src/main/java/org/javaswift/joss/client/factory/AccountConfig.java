@@ -77,6 +77,8 @@ public class AccountConfig {
     */
     private String privateHost = null;
 
+    public boolean usePrivateURL = false;
+
     /**
     * If mock is turned off (default behaviour), then the real ObjectStore will be accessed. If not,
     * an in-memory simulation of Swift will be used. It can be accessed as if it were a real

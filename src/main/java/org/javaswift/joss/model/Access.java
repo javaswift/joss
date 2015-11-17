@@ -17,6 +17,8 @@ public interface Access {
     */
     public void setPreferredRegion(String preferredRegion);
 
+    public String getPreferredRegion();
+
     /**
     * The security token to pass to all secure ObjectStore calls. Note that this token has a
     * validity for a period of 24 hours. After that, you require a new token.
