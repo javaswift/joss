@@ -57,7 +57,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
         } catch (IOException err) {
             throw new CommandException("Unable to execute the HTTP call or to convert the HTTP Response", err);
         } finally {
-            if (closeStreamAutomatically()) {
+            if (closeStreamAutomatically() || response.getStatusLine().getStatusCode()>=400) {
                 try { close(); } catch (IOException err) { /* ignore */ }
             }
         }
