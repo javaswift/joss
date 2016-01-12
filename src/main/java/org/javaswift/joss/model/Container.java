@@ -19,38 +19,39 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
 
     /**
     * Takes a single Container and makes it public. ALL (!) the objects in the Container are now public, so be
-    * very careful exercising this option. The public URL can now be used to access objects.
+    * very careful exercising this option. The URL can now be used to access objects.
     */
-    public void makePublic();
+    void makePublic();
 
     /**
     * Takes a single Container and makes it private. All the objects in the Container are now private and can
-    * no longer be accessed through the public URL.
+    * no longer be accessed through the URL.
     */
-    public void makePrivate();
+    void makePrivate();
 
     /**
     * Creates a Container in the Account.
+    * @return instance of the newly created container
     */
-    public Container create();
+    Container create();
 
     /**
     * Deletes a Container from the Account. Note that the Container must be empty in order to be deleted.
     */
-    public void delete();
+    void delete();
 
     /**
     * Checks whether a container exists
     * @return whether the container exists
     */
-    public boolean exists();
+    boolean exists();
 
     /**
     * Returns a handle for an object. Note that this method DOES NOT create an object in the Object Store
     * @param name name of the object to create a handle for
     * @return the object handle
     */
-    public StoredObject getObject(String name);
+    StoredObject getObject(String name);
 
     /**
     * Returns an object that represents a segment of a single large object
@@ -58,32 +59,32 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
     * @param part the part of the large object that the segment represents
     * @return the object handle
     */
-    public StoredObject getObjectSegment(String name, int part);
+    StoredObject getObjectSegment(String name, int part);
 
     /**
     * Returns whether the metadata of the container has been retrieved
     * @return true if the metadata has been retrieved
     */
-    public boolean isInfoRetrieved();
+    boolean isInfoRetrieved();
 
     /**
     * Force the Account to reload its metadata
     */
-    public void reload();
+    void reload();
 
     /**
     * The number of StoredObjects in the Container. If the Container was read by Account.list, this
     * value will not be refetched from the server, unless caching is disabled.
     * @return number of StoredObjects
     */
-    public int getCount();
+    int getCount();
 
     /**
     * The number of bytes stored by the StoredObjects in the Container. If the Container was read by
     * Account.list, this value will not be refetched from the server, unless caching is disabled.
     * @return number of bytes
     */
-    public long getBytesUsed();
+    long getBytesUsed();
 
     /**
     * Returns a signature that can be used to upload files directly from the browser, using a basic form
@@ -94,7 +95,7 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
     * @param seconds number of seconds for the temporary URL to be valid
     * @return FormPost signature for uploading an object directly from the browser
     */
-    public FormPost getFormPost(String redirect, long maxFileSize, long maxFileCount, long seconds);
+    FormPost getFormPost(String redirect, long maxFileSize, long maxFileCount, long seconds);
 
     /**
     * Returns a number equal to pageSize of Container elements, starting with the first element
@@ -106,33 +107,33 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
     * @param pageSize the number of elements to return
     * @return collection of directories and objects
     */
-    public Collection<DirectoryOrObject> listDirectory(String prefix, Character delimiter, String marker, int pageSize);
+    Collection<DirectoryOrObject> listDirectory(String prefix, Character delimiter, String marker, int pageSize);
 
     /**
     * Reads a directory within the passed directory
     * @param directory the directory to read
     * @return collection of directories and objects within the directory
     */
-    public Collection<DirectoryOrObject> listDirectory(Directory directory);
+    Collection<DirectoryOrObject> listDirectory(Directory directory);
 
     /**
     * Reads all directories and object in the root of a container
     * @return collection of directories and objects within the root
     */
-    public Collection<DirectoryOrObject> listDirectory();
+    Collection<DirectoryOrObject> listDirectory();
 
-    public boolean isPublic();
+    boolean isPublic();
 
-    public void setCount(int count);
-    public void setBytesUsed(long bytesUsed);
+    void setCount(int count);
+    void setBytesUsed(long bytesUsed);
 
-    public abstract Account getAccount();
+    abstract Account getAccount();
     
     
-    public void setContainerRights(String writePermissions, String readPermissions);
+    void setContainerRights(String writePermissions, String readPermissions);
 
-    public String getContainerReadPermission();
-    public String getcontainerWritePermission();
+    String getContainerReadPermission();
+    String getcontainerWritePermission();
     
     /**
      * Sets custom headers to be passed when creating a container.  This allows you to
@@ -140,10 +141,11 @@ public interface Container extends ObjectStoreEntity, Comparable<Container>, Lis
      * 
      * @param headers the set of headers to pass in the create request.
      */
-    public void setCustomHeaders(Collection<Header> headers);
+    void setCustomHeaders(Collection<Header> headers);
     
     /**
      * Gets the custom headers on this container.
+     * @return the complete set of custom headers
      */
-    public Collection<Header> getCustomHeaders();
+    Collection<Header> getCustomHeaders();
 }

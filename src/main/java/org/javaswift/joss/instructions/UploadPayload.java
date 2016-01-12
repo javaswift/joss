@@ -29,6 +29,7 @@ public abstract class UploadPayload {
     /**
     * Returns the MD5 hash value in an Etag header
     * @return Etag header with MD5 hash
+    * @throws IOException when DigestUtils.md5Hex fails
     */
     public abstract Etag getEtag() throws IOException;
 
@@ -36,6 +37,7 @@ public abstract class UploadPayload {
     * Sets up the plan to upload the payload in segments
     * @param segmentationSize the size of an individual segment
     * @return the segmentation plan
+    * @throws IOException when the segmentation plan cannot be drawn up
     */
     public abstract SegmentationPlan getSegmentationPlan(Long segmentationSize) throws IOException;
 

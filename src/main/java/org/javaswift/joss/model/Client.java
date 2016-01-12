@@ -17,7 +17,8 @@ public interface Client<A extends Account> {
     * Calls the identity module of the OpenStack implementation to authenticate itself against. If
     * successful, it returns the internal URL to work with and the authentication token, which will
     * automatically be added to all calls made by the client henceforth.
+    * @return the account of the caller
     */
-    public A authenticate();
+    A authenticate();
 
 }

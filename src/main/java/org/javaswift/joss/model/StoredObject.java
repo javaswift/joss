@@ -28,7 +28,7 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * on the InputStream (which consumes the entire original response).
     * @return the object in an InputStreamWrapper (containing the input stream)
     */
-    public InputStream downloadObjectAsInputStream();
+    InputStream downloadObjectAsInputStream();
 
     /**
     * See documentation of {@link #downloadObjectAsInputStream()}. This method also accepts the download
@@ -36,14 +36,14 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * @param downloadInstructions the instructions for downloading the object
     * @return the object in an InputStreamWrapper (containing the input stream)
     */
-    public InputStream downloadObjectAsInputStream(DownloadInstructions downloadInstructions);
+    InputStream downloadObjectAsInputStream(DownloadInstructions downloadInstructions);
 
     /**
     * Fetches the object in a Container in a byte array. Note that for passing the information on, the
     * content-type is useful. This information can be found by fetching the object information.
     * @return the object in a byte array
     */
-    public byte[] downloadObject();
+    byte[] downloadObject();
 
     /**
     * See documentation of {@link #downloadObject()}. This method also accepts the download
@@ -51,13 +51,13 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * @param downloadInstructions the instructions for downloading the object
     * @return the object in a byte array
     */
-    public byte[] downloadObject(DownloadInstructions downloadInstructions);
+    byte[] downloadObject(DownloadInstructions downloadInstructions);
 
     /**
     * Reads the object and writes it to a file.
     * @param targetFile the file to write the object to
     */
-    public void downloadObject(File targetFile);
+    void downloadObject(File targetFile);
 
     /**
     * See documentation of {@link #downloadObject(java.io.File)}. This method also accepts the download
@@ -65,38 +65,38 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * @param targetFile the file to write the object to
     * @param downloadInstructions the instructions for downloading the object
     */
-    public void downloadObject(File targetFile, DownloadInstructions downloadInstructions);
+    void downloadObject(File targetFile, DownloadInstructions downloadInstructions);
 
     /**
     * Uploads a byte array object to a location designated by the Container and the object.
     * @param uploadInstructions not only the content to be uploaded, but also additional headers that need to be set
     */
-    public void uploadObject(UploadInstructions uploadInstructions);
+    void uploadObject(UploadInstructions uploadInstructions);
 
     /**
     * Uploads a byte array object to a location designated by the Container and the object.
     * @param inputStream the actual content that must be uploaded to the object, in InputStream format
     */
-    public void uploadObject(InputStream inputStream);
+    void uploadObject(InputStream inputStream);
 
     /**
     * Uploads a byte array object to a location designated by the Container and the object.
     * @param fileToUpload the actual content that must be uploaded to the object
     */
-    public void uploadObject(byte[] fileToUpload);
+    void uploadObject(byte[] fileToUpload);
 
     /**
     * Uploads a file from a designated location to a location designated by the Container and the
     * object.
     * @param fileToUpload the file containing the content that must be uploaded to the object
     */
-    public void uploadObject(File fileToUpload);
+    void uploadObject(File fileToUpload);
 
     /**
     * Deletes an object in a container. In combination with copyObject, this is effectively the "Best Practice'
     * move method.
     */
-    public void delete();
+    void delete();
 
     /**
     * Copies the content of an object to another object. In combination with deleteObject, this is effectively
@@ -104,7 +104,7 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * @param targetContainer the owning Container of the target location of the copy
     * @param targetObject the object location where the copy must be placed
     */
-    public void copyObject(Container targetContainer, StoredObject targetObject);
+    void copyObject(Container targetContainer, StoredObject targetObject);
 
     /**
     * Explicitly sets the content type of an object. This can be useful, for example when you have content-sniffers
@@ -113,14 +113,14 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * @param contentType the content type of the object
     * @return this
     */
-    public StoredObject setContentType(String contentType);
+    StoredObject setContentType(String contentType);
 
     /**
     * Schedules the object to be deleted after a fixed period of x seconds
     * @param seconds the number of seconds to wait before deleting the content
     * @return this
     */
-    public StoredObject setDeleteAfter(long seconds);
+    StoredObject setDeleteAfter(long seconds);
 
     /**
     * Schedules the object to be deleted at a fixed date. Be careful using this method, since the server's date
@@ -128,65 +128,65 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * @param date the date at which to delete the content
     * @return this
     */
-    public StoredObject setDeleteAt(Date date);
+    StoredObject setDeleteAt(Date date);
 
     /**
-    * This call checks the container privacy before deciding whether to use the configured public / private
+    * This call checks the container privacy before deciding whether to use the configured / private
     * host or the default ObjectStore host. NOTE: this call needs to know the container's privacy settings
     * and therefore, if it did not do so already, will make a HEAD call to fetch the container's metadata.
     * @return the URL of the resource
     */
-    public String getURL();
+    String getURL();
 
     /**
-    * Returns the public URL through which the resource can be viewed
-    * @return the public URL of the resource
+    * Returns the URL through which the resource can be viewed
+    * @return the URL of the resource
     */
-    public String getPublicURL();
+    String getPublicURL();
 
     /**
     * Returns the private URL through which the resource can be viewed
     * @return the private URL of the resource
     */
-    public String getPrivateURL();
+    String getPrivateURL();
 
     /**
     * Checks whether a container exists
     * @return whether the container exists
     */
-    public boolean exists();
+    boolean exists();
 
     /**
     * Returns whether the metadata of the object has been retrieved
     * @return true if the metadata has been retrieved
     */
-    public boolean isInfoRetrieved();
+    boolean isInfoRetrieved();
 
     /**
     * Force the Account to reload its metadata
     */
-    public void reload();
+    void reload();
 
     /**
     * The last modified date of the StoredObject. If the Container was read by Container.list, this
     * value will not be refetched from the server, unless caching is disabled.
     * @return last modified date
     */
-    public Date getLastModifiedAsDate();
+    Date getLastModifiedAsDate();
 
     /**
     * The last modified date of the StoredObject. If the Container was read by Container.list, this
     * value will not be refetched from the server, unless caching is disabled.
     * @return last modified date
     */
-    public String getLastModified();
+    String getLastModified();
 
     /**
     * The etag (or hash) of the StoredObject. If the Container was read by Container.list, this
     * value will not be refetched from the server, unless caching is disabled.
     * @return etag or hash of the StoredObject
     */
-    public String getEtag();
+    String getEtag();
     
     /**
     * The manifest of the StoredObject (relevant for large objects that are segmented). 
@@ -194,35 +194,35 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * the server, unless caching is disabled.
     * @return manifest of the StoredObject, or null if the object has no manifest
     */
-    public String getManifest();
+    String getManifest();
 
     /**
     * The number of the bytes used by the StoredObject. If the Container was read by Container.list, this
     * value will not be refetched from the server, unless caching is disabled.
     * @return number of bytes used
     */
-    public long getContentLength();
+    long getContentLength();
 
     /**
     * The content type of the StoredObject. If the Container was read by Container.list, this
     * value will not be refetched from the server, unless caching is disabled.
     * @return content type
     */
-    public String getContentType();
+    String getContentType();
 
     /**
     * The date when the object will be deleted. Note that this value is never passed in Container.list and
     * therefore always costs an extra HTTP call to the server.
     * @return date when the StoredObject will be deleted (as a java.util.Date)
     */
-    public Date getDeleteAtAsDate();
+    Date getDeleteAtAsDate();
 
     /**
     * The date when the object will be deleted. Note that this value is never passed in Container.list and
     * therefore always costs an extra HTTP call to the server.
     * @return date when the StoredObject will be deleted (as a String)
     */
-    public String getDeleteAt();
+    String getDeleteAt();
 
     /**
     * Returns a temporary GET URL to an Object. Note that for this method to work Account.saveHashPassword must
@@ -230,7 +230,7 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * @param seconds number of seconds for the temporary URL to be valid
     * @return temporary GET URL to the object
     */
-    public String getTempGetUrl(long seconds);
+    String getTempGetUrl(long seconds);
 
     /**
     * Returns a temporary POST URL to an Object, allowing one to directly upload content to the ObjectStore.
@@ -239,21 +239,24 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     * @param seconds number of seconds for the temporary URL to be valid
     * @return temporary POST URL to the object
     */
-    public String getTempPutUrl(long seconds);
+    String getTempPutUrl(long seconds);
 
     /**
     * Creates a hash using the server's hash password and compares it to the signature. If right, expiry will
     * be checked against the server time. If all matches, a go is given. This method is useful for supporting
     * TempURLs in a mock context.
+    * @param method in REST terms, the command to execute
+    * @param signature the password to use for creating the hash
+    * @param expiry the expiration time of the temporary URL
     * @return true if the TempURL is valid, false if not
     */
-    public boolean verifyTempUrl(String method, String signature, long expiry);
+    boolean verifyTempUrl(String method, String signature, long expiry);
 
-    public String getPath();
-    public void setLastModified(Date date);
-    public void setLastModified(String date);
-    public void setEtag(String etag);
-    public void setContentLength(long contentLength);
-    public void setContentTypeWithoutSaving(String contentType);
+    String getPath();
+    void setLastModified(Date date);
+    void setLastModified(String date);
+    void setEtag(String etag);
+    void setContentLength(long contentLength);
+    void setContentTypeWithoutSaving(String contentType);
 
 }
