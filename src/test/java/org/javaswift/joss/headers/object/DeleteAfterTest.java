@@ -9,5 +9,4 @@ public class DeleteAfterTest extends AbstractHeaderTest {
     public void testAddHeader() {
         testHeader(new DeleteAfter(30));
     }
-
 }

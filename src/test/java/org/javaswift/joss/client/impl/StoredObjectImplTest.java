@@ -255,6 +255,14 @@ public class StoredObjectImplTest extends BaseCommandTest {
     }
 
     @Test
+    public void removeDeleteAt() throws IOException, DateParseException {
+        expectStatusCode(202, false);
+        prepareMetadata();
+        object.setDeleteAt(null);
+        verifyHeaderValue(null, X_DELETE_AT, "POST");
+    }
+
+    @Test
     public void setDeleteAfter() throws IOException {
         expectStatusCode(202, false);
         prepareMetadata();
@@ -262,6 +270,15 @@ public class StoredObjectImplTest extends BaseCommandTest {
         verifyHeaderValue("42", X_DELETE_AFTER, "POST");
         verifyHeaderValue(null, X_DELETE_AT, "POST");
    }
+
+    @Test
+    public void removeDeleteAfter() throws IOException, DateParseException {
+        expectStatusCode(202, false);
+        prepareMetadata();
+        object.setDeleteAfter(null);
+        verifyHeaderValue(null, X_DELETE_AFTER, "POST");
+        verifyHeaderValue(null, X_DELETE_AT, "POST");
+    }
 
     @Test
     public void deleteObject() {

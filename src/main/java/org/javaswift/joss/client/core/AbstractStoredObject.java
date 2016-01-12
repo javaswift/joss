@@ -233,19 +233,23 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         return this;
     }
 
-    public StoredObject setDeleteAfter(long seconds) {
+    public StoredObject setDeleteAfter(Long seconds) {
         checkForInfo();
         info.setDeleteAt(null);
-        info.setDeleteAfter(new DeleteAfter(seconds));
+        info.setDeleteAfter(seconds == null ? null : new DeleteAfter(seconds));
         commandFactory.createObjectMetadataCommand(
                 getAccount(), getContainer(), this, info.getHeadersIncludingHeader(info.getDeleteAfter())).call();
         return this;
     }
 
+    public StoredObject setDeleteAfter(long seconds) {
+        return this.setDeleteAfter(new Long(seconds));
+    }
+
     @Override
     public StoredObject setDeleteAt(Date date) {
         checkForInfo();
-        info.setDeleteAt(new DeleteAt(date));
+        info.setDeleteAt(date == null ? null : new DeleteAt(date));
         saveSpecificMetadata();
         return this;
     }
