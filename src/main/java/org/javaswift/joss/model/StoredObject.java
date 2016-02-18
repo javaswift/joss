@@ -233,6 +233,16 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     public String getDeleteAt();
 
     /**
+     * To create a static large object, divide content into pieces and create (upload) a segment object
+     * to contain each piece.and then create a manifest object include the list of each segment object along
+     * with its size and MD5 checksum in order.If everything matches, the manifest object is created. The
+     * X-Static-Large-Object metadata is set to true indicating that this is a static object manifest. And it
+     * can't be changed when object have created.
+     * @return true if the object is SLO
+     */
+    public boolean isStaticLargeObject();
+
+    /**
     * Returns a temporary GET URL to an Object. Note that for this method to work Account.saveHashPassword must
     * have been set.
     * @param seconds number of seconds for the temporary URL to be valid

@@ -60,6 +60,11 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         return info.getManifest() ;
     }
 
+    public boolean isStaticLargeObject() {
+        checkForInfoAndAllowHeaderSet();
+        return info.getStaticLargeObject();
+    }
+
     public long getContentLength() {
         checkForInfoAndAllowHeaderSet();
         return info.getContentLength();
