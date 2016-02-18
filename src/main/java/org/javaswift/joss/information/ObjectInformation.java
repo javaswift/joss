@@ -15,7 +15,8 @@ public class ObjectInformation extends AbstractInformation {
     private ObjectContentType contentType;
     private DeleteAfter deleteAfter;
     private DeleteAt deleteAt;
-    private ObjectManifest manifest ;
+    private ObjectManifest manifest;
+    private ObjectSLO staticLargeObject;
 
     public Date getLastModifiedAsDate() {
         return lastModified == null ? null : lastModified.getDate();
@@ -86,6 +87,16 @@ public class ObjectInformation extends AbstractInformation {
     
     public void setManifest(ObjectManifest manifest) {
         this.manifest = manifest;
+    }
+
+    public boolean getStaticLargeObject() {
+        if (staticLargeObject == null || staticLargeObject.getHeaderValue() == null)
+            return false;
+        return Boolean.parseBoolean(staticLargeObject.getHeaderValue());
+    }
+
+    public void setStaticLargeObject(ObjectSLO staticLargeObject) {
+        this.staticLargeObject = staticLargeObject;
     }
 
     public Collection<Header> getHeaders() {
