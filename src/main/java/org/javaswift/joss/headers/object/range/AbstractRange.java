@@ -16,8 +16,8 @@ import java.util.Arrays;
  */
 public abstract class AbstractRange extends Header {
 
-    public String RANGE_HEADER_NAME = "Range";
-    public String RANGE_HEADER_VALUE_PREFIX = "bytes=";
+    public String rangeHeaderName = "Range";
+    public String rangeHeaderValuePrefix = "bytes=";
 
     protected long offset;
 
@@ -30,14 +30,14 @@ public abstract class AbstractRange extends Header {
 
     public String getHeaderValue() {
         return
-            RANGE_HEADER_VALUE_PREFIX+
+            rangeHeaderValuePrefix+
                 (offset >= 0 ? Long.toString(offset) : "") +
                 "-" +
                 (length >= 0 ? Long.toString(length) : "");
     }
 
     public String getHeaderName() {
-        return RANGE_HEADER_NAME;
+        return rangeHeaderName;
     }
 
     public abstract long getFrom(int byteArrayLength);

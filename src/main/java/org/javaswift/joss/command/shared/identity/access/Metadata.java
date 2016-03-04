@@ -7,7 +7,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Metadata {
 
-    public boolean is_admin;
+    public boolean isAdmin;
 
     public List<String> roles;
 

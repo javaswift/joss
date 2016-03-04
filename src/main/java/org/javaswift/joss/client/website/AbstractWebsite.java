@@ -113,7 +113,7 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
         target.cleanup();
     }
 
-    private void deleteObjects(FileObjects source, FileObjects target) {
+    private static void deleteObjects(FileObjects source, FileObjects target) {
         for (String targetPath : target.keys()) {
             if (target.ignore(targetPath)) {
                 continue;
@@ -126,7 +126,7 @@ public abstract class AbstractWebsite extends AbstractContainer implements Websi
     }
 
     @SuppressWarnings("unchecked")
-    private void saveObjects(FileObjects source, FileObjects target) {
+    private static void saveObjects(FileObjects source, FileObjects target) {
         for (String sourcePath : source.keys()) {
             FileObject sourceObject = source.get(sourcePath);
             FileObject targetObject = target.get(sourcePath);
