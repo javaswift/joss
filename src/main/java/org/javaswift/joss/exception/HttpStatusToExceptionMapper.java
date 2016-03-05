@@ -40,7 +40,7 @@ public enum HttpStatusToExceptionMapper {
         return this.error;
     }
 
-    public CommandException getException(CommandExceptionError customError) throws CommandException {
+    public CommandException getException(CommandExceptionError customError) {
         CommandExceptionError showError = customError == null ? getError() : customError;
         try {
             Constructor constructor = getExceptionToThrow().getDeclaredConstructor(new Class[]{Integer.class, CommandExceptionError.class});

@@ -2,11 +2,11 @@ package org.javaswift.joss.exception;
 
 public class HttpStatusExceptionUtil {
 
-    public static void throwException(int httpStatus, CommandExceptionError customError) throws CommandException {
+    public static void throwException(int httpStatus, CommandExceptionError customError) {
         throw getException(httpStatus, customError);
     }
 
-    public static void throwException(int httpStatus) throws CommandException {
+    public static void throwException(int httpStatus) {
         throw getException(httpStatus, null);
     }
 

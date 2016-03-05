@@ -118,8 +118,8 @@ public abstract class AbstractContainer extends AbstractObjectStoreEntity<Contai
                 expires;
 
         FormPost formPost = new FormPost();
-        formPost.expires = expires;
-        formPost.signature = HashSignature.getSignature(getAccount().getHashPassword(), plainText);
+        formPost.setExpires(expires);
+        formPost.setSignature(HashSignature.getSignature(getAccount().getHashPassword(), plainText));
         return formPost;
     }
 
