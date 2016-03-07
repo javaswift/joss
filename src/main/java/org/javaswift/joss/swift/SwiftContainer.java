@@ -84,7 +84,7 @@ public class SwiftContainer implements ListSubject {
 
         return new SwiftResult<Collection<DirectoryOrObject>>(
                 pagedObjects,
-                pagedObjects.size() == 0 ? HttpStatus.SC_NO_CONTENT : HttpStatus.SC_OK
+                pagedObjects.isEmpty() ? HttpStatus.SC_NO_CONTENT : HttpStatus.SC_OK
         );
     }
 
@@ -102,7 +102,7 @@ public class SwiftContainer implements ListSubject {
 
         return new SwiftResult<Collection<StoredObject>>(
                 objects,
-                objects.size() == 0 ? HttpStatus.SC_NO_CONTENT : HttpStatus.SC_OK
+                objects.isEmpty() ? HttpStatus.SC_NO_CONTENT : HttpStatus.SC_OK
         );
     }
 

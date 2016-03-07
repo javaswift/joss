@@ -52,7 +52,7 @@ public class ObjectDeleter implements Runnable {
         }
         objectsToDelete.removeAll(objectsToDeleteNow);
 
-        if (objectsToDelete.size() == 0) {
+        if (objectsToDelete.isEmpty()) {
             shutdown();
         }
     }

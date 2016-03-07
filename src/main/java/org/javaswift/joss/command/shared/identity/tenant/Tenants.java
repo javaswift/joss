@@ -15,7 +15,7 @@ public class Tenants {
     @JsonIgnore
     public Tenant getTenant() {
         List<Tenant> enabledTenants = getEnabledTenants();
-        if (enabledTenants.size() < 1) {
+        if (enabledTenants.isEmpty()) {
             throw new CommandException("No enabled tenant found during auto-discovery");
         }
         if (enabledTenants.size() > 1) {
