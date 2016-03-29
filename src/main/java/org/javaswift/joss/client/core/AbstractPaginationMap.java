@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+import java.io.*;
 
 public abstract class AbstractPaginationMap<Child extends ListSubject> implements PaginationMap {
 
@@ -41,12 +42,11 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
 
     public Collection<Child> listAllItems() {
         Collection<Child> allChildren = new ArrayList<Child>();
-        int recordsToGo = getCount();
         String marker = null;
         int page = 0;
         int locationInPage = 0;
         pageToMarker.put(page++, null); // First marker is always null
-        while (recordsToGo > 0) {
+        while (true) {
             Collection<Child> children = list(prefix, marker, blockSize);
             for (Child child : children) {
                 marker = child.getName();
@@ -56,7 +56,11 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
                     locationInPage = 0;
                 }
             }
-            recordsToGo -= children.isEmpty() ? recordsToGo : (children.size() < blockSize ? children.size() : blockSize);
+            if (children.size() == 0)
+            {
+               // We have processed all the records. 
+               break;
+            }
             allChildren.addAll(children);
         }
         if (locationInPage == 0) { // Remove last page if no elements follow it

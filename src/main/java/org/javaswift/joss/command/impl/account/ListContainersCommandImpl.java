@@ -31,16 +31,23 @@ public class ListContainersCommandImpl extends AbstractAccountCommand<HttpGet, C
 
     @Override
     protected Collection<Container> getReturnObject(HttpResponse response) throws IOException {
-        ContainerListElement[] list = createObjectMapper(false)
-                .readValue(response.getEntity().getContent(), ContainerListElement[].class);
         List<Container> containers = new ArrayList<Container>();
-        for (ContainerListElement containerHeader : list) {
-            Container container = account.getContainer(containerHeader.name);
-            container.setCount(containerHeader.count);
-            container.setBytesUsed(containerHeader.bytes);
-            container.metadataSetFromHeaders();
-            containers.add(container);
+        try {
+            ContainerListElement[] list = createObjectMapper(false)
+                .readValue(response.getEntity().getContent(), ContainerListElement[].class);
+            for (ContainerListElement containerHeader : list) {
+                Container container = account.getContainer(containerHeader.name);
+                container.setCount(containerHeader.count);
+                container.setBytesUsed(containerHeader.bytes);
+                container.metadataSetFromHeaders();
+                containers.add(container);
+            }
         }
+        catch (java.io.EOFException e) {
+            // The response is empty.  Return a containers object with no 
+            // items in it.
+        }
+
         return containers;
     }
 
