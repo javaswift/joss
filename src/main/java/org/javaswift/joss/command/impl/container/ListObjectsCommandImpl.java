@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
 public class ListObjectsCommandImpl extends AbstractListCommandImpl<Collection<StoredObject>> implements ListObjectsCommand {
 
     public ListObjectsCommandImpl(Account account, HttpClient httpClient, Access access, Container container, ListInstructions listInstructions) {
