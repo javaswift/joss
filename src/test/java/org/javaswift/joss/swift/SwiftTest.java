@@ -67,10 +67,10 @@ public class SwiftTest {
             @Mocked OnFileObjectStoreLoader loader; {
             new OnFileObjectStoreLoader();
             result = loader;
-            loader.createContainers(anyString, false);
+            loader.createContainers(null, anyString, false);
             result = new IOException();
         }};
-        new Swift().setOnFileObjectStore("test", false);
+        new Swift().setOnFileObjectStore(null, "test", false);
     }
 
     @Test
