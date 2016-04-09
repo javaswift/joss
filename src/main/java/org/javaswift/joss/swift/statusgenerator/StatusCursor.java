@@ -19,7 +19,7 @@ public class StatusCursor {
         if (position == statusList.size()) {
             position = 0;
         }
-        if (statusList.size() == 0) {
+        if (statusList.isEmpty()) {
             return -1;
         }
         return statusList.get(position++);

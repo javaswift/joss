@@ -157,9 +157,9 @@ public class ContainerImplTest extends BaseCommandTest {
         useFixedDateForToday(todayInMS);
         // Check whether the secure URL contains the right signature and expiry date
         FormPost formPost = container.getFormPost(redirectUrl, maxFileSize, maxFileCount, oneDayInSeconds);
-        String plainText = "/internal/path/alpha\n"+redirectUrl+"\n"+maxFileSize+"\n"+maxFileCount+"\n"+formPost.expires;
+        String plainText = "/internal/path/alpha\n"+redirectUrl+"\n"+maxFileSize+"\n"+maxFileCount+"\n"+formPost.getExpires();
         String signature = HashSignature.getSignature(password, plainText);
-        assertEquals("The signature must match", signature, formPost.signature);
+        assertEquals("The signature must match", signature, formPost.getSignature());
     }
 
     @Test
