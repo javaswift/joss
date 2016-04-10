@@ -57,7 +57,7 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
             }
             if (children.size() == 0)
             {
-               // We have processed all the records. 
+               // We have processed all the records.
                break;
             }
             allChildren.addAll(children);

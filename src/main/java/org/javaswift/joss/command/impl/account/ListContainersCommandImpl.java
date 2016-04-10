@@ -44,7 +44,7 @@ public class ListContainersCommandImpl extends AbstractAccountCommand<HttpGet, C
             }
         }
         catch (java.io.EOFException e) {
-            // The response is empty.  Return a containers object with no 
+            // The response is empty.  Return a containers object with no
             // items in it.
         }
 

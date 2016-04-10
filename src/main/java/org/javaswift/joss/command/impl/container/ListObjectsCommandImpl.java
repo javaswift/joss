@@ -32,7 +32,7 @@ public class ListObjectsCommandImpl extends AbstractListCommandImpl<Collection<S
             }
         }
         catch (java.io.EOFException e) {
-            // The response is empty.  Return an 'objects' object with no 
+            // The response is empty.  Return an 'objects' object with no
             // items in it.
         }
         

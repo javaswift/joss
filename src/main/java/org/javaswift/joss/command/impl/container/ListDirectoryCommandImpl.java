@@ -25,7 +25,7 @@ public class ListDirectoryCommandImpl extends AbstractListCommandImpl<Collection
     protected Collection<DirectoryOrObject> getReturnObject(HttpResponse response) throws IOException {
 
         List<DirectoryOrObject> files = new ArrayList<DirectoryOrObject>();
-        try { 
+        try {
             StoredObjectListElement[] list = createObjectMapper(false)
                     .readValue(response.getEntity().getContent(), StoredObjectListElement[].class);
             for (StoredObjectListElement header : list) {
@@ -37,7 +37,7 @@ public class ListDirectoryCommandImpl extends AbstractListCommandImpl<Collection
             }
         }
         catch (java.io.EOFException e) {
-            // The response is empty.  Return a 'files' object with no 
+            // The response is empty.  Return a 'files' object with no
             // items in it.
         }
 
