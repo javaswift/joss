@@ -55,7 +55,7 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
                     locationInPage = 0;
                 }
             }
-            if (children.size() == 0)
+            if (children.isEmpty())
             {
                // We have processed all the records.
                break;
