@@ -67,17 +67,17 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
                     locationInPage = 0;
                 }
             }
-            if (children.isEmpty())
-            {
+            if (children.isEmpty()) {
                 // We have processed all the records.
                 recordsToGo = 0;
             }
-            else if (!loopUntilNoMoreData)
-            {
-                recordsToGo -= (children.size() < blockSize) ?
-                               children.size() : blockSize;
+            else {
+                allChildren.addAll(children);
+                if (!loopUntilNoMoreData) {
+                    recordsToGo -= (children.size() < blockSize) ?
+                                   children.size() : blockSize;
+                }
             }
-            allChildren.addAll(children);
         }
         if (locationInPage == 0) { // Remove last page if no elements follow it
             pageToMarker.remove(pageToMarker.size() - 1);
