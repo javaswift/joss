@@ -84,6 +84,11 @@ public class FileAction {
         return path;
     }
 
+    public static File getFile(Class classPathProvider, String resource) throws IOException, URISyntaxException {
+        ClassLoader classLoader = classPathProvider.getClassLoader();
+        return new File(classLoader.getResource(resource).getPath());
+    }
+
     public static File getFile(String resource) throws IOException, URISyntaxException {
         ClassLoader classLoader = FileAction.class.getClassLoader();
         Enumeration<URL> urls = classLoader.getResources(resource);

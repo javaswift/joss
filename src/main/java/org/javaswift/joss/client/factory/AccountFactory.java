@@ -154,4 +154,9 @@ public class AccountFactory {
         return this;
     }
 
+    public AccountFactory setMockClasspath(Class mockClasspath) {
+        this.config.setMockClasspath(mockClasspath);
+        return this;
+    }
+
 }

@@ -105,6 +105,11 @@ public class AccountConfig {
     private boolean mockAllowEveryone  = true;
 
     /**
+     * Classpath to load the testdata binary resources from. If null, the JOSS classpath will be used
+     */
+    private Class mockClasspath;
+
+    /**
     * It is possible to pass a folder which must be loaded as an ObjectStore into the in-memory
     * representation of the ObjectStore.
     */
@@ -381,5 +386,13 @@ public class AccountConfig {
 
     public void setMockOnFileObjectStoreIsAbsolutePath(boolean mockOnFileObjectStoreIsAbsolutePath) {
         this.mockOnFileObjectStoreIsAbsolutePath = mockOnFileObjectStoreIsAbsolutePath;
+    }
+
+    public Class getMockClasspath() {
+        return mockClasspath;
+    }
+
+    public void setMockClasspath(Class mockClasspath) {
+        this.mockClasspath = mockClasspath;
     }
 }

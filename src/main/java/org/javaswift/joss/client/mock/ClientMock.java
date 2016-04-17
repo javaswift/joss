@@ -31,6 +31,7 @@ public class ClientMock extends AbstractClient<AccountMock> {
             this.swift = new Swift()
                     .setAllowObjectDeleter(accountConfig.isMockAllowObjectDeleter())
                     .setOnFileObjectStore(
+                            accountConfig.getMockClasspath(),
                             accountConfig.getMockOnFileObjectStore(),
                             accountConfig.isMockOnFileObjectStoreIsAbsolutePath())
                     .setUserStore(users)
