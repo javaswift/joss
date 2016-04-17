@@ -41,11 +41,23 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
 
     public Collection<Child> listAllItems() {
         Collection<Child> allChildren = new ArrayList<Child>();
+        boolean loopUntilNoMoreData = false;
+        int recordsToGo = getCount();
         String marker = null;
         int page = 0;
         int locationInPage = 0;
         pageToMarker.put(page++, null); // First marker is always null
-        while (true) {
+
+        if (recordsToGo == 0) {
+           // recordsToGo hints that there are no items to list, but the
+           // container might have changed since we last check it.  Rather
+           // than loop over recordsToGo, we will loop over the list
+           // interface to the object store until no items are returned.
+           loopUntilNoMoreData = true;
+           recordsToGo = 1;
+        }
+        
+        while (recordsToGo > 0) {
             Collection<Child> children = list(prefix, marker, blockSize);
             for (Child child : children) {
                 marker = child.getName();
@@ -57,8 +69,13 @@ public abstract class AbstractPaginationMap<Child extends ListSubject> implement
             }
             if (children.isEmpty())
             {
-               // We have processed all the records.
-               break;
+                // We have processed all the records.
+                recordsToGo = 0;
+            }
+            else if (!loopUntilNoMoreData)
+            {
+                recordsToGo -= (children.size() < blockSize) ?
+                               children.size() : blockSize;
             }
             allChildren.addAll(children);
         }

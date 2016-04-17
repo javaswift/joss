@@ -22,20 +22,13 @@ public class ListObjectsCommandImpl extends AbstractListCommandImpl<Collection<S
     }
 
     protected Collection<StoredObject> getReturnObject(HttpResponse response) throws IOException {
+        StoredObjectListElement[] list = createObjectMapper(false)
+                .readValue(response.getEntity().getContent(), StoredObjectListElement[].class);
         List<StoredObject> objects = new ArrayList<StoredObject>();
-        try {
-            StoredObjectListElement[] list = createObjectMapper(false)
-                    .readValue(response.getEntity().getContent(), StoredObjectListElement[].class);
-            for (StoredObjectListElement header : list) {
-                StoredObject object = getStoredObject(header);
-                objects.add(object);
-            }
+        for (StoredObjectListElement header : list) {
+            StoredObject object = getStoredObject(header);
+            objects.add(object);
         }
-        catch (java.io.EOFException e) {
-            // The response is empty.  Return an 'objects' object with no
-            // items in it.
-        }
-        
         return objects;
     }
 
