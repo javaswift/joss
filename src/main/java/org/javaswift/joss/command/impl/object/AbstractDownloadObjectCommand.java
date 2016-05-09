@@ -35,6 +35,13 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
         setHeader(downloadInstructions.getRange());
         setHeader(downloadInstructions.getMatchConditional());
         setHeader(downloadInstructions.getSinceConditional());
+        if (downloadInstructions.getHeaders() != null) {
+                for (Header header :
+				downloadInstructions.getHeaders().
+				values()) {
+			setHeader(header);
+		}
+        }
     }
 
     @Override

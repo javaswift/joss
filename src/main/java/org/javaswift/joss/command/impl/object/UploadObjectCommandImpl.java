@@ -15,6 +15,7 @@ import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.headers.Header;
 
 import java.io.IOException;
 
@@ -37,6 +38,13 @@ public class UploadObjectCommandImpl extends AbstractObjectCommand<HttpPut, Obje
         setHeader(uploadInstructions.getObjectManifest());
         setHeader(uploadInstructions.getEtag());
         setHeader(uploadInstructions.getContentType());
+        if (uploadInstructions.getHeaders() != null) {
+               for (Header header :
+                               uploadInstructions.getHeaders().
+                               values()) {
+                       setHeader(header);
+               }
+        }
         request.setEntity(entity);
     }
 
