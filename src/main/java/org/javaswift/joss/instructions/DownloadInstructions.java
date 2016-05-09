@@ -1,8 +1,11 @@
 package org.javaswift.joss.instructions;
 
+import java.util.Map;
+import java.util.TreeMap;
 import org.javaswift.joss.headers.object.conditional.AbstractIfMatch;
 import org.javaswift.joss.headers.object.conditional.AbstractIfSince;
 import org.javaswift.joss.headers.object.range.AbstractRange;
+import org.javaswift.joss.headers.Header;
 
 /**
  * Specific instructions for downloading content, these could be:
@@ -19,6 +22,9 @@ import org.javaswift.joss.headers.object.range.AbstractRange;
  * </ul>
  */
 public class DownloadInstructions {
+
+    /** Optional additional headers */
+    private Map<String, Header> headers;
 
     /** Determines what part of the object must be downloaded */
     private AbstractRange range;
@@ -91,6 +97,18 @@ public class DownloadInstructions {
 
     public AbstractIfSince getSinceConditional() {
         return this.ifSince;
+    }
+
+    public DownloadInstructions addHeader(Header header) {
+        if (headers == null) {
+            this.headers = new TreeMap<String, Header>();
+	}
+        this.headers.put(header.getHeaderName(), header);
+        return this;
+    }
+
+    public Map<String, Header> getHeaders() {
+        return this.headers;
     }
 
 }
