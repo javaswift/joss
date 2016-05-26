@@ -161,7 +161,7 @@ public class UploadInstructions {
     public UploadInstructions addHeader(Header header) {
         if (headers == null) {
             this.headers = new TreeMap<String, Header>();
-	}
+        }
         this.headers.put(header.getHeaderName(), header);
         return this;
     }
