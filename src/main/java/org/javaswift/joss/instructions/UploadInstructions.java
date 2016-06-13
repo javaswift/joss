@@ -1,8 +1,11 @@
 package org.javaswift.joss.instructions;
 
+import java.util.Map;
+import java.util.TreeMap;
 import org.apache.http.HttpEntity;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.object.*;
+import org.javaswift.joss.headers.Header;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +27,9 @@ import java.io.InputStream;
 * </ul>
 */
 public class UploadInstructions {
+
+    /** Optional additional headers */
+    private Map<String, Header> headers;
 
     /** Maximum segmentation size allowed by the ObjectStore. */
     public static Long MAX_SEGMENTATION_SIZE = 5368709120L; // 5 GB, max object size
@@ -150,6 +156,18 @@ public class UploadInstructions {
 
     public DeleteAfter getDeleteAfter() {
         return this.deleteAfter;
+    }
+
+    public UploadInstructions addHeader(Header header) {
+        if (headers == null) {
+            this.headers = new TreeMap<String, Header>();
+        }
+        this.headers.put(header.getHeaderName(), header);
+        return this;
+    }
+
+    public Map<String, Header> getHeaders() {
+        return this.headers;
     }
 
 }
