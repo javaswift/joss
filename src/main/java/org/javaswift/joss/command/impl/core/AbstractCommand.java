@@ -132,6 +132,9 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
 
     protected ObjectMapper createObjectMapper(boolean dealWithRootValue) {
         ObjectMapper objectMapper = new ObjectMapper();
+        // make the ObjectMapper more friendly in secure environment
+        objectMapper.configure(DeserializationConfig.Feature.CAN_OVERRIDE_ACCESS_MODIFIERS, false);
+        objectMapper.configure(SerializationConfig.Feature.CAN_OVERRIDE_ACCESS_MODIFIERS, false);
         if (dealWithRootValue) {
             objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
             objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
