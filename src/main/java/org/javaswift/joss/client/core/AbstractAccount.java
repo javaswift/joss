@@ -171,6 +171,10 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return this.commandFactory.authenticate();
     }
 
+    public Access getAccess() {
+       return this.commandFactory.getAccess();
+    }
+
     @Override
     public String getPublicURL() {
         return this.commandFactory.getPublicHost();

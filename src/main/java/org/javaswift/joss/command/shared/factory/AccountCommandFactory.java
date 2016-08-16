@@ -12,6 +12,8 @@ public interface AccountCommandFactory {
 
     public Access authenticate();
 
+    public Access getAccess();
+
     public String getPublicHost();
 
     public String getPrivateHost();

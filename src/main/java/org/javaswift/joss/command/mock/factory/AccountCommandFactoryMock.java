@@ -54,6 +54,11 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
     }
 
     @Override
+    public Access getAccess() {
+        return null;
+    }
+
+    @Override
     public AccountInformationCommand createAccountInformationCommand(Account account) {
         return new AccountInformationCommandMock(swift, account);
     }
