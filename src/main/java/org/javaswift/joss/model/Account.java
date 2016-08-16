@@ -38,6 +38,12 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     Access authenticate();
 
     /**
+    * Obtain the Access interface
+    * @ return the access element including the existing token
+    */
+    Access getAccess();
+
+    /**
     * Returns the URL which is used for the underlying stored objects
     * @return the URL of the underlying stored objects
     */
