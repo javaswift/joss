@@ -182,4 +182,16 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
     */
     boolean isTenantSupplied();
 
+    /**
+     * Returns the preferred region of the account. 
+     * @return the account's preferred region
+     */
+    String getPreferredRegion();
+
+    /**
+     * Set the preferred region for the account.
+     * @param preferredRegion the preferred region for the account
+     * @return instance of Account
+     */
+    Account setPreferredRegion(String preferredRegion);
 }

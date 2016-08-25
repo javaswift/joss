@@ -46,7 +46,8 @@ public abstract class AbstractClient<A extends Account> implements Client<A> {
                 .setPrivateHost(accountConfig.getPrivateHost())
                 .setAllowContainerCaching(accountConfig.isAllowContainerCaching())
                 .setAllowReauthenticate(accountConfig.isAllowReauthenticate())
-                .setHashPassword(accountConfig.getHashPassword());
+                .setHashPassword(accountConfig.getHashPassword())
+                .setPreferredRegion(accountConfig.getPreferredRegion());
     }
 
     protected Tenant autoDiscoverTenant(Account account) {

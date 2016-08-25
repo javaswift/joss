@@ -33,6 +33,8 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     private ServerTime serverTime = new ServerTime(0);
 
+    private String preferredRegion = null;
+
     public AbstractAccount(AccountCommandFactory commandFactory, ContainerFactory<Container> containerFactory,
                            ContainerFactory<Website> websiteFactory, boolean allowCaching) {
         super(allowCaching);
@@ -109,6 +111,13 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
         return this;
     }
 
+    @Override
+    public Account setPreferredRegion(final String preferredRegion) {
+        LOG.info("JOSS / PreferredRegion: " + preferredRegion);
+        this.preferredRegion = preferredRegion;
+        return this;
+    }
+
     public boolean isAllowReauthenticate() {
         return this.allowReauthenticate;
     }
@@ -173,6 +182,11 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
 
     public Access getAccess() {
        return this.commandFactory.getAccess();
+    }
+
+    @Override
+    public String getPreferredRegion() {
+        return this.preferredRegion;
     }
 
     @Override
