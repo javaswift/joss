@@ -4,10 +4,11 @@ import org.javaswift.joss.model.Container;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ContainerCache<N extends Container> {
 
-    private Map<String, N> cache = new TreeMap<String, N>();
+    private Map<String, N> cache = new ConcurrentHashMap<String, N>();
 
     private final AbstractAccount account;
 
