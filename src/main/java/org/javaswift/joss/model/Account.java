@@ -39,7 +39,7 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
 
     /**
     * Obtain the Access interface
-    * @ return the access element including the existing token
+    * @return the access element including the existing token
     */
     Access getAccess();
 
