@@ -25,6 +25,8 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
     public static final String ETAG             = "ETag";
     public static final String CONTENT_LENGTH   = "Content-Length";
 
+    private HttpGet request;
+
     public AbstractDownloadObjectCommand(Account account, HttpClient httpClient, Access access,
                                          StoredObject object, DownloadInstructions downloadInstructions) {
         super(account, httpClient, access, object);
@@ -69,7 +71,8 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
 
     @Override
     protected HttpGet createRequest(String url) {
-        return new HttpGet(url);
+        this.request = new HttpGet(url);
+        return this.request;
     }
 
     @Override
@@ -83,4 +86,11 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
         };
     }
 
+    @Override
+    public void close() throws IOException {
+        if (this.request != null) {
+            this.request.abort();
+        }
+        super.close();
+    }
 }
