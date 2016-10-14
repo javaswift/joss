@@ -30,6 +30,10 @@ public class AccountConfig {
     private String authUrl;
 
     /**
+     * if false, JOSS will not synchronize time with the server
+     */
+    private boolean allowSynchronizeWithServer = true;
+    /**
     * The hash for a TempURL is based on the object path which consists of the the pure path to an
     * object. Eg, /v1/AUTH_Account/Container/Object. The first part ("/v1/AUTH_Account") must be
     * derived from one of the URLs in an Endpoint. By default this is the Public URL. However, sometimes
@@ -395,4 +399,12 @@ public class AccountConfig {
     public void setMockClasspath(Class mockClasspath) {
         this.mockClasspath = mockClasspath;
     }
+
+	public boolean isAllowSynchronizeWithServer() {
+		return allowSynchronizeWithServer;
+	}
+
+	public void setAllowSynchronizeWithServer(boolean allowSynchronizeWithServer) {
+		this.allowSynchronizeWithServer = allowSynchronizeWithServer;
+	}
 }

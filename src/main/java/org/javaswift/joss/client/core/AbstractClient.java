@@ -40,7 +40,9 @@ public abstract class AbstractClient<A extends Account> implements Client<A> {
             accountConfig.setTenantName(tenant.name);
             account = createAccount();
         }
-        account.synchronizeWithServerTime();
+        if (accountConfig.isAllowSynchronizeWithServer()) {
+            account.synchronizeWithServerTime();
+        }
         return (A)account
                 .setPublicHost(accountConfig.getPublicHost())
                 .setPrivateHost(accountConfig.getPrivateHost())
