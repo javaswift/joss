@@ -1,5 +1,6 @@
 package org.javaswift.joss.client.core;
 
+import org.apache.http.Header;
 import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Metadata;
@@ -26,6 +27,8 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
     private Container container;
 
     private final StoredObjectCommandFactory commandFactory;
+    
+    private Header[] responseHeaders;
 
     public AbstractStoredObject(Container container, String name, boolean allowCaching) {
         super(allowCaching);
@@ -291,6 +294,14 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
                 .setFixedExpiry(expiry)
                 .verify(signature, expiry);
     }
+    
+    public Header[] getResponseHeaders() {
+		return responseHeaders;
+	}
+
+	public void setResponseHeaders(Header[] responseHeaders) {
+		this.responseHeaders = responseHeaders;
+	}
 
     public boolean isObject() { return true; }
     public boolean isDirectory() { return false; }
