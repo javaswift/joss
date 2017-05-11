@@ -50,11 +50,13 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
             HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
             return getReturnObject(response);
         } catch (CommandException err) {
+        	request.releaseConnection();
             if (allowErrorLog) { // This is disabled, for example, for exists(), where we want to ignore the exception
                 logError(request, err);
             }
             throw err;
         } catch (IOException err) {
+        	request.releaseConnection();
             throw new CommandException("Unable to execute the HTTP call or to convert the HTTP Response", err);
         } finally {
             if (closeStreamAutomatically()) {
