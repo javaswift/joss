@@ -71,16 +71,17 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
     }
 
     private void logError(M request, CommandException err) {
-        LOG.error(
-                "JOSS / "+getPrintableCall(request)+
-                        (err.getHttpStatusCode() == 0 ? "" : ", HTTP status "+err.getHttpStatusCode())+
-                        (err.getError() == null ? "" : ", Error "+err.getError())+
-                        (err.getMessage() == null ? "" : ", Message '"+err.getMessage()+"'")+
-                        (err.getCause() == null ? "" : ", Cause "+err.getCause().getClass().getSimpleName()));
-
+        StringBuffer errorMsg = new StringBuffer();
+        errorMsg.append("JOSS / " + getPrintableCall(request) +
+                        (err.getHttpStatusCode() == 0 ? "" : ", HTTP status " + err.getHttpStatusCode()) +
+                        (err.getError() == null ? "" : ", Error " + err.getError()) +
+                        (err.getMessage() == null ? "" : ", Message '" + err.getMessage() + "'") +
+                        (err.getCause() == null ? "" : ", Cause " + err.getCause().getClass().getSimpleName())
+        );
         for (String printableHeaderLine : getPrintableHeaderLines(request)) {
-            LOG.error("* "+printableHeaderLine);
+            errorMsg.append(", * " + printableHeaderLine);
         }
+        LOG.error(errorMsg.toString());
     }
 
     private String getPrintableCall(M request) {
