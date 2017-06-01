@@ -36,12 +36,16 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
     public N call() {
         account.increaseCallCounter();
         try {
+            if (account.isAllowReauthenticate()) {
+                super.setAllowErrorLog(false);
+            }
             return super.call();
         } catch (UnauthorizedException err) {
             if (account.isAllowReauthenticate()) {
                 LOG.info("Reauthenticate");
                 Access access = account.authenticate();
                 setToken(access.getToken());
+                super.setAllowErrorLog(true);
                 return super.call();
             }
             throw err;
