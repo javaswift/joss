@@ -470,6 +470,7 @@ public class StoredObjectImplTest extends BaseCommandTest {
         object.metadataSetFromHeaders();
         Date date = object.getLastModifiedAsDate();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
         assertEquals("2012-12-05T14:57:00", formatter.format(date));
     }
 
