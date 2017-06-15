@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject {
 
@@ -116,6 +117,7 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
         try {
             // The LastModified date in the JSON body differs from that in the response header
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
             setLastModified(formatter.parse(date));
         } catch (ParseException e) {
             throw new CommandException("Unable to convert date string: "+date, e);
