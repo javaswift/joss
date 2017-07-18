@@ -1,12 +1,10 @@
 package org.javaswift.joss.client.impl;
 
 import org.apache.http.client.HttpClient;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.javaswift.joss.client.core.AbstractClient;
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.impl.factory.AuthenticationCommandFactoryImpl;
@@ -36,36 +34,33 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
     }
 
     private void initHttpClient(int socketTimeout) {
-        PoolingClientConnectionManager connectionManager = initConnectionManager();
-        
+        PoolingHttpClientConnectionManager connectionManager = initConnectionManager();
+
+        final HttpClientBuilder clientBuilder = HttpClientBuilder.create();
+
         if(accountConfig.isDisableSslValidation()) {
-            disableSslValidation(connectionManager);
+            clientBuilder.setSSLHostnameVerifier(new NoopHostnameVerifier());
         }
-        
-        this.httpClient = new DefaultHttpClient(connectionManager);
+
         if (socketTimeout != -1) {
-            LOG.info("JOSS / Set socket timeout on HttpClient: "+socketTimeout);
-            HttpParams params = this.httpClient.getParams();
-            HttpConnectionParams.setSoTimeout(params, socketTimeout);
+            final RequestConfig requestConfig = RequestConfig.custom()
+                                                             .setConnectTimeout(socketTimeout)
+                                                             .setConnectionRequestTimeout(socketTimeout)
+                                                             .setSocketTimeout(socketTimeout).build();
+
+            LOG.info("JOSS / Set socket timeout on HttpClient: " + socketTimeout);
+
+            clientBuilder.setDefaultRequestConfig(requestConfig);
         }
+
+        this.httpClient = clientBuilder.useSystemProperties().setConnectionManager(connectionManager).build();
     }
 
-    protected PoolingClientConnectionManager initConnectionManager() {
-        PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
+    protected PoolingHttpClientConnectionManager initConnectionManager() {
+        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
         connectionManager.setMaxTotal(50);
         connectionManager.setDefaultMaxPerRoute(25);
         return connectionManager;
-    }
-
-    protected void disableSslValidation(PoolingClientConnectionManager connectionManager) {
-        try {
-            connectionManager.getSchemeRegistry().register(
-                    new Scheme("https", 443,
-                            new SSLSocketFactory(createGullibleSslContext(),
-                                    SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER)));
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException("Could not initialize SSL Context: " + e, e);
-        }
     }
 
     @Override

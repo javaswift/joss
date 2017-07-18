@@ -116,15 +116,5 @@ public class ClientImplTest extends BaseCommandTest {
         new ClientImpl(config);
     }
 
-    @Test (expected = RuntimeException.class)
-    public void throwSecurityException() throws GeneralSecurityException {
-        final PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
-        new NonStrictExpectations(connectionManager) {{
-            connectionManager.getSchemeRegistry();
-            result = new GeneralSecurityException();
-        }};
-        client.disableSslValidation(connectionManager);
-    }
-
 }
 
