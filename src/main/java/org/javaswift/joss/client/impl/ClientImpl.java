@@ -1,8 +1,13 @@
 package org.javaswift.joss.client.impl;
 
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.javaswift.joss.client.core.AbstractClient;
@@ -28,17 +33,62 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
 
     private HttpClient httpClient;
 
+    private HttpClientBuilder clientBuilder;
+
     public ClientImpl(AccountConfig accountConfig) {
         super(accountConfig);
         initHttpClient(accountConfig.getSocketTimeout());
     }
 
+    private void initProxySettings() {
+        if (accountConfig.isUseProxy()) {
+            if ((accountConfig.getProxyHost() != null) && (accountConfig.getProxyPort() > 0)) {
+                LOG.info("JOSS / Use proxy: " + accountConfig.getProxyHost() + ":" + accountConfig.getProxyPort());
+
+                try {
+                    String httpScheme = "http";
+
+                    if (accountConfig.getProxyHost().startsWith("https")) {
+                        httpScheme = "https";
+                    }
+
+                    final HttpHost proxy = new HttpHost(accountConfig.getProxyHost(),
+                                                        accountConfig.getProxyPort(),
+                                                        httpScheme);
+
+                    if ((accountConfig.getProxyUsername() != null) && (accountConfig.getProxyPassword() != null)) {
+                        LOG.info("JOSS / Proxy with authorization: " + accountConfig.getProxyUsername() + " \\ *********");
+
+                        final CredentialsProvider credsProvider = new BasicCredentialsProvider();
+                        credsProvider.setCredentials(new AuthScope(accountConfig.getProxyHost(),
+                                                                   accountConfig.getProxyPort()),
+                                                     new UsernamePasswordCredentials(accountConfig.getProxyUsername(),
+                                                                                     accountConfig.getProxyPassword()));
+
+                        clientBuilder.setDefaultCredentialsProvider(credsProvider);
+                    }
+
+                    clientBuilder.setProxy(proxy);
+
+                } catch (Exception e) {
+                    LOG.error("JOSS / Invalid proxy authorization settings");
+                }
+
+            } else {
+                LOG.error("JOSS / Invalid proxy settings");
+            }
+        }
+    }
+
     private void initHttpClient(int socketTimeout) {
         PoolingHttpClientConnectionManager connectionManager = initConnectionManager();
 
-        final HttpClientBuilder clientBuilder = HttpClientBuilder.create();
+        clientBuilder = HttpClientBuilder.create();
 
-        if(accountConfig.isDisableSslValidation()) {
+        initProxySettings();
+
+        if (accountConfig.isDisableSslValidation()) {
+            LOG.info("JOSS / Disable SSL verification");
             clientBuilder.setSSLHostnameVerifier(new NoopHostnameVerifier());
         }
 

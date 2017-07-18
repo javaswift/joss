@@ -30,6 +30,31 @@ public class AccountConfig {
     private String authUrl;
 
     /**
+     * Use proxy
+     */
+    private boolean useProxy;
+
+    /**
+     * Proxy server (hostname\ip)
+     */
+    private String proxyHost;
+
+    /**
+     * Proxy port
+     */
+    private int proxyPort;
+
+    /**
+     * Proxy username
+     */
+    private String proxyUsername;
+
+    /**
+     * Proxy password
+     */
+    private String proxyPassword;
+
+    /**
      * if false, JOSS will not synchronize time with the server
      */
     private boolean allowSynchronizeWithServer = true;
@@ -400,7 +425,47 @@ public class AccountConfig {
         this.mockClasspath = mockClasspath;
     }
 
-	public boolean isAllowSynchronizeWithServer() {
+    public boolean isUseProxy() {
+        return useProxy;
+    }
+
+    public void setUseProxy(boolean useProxy) {
+        this.useProxy = useProxy;
+    }
+
+    public String getProxyHost() {
+        return proxyHost;
+    }
+
+    public void setProxyHost(String proxyHost) {
+        this.proxyHost = proxyHost;
+    }
+
+    public int getProxyPort() {
+        return proxyPort;
+    }
+
+    public void setProxyPort(int proxyPort) {
+        this.proxyPort = proxyPort;
+    }
+
+    public String getProxyUsername() {
+        return proxyUsername;
+    }
+
+    public void setProxyUsername(String proxyUsername) {
+        this.proxyUsername = proxyUsername;
+    }
+
+    public String getProxyPassword() {
+        return proxyPassword;
+    }
+
+    public void setProxyPassword(String proxyPassword) {
+        this.proxyPassword = proxyPassword;
+    }
+
+    public boolean isAllowSynchronizeWithServer() {
 		return allowSynchronizeWithServer;
 	}
 

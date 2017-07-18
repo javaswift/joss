@@ -4,9 +4,11 @@ import mockit.NonStrictExpectations;
 import org.apache.http.Header;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.javaswift.joss.client.factory.AccountConfig;
+import org.javaswift.joss.client.factory.AuthenticationMethod;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.model.Account;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.net.ssl.X509TrustManager;
@@ -114,6 +116,36 @@ public class ClientImplTest extends BaseCommandTest {
         config = new AccountConfig();
         config.setDisableSslValidation(true);
         new ClientImpl(config);
+    }
+
+    // INTEGRATION TEST
+    @Ignore
+    @Test
+    public void connectViaProxy() {
+        // Without proxy authorization
+
+        config.setAuthenticationMethod(AuthenticationMethod.BASIC);
+
+        config.setAuthUrl("https://openstack-swift-endpoint"); // CHANGE ME
+        config.setUsername("some-user"); // CHANGE ME
+        config.setPassword("some-password"); // CHANGE ME
+
+        config.setUseProxy(true);
+        config.setProxyHost("proxy-host"); // CHANGE ME
+        config.setProxyPort(3128); // CHANGE ME
+
+        ClientImpl client = new ClientImpl(config);
+
+        client.authenticate();
+
+        // With proxy authorization
+
+        config.setProxyUsername("some-user"); // CHANGE ME
+        config.setProxyPassword("some-password"); // CHANGE ME
+
+        client = new ClientImpl(config);
+
+        client.authenticate();
     }
 
 }
