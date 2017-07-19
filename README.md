@@ -8,7 +8,7 @@ In order to use JOSS in your project, simply add the following dependency:
         <dependency>
             <groupId>org.javaswift</groupId>
             <artifactId>joss</artifactId>
-            <version>0.9.15</version>
+            <version>0.10.0</version>
         </dependency>
 ```
 
@@ -120,6 +120,49 @@ Likewise, this information can be retrieved, as seen above.
     for (String name : returnedMetadata.keySet()) {
         System.out.println("META / "+name+": "+returnedMetadata.get(name));
     }
+```
+
+It is possible to connect with proxy, there are two options how to setup it:
+
+Option A: Programmatically
+
+```java
+    AccountConfig config = new AccountConfig()                                
+                            config.setUseProxy(true)
+                            config.setProxyHost("hostname")
+                            config.setProxyPort(3128);
+```
+
+Also you can specify username and password if authentication required:
+
+```java
+    AccountConfig config = new AccountConfig()
+    config.setProxyUsername("some-user")
+    config.setProxyPort("some-password");
+```
+
+Option B: JVM Proxy Settings
+
+- Edit `${JAVA_HOME}/jre/lib/net.properties`, set properties:
+
+```
+    java.net.useSystemProxies=true
+     
+    ...
+    http.proxyHost=some-host
+    http.proxyPort=some-port
+```
+
+or
+
+- Specify as JVM options: 
+
+```
+    -Djava.net.useSystemProxies=true 
+    -Dhttp.proxyHost=http://PROXY_HOST \
+    -Dhttp.proxyPort=PROXY_PORT \ 
+    -Dhttp.proxyUser=USERNAME \
+    -Dhttp.proxyPassword=PASSWORD
 ```
 
 There are many situations in which it is not necessary, not possible, or even plain clumsy, to be connected to external dependencies. For those situations, JOSS offers the InMemory implementation of the OpenStackClient.
