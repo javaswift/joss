@@ -3,7 +3,7 @@
 
     <groupId>org.javaswift</groupId>
     <artifactId>joss</artifactId>
-    <version>0.9.15</version>
+    <version>0.9.16</version>
     <packaging>jar</packaging>
     <name>Java OpenStack Storage</name>
     <description>Java Client library for OpenStack Storage (Swift)</description>
@@ -44,7 +44,7 @@
     <properties>
         <commons.lang.version>2.6</commons.lang.version>
         <commons.io.version>2.3</commons.io.version>
-        <httpcomponents.version>4.2.1</httpcomponents.version>
+        <httpcomponents.version>4.3</httpcomponents.version>
         <jackson.version>1.9.7</jackson.version>
         <junit.version>4.10</junit.version>
         <mockit.version>1.6</mockit.version>
