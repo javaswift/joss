@@ -212,7 +212,7 @@
             <ul>
                 <li>
                     <strong>Large Object Creation</strong>; Segmented files and manifests can be uploaded. Files and byte array are automatically segmented if the segmentation size is exceeded.
-                    <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/large-object-creation.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/large-object-creation.html</a>
+                    <a href="https://docs.openstack.org/swift/latest/overview_large_objects.html">https://docs.openstack.org/swift/latest/overview_large_objects.html</a>
                 </li>
                 <li>
                     <strong>Factories</strong>; factories that can be used in Spring to get a self-reauthenticating account singleton </li>
@@ -242,13 +242,13 @@
             </ul><h2>
             <a name="v050" class="anchor" href="#v050"><span class="mini-icon mini-icon-link"></span></a>v0.5.0</h2>
 
-            <p>Theme: <em>Working down the list of unsupported Object Storage features: <a href="https://github.com/java-openstack/joss/wiki/Future-features">https://github.com/java-openstack/joss/wiki/Future-features</a></em></p>
+            <p>Theme: <em>Working down the list of unsupported Object Storage features from <a href="future-features.html"><strong>Future Features</strong></a></em></p>
 
             <ul>
                 <li>
                     <strong>X-Delete-After / X-Delete-At</strong>; with X-Delete-At, the ObjectStore can be instructed to remove an object at the specified date/time. With X-Delete-After, the ObjectStore is instructed to remove the object x seconds after the current date/time. </li>
                 <li>
-                    <strong>If-*Modified-Since headers</strong>; these headers instruct the ObjectStore to check against the last modification date. In the case of If-Modified-Since, the content will be returned if changes have taken place. In the case of If-Unmodified-Since, the content will be returned if changes have NOT taken place. See also, the Openstack API: <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html</a>
+                    <strong>If-*Modified-Since headers</strong>; these headers instruct the ObjectStore to check against the last modification date. In the case of If-Modified-Since, the content will be returned if changes have taken place. In the case of If-Unmodified-Since, the content will be returned if changes have NOT taken place. See also, the Openstack API: <a href="https://github.com/openstack/swift/blob/master/api-ref/source/storage-object-services.inc#request">https://github.com/openstack/swift/blob/master/api-ref/source/storage-object-services.inc#request</a>
                 </li>
                 <li>
                     <strong>If-Match / If-None-Match</strong>; these headers instruct the ObjectStore to check against the passed value. In the case of If-None-Match, the content will only be returned if the value does not match (ie, content is modified). In the case of If-Match, the content will only be returned if the value matches (ie, content is unmodified). </li>
@@ -269,7 +269,7 @@
 
             <ul>
                 <li>
-                    <strong>download partial content</strong>; added Range that allow downloads of partials, see <a href="http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html">http://docs.openstack.org/api/openstack-object-storage/1.0/content/retrieve-object.html</a>
+                    <strong>download partial content</strong>; added Range that allow downloads of partials, see <a href="https://developer.openstack.org/api-ref/object-storage/#get-object-content-and-metadata">https://developer.openstack.org/api-ref/object-storage/#get-object-content-and-metadata</a>
                 </li>
                 <li>
                     <strong>supply your own etag</strong>; added possibility to upload your own Etag, in case you use an inputstream but still require a server-side comparison of MD5 hashes</li>
