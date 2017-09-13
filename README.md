@@ -1,6 +1,6 @@
 Java OpenStack Storage (JOSS) [![Build Status](https://buildhive.cloudbees.com/job/javaswift/job/joss/badge/icon)](https://buildhive.cloudbees.com/job/javaswift/job/joss/)
 =============================
-JOSS is a Java client for the [OpenStack Storage component](http://docs.openstack.org/essex/openstack-object-storage/admin/content/ch_introduction-to-openstack-object-storage.html) REST interface. In order to use it you must have an account with an OpenStack Storage provider, such as the [CloudVPS Object Store](https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/).
+JOSS is a Java client for the [OpenStack Storage component](https://docs.openstack.org/swift/latest/admin/objectstorage-intro.html) REST interface. In order to use it you must have an account with an OpenStack Storage provider, such as the [CloudVPS Object Store](https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/).
 
 In order to use JOSS in your project, simply add the following dependency:
 
@@ -178,23 +178,16 @@ More information
 _On JOSS_
 
 * High level explanation of JOSS; http://blog.42.nl/articles/accessing-openstack-object-storage-with-java-through-joss
-* Hands-on JOSS tutorial; http://blog.42.nl/articles/joss-tutorial-using-joss-to-access-openstack-storage
-* Architecture models; http://blog.42.nl/articles/joss-architecture-approaches-integrating-with-openstack-object-storage
-* If-Modified-Since; http://blog.42.nl/articles/instruct-java-facilitate-browser-cache-if-modified-since
-* Working JOSS tutorial project; https://github.com/javaswift/tutorial-joss-quickstart
-* Working JOSS streaming project; https://github.com/javaswift/tutorial-joss-streaming
-* Working JOSS If-Modified-Since project; https://github.com/javaswift/tutorial-joss-if-modified-since
 
 _On Cloud VPS Object Store_
 
-* How to use the CloudVPS ObjectStore as a beta-tester; http://www.vankouteren.eu/blog/2012/08/cloudvps-object-store-beta-introduction/
-* How to get a beta-tester account on the CloudVPS ObjectStore; https://www.cloudvps.nl/blog/cloudvps-object-store-beta-test-join-and-get-free-storage/
+* How to get a beta-tester account on the CloudVPS ObjectStore; https://www.cloudvps.com/blog/cloudvps-object-store-beta-test-more-testers-welcome
 * CloudVPS writes on collaboration with 42 to create JOSS; https://www.cloudvps.com/blog/cloudvps-object-store-beta-tester-contributes-java-library/
 
 _On the OpenStack API_
 
-* OpenStack API; http://api.openstack.org/
-* OpenStack API; http://docs.openstack.org/api/openstack-object-storage/1.0/content/
+* OpenStack API; https://developer.openstack.org/
+* OpenStack API; https://developer.openstack.org/api-ref/object-store/
 
 _Openstack Swift on Github_
 * Github project https://github.com/openstack/swift
