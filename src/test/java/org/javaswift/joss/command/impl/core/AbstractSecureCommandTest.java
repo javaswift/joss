@@ -8,6 +8,7 @@ import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.command.impl.container.CreateContainerCommandImpl;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
+import org.javaswift.joss.command.shared.identity.access.AbstractAccess;
 import org.javaswift.joss.command.shared.identity.access.AccessTenant;
 import org.javaswift.joss.exception.UnauthorizedException;
 import org.javaswift.joss.headers.ConnectionKeepAlive;
@@ -52,6 +53,19 @@ public class AbstractSecureCommandTest extends BaseCommandTest {
         }};
         this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH, '/');
         new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
+    }
+
+    @Test
+    public void reauthenticateWithPreferredRegionSuccess(@Mocked final AuthenticationCommand authCommand) {
+        new NonStrictExpectations() {{
+            statusLine.getStatusCode(); returns(401, 201);
+            authCommand.call(); result = new AccessTenant();
+        }};
+        this.account = new AccountImpl(authCommand, httpClient, defaultAccess, true, TempUrlHashPrefixSource.PUBLIC_URL_PATH, '/');
+        final String preferredRegion = "testPreferredRegion";
+        this.account.setPreferredRegion(preferredRegion);
+        new CreateContainerCommandImpl(this.account, httpClient, defaultAccess, account.getContainer("containerName")).call();
+        assertEquals(preferredRegion, ((AbstractAccess)this.account.getAccess()).getPreferredRegion());
     }
 
     @Test(expected = UnauthorizedException.class)

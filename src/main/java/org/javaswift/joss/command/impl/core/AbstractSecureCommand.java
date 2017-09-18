@@ -32,6 +32,9 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
         } catch (UnauthorizedException err) {
             if (account.isAllowReauthenticate()) {
                 Access access = account.authenticate();
+                if (account.getPreferredRegion() != null) {
+                    access.setPreferredRegion(account.getPreferredRegion());
+                }
                 setToken(access.getToken());
                 return super.call();
             }
