@@ -119,33 +119,32 @@ public class ClientImplTest extends BaseCommandTest {
     }
 
     // INTEGRATION TEST
-    @Ignore
+    //@Ignore
     @Test
-    public void connectViaProxy() {
+    public void connectViaProxy() throws IOException{
+        loadSampleJson("/sample-access.json");
         // Without proxy authorization
-
-        config.setAuthenticationMethod(AuthenticationMethod.BASIC);
-
-        config.setAuthUrl("https://openstack-swift-endpoint"); // CHANGE ME
-        config.setUsername("some-user"); // CHANGE ME
-        config.setPassword("some-password"); // CHANGE ME
-
+        config.setTenantName("sometenant");
+        config.setTenantId("tenantid");
+        config.setUsername("superuser");
+        config.setPassword("somepwd");
+        config.setAuthUrl("http://auth-url");
+        
         config.setUseProxy(true);
-        config.setProxyHost("proxy-host"); // CHANGE ME
-        config.setProxyPort(3128); // CHANGE ME
+        config.setProxyHost("http://www.ghostproxy.eu/"); // This will only work in the US
+        //config.setProxyPort(3128); // CHANGE ME
 
-        ClientImpl client = new ClientImpl(config);
+        Account account = client.authenticate();
+        assertNotNull(account);
 
-        client.authenticate();
-
-        // With proxy authorization
-
-        config.setProxyUsername("some-user"); // CHANGE ME
-        config.setProxyPassword("some-password"); // CHANGE ME
-
-        client = new ClientImpl(config);
-
-        client.authenticate();
+        // TODO: With proxy authorization
+//        config.setProxyUsername("some-user"); // CHANGE ME
+//        config.setProxyPassword("some-password"); // CHANGE ME
+//
+//        client = new ClientImpl(config);
+//
+//        Account account_auth = client.authenticate();
+//        assertNotNull(account_auth);
     }
 
 }
