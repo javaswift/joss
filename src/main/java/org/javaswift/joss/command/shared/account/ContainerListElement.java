@@ -11,5 +11,5 @@ public class ContainerListElement {
     public long bytes;
 
     @JsonProperty(value="last_modified")
-    public String lastModified;    
+    public String lastModified;
 }
