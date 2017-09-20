@@ -1,12 +1,15 @@
 package org.javaswift.joss.client.impl;
 
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.javaswift.joss.client.core.AbstractClient;
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.impl.factory.AuthenticationCommandFactoryImpl;
@@ -30,42 +33,84 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
 
     private HttpClient httpClient;
 
+    private HttpClientBuilder clientBuilder;
+
     public ClientImpl(AccountConfig accountConfig) {
         super(accountConfig);
         initHttpClient(accountConfig.getSocketTimeout());
     }
 
-    private void initHttpClient(int socketTimeout) {
-        PoolingClientConnectionManager connectionManager = initConnectionManager();
-        
-        if(accountConfig.isDisableSslValidation()) {
-            disableSslValidation(connectionManager);
-        }
-        
-        this.httpClient = new DefaultHttpClient(connectionManager);
-        if (socketTimeout != -1) {
-            LOG.info("JOSS / Set socket timeout on HttpClient: "+socketTimeout);
-            HttpParams params = this.httpClient.getParams();
-            HttpConnectionParams.setSoTimeout(params, socketTimeout);
+    private void initProxySettings() {
+        if (accountConfig.isUseProxy()) {
+            if ((accountConfig.getProxyHost() != null) && (accountConfig.getProxyPort() > 0)) {
+                LOG.info("JOSS / Use proxy: " + accountConfig.getProxyHost() + ":" + accountConfig.getProxyPort());
+
+                try {
+                    String httpScheme = "http";
+
+                    if (accountConfig.getProxyHost().startsWith("https")) {
+                        httpScheme = "https";
+                    }
+
+                    final HttpHost proxy = new HttpHost(accountConfig.getProxyHost(),
+                                                        accountConfig.getProxyPort(),
+                                                        httpScheme);
+
+                    if ((accountConfig.getProxyUsername() != null) && (accountConfig.getProxyPassword() != null)) {
+                        LOG.info("JOSS / Proxy with authorization: " + accountConfig.getProxyUsername() + " \\ *********");
+
+                        final CredentialsProvider credsProvider = new BasicCredentialsProvider();
+                        credsProvider.setCredentials(new AuthScope(accountConfig.getProxyHost(),
+                                                                   accountConfig.getProxyPort()),
+                                                     new UsernamePasswordCredentials(accountConfig.getProxyUsername(),
+                                                                                     accountConfig.getProxyPassword()));
+
+                        clientBuilder.setDefaultCredentialsProvider(credsProvider);
+                    }
+
+                    clientBuilder.setProxy(proxy);
+
+                } catch (Exception e) {
+                    LOG.error("JOSS / Invalid proxy authorization settings");
+                }
+
+            } else {
+                LOG.error("JOSS / Invalid proxy settings");
+            }
         }
     }
 
-    protected PoolingClientConnectionManager initConnectionManager() {
-        PoolingClientConnectionManager connectionManager = new PoolingClientConnectionManager();
+    private void initHttpClient(int socketTimeout) {
+        PoolingHttpClientConnectionManager connectionManager = initConnectionManager();
+
+        clientBuilder = HttpClientBuilder.create();
+
+        initProxySettings();
+
+        if (accountConfig.isDisableSslValidation()) {
+            LOG.info("JOSS / Disable SSL verification");
+            clientBuilder.setSSLHostnameVerifier(new NoopHostnameVerifier());
+        }
+
+        if (socketTimeout != -1) {
+            final RequestConfig requestConfig = RequestConfig.custom()
+                                                             .setConnectTimeout(socketTimeout)
+                                                             .setConnectionRequestTimeout(socketTimeout)
+                                                             .setSocketTimeout(socketTimeout).build();
+
+            LOG.info("JOSS / Set socket timeout on HttpClient: " + socketTimeout);
+
+            clientBuilder.setDefaultRequestConfig(requestConfig);
+        }
+
+        this.httpClient = clientBuilder.useSystemProperties().setConnectionManager(connectionManager).build();
+    }
+
+    protected PoolingHttpClientConnectionManager initConnectionManager() {
+        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
         connectionManager.setMaxTotal(50);
         connectionManager.setDefaultMaxPerRoute(25);
         return connectionManager;
-    }
-
-    protected void disableSslValidation(PoolingClientConnectionManager connectionManager) {
-        try {
-            connectionManager.getSchemeRegistry().register(
-                    new Scheme("https", 443,
-                            new SSLSocketFactory(createGullibleSslContext(),
-                                    SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER)));
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException("Could not initialize SSL Context: " + e, e);
-        }
     }
 
     @Override
