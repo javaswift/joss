@@ -41,43 +41,23 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
     }
 
     private void initProxySettings() {
-        if (accountConfig.isUseProxy()) {
-            if ((accountConfig.getProxyHost() != null) && (accountConfig.getProxyPort() > 0)) {
-                LOG.info("JOSS / Use proxy: " + accountConfig.getProxyHost() + ":" + accountConfig.getProxyPort());
-
-                try {
-                    String httpScheme = "http";
-
-                    if (accountConfig.getProxyHost().startsWith("https")) {
-                        httpScheme = "https";
-                    }
-
-                    final HttpHost proxy = new HttpHost(accountConfig.getProxyHost(),
-                                                        accountConfig.getProxyPort(),
-                                                        httpScheme);
-
-                    if ((accountConfig.getProxyUsername() != null) && (accountConfig.getProxyPassword() != null)) {
-                        LOG.info("JOSS / Proxy with authorization: " + accountConfig.getProxyUsername() + " \\ *********");
-
-                        final CredentialsProvider credsProvider = new BasicCredentialsProvider();
-                        credsProvider.setCredentials(new AuthScope(accountConfig.getProxyHost(),
-                                                                   accountConfig.getProxyPort()),
-                                                     new UsernamePasswordCredentials(accountConfig.getProxyUsername(),
-                                                                                     accountConfig.getProxyPassword()));
-
-                        clientBuilder.setDefaultCredentialsProvider(credsProvider);
-                    }
-
-                    clientBuilder.setProxy(proxy);
-
-                } catch (Exception e) {
-                    LOG.error("JOSS / Invalid proxy authorization settings");
-                }
-
-            } else {
-                LOG.error("JOSS / Invalid proxy settings");
-            }
+        if (!accountConfig.isUseProxy()) {
+            return;
         }
+
+        ProxyConfigurer proxyConfigurer = new ProxyConfigurer(
+                accountConfig.getProxyHost(),
+                accountConfig.getProxyPort(),
+                accountConfig.getProxyUsername(),
+                accountConfig.getProxyPassword()
+        );
+
+        if (!proxyConfigurer.hasHostAndPort()) {
+            LOG.error("JOSS / Invalid proxy settings");
+            return;
+        }
+
+        proxyConfigurer.configureHttpClientBuilder(clientBuilder);
     }
 
     private void initHttpClient(int socketTimeout) {
