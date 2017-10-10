@@ -1,6 +1,6 @@
 package org.javaswift.joss.client.factory;
 
-import static org.javaswift.joss.client.factory.AuthenticationMethod.*;
+import static org.javaswift.joss.client.factory.AuthenticationMethod.KEYSTONE;
 
 public class AccountConfig {
 
@@ -216,6 +216,11 @@ public class AccountConfig {
     private AuthenticationMethod authenticationMethod = KEYSTONE;
     
     private AuthenticationMethod.AccessProvider accessProvider = null ;
+
+    /**
+     * Keystone domain.  Used by the V3 Identity API
+     */
+    private String domain = "Default";
 
     public void setTenantName(String tenantName) {
         this.tenantName = tenantName;
@@ -472,4 +477,12 @@ public class AccountConfig {
 	public void setAllowSynchronizeWithServer(boolean allowSynchronizeWithServer) {
 		this.allowSynchronizeWithServer = allowSynchronizeWithServer;
 	}
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 }
