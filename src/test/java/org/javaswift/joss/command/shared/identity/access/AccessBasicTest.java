@@ -9,8 +9,8 @@ public class AccessBasicTest {
 
     @Test
     public void settersAndGetters() {
-        String url = "http://www.abc.nl/";
-        String urlNoSlashAtEnd = "http://www.abc.nl";
+        String url = "http://www.abc.nl/path/";
+        String pathNoSlashAtEnd = "/path";
         String token = "cafebabe";
         AccessBasic access = new AccessBasic();
         access.setUrl(url);
@@ -19,9 +19,9 @@ public class AccessBasicTest {
         access.setToken(token);
         assertEquals(token, access.getToken());
         access.setPreferredRegion(null); // does nothing
-        assertEquals(urlNoSlashAtEnd, access.getTempUrlPrefix(null));
-        access.setUrl(urlNoSlashAtEnd);
-        assertEquals(urlNoSlashAtEnd, access.getTempUrlPrefix(null));
+        assertEquals(pathNoSlashAtEnd, access.getTempUrlPrefix(null));
+        access.setUrl(url.substring(0,url.length()-1));
+        assertEquals(pathNoSlashAtEnd, access.getTempUrlPrefix(null));
         assertTrue(access.isTenantSupplied());
     }
 }

@@ -1,5 +1,9 @@
 package org.javaswift.joss.command.shared.identity.access;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.model.Access;
 
@@ -41,6 +45,11 @@ public class AccessBasic implements Access {
 
     @Override
     public String getTempUrlPrefix(TempUrlHashPrefixSource tempUrlHashPrefixSource) {
-        return url.endsWith("/") ? url.substring(0, url.length()-1) : url;
+        try {
+            final String path = new URL(url).getPath();
+            return path.endsWith("/") ? path.substring(0, path.length()-1) : path;
+        } catch (MalformedURLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }
