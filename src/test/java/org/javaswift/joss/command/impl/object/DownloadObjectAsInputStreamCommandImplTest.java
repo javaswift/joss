@@ -1,9 +1,11 @@
 package org.javaswift.joss.command.impl.object;
 
+import mockit.Verifications;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.util.EntityUtils;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.instructions.DownloadInstructions;
@@ -60,5 +62,17 @@ public class DownloadObjectAsInputStreamCommandImplTest extends BaseCommandTest 
         prepareBytes(new byte[] { 0x01, 0x02, 0x03}, null);
         isSecure(new DownloadObjectAsInputStreamCommandImpl(this.account, httpClient, defaultAccess,
                 getObject("objectname"), new DownloadInstructions()));
+    }
+
+    @Test
+    public void entityClosedOnStatusCodeVerificationFailure() throws IOException {
+        final DownloadObjectAsInputStreamCommandImpl command = new DownloadObjectAsInputStreamCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions());
+        try {
+            checkForError(404, command);
+        } catch (CommandException err) {
+            new Verifications() {{
+                command.close(); times = 1;
+            }};
+        }
     }
 }

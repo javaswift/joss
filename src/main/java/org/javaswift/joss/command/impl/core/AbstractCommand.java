@@ -45,9 +45,11 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
 
     public N call() {
         logCall(request);
+        boolean statusCodeVerified = false;
         try {
             response = httpClient.execute(request);
             HttpStatusChecker.verifyCode(getStatusCheckers(), response.getStatusLine().getStatusCode());
+            statusCodeVerified = true;
             return getReturnObject(response);
         } catch (CommandException err) {
             if (allowErrorLog) { // This is disabled, for example, for exists(), where we want to ignore the exception
@@ -57,7 +59,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
         } catch (IOException err) {
             throw new CommandException("Unable to execute the HTTP call or to convert the HTTP Response", err);
         } finally {
-            if (closeStreamAutomatically()) {
+            if (closeStreamAutomatically() || !statusCodeVerified) {
                 try { close(); } catch (IOException err) { /* ignore */ }
             }
         }
