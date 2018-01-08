@@ -17,7 +17,8 @@ public class AccessBasic implements Access {
     }
 
     @Override
-    public void setPreferredRegion(String preferredRegion) {}
+    public void setPreferredRegion(String preferredRegion) {
+    }
 
     @Override
     public String getToken() {
@@ -41,6 +42,7 @@ public class AccessBasic implements Access {
 
     @Override
     public String getTempUrlPrefix(TempUrlHashPrefixSource tempUrlHashPrefixSource) {
-        return url.endsWith("/") ? url.substring(0, url.length()-1) : url;
+        String tempUrl = TempUrlHashPrefixSource.getPath(url);
+        return tempUrl.endsWith("/") ? tempUrl.substring(0, tempUrl.length() - 1) : tempUrl;
     }
 }
