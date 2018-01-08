@@ -5,6 +5,7 @@ import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.ObjectIdentifier;
 
 import java.util.Collection;
 
@@ -33,7 +34,9 @@ public interface AccountCommandFactory {
     TenantCommand createTenantCommand(Account account);
 
     HashPasswordCommand createHashPasswordCommand(Account account, String hashPassword);
-
+    
+    BulkDeleteCommand createBulkDeleteCommand(Account account, Collection<ObjectIdentifier> objectsToDelete);
+    
     ContainerCommandFactory getContainerCommandFactory();
 
     public boolean isTenantSupplied();

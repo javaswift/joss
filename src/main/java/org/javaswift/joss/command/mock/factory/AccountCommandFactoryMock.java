@@ -8,6 +8,7 @@ import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.ObjectIdentifier;
 import org.javaswift.joss.swift.Swift;
 
 import java.util.Collection;
@@ -81,6 +82,11 @@ public class AccountCommandFactoryMock implements AccountCommandFactory {
     @Override
     public HashPasswordCommand createHashPasswordCommand(Account account, String hashPassword) {
         return new HashPasswordCommandMock(swift, account, hashPassword);
+    }
+
+    @Override
+    public BulkDeleteCommand createBulkDeleteCommand(Account account, Collection<ObjectIdentifier> objectsToDelete) {
+        return new BulkDeleteCommandMock(swift, account, objectsToDelete);
     }
 
     @Override
