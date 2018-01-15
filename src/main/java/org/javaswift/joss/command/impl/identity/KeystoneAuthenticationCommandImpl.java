@@ -33,7 +33,7 @@ public class KeystoneAuthenticationCommandImpl extends AbstractCommand<HttpPost,
     }
 
     private void setTenantSupplied(String tenantName, String tenantId) {
-        this.tenantSupplied = tenantName != null || tenantId != null;
+        tenantSupplied = tenantName != null && !tenantName.isEmpty() || tenantId != null && !tenantId.isEmpty();
     }
 
     private boolean isTenantSupplied() {
