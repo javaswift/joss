@@ -37,6 +37,20 @@ public class KeystoneAuthenticationCommandImplTest extends BaseCommandTest {
     }
 
     @Test
+    public void emptyTenantNameSupplied() {
+        AuthenticationCommand command = new KeystoneAuthenticationCommandImpl(httpClient, "someurl", "", null, "user", "pwd");
+        Access access = command.call();
+        assertFalse(access.isTenantSupplied());
+    }
+
+    @Test
+    public void emptyTenantIdSupplied() {
+        AuthenticationCommand command = new KeystoneAuthenticationCommandImpl(httpClient, "someurl", null, "", "user", "pwd");
+        Access access = command.call();
+        assertFalse(access.isTenantSupplied());
+    }
+
+    @Test
     public void noTenantNameSupplied() throws IOException {
         AuthenticationCommand command = new KeystoneAuthenticationCommandImpl(httpClient, "someurl", null, "tenantid", "user", "pwd");
         Access access = command.call();
