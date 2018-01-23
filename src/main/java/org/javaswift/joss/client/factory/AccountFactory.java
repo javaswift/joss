@@ -159,4 +159,8 @@ public class AccountFactory {
         return this;
     }
 
+    public AccountFactory setDomain(String domain) {
+        this.config.setDomain(domain);
+        return this;
+    }
 }

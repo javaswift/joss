@@ -1,0 +1,114 @@
+{
+  "token": {
+    "is_domain": false,
+    "methods": [
+      "password"
+    ],
+    "roles": [
+      {
+        "id": "123",
+        "name": "swiftuser"
+      }
+    ],
+    "expires_at": "2017-10-11T04:49:27.000000Z",
+    "project": {
+      "domain": {
+        "id": "default",
+        "name": "Default"
+      },
+      "id": "345",
+      "name": "sw_myuser"
+    },
+    "catalog": [
+      {
+        "endpoints": [
+          {
+            "region_id": "region-obj-100",
+            "url": "http://region-obj-100.storage.mycompany.com/swift/v1/public",
+            "region": "region-obj-100",
+            "interface": "public",
+            "id": "1"
+          },
+          {
+            "region_id": "region-obj-100",
+            "url": "http://region-obj-100.storage.mycompany.com/swift/v1/admin",
+            "region": "region-obj-100",
+            "interface": "admin",
+            "id": "2"
+          },
+          {
+            "region_id": "region-ssdobj-005",
+            "url": "http://region-ssdobj-005.storage.mycompany.com/swift/v1/public",
+            "region": "region-ssdobj-005",
+            "interface": "public",
+            "id": "3"
+          },
+          {
+            "region_id": "region-ssdobj-005",
+            "url": "http://region-ssdobj-005.storage.mycompany.com/swift/v1/internal",
+            "region": "region-ssdobj-005",
+            "interface": "internal",
+            "id": "4"
+          },
+          {
+            "region_id": "region-ssdobj-005",
+            "url": "http://region-ssdobj-005.storage.mycompany.com/swift/v1/admin",
+            "region": "region-ssdobj-005",
+            "interface": "admin",
+            "id": "5"
+          },
+          {
+            "region_id": "region-obj-100",
+            "url": "http://region-obj-100.storage.mycompany.com/swift/v1/internal",
+            "region": "region-obj-100",
+            "interface": "internal",
+            "id": "6"
+          }
+        ],
+        "type": "object-store",
+        "id": "789",
+        "name": "swift"
+      },
+      {
+        "endpoints": [
+          {
+            "region_id": "RegionOne",
+            "url": "https://region-keystone-endpoint.prod.mycompany.com:5000/v3",
+            "region": "RegionOne",
+            "interface": "internal",
+            "id": "7"
+          },
+          {
+            "region_id": "RegionOne",
+            "url": "https://region-keystone-endpoint.prod.mycompany.com:35357/v3",
+            "region": "RegionOne",
+            "interface": "admin",
+            "id": "8"
+          },
+          {
+            "region_id": "RegionOne",
+            "url": "https://region-keystone-endpoint.prod.mycompany.com:5000/v3",
+            "region": "RegionOne",
+            "interface": "public",
+            "id": "9"
+          }
+        ],
+        "type": "identity",
+        "id": "012",
+        "name": "keystone"
+      }
+    ],
+    "user": {
+      "domain": {
+        "id": "default",
+        "name": "Default"
+      },
+      "id": "345",
+      "name": "sw_myuser"
+    },
+    "audit_ids": [
+      "audit_id"
+    ],
+    "issued_at": "2017-10-10T16:49:27.000000Z"
+  }
+}

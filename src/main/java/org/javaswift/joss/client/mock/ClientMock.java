@@ -60,15 +60,7 @@ public class ClientMock extends AbstractClient<AccountMock> {
                     ", tenant ID: "+accountConfig.getTenantId()+
                     ", username: " +accountConfig.getUsername()+
                     ", Auth URL: " +accountConfig.getAuthUrl());
-            this.factory.createAuthenticationCommand(
-                    null,
-                    accountConfig.getAuthenticationMethod(),
-                    null,
-                    accountConfig.getTenantName(),
-                    accountConfig.getTenantId(),
-                    accountConfig.getUsername(),
-                    accountConfig.getPassword(), 
-                    accountConfig.getAccessProvider()).call();
+            this.factory.createAuthenticationCommand(null, accountConfig).call();
         }
         return new AccountMock(swift);
     }
