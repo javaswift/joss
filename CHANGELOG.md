@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - 
 ### Changed
-- [#102](https://github.com/javaswift/joss/issues/102): TempUrl fixed to generate hash signature from relative path instead of absolute path by @thomasritscher [#146](https://github.com/javaswift/joss/pull/146)  
+- [#102](https://github.com/javaswift/joss/issues/102): Fixed bug which caused tempUrl to generate hash signature from relative path instead of absolute path by @thomasritscher [#146](https://github.com/javaswift/joss/pull/146)  
+- [#104](https://github.com/javaswift/joss/issues/104): Fixed bug which did not allow tenant name and id to be empty strings by @LiamJolly [#105](https://github.com/javaswift/joss/pull/105)  
 
 ## [0.9.17](https://github.com/javaswift/joss/releases/tag/v0.9.17) - 2017-10-25
 ### Added
