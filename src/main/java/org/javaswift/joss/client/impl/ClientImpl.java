@@ -1,13 +1,8 @@
 package org.javaswift.joss.client.impl;
 
-import org.apache.http.HttpHost;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.javaswift.joss.client.core.AbstractClient;
@@ -106,15 +101,7 @@ public class ClientImpl extends AbstractClient<AccountImpl> {
 
     @Override
     protected AccountImpl createAccount() {
-        AuthenticationCommand command = this.factory.createAuthenticationCommand(
-                httpClient,
-                accountConfig.getAuthenticationMethod(),
-                accountConfig.getAuthUrl(),
-                accountConfig.getTenantName(),
-                accountConfig.getTenantId(),
-                accountConfig.getUsername(),
-                accountConfig.getPassword(),
-                accountConfig.getAccessProvider());
+        AuthenticationCommand command = this.factory.createAuthenticationCommand(httpClient, accountConfig);
         LOG.info(
                 "JOSS / Attempting authentication with tenant name: " + accountConfig.getTenantName()+
                         ", tenant ID: "+accountConfig.getTenantId()+

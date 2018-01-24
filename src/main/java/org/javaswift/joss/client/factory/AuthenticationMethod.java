@@ -16,6 +16,7 @@ import org.javaswift.joss.model.Access;
 public enum AuthenticationMethod {
     BASIC,
     KEYSTONE,
+    KEYSTONE_V3,
     TEMPAUTH,
     EXTERNAL;
     
