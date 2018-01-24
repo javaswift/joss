@@ -33,13 +33,14 @@
 
             <h1>Authentication</h1>
 
-            <p>JOSS supports two modes of authentication:</p>
+            <p>JOSS supports four modes of authentication:</p>
             <ul>
                 <li><a href="#basic">Basic authentication</a>; authenticates against the Swift container</li>
                 <li><a href="#tempauth">TempAuth authentication</a>; authenticates against the Swift TempAuth module</li>
-                <li><a href="#keystone">Keystone authentication</a>; authenticates against a <a href="https://developer.openstack.org/api-ref/identity/v2/index.html#authenticate">Keystone</a> instance</li>
+                <li><a href="#keystone">Keystone v2.0 authentication</a>; authenticates against a <a href="https://developer.openstack.org/api-ref/identity/v2/index.html#authenticate">Keystone v2.0</a> instance</li>
+                <li><a href="#keystonev3">Keystone v3 authentication</a>; authenticates against a <a href="https://developer.openstack.org/api-ref/identity/v3/index.html#authentication-and-token-management">Keystone v3</a> instance</li>
             </ul>
-            <p>Important! Keystone authentication is the JOSS default.</p>
+            <p>Important! Keystone v2.0 authentication is the JOSS default. In this guide whenever Keystone is mentioned, it refers to Keystone v2.0.</p>
 
             <p>The <a href="#architecture">JOSS authentication architecture</a> is based on a stateful session.</p>
 
@@ -150,6 +151,11 @@
             <span class="o">.</span><span class="na">setAuthUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
             <span class="o">.</span><span class="na">setAuthenticationMethod</span><span class="o">(</span><span class="n">AuthenticationMethod.KEYSTONE</span><span class="o">);</span>
     <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountFactory</span><span class="o">(</span><span class="n">config</span><span class="o">).</span><span class="na">createAccount</span><span class="o">();</span>
+</pre></div>
+            <h2 id="keystonev3">Keystone v3 authentication</h2>
+            <p> If you would like to use Keystone v3 authentication instead of the default v2.0, the above options for identifying the tenant still apply. The main difference is the line with which we set the authentication method:
+
+            <div class="highlight"><pre> <span class="o">.</span><span class="na">setAuthenticationMethod</span><span class="o">(</span><span class="n">AuthenticationMethod.KEYSTONE_V3</span><span class="o">);</span>
 </pre></div>
 
             <h2 id="architecture">Architecture</h2>
