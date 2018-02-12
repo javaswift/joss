@@ -25,6 +25,9 @@ public class ObjectManifest extends SimpleHeader {
     }
 
     public static ObjectManifest fromResponse(HttpResponse response) {
-    	return new ObjectManifest(convertResponseHeader(response, X_OBJECT_MANIFEST));
+    	String manifest = convertResponseHeader(response, X_OBJECT_MANIFEST);
+    	if (manifest == null)
+    		return null;
+    	return new ObjectManifest(manifest);
     }
 }

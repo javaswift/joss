@@ -26,7 +26,7 @@ public class ObjectInformationTest {
         info.setContentType(new ObjectContentType("text/plain"));
         info.setManifest(new ObjectManifest("container_segments/object"));
         Collection<Header> headers = info.getHeadersIncludingHeader(new ObjectContentType("image/png"));
-        assertEquals(5, headers.size());
+        assertEquals(6, headers.size());
         for (Header header : headers) {
             if (ObjectContentType.CONTENT_TYPE.equals(header.getHeaderName())) {
                 assertEquals("image/png", header.getHeaderValue());
