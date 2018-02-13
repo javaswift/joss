@@ -58,17 +58,25 @@ public class UploadInstructions {
     /** Size at which a file must be segmented into smaller pieces */
     private Long segmentationSize = MAX_SEGMENTATION_SIZE;
 
+    public UploadInstructions(UploadPayload uploadPayload) {
+    	this.uploadPayload = uploadPayload;
+    }
+
     public UploadInstructions(File fileToUpload) {
-        this.uploadPayload = new UploadPayloadFile(fileToUpload);
+        this(new UploadPayloadFile(fileToUpload));
     }
 
     public UploadInstructions(InputStream inputStream) {
-        this.uploadPayload = new UploadPayloadInputStream(inputStream);
+        this(new UploadPayloadInputStream(inputStream));
     }
 
     public UploadInstructions(byte[] fileToUpload) {
-        this.uploadPayload = new UploadPayloadByteArray(fileToUpload);
+        this(new UploadPayloadByteArray(fileToUpload));
     }
+
+	public UploadInstructions(InputStream inputStream, long length) {
+		this(new UploadPayloadBoundedInputStream(inputStream, length));
+	}
 
     /**
      * Facade method for checking out the payload to see if must be segmented. Used
