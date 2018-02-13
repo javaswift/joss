@@ -79,19 +79,24 @@ public class ObjectInformation extends AbstractInformation {
         }
         headers.add(header);
     }
-    
+
     public String getManifest () {
     	return (manifest == null) ? (null) : (manifest.getHeaderValue()) ;
     }
-    
+
     public void setManifest(ObjectManifest manifest) {
         this.manifest = manifest;
+    }
+
+    protected ObjectManifest getObjectManifest() {
+    	return this.manifest;
     }
 
     public Collection<Header> getHeaders() {
         Collection<Header> headers = new ArrayList<Header>();
         addHeader(headers, getDeleteAfter());
         addHeader(headers, getDeleteAt());
+        addHeader(headers, getObjectManifest());
         headers.addAll(getMetadata()); // The original metadata must be passed as well, otherwise it's deleted
         return headers;
     }
