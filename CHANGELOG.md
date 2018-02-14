@@ -3,11 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [0.10.1] Unreleased
+## [0.10.1](https://github.com/javaswift/joss/releases/tag/v10.0.1) - 2018-2-14
 ### Added
 - [#63](https://github.com/javaswift/joss/issues/63): Added segmentation support for uploading objects via InputStream by [@infinitydev](https://github.com/infinitydev) and [@arunazaraiah](https://github.com/arunazaraiah) [#74](https://github.com/javaswift/joss/pull/74)
 
-## [0.10.0](https://github.com/javaswift/joss/releases/tag/v0.10.0) - 2017-1-24
+## [0.10.0](https://github.com/javaswift/joss/releases/tag/v0.10.0) - 2018-1-24
 ### Added
 - [#133](https://github.com/javaswift/joss/issues/133): Added support for [Keystone v3.0 authentication](https://developer.openstack.org/api-ref/identity/v3/index.html#authentication-and-token-management) by [@kevinconaway](https://github.com/kevinconaway) [#142](https://github.com/javaswift/joss/pull/142)
 ### Changed
