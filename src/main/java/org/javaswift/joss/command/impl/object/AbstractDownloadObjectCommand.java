@@ -46,7 +46,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
 
     @Override
     protected N getReturnObject(HttpResponse response) throws IOException {
-        String expectedMd5 = response.getHeaders(ETAG)[0].getValue().replaceAll("\"", "");
+        String expectedMd5 = getEtagHeader(response);
         boolean isManifest = Header.headerNotEmpty(response, X_OBJECT_MANIFEST);
         handleEntity(response.getEntity());
         if (    !isManifest &&  // Manifest files may not be checked
@@ -59,6 +59,22 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
             }
         }
         return getObjectAsReturnObject();
+    }
+
+    /**
+     * @param response to extract the etag from
+     * @return null if there was no etag, "" if the header was there but empty, etag as String otherwise.
+     */
+    private String getEtagHeader(HttpResponse response) {
+        org.apache.http.Header[] headers = response.getHeaders(ETAG);
+        if(headers.length == 0) {
+            return null;
+        }
+        String etagHeaderValue = response.getHeaders(ETAG)[0].getValue();
+        if(etagHeaderValue == null) {
+            return "";
+        }
+        return etagHeaderValue.replaceAll("\"", "");
     }
 
     protected abstract void handleEntity(HttpEntity entity) throws IOException;
