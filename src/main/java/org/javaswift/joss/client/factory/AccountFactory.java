@@ -163,4 +163,9 @@ public class AccountFactory {
         this.config.setDomain(domain);
         return this;
     }
+
+    public AccountFactory setAuthenticationMode(AuthenticationMethodScope scope) {
+        this.config.setAuthenticationMethodScope(scope);
+        return this;
+    }
 }

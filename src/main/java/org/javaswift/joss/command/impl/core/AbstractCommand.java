@@ -7,6 +7,7 @@ import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
@@ -137,6 +138,7 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
         if (dealWithRootValue) {
             objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
             objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+            objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
         }
         return objectMapper;
     }

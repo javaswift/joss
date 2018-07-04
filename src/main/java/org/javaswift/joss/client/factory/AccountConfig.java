@@ -215,7 +215,26 @@ public class AccountConfig {
      */
     private AuthenticationMethod authenticationMethod = KEYSTONE;
     
-    private AuthenticationMethod.AccessProvider accessProvider = null ;
+    private AuthenticationMethod.AccessProvider accessProvider = null;
+
+    /**
+     * Sets the scope of authentication when using the {@link AuthenticationMethod} Keystone V3.
+     * During authentication you can request a scope against a certain domain or project. Which might be required by
+     * your Keystone installation.
+     * <ul>
+     *     <li>
+     *         <b>DEFAULT</b>; Default authentication with no special scope. This is also the default setting.
+     *     </li>
+     *     <li>
+     *         <b>PROJECT_NAME</b>; Scopes against a tenant/project name. You must also provide the TenantName.
+     *     </li>
+     *     <li>
+     *         <b>DOMAIN_NAME</b>; Scopes against a domain name. You must also provide the Domain.
+     *     </li>
+     *
+     * </ul>
+     */
+    private AuthenticationMethodScope authenticationMethodScope = AuthenticationMethodScope.DEFAULT;
 
     /**
      * Keystone domain.  Used by the V3 Identity API
@@ -484,5 +503,11 @@ public class AccountConfig {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public AuthenticationMethodScope getAuthenticationMethodScope() { return authenticationMethodScope; }
+
+    public void setAuthenticationMethodScope(AuthenticationMethodScope scope) {
+        this.authenticationMethodScope = scope;
     }
 }

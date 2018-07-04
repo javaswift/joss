@@ -71,7 +71,8 @@ public class AccountFactoryTest {
                 .setTenantName(null)
                 .setTenantId(null)
                 .setUsername(null)
-                .setDelimiter('\\');
+                .setDelimiter('\\')
+                .setAuthenticationMethod(null);
     }
 
 }

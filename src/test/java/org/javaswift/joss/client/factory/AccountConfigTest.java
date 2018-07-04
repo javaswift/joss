@@ -33,6 +33,7 @@ public class AccountConfigTest {
         config.setPreferredRegion("AMS-01");
         config.setDisableSslValidation(true);
         config.setDelimiter('\\');
+        config.setAuthenticationMethodScope(AuthenticationMethodScope.DOMAIN_NAME);
         assertEquals("auth", config.getAuthUrl());
         assertEquals("pwd", config.getPassword());
         assertEquals("tenant", config.getTenantName());
@@ -56,5 +57,6 @@ public class AccountConfigTest {
         assertEquals("AMS-01", config.getPreferredRegion());
         assertEquals(true, config.isDisableSslValidation());
         assertEquals((Character)'\\', config.getDelimiter());
+        assertEquals(AuthenticationMethodScope.DOMAIN_NAME, config.getAuthenticationMethodScope());
     }
 }
