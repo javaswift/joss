@@ -46,7 +46,7 @@ public class KeystoneAuthenticationV3CommandImpl extends AbstractCommand<HttpPos
                 );
                 break;
             case PROJECT_NAME:
-                createKeystoneV3AuthenticationProjectScope(
+                auth = createKeystoneV3AuthenticationProjectScope(
                         config.getUsername(),
                         config.getPassword(),
                         config.getDomain(),
