@@ -37,7 +37,7 @@ public class ObjectLastModified extends DateHeader {
         try {
             return new ObjectLastModified(convertResponseHeader(response, LAST_MODIFIED));
         } catch (DateParseException e) {
-            throw new CommandException("Unable to convert date string");
+            throw new CommandException("Unable to convert date string", e);
         }
     }
 }

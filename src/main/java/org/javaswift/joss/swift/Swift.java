@@ -21,6 +21,8 @@ import org.javaswift.joss.model.*;
 import org.javaswift.joss.swift.scheduled.ObjectDeleter;
 import org.javaswift.joss.swift.statusgenerator.StatusGenerator;
 import org.javaswift.joss.util.LocalTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.io.File;
@@ -30,6 +32,8 @@ import java.util.*;
 * Mock implementation of the Swift Object Store
 */
 public class Swift {
+
+    public static final Logger LOG = LoggerFactory.getLogger(Swift.class);
 
     private Map<String, SwiftContainer> containers = new TreeMap<String, SwiftContainer>();
 
@@ -443,6 +447,7 @@ public class Swift {
             os = new FileOutputStream(targetFile);
             IOUtils.copy(is, os);
         } catch (IOException err) {
+            LOG.error("Failed when downloading object", err);
             return new SwiftResult<Object>(HttpStatus.SC_UNPROCESSABLE_ENTITY);
         } finally {
             closeStreams(is, os);

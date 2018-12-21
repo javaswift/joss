@@ -14,7 +14,7 @@ public enum TempUrlHashPrefixSource {
         try {
             return new URL(url).getPath();
         } catch (MalformedURLException e) {
-            throw new CommandException("Unable to parse URL "+url);
+            throw new CommandException("Unable to parse URL "+url, e);
         }
     }
 

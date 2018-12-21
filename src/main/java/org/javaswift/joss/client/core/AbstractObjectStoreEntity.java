@@ -151,7 +151,7 @@ public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> i
         try {
             return getPathForEntity();
         } catch (Exception e) {
-            throw new CommandException("Unable to encode the object path");
+            throw new CommandException("Unable to encode the object path", e);
         }
     }
 
