@@ -52,7 +52,7 @@ public class ContainerCacheTest {
                 @Override
                 public void run() {
                     try {
-                        for (int i = 0; i < numContainers; i++) {
+                        for (int j = 0; j < numContainers; j++) {
                             int containerI = (int) (Math.random() * numContainers);
                             String randomContainer = containers[containerI];
                             cache.getContainer(randomContainer);
