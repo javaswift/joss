@@ -3,11 +3,11 @@ package org.javaswift.joss.client.core;
 import org.javaswift.joss.model.Container;
 
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class ContainerCache<N extends Container> {
 
-    private Map<String, N> cache = new TreeMap<String, N>();
+    private Map<String, N> cache = new ConcurrentSkipListMap<String, N>();
 
     private final AbstractAccount account;
 
