@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.10.3](https://github.com/javaswift/joss/releases/tag/v0.10.3) - 2019-05-20
+### Changed
+- [#156](https://github.com/javaswift/joss/pull/156): Adds support for KeystoneV3 scoping during auth [@tfelix](https://github.com/tfelix) [#155](https://github.com/javaswift/joss/issues/155)  
+
 ## [0.10.2](https://github.com/javaswift/joss/releases/tag/v0.10.2) - 2018-4-5
 ### Changed
 - [#148](https://github.com/javaswift/joss/issues/148): Prevent HTTP connection pool exhaustion when an exception occurs by [@wangbinhui](https://github.com/wangbinhui) [#128](https://github.com/javaswift/joss/pull/128)  
