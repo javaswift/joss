@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.shared.identity.authentication;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
@@ -11,7 +13,12 @@ public class Authentication {
     private String tenantId;
 
     public Authentication(final String tenantName, String tenantId, final String username, final String password) {
-        this.passwordCredentials = new PasswordCredentials(username, password);
+        this(tenantName, tenantId, new PasswordCredentials(username, password));
+    }
+
+    @JsonCreator
+    public Authentication(@JsonProperty final String tenantName, @JsonProperty String tenantId, @JsonProperty PasswordCredentials passwordCredentials) {
+        this.passwordCredentials = passwordCredentials;
         this.tenantName = tenantName;
         this.tenantId = tenantId;
     }

@@ -1,6 +1,7 @@
 package org.javaswift.joss.command.shared.identity.tenant;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 import org.javaswift.joss.exception.CommandException;
 import org.junit.Test;
 
@@ -15,6 +16,7 @@ public class TenantsTest {
     @Test
     public void marshalling() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationConfig.Feature.CAN_OVERRIDE_ACCESS_MODIFIERS, false);
         Tenant tenant = new Tenant();
         tenant.enabled = true;
         tenant.id = "tenant-id";

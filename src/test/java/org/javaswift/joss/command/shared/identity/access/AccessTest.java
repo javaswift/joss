@@ -23,6 +23,7 @@ public class AccessTest {
     public void testUnmarshalling() throws IOException {
         String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationConfig.Feature.CAN_OVERRIDE_ACCESS_MODIFIERS, false);
         mapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
         Access access = mapper.readValue(jsonString, AccessTenant.class);
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
