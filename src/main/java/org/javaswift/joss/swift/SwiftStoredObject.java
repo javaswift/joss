@@ -85,6 +85,9 @@ public class SwiftStoredObject implements ListSubject, DirectoryOrObject {
                     uploadInstructions.getContentType() != null ?
                         uploadInstructions.getContentType() :
                         new ObjectContentType(new MimetypesFileTypeMap().getContentType(getName()));
+            this.deleteAt = uploadInstructions.getDeleteAt() != null ? uploadInstructions.getDeleteAt() :
+                    uploadInstructions.getDeleteAfter() != null ?
+                            new DeleteAt(System.currentTimeMillis() + (1000 * uploadInstructions.getDeleteAfter().getExpireAfterSeconds())) : null;
             return new SwiftResult<Object>(HttpStatus.SC_CREATED);
         } catch (IOException err) {
             return new SwiftResult<Object>(HttpStatus.SC_UNPROCESSABLE_ENTITY);
@@ -164,6 +167,7 @@ public class SwiftStoredObject implements ListSubject, DirectoryOrObject {
         targetObject.setEtag(getEtag().getHeaderValue());
         targetObject.setLastModified(getLastModified());
         targetObject.metadataSetFromHeaders();
+        targetObject.setDeleteAt(deleteAt.getDate());
         return targetObject;
     }
 
