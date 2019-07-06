@@ -3,6 +3,8 @@ package org.javaswift.joss.swift;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.command.mock.core.CommandMock;
+import org.javaswift.joss.command.shared.identity.bulkdelete.BulkDeleteResponse;
+import org.javaswift.joss.command.shared.identity.bulkdelete.ErrorObject;
 import org.javaswift.joss.command.shared.identity.tenant.Tenant;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
 import org.javaswift.joss.exception.CommandException;
@@ -25,6 +27,8 @@ import org.javaswift.joss.util.LocalTime;
 import java.io.*;
 import java.io.File;
 import java.util.*;
+
+import javax.management.ObjectName;
 
 /**
 * Mock implementation of the Swift Object Store
@@ -240,6 +244,47 @@ public class Swift {
         return new SwiftResult<Object>(HttpStatus.SC_NO_CONTENT);
     }
 
+    public SwiftResult<BulkDeleteResponse> bulkDelete(Collection<ObjectIdentifier> objectsToDelete) {
+        int numberDeleted = 0;
+        int numberNotFound = 0;
+        ArrayList<ErrorObject> errors = new ArrayList<ErrorObject>();
+        for (ObjectIdentifier objectIdentifier : objectsToDelete) {
+            Optional<String> objectName = objectIdentifier.getObjectName();
+            if (objectName.isPresent()) {
+                SwiftResult<Object> deleteResult = deleteObjectByName(objectIdentifier.getContainerName(), objectName.get());
+                if (deleteResult.getStatus() == HttpStatus.SC_NOT_FOUND){
+                    numberNotFound++;
+                }else if (deleteResult.getStatus() == HttpStatus.SC_OK){
+                    numberDeleted++;
+                } else {
+                    addErrorObject(errors, objectIdentifier, deleteResult);
+                }
+            } else {
+                SwiftResult<String[]> deleteResult = deleteContainer(objectIdentifier.getContainerName());
+                if (deleteResult.getStatus() == HttpStatus.SC_NOT_FOUND){
+                    numberNotFound++;
+                }else if (deleteResult.getStatus() == HttpStatus.SC_OK){
+                    numberDeleted++;
+                } else {
+                    addErrorObject(errors, objectIdentifier, deleteResult);
+                }
+            }
+        }
+        BulkDeleteResponse bulkDeleteResponse = new BulkDeleteResponse();
+        bulkDeleteResponse.numberDeleted = numberDeleted;
+        bulkDeleteResponse.numberNotFound = numberNotFound;
+        bulkDeleteResponse.errors = errors.toArray(new ErrorObject[errors.size()]);
+        return new SwiftResult<BulkDeleteResponse>(bulkDeleteResponse, HttpStatus.SC_OK);
+    }
+
+    private void addErrorObject(ArrayList<ErrorObject> errors, ObjectIdentifier objectIdentifier, SwiftResult<?> deleteContainer) {
+        ErrorObject errorObject = new ErrorObject();
+        errorObject.name = objectIdentifier.getContainerName();
+        errorObject.status = Integer.toString(deleteContainer.getStatus());
+        errors.add(errorObject);
+    }
+    
+
     // +-----------------------------------------+
     // |           C O N T A I N E R             |
     // +-----------------------------------------+
@@ -353,15 +398,19 @@ public class Swift {
     }
 
     public SwiftResult<Object> deleteObject(Container container, StoredObject object) {
-        SwiftContainer foundContainer = containers.get(container.getName());
+        return deleteObjectByName(container.getName(), object.getName());
+    }
+
+    private SwiftResult<Object> deleteObjectByName(String containerName, String objectName) {
+        SwiftContainer foundContainer = containers.get(containerName);
         if (foundContainer == null) {
             return new SwiftResult<Object>(HttpStatus.SC_NOT_FOUND);
         }
-        SwiftStoredObject foundObject = foundContainer.getObject(object.getName());
+        SwiftStoredObject foundObject = foundContainer.getObject(objectName);
         if (foundObject == null) {
             return new SwiftResult<Object>(HttpStatus.SC_NOT_FOUND);
         }
-        foundContainer.deleteObject(object.getName());
+        foundContainer.deleteObject(objectName);
         return new SwiftResult<Object>(HttpStatus.SC_NO_CONTENT);
     }
 

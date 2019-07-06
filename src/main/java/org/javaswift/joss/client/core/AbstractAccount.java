@@ -1,6 +1,7 @@
 package org.javaswift.joss.client.core;
 
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
+import org.javaswift.joss.command.shared.identity.bulkdelete.BulkDeleteResponse;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.headers.account.AccountMetadata;
@@ -242,6 +243,11 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     @Override
     public String getOriginalHost() {
         return this.commandFactory.getOriginalHost();
+    }
+
+    @Override
+    public BulkDeleteResponse bulkDelete(Collection<ObjectIdentifier> objectsToDelete) {
+        return commandFactory.createBulkDeleteCommand(this, objectsToDelete).call();
     }
 
 }

@@ -1,6 +1,9 @@
 package org.javaswift.joss.model;
 
+import org.javaswift.joss.command.shared.identity.bulkdelete.BulkDeleteResponse;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
+
+import java.util.Collection;
 
 /**
  * Account is the root entity in Object Store. It allows you access to the various containers underneath. Note
@@ -194,4 +197,21 @@ public interface Account extends ObjectStoreEntity, ListHolder<Container> {
      * @return instance of Account
      */
     Account setPreferredRegion(String preferredRegion);
+
+    /**
+     * Deletes a list of objects or containers in a single operation. ObjectIdentifier may be both,
+     * an object or a container.
+     *
+     * Note: Make sure that the container is empty. If it contains objects, Object Storage cannot
+     * delete the container.
+     *
+     * The operation will only throw an exception, if the operation failed completely. To make sure
+     * all containers/objects were deleted successfully, have a look at the response object.
+     *
+     * @param objectsToDelete the objects to delete
+     * @return as the whole operation may complete successfully with some sub-operations having
+     *         failed, this response object contains the details, what was deleted and which errors
+     *         did occur
+     */
+    BulkDeleteResponse bulkDelete(Collection<ObjectIdentifier> objectsToDelete);
 }
