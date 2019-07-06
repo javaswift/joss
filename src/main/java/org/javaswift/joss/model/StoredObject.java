@@ -1,5 +1,6 @@
 package org.javaswift.joss.model;
 
+import org.apache.http.Header;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
 
@@ -266,5 +267,6 @@ public interface StoredObject extends ObjectStoreEntity, Comparable<DirectoryOrO
     void setEtag(String etag);
     void setContentLength(long contentLength);
     void setContentTypeWithoutSaving(String contentType);
-
+    void setResponseHeaders(Header[] headers);
+    Header[] getResponseHeaders();
 }

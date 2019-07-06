@@ -49,6 +49,7 @@ public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extend
         String expectedMd5 = response.getHeaders(ETAG)[0].getValue().replaceAll("\"", "");
         boolean isManifest = Header.headerNotEmpty(response, X_OBJECT_MANIFEST);
         handleEntity(response.getEntity());
+        populateResponseHeaders(response);
         if (    !isManifest &&  // Manifest files may not be checked
                 HttpStatus.SC_PARTIAL_CONTENT != response.getStatusLine().getStatusCode()) {
                                 // etag match on partial content makes no sense)
