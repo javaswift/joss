@@ -1,8 +1,8 @@
 package org.javaswift.joss.headers.object.range;
 
-import org.javaswift.joss.headers.Header;
-
 import java.util.Arrays;
+
+import org.javaswift.joss.headers.Header;
 
 /**
  * Offers the option to return not the entire object, but only a designated part. The various options are

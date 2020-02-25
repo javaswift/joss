@@ -1,9 +1,26 @@
 package org.javaswift.joss.command.impl.factory;
 
+import java.io.File;
+import java.util.Collection;
+
 import org.apache.http.client.HttpClient;
-import org.javaswift.joss.command.impl.object.*;
+import org.javaswift.joss.command.impl.object.CopyObjectCommandImpl;
+import org.javaswift.joss.command.impl.object.DeleteObjectCommandImpl;
+import org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl;
+import org.javaswift.joss.command.impl.object.DownloadObjectAsInputStreamCommandImpl;
+import org.javaswift.joss.command.impl.object.DownloadObjectToFileCommandImpl;
+import org.javaswift.joss.command.impl.object.ObjectInformationCommandImpl;
+import org.javaswift.joss.command.impl.object.ObjectMetadataCommandImpl;
+import org.javaswift.joss.command.impl.object.UploadObjectCommandImpl;
 import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
-import org.javaswift.joss.command.shared.object.*;
+import org.javaswift.joss.command.shared.object.CopyObjectCommand;
+import org.javaswift.joss.command.shared.object.DeleteObjectCommand;
+import org.javaswift.joss.command.shared.object.DownloadObjectAsByteArrayCommand;
+import org.javaswift.joss.command.shared.object.DownloadObjectAsInputStreamCommand;
+import org.javaswift.joss.command.shared.object.DownloadObjectToFileCommand;
+import org.javaswift.joss.command.shared.object.ObjectInformationCommand;
+import org.javaswift.joss.command.shared.object.ObjectMetadataCommand;
+import org.javaswift.joss.command.shared.object.UploadObjectCommand;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
@@ -11,9 +28,6 @@ import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
-
-import java.io.File;
-import java.util.Collection;
 
 public class StoredObjectCommandFactoryImpl implements StoredObjectCommandFactory {
 

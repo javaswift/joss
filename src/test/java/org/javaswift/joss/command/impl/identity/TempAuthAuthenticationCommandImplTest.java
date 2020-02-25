@@ -1,7 +1,16 @@
 package org.javaswift.joss.command.impl.identity;
 
+import static junit.framework.Assert.assertEquals;
+import static org.javaswift.joss.command.impl.identity.BasicAuthenticationCommandImpl.X_AUTH_TOKEN;
+import static org.javaswift.joss.command.impl.identity.BasicAuthenticationCommandImpl.X_STORAGE_URL;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import mockit.NonStrictExpectations;
 import mockit.Verifications;
+
 import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
@@ -10,14 +19,6 @@ import org.javaswift.joss.headers.identity.XStorageUser;
 import org.javaswift.joss.model.Access;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static org.javaswift.joss.command.impl.identity.BasicAuthenticationCommandImpl.X_AUTH_TOKEN;
-import static org.javaswift.joss.command.impl.identity.BasicAuthenticationCommandImpl.X_STORAGE_URL;
 
 public class TempAuthAuthenticationCommandImplTest extends BaseCommandTest {
 

@@ -1,15 +1,15 @@
 package org.javaswift.joss.headers.object;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.javaswift.joss.headers.AbstractHeaderTest;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.javaswift.joss.headers.AbstractHeaderTest;
+import org.junit.Test;
 
 public class EtagTest extends AbstractHeaderTest {
 

@@ -1,18 +1,22 @@
 package org.javaswift.joss.command.impl.account;
 
+import java.io.IOException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.javaswift.joss.command.impl.core.AbstractSecureCommand;
-import org.javaswift.joss.command.impl.core.httpstatus.*;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.account.TenantCommand;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
 import org.javaswift.joss.headers.Accept;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
-
-import java.io.IOException;
 
 public class TenantCommandImpl extends AbstractSecureCommand<HttpGet, Tenants> implements TenantCommand {
 

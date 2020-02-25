@@ -1,10 +1,10 @@
 package org.javaswift.joss.headers.object;
 
+import java.util.Date;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.cookie.DateParseException;
 import org.javaswift.joss.headers.DateHeader;
-
-import java.util.Date;
 
 public class DeleteAt extends DateHeader {
 

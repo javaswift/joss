@@ -1,9 +1,9 @@
 package org.javaswift.joss.headers;
 
+import java.util.Date;
+
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
-
-import java.util.Date;
 
 public abstract class DateHeader extends Header {
 

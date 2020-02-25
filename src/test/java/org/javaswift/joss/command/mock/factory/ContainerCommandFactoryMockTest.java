@@ -1,8 +1,8 @@
 package org.javaswift.joss.command.mock.factory;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class ContainerCommandFactoryMockTest {
 

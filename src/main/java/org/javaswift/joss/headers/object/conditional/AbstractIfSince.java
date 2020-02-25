@@ -1,9 +1,9 @@
 package org.javaswift.joss.headers.object.conditional;
 
+import java.util.Date;
+
 import org.apache.http.impl.cookie.DateParseException;
 import org.javaswift.joss.headers.DateHeader;
-
-import java.util.Date;
 
 public abstract class AbstractIfSince extends DateHeader {
 

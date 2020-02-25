@@ -1,14 +1,14 @@
 package org.javaswift.joss.swift.scheduled;
 
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+
+import java.util.Date;
+
 import org.javaswift.joss.swift.SwiftContainer;
 import org.javaswift.joss.swift.SwiftStoredObject;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Date;
-
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
 
 public class ObjectDeleterTest {
 

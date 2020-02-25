@@ -1,12 +1,18 @@
 package org.javaswift.joss.command.shared.factory;
 
-import org.javaswift.joss.command.shared.container.*;
+import java.util.Collection;
+
+import org.javaswift.joss.command.shared.container.ContainerInformationCommand;
+import org.javaswift.joss.command.shared.container.ContainerMetadataCommand;
+import org.javaswift.joss.command.shared.container.ContainerRightsCommand;
+import org.javaswift.joss.command.shared.container.CreateContainerCommand;
+import org.javaswift.joss.command.shared.container.DeleteContainerCommand;
+import org.javaswift.joss.command.shared.container.ListDirectoryCommand;
+import org.javaswift.joss.command.shared.container.ListObjectsCommand;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
-
-import java.util.Collection;
 
 public interface ContainerCommandFactory {
 

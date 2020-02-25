@@ -1,11 +1,12 @@
 package org.javaswift.joss.client.core;
 
+import static junit.framework.Assert.assertEquals;
+
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
+
 import org.javaswift.joss.util.LocalTime;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
 
 public class ServerTimeTest {
 

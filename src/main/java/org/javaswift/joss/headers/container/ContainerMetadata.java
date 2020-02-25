@@ -1,10 +1,10 @@
 package org.javaswift.joss.headers.container;
 
-import org.apache.http.HttpResponse;
-import org.javaswift.joss.headers.Metadata;
-
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.apache.http.HttpResponse;
+import org.javaswift.joss.headers.Metadata;
 
 public class ContainerMetadata extends Metadata {
 

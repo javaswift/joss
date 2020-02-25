@@ -1,12 +1,12 @@
 package org.javaswift.joss.swift;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static junit.framework.Assert.assertEquals;
+import org.junit.Test;
 
 public class PageServerTest {
 

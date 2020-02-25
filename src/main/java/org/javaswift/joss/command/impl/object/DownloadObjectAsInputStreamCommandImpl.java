@@ -1,5 +1,8 @@
 package org.javaswift.joss.command.impl.object;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -8,9 +11,6 @@ import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 public class DownloadObjectAsInputStreamCommandImpl extends AbstractDownloadObjectCommand<HttpGet, InputStream> implements DownloadObjectAsInputStreamCommand {
 

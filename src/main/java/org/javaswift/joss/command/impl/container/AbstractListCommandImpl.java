@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.impl.container;
 
+import java.io.IOException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -14,8 +16,6 @@ import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
-
-import java.io.IOException;
 
 public abstract class AbstractListCommandImpl<N> extends AbstractContainerCommand<HttpGet, N> {
 

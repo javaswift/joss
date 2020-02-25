@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.impl.identity;
 
+import java.io.IOException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -10,8 +12,6 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessConditio
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.command.shared.identity.access.AccessBasic;
 import org.javaswift.joss.model.Access;
-
-import java.io.IOException;
 
 public abstract class AbstractSimpleAuthenticationCommandImpl extends AbstractCommand<HttpGet, Access> implements AuthenticationCommand {
 

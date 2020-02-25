@@ -1,8 +1,11 @@
 package org.javaswift.joss.exception;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
-import static junit.framework.Assert.*;
+import org.junit.Test;
 
 public class CommandExceptionTest {
 

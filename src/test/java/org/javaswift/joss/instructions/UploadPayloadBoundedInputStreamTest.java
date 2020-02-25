@@ -1,13 +1,15 @@
 package org.javaswift.joss.instructions;
 
-import mockit.Injectable;
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
-
-import java.io.*;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import mockit.Injectable;
+
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 
 public class UploadPayloadBoundedInputStreamTest extends SegmentationPlanTestBase {
 

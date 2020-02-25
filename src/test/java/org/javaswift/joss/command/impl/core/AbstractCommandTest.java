@@ -1,13 +1,14 @@
 package org.javaswift.joss.command.impl.core;
 
+import java.io.IOException;
+
 import mockit.Expectations;
+
 import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.command.impl.identity.KeystoneAuthenticationCommandImpl;
 import org.javaswift.joss.exception.CommandException;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 public class AbstractCommandTest extends BaseCommandTest {
 

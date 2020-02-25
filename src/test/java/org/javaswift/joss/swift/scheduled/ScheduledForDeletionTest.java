@@ -1,13 +1,16 @@
 package org.javaswift.joss.swift.scheduled;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertTrue;
+
+import java.util.Date;
+
 import org.javaswift.joss.swift.SwiftContainer;
 import org.javaswift.joss.swift.SwiftStoredObject;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Date;
-
-import static junit.framework.Assert.*;
 
 public class ScheduledForDeletionTest {
 

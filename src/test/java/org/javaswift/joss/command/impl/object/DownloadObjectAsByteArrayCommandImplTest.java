@@ -1,27 +1,32 @@
 package org.javaswift.joss.command.impl.object;
 
+import static junit.framework.Assert.assertEquals;
+import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.CONTENT_LENGTH;
+import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.ETAG;
+import static org.javaswift.joss.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import mockit.Expectations;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.Header;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.cookie.DateParseException;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
-import org.javaswift.joss.exception.*;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.exception.Md5ChecksumException;
+import org.javaswift.joss.exception.ModifiedException;
+import org.javaswift.joss.exception.NotFoundException;
+import org.javaswift.joss.exception.NotModifiedException;
 import org.javaswift.joss.headers.object.conditional.IfModifiedSince;
 import org.javaswift.joss.headers.object.conditional.IfNoneMatch;
 import org.javaswift.joss.headers.object.range.FirstPartRange;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.CONTENT_LENGTH;
-import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.ETAG;
-import static org.javaswift.joss.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
 
 public class DownloadObjectAsByteArrayCommandImplTest extends BaseCommandTest {
 

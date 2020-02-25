@@ -1,10 +1,11 @@
 package org.javaswift.joss.exception;
 
+import static junit.framework.Assert.assertTrue;
+
 import mockit.Expectations;
 import mockit.Mocked;
-import org.junit.Test;
 
-import static junit.framework.Assert.assertTrue;
+import org.junit.Test;
 
 public class HttpStatusExceptionUtilTest {
 

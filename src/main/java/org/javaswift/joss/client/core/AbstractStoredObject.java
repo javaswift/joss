@@ -1,15 +1,5 @@
 package org.javaswift.joss.client.core;
 
-import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.headers.Metadata;
-import org.javaswift.joss.headers.object.*;
-import org.javaswift.joss.information.ObjectInformation;
-import org.javaswift.joss.instructions.DownloadInstructions;
-import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.*;
-import org.javaswift.joss.util.SpaceURLEncoder;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -17,6 +7,27 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.Metadata;
+import org.javaswift.joss.headers.object.DeleteAfter;
+import org.javaswift.joss.headers.object.DeleteAt;
+import org.javaswift.joss.headers.object.Etag;
+import org.javaswift.joss.headers.object.ObjectContentLength;
+import org.javaswift.joss.headers.object.ObjectContentType;
+import org.javaswift.joss.headers.object.ObjectLastModified;
+import org.javaswift.joss.headers.object.ObjectManifest;
+import org.javaswift.joss.headers.object.ObjectMetadata;
+import org.javaswift.joss.information.ObjectInformation;
+import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.instructions.UploadInstructions;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.Directory;
+import org.javaswift.joss.model.DirectoryOrObject;
+import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.util.SpaceURLEncoder;
 
 public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<ObjectInformation> implements StoredObject {
 

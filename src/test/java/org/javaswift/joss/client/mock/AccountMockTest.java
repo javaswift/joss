@@ -1,7 +1,19 @@
 package org.javaswift.joss.client.mock;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertSame;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Map;
+import java.util.TreeMap;
+
 import mockit.Expectations;
 import mockit.Mocked;
+
 import org.javaswift.joss.client.factory.AccountFactory;
 import org.javaswift.joss.command.mock.container.ContainerInformationCommandMock;
 import org.javaswift.joss.exception.CommandException;
@@ -14,13 +26,6 @@ import org.javaswift.joss.model.PaginationMap;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.swift.Swift;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
-
-import static junit.framework.Assert.*;
 
 public class AccountMockTest {
 
@@ -45,8 +50,8 @@ public class AccountMockTest {
         metadata.put("name", "Alpha");
         metadata.put("year", 1969);
         account.setMetadata(metadata);
-        assertEquals("Alpha", account.getMetadata().get("Name"));
-        assertEquals("1969", account.getMetadata().get("Year"));
+        assertEquals("Alpha", account.getMetadata("Name"));
+        assertEquals("1969", account.getMetadata("Year"));
     }
 
     @Test
@@ -255,7 +260,7 @@ public class AccountMockTest {
                 .setMock(true)
                 .setHashPassword("somepwd")
                 .createAccount();
-        assertEquals("somepwd", account.getMetadata().get(HashPassword.X_ACCOUNT_TEMP_URL_KEY));
+        assertEquals("somepwd", account.getMetadata(HashPassword.X_ACCOUNT_TEMP_URL_KEY));
     }
 
 }

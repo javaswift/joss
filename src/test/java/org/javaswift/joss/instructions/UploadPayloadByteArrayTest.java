@@ -1,11 +1,11 @@
 package org.javaswift.joss.instructions;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
+import org.junit.Test;
 
 public class UploadPayloadByteArrayTest {
 

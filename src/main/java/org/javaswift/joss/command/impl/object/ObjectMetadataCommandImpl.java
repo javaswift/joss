@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.impl.object;
 
+import java.util.Collection;
+
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -12,8 +14,6 @@ import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
-
-import java.util.Collection;
 
 public class ObjectMetadataCommandImpl extends AbstractObjectCommand<HttpPost, Object> implements ObjectMetadataCommand {
 

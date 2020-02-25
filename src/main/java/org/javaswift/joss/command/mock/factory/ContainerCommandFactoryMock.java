@@ -1,7 +1,21 @@
 package org.javaswift.joss.command.mock.factory;
 
-import org.javaswift.joss.command.mock.container.*;
-import org.javaswift.joss.command.shared.container.*;
+import java.util.Collection;
+
+import org.javaswift.joss.command.mock.container.ContainerInformationCommandMock;
+import org.javaswift.joss.command.mock.container.ContainerMetadataCommandMock;
+import org.javaswift.joss.command.mock.container.ContainerRightsCommandMock;
+import org.javaswift.joss.command.mock.container.CreateContainerCommandMock;
+import org.javaswift.joss.command.mock.container.DeleteContainerCommandMock;
+import org.javaswift.joss.command.mock.container.ListDirectoryCommandMock;
+import org.javaswift.joss.command.mock.container.ListObjectsCommandMock;
+import org.javaswift.joss.command.shared.container.ContainerInformationCommand;
+import org.javaswift.joss.command.shared.container.ContainerMetadataCommand;
+import org.javaswift.joss.command.shared.container.ContainerRightsCommand;
+import org.javaswift.joss.command.shared.container.CreateContainerCommand;
+import org.javaswift.joss.command.shared.container.DeleteContainerCommand;
+import org.javaswift.joss.command.shared.container.ListDirectoryCommand;
+import org.javaswift.joss.command.shared.container.ListObjectsCommand;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
 import org.javaswift.joss.headers.Header;
@@ -9,8 +23,6 @@ import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.swift.Swift;
-
-import java.util.Collection;
 
 public class ContainerCommandFactoryMock implements ContainerCommandFactory {
 

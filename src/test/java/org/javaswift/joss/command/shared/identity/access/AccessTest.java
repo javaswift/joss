@@ -1,5 +1,13 @@
 package org.javaswift.joss.command.shared.identity.access;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+import static org.javaswift.joss.command.shared.identity.access.ServiceCatalogBuilder.createServiceCatalog;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
@@ -8,14 +16,6 @@ import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.util.ClasspathTemplateResource;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static org.javaswift.joss.command.shared.identity.access.ServiceCatalogBuilder.createServiceCatalog;
 
 public class AccessTest {
     

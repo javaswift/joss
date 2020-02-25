@@ -1,5 +1,8 @@
 package org.javaswift.joss.command.shared.identity.access;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.HttpStatus;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -7,9 +10,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.HttpStatusExceptionUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @JsonRootName(value="access")
 @JsonIgnoreProperties(ignoreUnknown = true)

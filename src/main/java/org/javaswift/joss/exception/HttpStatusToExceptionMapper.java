@@ -1,8 +1,8 @@
 package org.javaswift.joss.exception;
 
-import org.apache.http.HttpStatus;
-
 import java.lang.reflect.Constructor;
+
+import org.apache.http.HttpStatus;
 
 public enum HttpStatusToExceptionMapper {
 

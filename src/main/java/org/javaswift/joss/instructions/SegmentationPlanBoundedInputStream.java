@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.input.BoundedInputStream;
-import org.javaswift.joss.instructions.SegmentationPlan;
 
 public class SegmentationPlanBoundedInputStream extends SegmentationPlan {
 

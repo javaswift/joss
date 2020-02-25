@@ -1,14 +1,14 @@
 package org.javaswift.joss.client.core;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.headers.Metadata;
 import org.javaswift.joss.information.AbstractInformation;
 import org.javaswift.joss.model.ObjectStoreEntity;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
-import java.util.TreeMap;
 
 public abstract class AbstractObjectStoreEntity<I extends AbstractInformation> implements ObjectStoreEntity {
 

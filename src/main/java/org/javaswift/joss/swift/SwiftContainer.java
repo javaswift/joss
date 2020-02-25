@@ -1,5 +1,11 @@
 package org.javaswift.joss.swift;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.container.ContainerBytesUsed;
@@ -11,8 +17,6 @@ import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.DirectoryOrObject;
 import org.javaswift.joss.model.ListSubject;
 import org.javaswift.joss.model.StoredObject;
-
-import java.util.*;
 
 public class SwiftContainer implements ListSubject {
 

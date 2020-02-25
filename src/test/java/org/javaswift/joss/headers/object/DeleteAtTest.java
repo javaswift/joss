@@ -1,19 +1,20 @@
 package org.javaswift.joss.headers.object;
 
+import static junit.framework.Assert.assertNull;
+import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
+import static org.javaswift.joss.headers.object.DeleteAt.X_DELETE_AT;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import mockit.Mocked;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
 import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.assertNull;
-import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
-import static org.javaswift.joss.headers.object.DeleteAt.X_DELETE_AT;
 
 public class DeleteAtTest extends AbstractHeaderTest {
 

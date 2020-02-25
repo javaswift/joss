@@ -1,11 +1,11 @@
 package org.javaswift.joss.instructions;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.javaswift.joss.headers.object.Etag;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 public class UploadPayloadInputStream extends UploadPayload {
 

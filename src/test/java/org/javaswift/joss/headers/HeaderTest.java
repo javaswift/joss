@@ -1,13 +1,14 @@
 package org.javaswift.joss.headers;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
+
 import mockit.Expectations;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
+
 import org.apache.http.HttpResponse;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 
 public class HeaderTest {
 

@@ -1,16 +1,17 @@
 package org.javaswift.joss.swift;
 
-import mockit.Expectations;
-import mockit.Mocked;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpStatus;
-import org.javaswift.joss.instructions.UploadInstructions;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import static junit.framework.Assert.assertEquals;
+import mockit.Expectations;
+import mockit.Mocked;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
+import org.javaswift.joss.instructions.UploadInstructions;
+import org.junit.Test;
 
 public class SwiftStoredObjectTest {
 

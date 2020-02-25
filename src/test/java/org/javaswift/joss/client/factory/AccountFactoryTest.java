@@ -1,14 +1,17 @@
 package org.javaswift.joss.client.factory;
 
-import mockit.*;
-import org.javaswift.joss.client.impl.AccountImpl;
-import org.javaswift.joss.client.impl.ClientImpl;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
+import mockit.Cascading;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
+
+import org.javaswift.joss.client.impl.AccountImpl;
+import org.javaswift.joss.client.impl.ClientImpl;
+import org.junit.Test;
 
 public class AccountFactoryTest {
 

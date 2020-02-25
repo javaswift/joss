@@ -1,8 +1,8 @@
 package org.javaswift.joss.swift.statusgenerator;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class StatusCursorTest {
 

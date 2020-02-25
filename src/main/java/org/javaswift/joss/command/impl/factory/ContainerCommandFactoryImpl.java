@@ -1,9 +1,23 @@
 package org.javaswift.joss.command.impl.factory;
 
+import java.util.Collection;
+
 import org.apache.http.client.HttpClient;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
-import org.javaswift.joss.command.impl.container.*;
-import org.javaswift.joss.command.shared.container.*;
+import org.javaswift.joss.command.impl.container.ContainerInformationCommandImpl;
+import org.javaswift.joss.command.impl.container.ContainerMetadataCommandImpl;
+import org.javaswift.joss.command.impl.container.ContainerRightsCommandImpl;
+import org.javaswift.joss.command.impl.container.CreateContainerCommandImpl;
+import org.javaswift.joss.command.impl.container.DeleteContainerCommandImpl;
+import org.javaswift.joss.command.impl.container.ListDirectoryCommandImpl;
+import org.javaswift.joss.command.impl.container.ListObjectsCommandImpl;
+import org.javaswift.joss.command.shared.container.ContainerInformationCommand;
+import org.javaswift.joss.command.shared.container.ContainerMetadataCommand;
+import org.javaswift.joss.command.shared.container.ContainerRightsCommand;
+import org.javaswift.joss.command.shared.container.CreateContainerCommand;
+import org.javaswift.joss.command.shared.container.DeleteContainerCommand;
+import org.javaswift.joss.command.shared.container.ListDirectoryCommand;
+import org.javaswift.joss.command.shared.container.ListObjectsCommand;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.command.shared.factory.StoredObjectCommandFactory;
 import org.javaswift.joss.headers.Header;
@@ -11,8 +25,6 @@ import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
-
-import java.util.Collection;
 
 public class ContainerCommandFactoryImpl implements ContainerCommandFactory {
 

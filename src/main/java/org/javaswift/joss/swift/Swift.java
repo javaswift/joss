@@ -1,5 +1,18 @@
 package org.javaswift.joss.swift;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.command.mock.core.CommandMock;
@@ -7,7 +20,13 @@ import org.javaswift.joss.command.shared.identity.tenant.Tenant;
 import org.javaswift.joss.command.shared.identity.tenant.Tenants;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
-import org.javaswift.joss.headers.account.*;
+import org.javaswift.joss.headers.Metadata;
+import org.javaswift.joss.headers.account.AccountBytesUsed;
+import org.javaswift.joss.headers.account.AccountContainerCount;
+import org.javaswift.joss.headers.account.AccountMetadata;
+import org.javaswift.joss.headers.account.AccountObjectCount;
+import org.javaswift.joss.headers.account.HashPassword;
+import org.javaswift.joss.headers.account.ServerDate;
 import org.javaswift.joss.headers.object.DeleteAfter;
 import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.headers.object.ObjectManifest;
@@ -17,14 +36,14 @@ import org.javaswift.joss.information.ObjectInformation;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.*;
+import org.javaswift.joss.model.Access;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.DirectoryOrObject;
+import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.swift.scheduled.ObjectDeleter;
 import org.javaswift.joss.swift.statusgenerator.StatusGenerator;
 import org.javaswift.joss.util.LocalTime;
-
-import java.io.*;
-import java.io.File;
-import java.util.*;
 
 /**
 * Mock implementation of the Swift Object Store
@@ -169,7 +188,8 @@ public class Swift {
     }
 
     public String getHashPassword() {
-        Header header = this.headers.get(AccountMetadata.X_ACCOUNT_META_PREFIX+ HashPassword.X_ACCOUNT_TEMP_URL_KEY);
+        Header header = this.headers.get(
+                AccountMetadata.X_ACCOUNT_META_PREFIX + Metadata.capitalize(HashPassword.X_ACCOUNT_TEMP_URL_KEY));
         return header == null ? null : header.getHeaderValue();
     }
 

@@ -1,10 +1,10 @@
 package org.javaswift.joss.instructions;
 
+import java.io.IOException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
 import org.javaswift.joss.headers.object.Etag;
-
-import java.io.IOException;
 
 public class UploadPayloadByteArray extends UploadPayload {
 

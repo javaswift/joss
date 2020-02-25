@@ -1,7 +1,5 @@
 package org.javaswift.joss.headers;
 
-import org.apache.commons.lang.WordUtils;
-
 public abstract class Metadata extends SimpleHeader {
 
     private String name;
@@ -17,7 +15,7 @@ public abstract class Metadata extends SimpleHeader {
 
     public static String capitalize(String key) {
         key = key.replaceAll("_", "-");
-        return WordUtils.capitalize(key, new char[]{'-'});
+        return key.toLowerCase();
     }
 
 }

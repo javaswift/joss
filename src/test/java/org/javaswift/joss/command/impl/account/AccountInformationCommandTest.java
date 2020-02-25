@@ -1,7 +1,19 @@
 package org.javaswift.joss.command.impl.account;
 
+import static junit.framework.Assert.assertEquals;
+import static org.javaswift.joss.headers.account.AccountBytesUsed.X_ACCOUNT_BYTES_USED;
+import static org.javaswift.joss.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
+import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
+import static org.javaswift.joss.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
+import static org.javaswift.joss.headers.account.ServerDate.DATE;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import mockit.Expectations;
 import mockit.NonStrictExpectations;
+
 import org.apache.http.Header;
 import org.javaswift.joss.command.impl.container.ContainerInformationCommandImpl;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
@@ -9,17 +21,6 @@ import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.information.AccountInformation;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static org.javaswift.joss.headers.account.AccountBytesUsed.X_ACCOUNT_BYTES_USED;
-import static org.javaswift.joss.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
-import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
-import static org.javaswift.joss.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
-import static org.javaswift.joss.headers.account.ServerDate.DATE;
 
 public class AccountInformationCommandTest extends BaseCommandTest {
 

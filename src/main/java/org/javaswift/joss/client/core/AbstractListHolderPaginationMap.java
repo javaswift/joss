@@ -1,9 +1,9 @@
 package org.javaswift.joss.client.core;
 
+import java.util.Collection;
+
 import org.javaswift.joss.model.ListHolder;
 import org.javaswift.joss.model.ListSubject;
-
-import java.util.Collection;
 
 public class AbstractListHolderPaginationMap<Child extends ListSubject> extends AbstractPaginationMap<Child> {
 

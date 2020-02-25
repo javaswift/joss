@@ -1,9 +1,9 @@
 package org.javaswift.joss.client.factory;
 
+import static junit.framework.Assert.assertEquals;
+
 import org.javaswift.joss.exception.CommandException;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
 
 public class TempUrlHashPrefixSourceTest {
 

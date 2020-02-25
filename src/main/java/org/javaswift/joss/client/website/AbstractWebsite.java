@@ -1,12 +1,16 @@
 package org.javaswift.joss.client.website;
 
+import java.io.File;
+
 import org.javaswift.joss.client.core.AbstractContainer;
-import org.javaswift.joss.headers.website.*;
+import org.javaswift.joss.headers.website.ErrorPage;
+import org.javaswift.joss.headers.website.IndexPage;
+import org.javaswift.joss.headers.website.Listing;
+import org.javaswift.joss.headers.website.ListingCSS;
+import org.javaswift.joss.headers.website.WebsiteHeader;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.model.Website;
-
-import java.io.File;
 
 public abstract class AbstractWebsite extends AbstractContainer implements Website {
 

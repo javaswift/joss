@@ -1,15 +1,16 @@
 package org.javaswift.joss.instructions;
 
-import mockit.Injectable;
-import mockit.NonStrictExpectations;
-import org.junit.After;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
+import mockit.Injectable;
+import mockit.NonStrictExpectations;
+
+import org.junit.After;
+import org.junit.Test;
 
 public class UploadPayloadFileTest {
 

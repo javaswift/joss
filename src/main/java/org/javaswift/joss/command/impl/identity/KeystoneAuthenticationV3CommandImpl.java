@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.impl.identity;
 
+import java.io.IOException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -14,12 +16,14 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
 import org.javaswift.joss.command.shared.identity.access.KeystoneV3Access;
-import org.javaswift.joss.command.shared.identity.authentication.*;
+import org.javaswift.joss.command.shared.identity.authentication.KeystoneV3Authentication;
+import org.javaswift.joss.command.shared.identity.authentication.KeystoneV3Domain;
+import org.javaswift.joss.command.shared.identity.authentication.KeystoneV3DomainScope;
+import org.javaswift.joss.command.shared.identity.authentication.KeystoneV3Identity;
+import org.javaswift.joss.command.shared.identity.authentication.KeystoneV3ProjectScope;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Accept;
 import org.javaswift.joss.model.Access;
-
-import java.io.IOException;
 
 public class KeystoneAuthenticationV3CommandImpl extends AbstractCommand<HttpPost, Access> implements AuthenticationCommand {
 

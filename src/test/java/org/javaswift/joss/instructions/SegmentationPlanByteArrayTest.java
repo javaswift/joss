@@ -1,10 +1,10 @@
 package org.javaswift.joss.instructions;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertEquals;
+import org.junit.Test;
 
 public class SegmentationPlanByteArrayTest extends SegmentationPlanTestBase {
 

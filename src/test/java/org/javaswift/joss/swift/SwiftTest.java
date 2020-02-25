@@ -1,7 +1,19 @@
 package org.javaswift.joss.swift;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+
 import mockit.Expectations;
 import mockit.Mocked;
+
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.client.mock.AccountMock;
 import org.javaswift.joss.client.mock.ContainerMock;
@@ -19,15 +31,6 @@ import org.javaswift.joss.model.DirectoryOrObject;
 import org.javaswift.joss.model.StoredObject;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-
-import static junit.framework.Assert.*;
 
 public class SwiftTest {
 

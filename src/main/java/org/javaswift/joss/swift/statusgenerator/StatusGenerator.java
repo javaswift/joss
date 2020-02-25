@@ -1,9 +1,9 @@
 package org.javaswift.joss.swift.statusgenerator;
 
-import org.javaswift.joss.command.mock.core.CommandMock;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.javaswift.joss.command.mock.core.CommandMock;
 
 public class StatusGenerator {
 

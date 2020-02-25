@@ -1,13 +1,13 @@
 package org.javaswift.joss.client.core;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
+
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.client.mock.ClientMock;
 import org.javaswift.joss.client.mock.ContainerFactoryMock;
 import org.javaswift.joss.model.Container;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotSame;
 
 public class ContainerCacheTest {
 

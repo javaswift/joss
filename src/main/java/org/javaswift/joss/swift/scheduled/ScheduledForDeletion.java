@@ -1,9 +1,9 @@
 package org.javaswift.joss.swift.scheduled;
 
+import java.util.Date;
+
 import org.javaswift.joss.swift.SwiftContainer;
 import org.javaswift.joss.swift.SwiftStoredObject;
-
-import java.util.Date;
 
 public class ScheduledForDeletion {
 

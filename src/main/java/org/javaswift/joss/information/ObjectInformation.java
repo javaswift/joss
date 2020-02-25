@@ -1,11 +1,17 @@
 package org.javaswift.joss.information;
 
-import org.javaswift.joss.headers.Header;
-import org.javaswift.joss.headers.object.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
+import org.javaswift.joss.headers.Header;
+import org.javaswift.joss.headers.object.DeleteAfter;
+import org.javaswift.joss.headers.object.DeleteAt;
+import org.javaswift.joss.headers.object.Etag;
+import org.javaswift.joss.headers.object.ObjectContentLength;
+import org.javaswift.joss.headers.object.ObjectContentType;
+import org.javaswift.joss.headers.object.ObjectLastModified;
+import org.javaswift.joss.headers.object.ObjectManifest;
 
 public class ObjectInformation extends AbstractInformation {
 

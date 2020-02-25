@@ -1,11 +1,11 @@
 package org.javaswift.joss.client.website;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.util.FileAction;
 import org.javaswift.joss.util.FileReference;
-
-import java.io.File;
-import java.io.IOException;
 
 public class LocalFileObject extends AbstractFileObject<ObjectStoreFileObject> {
 

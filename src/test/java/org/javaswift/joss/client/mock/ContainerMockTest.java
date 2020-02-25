@@ -1,19 +1,26 @@
 package org.javaswift.joss.client.mock;
 
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.exception.CommandExceptionError;
-import org.javaswift.joss.exception.NotFoundException;
-import org.javaswift.joss.model.*;
-import org.javaswift.joss.swift.Swift;
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static junit.framework.Assert.*;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.exception.CommandExceptionError;
+import org.javaswift.joss.exception.NotFoundException;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.Directory;
+import org.javaswift.joss.model.PaginationMap;
+import org.javaswift.joss.model.StoredObject;
+import org.javaswift.joss.swift.Swift;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ContainerMockTest {
 

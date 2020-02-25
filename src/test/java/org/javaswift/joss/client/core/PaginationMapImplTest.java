@@ -1,19 +1,20 @@
 package org.javaswift.joss.client.core;
 
+import static junit.framework.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
+
 import org.javaswift.joss.client.impl.AccountImpl;
 import org.javaswift.joss.client.impl.ContainerImpl;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.command.impl.factory.AccountCommandFactoryImpl;
 import org.javaswift.joss.model.Container;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
 
 public class PaginationMapImplTest extends BaseCommandTest {
 

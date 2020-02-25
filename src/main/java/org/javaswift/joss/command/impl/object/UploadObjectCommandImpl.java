@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.impl.object;
 
+import java.io.IOException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -11,13 +13,11 @@ import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.shared.object.UploadObjectCommand;
 import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
-import org.javaswift.joss.headers.Header;
-
-import java.io.IOException;
 
 public class UploadObjectCommandImpl extends AbstractObjectCommand<HttpPut, Object> implements UploadObjectCommand {
 

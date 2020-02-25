@@ -1,9 +1,19 @@
 package org.javaswift.joss.command.impl.factory;
 
+import java.util.Collection;
+
 import org.apache.http.client.HttpClient;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
-import org.javaswift.joss.command.impl.account.*;
-import org.javaswift.joss.command.shared.account.*;
+import org.javaswift.joss.command.impl.account.AccountInformationCommandImpl;
+import org.javaswift.joss.command.impl.account.AccountMetadataCommandImpl;
+import org.javaswift.joss.command.impl.account.HashPasswordCommandImpl;
+import org.javaswift.joss.command.impl.account.ListContainersCommandImpl;
+import org.javaswift.joss.command.impl.account.TenantCommandImpl;
+import org.javaswift.joss.command.shared.account.AccountInformationCommand;
+import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
+import org.javaswift.joss.command.shared.account.HashPasswordCommand;
+import org.javaswift.joss.command.shared.account.ListContainersCommand;
+import org.javaswift.joss.command.shared.account.TenantCommand;
 import org.javaswift.joss.command.shared.factory.AccountCommandFactory;
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
@@ -11,8 +21,6 @@ import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
-
-import java.util.Collection;
 
 public class AccountCommandFactoryImpl implements AccountCommandFactory {
 

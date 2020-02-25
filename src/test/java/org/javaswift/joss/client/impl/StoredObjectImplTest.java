@@ -1,9 +1,39 @@
 package org.javaswift.joss.client.impl;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
+import static org.javaswift.joss.headers.object.DeleteAfter.X_DELETE_AFTER;
+import static org.javaswift.joss.headers.object.DeleteAt.X_DELETE_AT;
+import static org.javaswift.joss.headers.object.Etag.ETAG;
+import static org.javaswift.joss.headers.object.ObjectContentLength.CONTENT_LENGTH;
+import static org.javaswift.joss.headers.object.ObjectContentType.CONTENT_TYPE;
+import static org.javaswift.joss.headers.object.ObjectLastModified.LAST_MODIFIED;
+import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.TreeMap;
+
 import mockit.Expectations;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import mockit.Verifications;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
@@ -29,21 +59,6 @@ import org.javaswift.joss.util.LocalTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import static junit.framework.Assert.*;
-import static org.javaswift.joss.headers.object.DeleteAfter.X_DELETE_AFTER;
-import static org.javaswift.joss.headers.object.DeleteAt.X_DELETE_AT;
-import static org.javaswift.joss.headers.object.Etag.ETAG;
-import static org.javaswift.joss.headers.object.ObjectContentLength.CONTENT_LENGTH;
-import static org.javaswift.joss.headers.object.ObjectContentType.CONTENT_TYPE;
-import static org.javaswift.joss.headers.object.ObjectLastModified.LAST_MODIFIED;
-import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 
 public class StoredObjectImplTest extends BaseCommandTest {
 
@@ -384,8 +399,8 @@ public class StoredObjectImplTest extends BaseCommandTest {
     public void getMetadata() throws IOException, DateParseException {
         expectStatusCode(202);
         prepareMetadata();
-        assertEquals("1989", object.getMetadata().get("Year"));
-        assertEquals("42 BV", object.getMetadata().get("Company"));
+        assertEquals("1989", object.getMetadata("Year"));
+        assertEquals("42 BV", object.getMetadata("Company"));
         assertEquals("Mon, 03 Sep 2012 05:40:33 GMT", object.getLastModified());
         assertEquals(DateUtils.parseDate("Mon, 03 Sep 2012 05:40:33 GMT"), object.getLastModifiedAsDate());
         assertEquals(654321, object.getContentLength());

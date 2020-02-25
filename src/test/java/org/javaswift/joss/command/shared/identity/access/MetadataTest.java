@@ -1,8 +1,8 @@
 package org.javaswift.joss.command.shared.identity.access;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertNotNull;
+
+import org.junit.Test;
 
 public class MetadataTest {
 

@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.mock.account;
 
+import java.util.Collection;
+
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
@@ -10,8 +12,6 @@ import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.swift.Swift;
 import org.javaswift.joss.swift.SwiftResult;
-
-import java.util.Collection;
 
 public class AccountMetadataCommandMock extends CommandMock implements AccountMetadataCommand {
 
