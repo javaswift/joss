@@ -38,7 +38,7 @@ public class ProxyConfigurer {
             }
             clientBuilder.setProxy(createProxy());
         } catch (Exception e) {
-            LOG.error("JOSS / Invalid proxy authorization settings");
+            LOG.error("JOSS / Invalid proxy authorization settings", e);
         }
     }
 

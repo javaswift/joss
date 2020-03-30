@@ -28,8 +28,12 @@ import org.javaswift.joss.model.DirectoryOrObject;
 import org.javaswift.joss.model.ListSubject;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.util.LocalTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SwiftStoredObject implements ListSubject, DirectoryOrObject {
+
+    public static final Logger LOG = LoggerFactory.getLogger(Swift.class);
 
     private String name;
 
@@ -101,6 +105,7 @@ public class SwiftStoredObject implements ListSubject, DirectoryOrObject {
                         new ObjectContentType(new MimetypesFileTypeMap().getContentType(getName()));
             return new SwiftResult<Object>(HttpStatus.SC_CREATED);
         } catch (IOException err) {
+            LOG.error("Failed when uploading object", err);
             return new SwiftResult<Object>(HttpStatus.SC_UNPROCESSABLE_ENTITY);
         }
     }

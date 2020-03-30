@@ -58,10 +58,12 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
             throw err;
         } catch (IOException err) {
         	request.releaseConnection();
-            throw new CommandException("Unable to execute the HTTP call or to convert the HTTP Response", err);
+            throw new CommandException("Unable to execute the HTTP call or to convert the HTTP Response. Request URI: " + request.getURI(), err);
         } finally {
             if (closeStreamAutomatically()) {
-                try { close(); } catch (IOException err) { /* ignore */ }
+                try { close(); } catch (IOException err) {
+                    LOG.warn("Failed to close response. Request URI: " + request.getURI(), err);
+                }
             }
         }
     }

@@ -31,6 +31,7 @@ public abstract class AbstractSecureCommand<M extends HttpRequestBase, N> extend
             return super.call();
         } catch (UnauthorizedException err) {
             if (account.isAllowReauthenticate()) {
+                LOG.info("Attempting to re-authenticate due to authorization failure " + err.getMessage());
                 Access access = account.authenticate();
                 if (account.getPreferredRegion() != null) {
                     access.setPreferredRegion(account.getPreferredRegion());
