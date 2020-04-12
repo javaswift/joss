@@ -28,8 +28,12 @@ public class DownloadObjectAsInputStreamCommandImplTest extends BaseCommandTest 
     }
 
     protected void prepareBytes(byte[] bytes, String md5) {
+        prepareBytes(bytes, md5, md5 == null ? DigestUtils.md5Hex(bytes) : md5);
+    }
+
+    protected void prepareBytes(byte[] bytes, String md5, String etag) {
         final List<Header> headers = new ArrayList<Header>();
-        prepareHeader(response, ETAG, md5 == null ? DigestUtils.md5Hex(bytes) : md5, headers);
+        if(etag != null) prepareHeader(response, ETAG, etag, headers);
         prepareHeader(response, CONTENT_LENGTH, "3", headers);
         prepareHeadersForRetrieval(response, headers);
         setHttpEntity(new ByteArrayEntity(bytes));
@@ -49,9 +53,19 @@ public class DownloadObjectAsInputStreamCommandImplTest extends BaseCommandTest 
     public void md5Mismatch() throws IOException {
         prepareBytes(new byte[] { 0x01}, "cafebabe"); // non-matching MD5
         try {
-            new DownloadObjectAsInputStreamCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions());
+            new DownloadObjectAsInputStreamCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()).call();
         } catch (CommandException err) {
             fail("Downloading as an inputstream does not check for the MD5 checksum, so therefore should not throw an error");
+        }
+    }
+
+    @Test
+    public void noEtag() throws IOException {
+        prepareBytes(new byte[] { 0x01, 0x02, 0x03}, null, null);
+        try {
+            new DownloadObjectAsInputStreamCommandImpl(this.account, httpClient, defaultAccess, getObject("objectname"), new DownloadInstructions()).call();
+        } catch (CommandException err) {
+            fail("If theres a proxy that does gzip, there might not be an etag");
         }
     }
 
