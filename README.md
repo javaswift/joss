@@ -8,7 +8,7 @@ In order to use JOSS in your project, simply add the following dependency:
         <dependency>
             <groupId>org.javaswift</groupId>
             <artifactId>joss</artifactId>
-            <version>0.10.2</version>
+            <version>0.10.3</version>
         </dependency>
 ```
 
@@ -121,7 +121,25 @@ Likewise, this information can be retrieved, as seen above.
         System.out.println("META / "+name+": "+returnedMetadata.get(name));
     }
 ```
+KeystoneV3 scoped authentication
+--------------------------------
+In 0.10.3 version, support for scoping the authentication is added. There are three scopes defined namely DEFAULT, PROJECT_NAME, DOMAIN_NAME.
+For PROJECT_NAME scoping, the tenantName and authentication method scope are mandatary parameters that need to be set.
 
+```java
+    Account account = new AccountFactory()
+            .setUsername(username)
+            .setPassword(password)
+            .setAuthUrl(url)
+            .setTenantName(tenantName)
+	    .setAuthenticationMethod(AuthenticationMethod.KEYSTONE_V3)
+	    .setAuthenticationMethodScope(AuthenticationMethodScope.PROJECT_NAME)
+            .createAccount();
+```
+
+
+Connecting through proxy
+------------------------
 It is possible to connect with proxy, there are two options how to setup it:
 
 Option A: Programmatically
