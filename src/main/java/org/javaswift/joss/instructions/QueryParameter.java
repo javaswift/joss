@@ -30,7 +30,7 @@ public class QueryParameter implements NameValuePair {
         return getValue() == null ? null : urlEncode(getName()) + "=" + urlEncode(getValue());
     }
 
-    private String urlEncode(String value) {
+    private static String urlEncode(String value) {
         try {
             return SpaceURLEncoder.encode(value);
         } catch (UnsupportedEncodingException e) {

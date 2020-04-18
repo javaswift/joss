@@ -413,7 +413,7 @@ public class Swift {
         return foundObject.saveMetadata(headers);
     }
 
-    private <T extends Header> T getSpecificHeader(Collection<? extends Header> headers, Class<T> matchClass) {
+    private static <T extends Header> T getSpecificHeader(Collection<? extends Header> headers, Class<T> matchClass) {
         for (Header header : headers) {
             if (matchClass.isInstance(header)) {
                 return (T)header;
