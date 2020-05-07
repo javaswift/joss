@@ -117,7 +117,8 @@ public abstract class AbstractStoredObject extends AbstractObjectStoreEntity<Obj
 
     @Override
     public String getPathForEntity() throws UnsupportedEncodingException {
-        return getContainer().getPath() + "/" + SpaceURLEncoder.encode(getName());
+		return getContainer().getPath() + "/"
+				+ SpaceURLEncoder.encode(getName()).replace("%2F", "/");
     }
 
     public void setLastModified(Date date) {
