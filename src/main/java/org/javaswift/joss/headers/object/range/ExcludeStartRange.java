@@ -5,7 +5,7 @@ package org.javaswift.joss.headers.object.range;
  */
 public class ExcludeStartRange extends AbstractRange {
 
-    public ExcludeStartRange(int offset) {
+    public ExcludeStartRange(long offset) {
         super(offset, -1);
     }
 

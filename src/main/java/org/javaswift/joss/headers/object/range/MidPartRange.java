@@ -5,7 +5,7 @@ package org.javaswift.joss.headers.object.range;
  */
 public class MidPartRange extends AbstractRange {
 
-    public MidPartRange(int startPos, int endPos) {
+    public MidPartRange(long startPos, long endPos) {
         super(startPos, endPos);
     }
 
