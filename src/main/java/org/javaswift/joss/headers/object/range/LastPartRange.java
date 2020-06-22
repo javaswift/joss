@@ -5,7 +5,7 @@ package org.javaswift.joss.headers.object.range;
  */
 public class LastPartRange extends AbstractRange {
 
-    public LastPartRange(int lastBytes) {
+    public LastPartRange(long lastBytes) {
         super(-1, lastBytes);
     }
 
