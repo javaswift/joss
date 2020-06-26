@@ -80,7 +80,7 @@ public abstract class AbstractAccount extends AbstractObjectStoreEntity<AccountI
     @Override
     public AbstractAccount setHashPassword(String hashPassword) {
         LOG.info("JOSS / Setting hash password");
-        if (hashPassword != null && !hashPassword.equals(getHashPassword())) {
+        if (hashPassword != null && (getHashPassword() == null || "".equals(getHashPassword()))) {
             LOG.info("JOSS / Hash password not yet saved, saving now");
             this.commandFactory.createHashPasswordCommand(this, hashPassword).call();
         }
