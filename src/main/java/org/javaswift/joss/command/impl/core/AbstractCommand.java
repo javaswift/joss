@@ -55,9 +55,16 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
             if (allowErrorLog) { // This is disabled, for example, for exists(), where we want to ignore the exception
                 logError(request, err);
             }
+            logCall(response);
+            if(response != null && response.getAllHeaders() != null) {
+            	LOG.error("Response Headers: "+Arrays.asList(response.getAllHeaders()).toString());
+            }
             throw err;
         } catch (IOException err) {
         	request.releaseConnection();
+            if(response != null && response.getAllHeaders() != null) {
+            	LOG.error("Response Headers: "+Arrays.asList(response.getAllHeaders()).toString());
+            }
             throw new CommandException("Unable to execute the HTTP call or to convert the HTTP Response", err);
         } finally {
             if (closeStreamAutomatically()) {
@@ -71,6 +78,10 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
         for (String printableHeaderLine : getPrintableHeaderLines(request)) {
             LOG.debug("* "+printableHeaderLine);
         }
+    }
+    
+    private void logCall(HttpResponse response) {
+        LOG.debug("JOSS / Response Headers* "+Arrays.asList(response.getAllHeaders()).toString());
     }
 
     private void logError(M request, CommandException err) {
