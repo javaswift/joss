@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.Test;
 
 public class KeystoneV3AuthenticationTest {
@@ -15,8 +15,8 @@ public class KeystoneV3AuthenticationTest {
     @Test
     public void testMarshallingDefaultScope() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         KeystoneV3Authentication authentication = new KeystoneV3Authentication();
         authentication.setIdentity(new KeystoneV3Identity("username", "password", "domainName"));
@@ -33,8 +33,8 @@ public class KeystoneV3AuthenticationTest {
     @Test
     public void testMarshallingDomainScope() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         KeystoneV3Authentication authentication = new KeystoneV3Authentication();
         authentication.setIdentity(new KeystoneV3Identity("username", "password", "domainName"));
@@ -52,8 +52,8 @@ public class KeystoneV3AuthenticationTest {
     @Test
     public void testMarshallingProjectScope() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         KeystoneV3Authentication authentication = new KeystoneV3Authentication();
         authentication.setIdentity(new KeystoneV3Identity("username", "password", "domainName"));

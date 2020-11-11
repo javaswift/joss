@@ -1,6 +1,6 @@
 package org.javaswift.joss.command.shared.identity.authentication;
 
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName(value="auth")
 public class KeystoneV3Authentication {

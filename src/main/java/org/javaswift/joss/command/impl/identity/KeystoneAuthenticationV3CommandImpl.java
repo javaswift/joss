@@ -2,13 +2,13 @@ package org.javaswift.joss.command.impl.identity;
 
 import java.io.IOException;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.impl.core.AbstractCommand;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
