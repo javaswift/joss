@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.Test;
 
 public class AuthenticationTest {
@@ -13,7 +13,7 @@ public class AuthenticationTest {
     @Test
     public void testMarshalling() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
         Authentication auth = new Authentication("testtenant", "testtenantid", "testuser", "testpassword");
         assertEquals("{\"auth\":{\"passwordCredentials\":{\"username\":\"testuser\",\"password\":\"testpassword\"},\"tenantName\":\"testtenant\",\"tenantId\":\"testtenantid\"}}", mapper.writeValueAsString(auth));
     }

@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.exception.CommandExceptionError;
 import org.javaswift.joss.exception.NotFoundException;
@@ -23,7 +23,7 @@ public class AccessTest {
     public void testUnmarshalling() throws IOException {
         String jsonString = new ClasspathTemplateResource("/sample-access.json").loadTemplate();
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+        mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
         Access access = mapper.readValue(jsonString, AccessTenant.class);
         assertEquals("a376b74fbdb64a4986cd3234647ff6f8", access.getToken());
         assertEquals("https://og.cloudvps.com:443/v1/AUTH_bfo000024", access.getInternalURL());

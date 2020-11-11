@@ -45,7 +45,7 @@
         <commons.lang.version>2.6</commons.lang.version>
         <commons.io.version>2.3</commons.io.version>
         <httpcomponents.version>4.5.3</httpcomponents.version>
-        <jackson.version>1.9.7</jackson.version>
+        <jackson.version>2.11.3</jackson.version>
         <junit.version>4.10</junit.version>
         <mockit.version>1.6</mockit.version>
         <slf4j.version>1.7.2</slf4j.version>
@@ -62,8 +62,8 @@
 
         <!-- Used for marshalling to / unmarshalling from JSON -->
         <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 
@@ -147,8 +147,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 

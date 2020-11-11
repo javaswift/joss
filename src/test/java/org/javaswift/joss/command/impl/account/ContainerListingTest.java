@@ -4,7 +4,7 @@ import static junit.framework.Assert.assertEquals;
 
 import java.io.IOException;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.javaswift.joss.command.shared.account.ContainerListElement;
 import org.javaswift.joss.util.ClasspathTemplateResource;
 import org.junit.Test;

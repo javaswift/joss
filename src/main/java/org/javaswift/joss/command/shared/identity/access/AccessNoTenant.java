@@ -1,7 +1,7 @@
 package org.javaswift.joss.command.shared.identity.access;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 
 @JsonRootName(value="access")

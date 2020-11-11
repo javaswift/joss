@@ -8,14 +8,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
@@ -136,9 +136,9 @@ public abstract class AbstractCommand<M extends HttpRequestBase, N> implements C
     protected ObjectMapper createObjectMapper(boolean dealWithRootValue) {
         ObjectMapper objectMapper = new ObjectMapper();
         if (dealWithRootValue) {
-            objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-            objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-            objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+            objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+            objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         }
         return objectMapper;
     }

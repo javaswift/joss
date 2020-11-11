@@ -1,6 +1,6 @@
 package org.javaswift.joss.command.shared.identity.authentication;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class KeystoneV3PasswordIdentity {
 
