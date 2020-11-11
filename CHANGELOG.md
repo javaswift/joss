@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
-- [#183](https://github.com/javaswift/joss/pull/183): Bump jackson from 1.x to 2.x, target JDK from 1.6 to 1.8 [@didot](https://github.com/didot) [#175](https://github.com/javaswift/joss/issues/175()
+- [#185](https://github.com/javaswift/joss/pull/185): Bump jackson from 1.x to 2.x, target JDK from 1.6 to 1.8 [@didot](https://github.com/didot) [#175](https://github.com/javaswift/joss/issues/175)
 
 ## [0.10.3](https://github.com/javaswift/joss/releases/tag/v0.10.3) - 2019-05-20
 ### Changed
