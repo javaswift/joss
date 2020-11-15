@@ -10,81 +10,82 @@ import org.javaswift.joss.model.Access;
 
 public class KeystoneV3Access implements Access {
 
-	private final String token;
-	private final Collection<EndPoint> endPoints;
+    private final String token;
+    private final Collection<EndPoint> endPoints;
 
-	private EndPoint currentEndpoint;
+    private EndPoint currentEndpoint;
 
-	public KeystoneV3Access(String token, JsonNode response) {
-		this.token = token;
-		this.endPoints = getEndPoints(response);
-		this.currentEndpoint = getEndPoint(null);
-	}
+    public KeystoneV3Access(String token, JsonNode response) {
+        this.token = token;
+        this.endPoints = getEndPoints(response);
+        this.currentEndpoint = getEndPoint(null);
+    }
 
-	@Override
-	public void setPreferredRegion(String preferredRegion) {
-		this.currentEndpoint = getEndPoint(preferredRegion);
-	}
+    @Override
+    public void setPreferredRegion(String preferredRegion) {
+        this.currentEndpoint = getEndPoint(preferredRegion);
+    }
 
-	@Override
-	public String getToken() {
-		return token;
-	}
+    @Override
+    public String getToken() {
+        return token;
+    }
 
-	@Override
-	public String getInternalURL() {
-		return currentEndpoint.internalURL;
-	}
+    @Override
+    public String getInternalURL() {
+        return currentEndpoint.internalURL;
+    }
 
-	@Override
-	public String getPublicURL() {
-		return currentEndpoint.publicURL;
-	}
+    @Override
+    public String getPublicURL() {
+        return currentEndpoint.publicURL;
+    }
 
-	/**
-	 * @return Always true, v3 doesn't use the tenant ID for auth
-	 */
-	@Override
-	public boolean isTenantSupplied() {
-		return true;
-	}
+    /**
+     * @return Always true, v3 doesn't use the tenant ID for auth
+     */
+    @Override
+    public boolean isTenantSupplied() {
+        return true;
+    }
 
-	@Override
-	public String getTempUrlPrefix(TempUrlHashPrefixSource tempUrlHashPrefixSource) {
-		final String tempUrlPrefix;
-		if (tempUrlHashPrefixSource == null) {
-			tempUrlPrefix = "";
-		} else if (tempUrlHashPrefixSource == TempUrlHashPrefixSource.PUBLIC_URL_PATH) {
-			tempUrlPrefix = TempUrlHashPrefixSource.getPath(currentEndpoint.publicURL);
-		} else if (tempUrlHashPrefixSource == TempUrlHashPrefixSource.INTERNAL_URL_PATH) {
-			tempUrlPrefix = TempUrlHashPrefixSource.getPath(currentEndpoint.internalURL);
-		} else {
-			tempUrlPrefix = TempUrlHashPrefixSource.getPath(currentEndpoint.adminURL);
-		}
-		return tempUrlPrefix.endsWith("/") ? tempUrlPrefix.substring(0, tempUrlPrefix.length() - 1) : tempUrlPrefix;
-	}
+    @Override
+    public String getTempUrlPrefix(TempUrlHashPrefixSource tempUrlHashPrefixSource) {
+        final String tempUrlPrefix;
+        if (tempUrlHashPrefixSource == null) {
+            tempUrlPrefix = "";
+        } else if (tempUrlHashPrefixSource == TempUrlHashPrefixSource.PUBLIC_URL_PATH) {
+            tempUrlPrefix = TempUrlHashPrefixSource.getPath(currentEndpoint.publicURL);
+        } else if (tempUrlHashPrefixSource == TempUrlHashPrefixSource.INTERNAL_URL_PATH) {
+            tempUrlPrefix = TempUrlHashPrefixSource.getPath(currentEndpoint.internalURL);
+        } else {
+            tempUrlPrefix = TempUrlHashPrefixSource.getPath(currentEndpoint.adminURL);
+        }
+        return tempUrlPrefix.endsWith("/") ? tempUrlPrefix.substring(0, tempUrlPrefix.length()-1) : tempUrlPrefix;
+    }
 
-	private EndPoint getEndPoint(String region) {
-		if (endPoints.isEmpty()) {
-			throw new IllegalStateException("No endpoints available");
-		}
+    private EndPoint getEndPoint(String region) {
+        if (endPoints.isEmpty()) {
+            throw new IllegalStateException("No endpoints available");
+        }
 
-		if (region == null) {
-			return endPoints.iterator().next();
-		}
+        if (region == null) {
+            return endPoints.iterator().next();
+        }
 
-		for (EndPoint endPoint : endPoints) {
-			if (region.equals(endPoint.region)) {
-				return endPoint;
-			}
-		}
+        for (EndPoint endPoint : endPoints) {
+            if (region.equals(endPoint.region)) {
+                return endPoint;
+            }
+        }
 
-		throw new IllegalArgumentException("No endpoint for region: " + region);
-	}
+        throw new IllegalArgumentException("No endpoint for region: " + region);
+    }
 
-	private Collection<EndPoint> getEndPoints(JsonNode response) {
-		Map<String, EndPoint> result = new LinkedHashMap<String, EndPoint>();
-		JsonNode token = response.get("token");
+    private Collection<EndPoint> getEndPoints(JsonNode response) {
+        Map<String, EndPoint> result = new LinkedHashMap<String, EndPoint>();
+
+        JsonNode token = response.get("token");
 		if (token.get("catalog") != null) {
 			for (JsonNode catalog : token.get("catalog")) {
 				if ("object-store".equals(catalog.get("type").asText())) {
@@ -112,9 +113,7 @@ public class KeystoneV3Access implements Access {
 					}
 				}
 			}
-
 		}
-
-		return result.values();
-	}
+        return result.values();
+    }
 }
