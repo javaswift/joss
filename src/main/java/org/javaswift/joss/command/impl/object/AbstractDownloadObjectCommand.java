@@ -1,5 +1,9 @@
 package org.javaswift.joss.command.impl.object;
 
+import static org.javaswift.joss.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
+
+import java.io.IOException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -15,10 +19,6 @@ import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
-
-import java.io.IOException;
-
-import static org.javaswift.joss.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
 
 public abstract class AbstractDownloadObjectCommand<M extends HttpGet, N> extends AbstractObjectCommand<HttpGet, N> {
 

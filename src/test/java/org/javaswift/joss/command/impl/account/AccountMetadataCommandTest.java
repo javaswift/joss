@@ -1,17 +1,17 @@
 package org.javaswift.joss.command.impl.account;
 
+import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.account.AccountMetadata;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
 
 public class AccountMetadataCommandTest extends BaseCommandTest {
 

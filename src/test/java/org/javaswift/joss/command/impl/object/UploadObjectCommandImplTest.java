@@ -1,8 +1,17 @@
 package org.javaswift.joss.command.impl.object;
 
+import static junit.framework.Assert.assertTrue;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import mockit.Expectations;
 import mockit.NonStrictExpectations;
 import mockit.Verifications;
+
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.params.CoreProtocolPNames;
@@ -12,18 +21,14 @@ import org.javaswift.joss.exception.Md5ChecksumException;
 import org.javaswift.joss.exception.MissingContentLengthOrTypeException;
 import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.headers.Token;
-import org.javaswift.joss.headers.object.*;
+import org.javaswift.joss.headers.object.DeleteAfter;
+import org.javaswift.joss.headers.object.DeleteAt;
+import org.javaswift.joss.headers.object.Etag;
+import org.javaswift.joss.headers.object.ObjectContentType;
+import org.javaswift.joss.headers.object.ObjectManifest;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.assertTrue;
 
 public class UploadObjectCommandImplTest extends BaseCommandTest {
 

@@ -1,9 +1,9 @@
 package org.javaswift.joss.client.website;
 
+import java.io.File;
+
 import org.javaswift.joss.util.FileAction;
 import org.javaswift.joss.util.FileReference;
-
-import java.io.File;
 
 public class LocalFileObjects extends AbstractFileObjects {
 

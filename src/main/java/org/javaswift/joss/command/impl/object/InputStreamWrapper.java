@@ -1,9 +1,9 @@
 package org.javaswift.joss.command.impl.object;
 
-import org.javaswift.joss.command.impl.core.AbstractCommand;
-
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.javaswift.joss.command.impl.core.AbstractCommand;
 
 public class InputStreamWrapper extends InputStream {
 

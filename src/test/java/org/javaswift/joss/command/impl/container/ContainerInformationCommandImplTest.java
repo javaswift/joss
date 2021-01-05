@@ -1,17 +1,5 @@
 package org.javaswift.joss.command.impl.container;
 
-import org.apache.http.Header;
-import org.javaswift.joss.command.impl.core.BaseCommandTest;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.exception.NotFoundException;
-import org.javaswift.joss.information.ContainerInformation;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.javaswift.joss.headers.container.ContainerBytesUsed.X_CONTAINER_BYTES_USED;
@@ -19,6 +7,18 @@ import static org.javaswift.joss.headers.container.ContainerMetadata.X_CONTAINER
 import static org.javaswift.joss.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
 import static org.javaswift.joss.headers.container.ContainerRights.X_CONTAINER_READ;
 import static org.javaswift.joss.headers.container.ContainerWritePermissions.X_CONTAINER_WRITE;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.Header;
+import org.javaswift.joss.command.impl.core.BaseCommandTest;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.exception.NotFoundException;
+import org.javaswift.joss.information.ContainerInformation;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ContainerInformationCommandImplTest extends BaseCommandTest {
 

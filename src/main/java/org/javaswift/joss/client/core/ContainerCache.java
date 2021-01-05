@@ -1,9 +1,9 @@
 package org.javaswift.joss.client.core;
 
-import org.javaswift.joss.model.Container;
-
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.javaswift.joss.model.Container;
 
 public class ContainerCache<N extends Container> {
 

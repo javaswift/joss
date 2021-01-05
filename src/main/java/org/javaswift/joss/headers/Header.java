@@ -1,10 +1,10 @@
 package org.javaswift.joss.headers;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpRequestBase;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpRequestBase;
 
 /**
  * Basic header that needs to be added to a command. The underlying implementation takes care of the

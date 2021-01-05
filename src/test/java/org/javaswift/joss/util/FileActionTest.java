@@ -1,11 +1,14 @@
 package org.javaswift.joss.util;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import static junit.framework.Assert.*;
+
+import org.junit.Test;
 
 public class FileActionTest {
 

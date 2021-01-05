@@ -1,6 +1,12 @@
 package org.javaswift.joss.headers.account;
 
+import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import mockit.Mocked;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.cookie.DateParseException;
@@ -8,11 +14,6 @@ import org.apache.http.impl.cookie.DateUtils;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
 
 public class ServerDateTest extends AbstractHeaderTest {
 

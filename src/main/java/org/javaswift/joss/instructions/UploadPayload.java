@@ -1,9 +1,9 @@
 package org.javaswift.joss.instructions;
 
+import java.io.IOException;
+
 import org.apache.http.HttpEntity;
 import org.javaswift.joss.headers.object.Etag;
-
-import java.io.IOException;
 
 /**
 * Encapsulates the payload that must be uploaded to the ObjectStore. The reason this class exists

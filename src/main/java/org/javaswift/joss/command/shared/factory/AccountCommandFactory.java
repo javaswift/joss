@@ -1,12 +1,16 @@
 package org.javaswift.joss.command.shared.factory;
 
-import org.javaswift.joss.command.shared.account.*;
+import java.util.Collection;
+
+import org.javaswift.joss.command.shared.account.AccountInformationCommand;
+import org.javaswift.joss.command.shared.account.AccountMetadataCommand;
+import org.javaswift.joss.command.shared.account.HashPasswordCommand;
+import org.javaswift.joss.command.shared.account.ListContainersCommand;
+import org.javaswift.joss.command.shared.account.TenantCommand;
 import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
-
-import java.util.Collection;
 
 public interface AccountCommandFactory {
 

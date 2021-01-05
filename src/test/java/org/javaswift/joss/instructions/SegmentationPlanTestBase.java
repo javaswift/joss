@@ -1,9 +1,9 @@
 package org.javaswift.joss.instructions;
 
+import static junit.framework.Assert.assertEquals;
+
 import java.io.IOException;
 import java.io.InputStream;
-
-import static junit.framework.Assert.assertEquals;
 
 public class SegmentationPlanTestBase {
 

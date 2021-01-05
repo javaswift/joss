@@ -1,7 +1,11 @@
 package org.javaswift.joss.command.mock.object;
 
 import org.apache.http.HttpStatus;
-import org.javaswift.joss.command.impl.core.httpstatus.*;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusMatch;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusRange;
+import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusSuccessCondition;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.javaswift.joss.command.shared.object.ObjectInformationCommand;
 import org.javaswift.joss.information.ObjectInformation;

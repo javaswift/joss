@@ -1,6 +1,22 @@
 package org.javaswift.joss.client.impl;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static org.javaswift.joss.headers.account.AccountBytesUsed.X_ACCOUNT_BYTES_USED;
+import static org.javaswift.joss.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
+import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
+import static org.javaswift.joss.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import mockit.Verifications;
+
 import org.apache.http.Header;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
@@ -10,15 +26,6 @@ import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.PaginationMap;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.*;
-
-import static junit.framework.Assert.*;
-import static org.javaswift.joss.headers.account.AccountBytesUsed.X_ACCOUNT_BYTES_USED;
-import static org.javaswift.joss.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
-import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
-import static org.javaswift.joss.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
 
 public class AccountImplTest extends BaseCommandTest {
 
@@ -83,8 +90,8 @@ public class AccountImplTest extends BaseCommandTest {
     public void getMetadata() throws IOException {
         expectStatusCode(204);
         prepareMetadata();
-        assertEquals("1989", account.getMetadata().get("Year"));
-        assertEquals("42 BV", account.getMetadata().get("Company"));
+        assertEquals("1989", account.getMetadata("Year"));
+        assertEquals("42 BV", account.getMetadata("Company"));
         assertEquals(7, account.getCount());
         assertEquals(123, account.getObjectCount());
         assertEquals(654321, account.getBytesUsed());

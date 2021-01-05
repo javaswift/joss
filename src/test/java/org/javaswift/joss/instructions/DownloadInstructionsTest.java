@@ -1,14 +1,16 @@
 package org.javaswift.joss.instructions;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+
+import java.util.Date;
+
 import org.apache.http.impl.cookie.DateParseException;
 import org.javaswift.joss.headers.object.conditional.IfModifiedSince;
 import org.javaswift.joss.headers.object.conditional.IfNoneMatch;
 import org.javaswift.joss.headers.object.range.FirstPartRange;
 import org.junit.Test;
-
-import java.util.Date;
-
-import static junit.framework.Assert.*;
 
 public class DownloadInstructionsTest {
 

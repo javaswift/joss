@@ -1,9 +1,13 @@
 package org.javaswift.joss.information;
 
-import org.javaswift.joss.headers.account.*;
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
+
+import org.javaswift.joss.headers.account.AccountBytesUsed;
+import org.javaswift.joss.headers.account.AccountContainerCount;
+import org.javaswift.joss.headers.account.AccountMetadata;
+import org.javaswift.joss.headers.account.AccountObjectCount;
+import org.javaswift.joss.headers.account.ServerDate;
+import org.junit.Test;
 
 public class AccountInformationTest {
 

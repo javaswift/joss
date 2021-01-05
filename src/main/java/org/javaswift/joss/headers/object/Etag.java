@@ -1,11 +1,11 @@
 package org.javaswift.joss.headers.object;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpResponse;
 import org.javaswift.joss.headers.SimpleHeader;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Sets the MD5 hash on an object. The server uses this hash to verify that the upload succeeded

@@ -1,12 +1,12 @@
 package org.javaswift.joss.command.impl.account;
 
+import java.io.IOException;
+
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.headers.account.AccountMetadata;
 import org.javaswift.joss.headers.account.HashPassword;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 public class HashPasswordCommandTest extends BaseCommandTest {
 

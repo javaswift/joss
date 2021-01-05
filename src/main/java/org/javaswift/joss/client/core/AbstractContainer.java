@@ -1,5 +1,10 @@
 package org.javaswift.joss.client.core;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Collection;
+
 import org.javaswift.joss.command.shared.factory.ContainerCommandFactory;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Header;
@@ -11,16 +16,17 @@ import org.javaswift.joss.information.ContainerInformation;
 import org.javaswift.joss.instructions.ListInstructions;
 import org.javaswift.joss.instructions.SegmentationPlan;
 import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.*;
+import org.javaswift.joss.model.Account;
+import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.Directory;
+import org.javaswift.joss.model.DirectoryOrObject;
+import org.javaswift.joss.model.FormPost;
+import org.javaswift.joss.model.PaginationMap;
+import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.util.HashSignature;
 import org.javaswift.joss.util.SpaceURLEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Collection;
 
 public abstract class AbstractContainer extends AbstractObjectStoreEntity<ContainerInformation> implements Container {
 

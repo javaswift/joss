@@ -1,5 +1,11 @@
 package org.javaswift.joss.command.impl.object;
 
+import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.NotFoundException;
@@ -7,12 +13,6 @@ import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.object.ObjectMetadata;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
 
 public class ObjectMetadataCommandImplTest extends BaseCommandTest {
 

@@ -1,10 +1,10 @@
 package org.javaswift.joss.swift;
 
-import org.javaswift.joss.model.ListSubject;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import org.javaswift.joss.model.ListSubject;
 
 public class PageServer<Child extends ListSubject> {
 

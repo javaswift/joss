@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.mock.object;
 
+import java.io.InputStream;
+
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
@@ -13,8 +15,6 @@ import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.swift.Swift;
 import org.javaswift.joss.swift.SwiftResult;
-
-import java.io.InputStream;
 
 public class DownloadObjectAsInputStreamCommandMock extends CommandMock<InputStream> implements DownloadObjectAsInputStreamCommand {
 

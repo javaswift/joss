@@ -1,11 +1,11 @@
 package org.javaswift.joss.swift;
 
-import org.javaswift.joss.headers.Header;
-import org.javaswift.joss.headers.Metadata;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.javaswift.joss.headers.Header;
+import org.javaswift.joss.headers.Metadata;
 
 public class HeaderStore {
 

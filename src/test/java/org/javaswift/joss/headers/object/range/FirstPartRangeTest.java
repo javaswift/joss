@@ -1,9 +1,9 @@
 package org.javaswift.joss.headers.object.range;
 
+import static junit.framework.Assert.assertEquals;
+
 import org.javaswift.joss.headers.AbstractHeaderTest;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
 
 public class FirstPartRangeTest extends AbstractHeaderTest {
 

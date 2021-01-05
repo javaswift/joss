@@ -1,10 +1,10 @@
 package org.javaswift.joss.information;
 
-import org.javaswift.joss.headers.Metadata;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.javaswift.joss.headers.Metadata;
 
 public abstract class AbstractInformation {
 
@@ -19,7 +19,8 @@ public abstract class AbstractInformation {
     }
 
     public String getMetadata(String name) {
-        return this.metadataHeaders.get(name) != null ? this.metadataHeaders.get(name).getHeaderValue() : null;
+        final String lowerCaseName = Metadata.capitalize(name);
+        return this.metadataHeaders.get(lowerCaseName) != null ? this.metadataHeaders.get(lowerCaseName).getHeaderValue() : null;
     }
 
     public Collection<Metadata> getMetadata() {

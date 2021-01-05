@@ -1,10 +1,10 @@
 package org.javaswift.joss.swift;
 
+import static junit.framework.Assert.assertEquals;
+
 import org.javaswift.joss.headers.object.ObjectContentLength;
 import org.javaswift.joss.headers.object.ObjectMetadata;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
 
 public class HeaderStoreTest {
 

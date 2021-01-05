@@ -1,12 +1,12 @@
 package org.javaswift.joss.swift.statusgenerator;
 
+import static junit.framework.Assert.assertEquals;
+
 import org.javaswift.joss.command.mock.account.AccountInformationCommandMock;
 import org.javaswift.joss.command.mock.account.AccountMetadataCommandMock;
 import org.javaswift.joss.command.mock.account.ListContainersCommandMock;
 import org.javaswift.joss.command.mock.core.CommandMock;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
 
 public class StatusGeneratorTest {
 

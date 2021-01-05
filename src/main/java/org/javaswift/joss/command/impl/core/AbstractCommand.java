@@ -1,5 +1,13 @@
 package org.javaswift.joss.command.impl.core;
 
+import java.io.Closeable;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.Callable;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -14,14 +22,6 @@ import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.instructions.QueryParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Closeable;
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.Callable;
 
 public abstract class AbstractCommand<M extends HttpRequestBase, N> implements Callable<N>, Closeable {
 

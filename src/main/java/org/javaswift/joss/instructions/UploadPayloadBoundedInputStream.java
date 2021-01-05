@@ -6,8 +6,6 @@ import java.io.InputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.javaswift.joss.headers.object.Etag;
-import org.javaswift.joss.instructions.SegmentationPlan;
-import org.javaswift.joss.instructions.UploadPayload;
 
 public class UploadPayloadBoundedInputStream extends UploadPayload {
 

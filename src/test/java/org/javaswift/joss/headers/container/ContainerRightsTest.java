@@ -1,18 +1,21 @@
 package org.javaswift.joss.headers.container;
 
-import mockit.Mocked;
-import mockit.NonStrictExpectations;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.javaswift.joss.headers.AbstractHeaderTest;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
+import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeadersForRetrieval;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.*;
-import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeader;
-import static org.javaswift.joss.command.impl.core.BaseCommandTest.prepareHeadersForRetrieval;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
+
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.javaswift.joss.headers.AbstractHeaderTest;
+import org.junit.Test;
 
 public class ContainerRightsTest extends AbstractHeaderTest {
 

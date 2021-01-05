@@ -1,5 +1,18 @@
 package org.javaswift.joss.command.impl.object;
 
+import static junit.framework.Assert.assertEquals;
+import static org.javaswift.joss.headers.object.DeleteAt.X_DELETE_AT;
+import static org.javaswift.joss.headers.object.Etag.ETAG;
+import static org.javaswift.joss.headers.object.ObjectContentLength.CONTENT_LENGTH;
+import static org.javaswift.joss.headers.object.ObjectContentType.CONTENT_TYPE;
+import static org.javaswift.joss.headers.object.ObjectLastModified.LAST_MODIFIED;
+import static org.javaswift.joss.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
+import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.Header;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.exception.CommandException;
@@ -7,19 +20,6 @@ import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.information.ObjectInformation;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static org.javaswift.joss.headers.object.DeleteAt.X_DELETE_AT;
-import static org.javaswift.joss.headers.object.Etag.ETAG;
-import static org.javaswift.joss.headers.object.ObjectContentLength.CONTENT_LENGTH;
-import static org.javaswift.joss.headers.object.ObjectContentType.CONTENT_TYPE;
-import static org.javaswift.joss.headers.object.ObjectLastModified.LAST_MODIFIED;
-import static org.javaswift.joss.headers.object.ObjectMetadata.X_OBJECT_META_PREFIX;
-import static org.javaswift.joss.headers.object.ObjectManifest.X_OBJECT_MANIFEST;
 
 public class ObjectInformationCommandImplTest extends BaseCommandTest {
 

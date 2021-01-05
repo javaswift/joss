@@ -1,19 +1,33 @@
 package org.javaswift.joss.swift;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
+
+import javax.activation.MimetypesFileTypeMap;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.headers.Header;
-import org.javaswift.joss.headers.object.*;
+import org.javaswift.joss.headers.object.DeleteAt;
+import org.javaswift.joss.headers.object.Etag;
+import org.javaswift.joss.headers.object.ObjectContentLength;
+import org.javaswift.joss.headers.object.ObjectContentType;
+import org.javaswift.joss.headers.object.ObjectLastModified;
+import org.javaswift.joss.headers.object.ObjectManifest;
 import org.javaswift.joss.information.ObjectInformation;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.model.*;
+import org.javaswift.joss.model.Container;
+import org.javaswift.joss.model.Directory;
+import org.javaswift.joss.model.DirectoryOrObject;
+import org.javaswift.joss.model.ListSubject;
+import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.util.LocalTime;
-
-import javax.activation.MimetypesFileTypeMap;
-import java.io.IOException;
-import java.util.*;
 
 public class SwiftStoredObject implements ListSubject, DirectoryOrObject {
 

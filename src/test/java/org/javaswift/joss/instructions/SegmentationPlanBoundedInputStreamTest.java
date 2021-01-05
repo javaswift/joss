@@ -1,12 +1,12 @@
 package org.javaswift.joss.instructions;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import static junit.framework.Assert.assertEquals;
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 
 public class SegmentationPlanBoundedInputStreamTest extends SegmentationPlanTestBase {
 

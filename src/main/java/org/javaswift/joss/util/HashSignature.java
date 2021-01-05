@@ -1,10 +1,10 @@
 package org.javaswift.joss.util;
 
-import org.apache.commons.codec.binary.Hex;
-import org.javaswift.joss.exception.CommandException;
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Hex;
+import org.javaswift.joss.exception.CommandException;
 
 public class HashSignature {
 

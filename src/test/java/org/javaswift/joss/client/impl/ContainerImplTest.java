@@ -1,6 +1,25 @@
 package org.javaswift.joss.client.impl;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static org.javaswift.joss.headers.container.ContainerBytesUsed.X_CONTAINER_BYTES_USED;
+import static org.javaswift.joss.headers.container.ContainerMetadata.X_CONTAINER_META_PREFIX;
+import static org.javaswift.joss.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
+import static org.javaswift.joss.headers.container.ContainerRights.X_CONTAINER_READ;
+import static org.javaswift.joss.headers.container.ContainerWritePermissions.X_CONTAINER_WRITE;
+import static org.javaswift.joss.headers.container.vipr.ProjectId.PROJECT_ID;
+import static org.javaswift.joss.headers.container.vipr.Vpool.VPOOL;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import mockit.NonStrictExpectations;
+
 import org.apache.http.Header;
 import org.javaswift.joss.client.core.AbstractContainer;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
@@ -19,18 +38,6 @@ import org.javaswift.joss.util.HashSignature;
 import org.javaswift.joss.util.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.*;
-
-import static junit.framework.Assert.*;
-import static org.javaswift.joss.headers.container.ContainerBytesUsed.X_CONTAINER_BYTES_USED;
-import static org.javaswift.joss.headers.container.ContainerMetadata.X_CONTAINER_META_PREFIX;
-import static org.javaswift.joss.headers.container.ContainerObjectCount.X_CONTAINER_OBJECT_COUNT;
-import static org.javaswift.joss.headers.container.ContainerRights.X_CONTAINER_READ;
-import static org.javaswift.joss.headers.container.ContainerWritePermissions.X_CONTAINER_WRITE;
-import static org.javaswift.joss.headers.container.vipr.Vpool.VPOOL;
-import static org.javaswift.joss.headers.container.vipr.ProjectId.PROJECT_ID;
 
 public class ContainerImplTest extends BaseCommandTest {
 
@@ -119,8 +126,8 @@ public class ContainerImplTest extends BaseCommandTest {
     public void getMetadata() throws IOException {
         expectStatusCode(204);
         prepareMetadata();
-        assertEquals("1989", container.getMetadata().get("Year"));
-        assertEquals("42 BV", container.getMetadata().get("Company"));
+        assertEquals("1989", container.getMetadata("Year"));
+        assertEquals("42 BV", container.getMetadata("Company"));
         assertTrue(container.isPublic());
         assertEquals(ContainerRights.PUBLIC_CONTAINER, container.getContainerReadPermission());
         assertEquals("1,4,3", container.getcontainerWritePermission());

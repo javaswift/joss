@@ -2,10 +2,11 @@ package org.javaswift.joss.instructions;
 
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.javaswift.joss.headers.Header;
 import org.javaswift.joss.headers.object.conditional.AbstractIfMatch;
 import org.javaswift.joss.headers.object.conditional.AbstractIfSince;
 import org.javaswift.joss.headers.object.range.AbstractRange;
-import org.javaswift.joss.headers.Header;
 
 /**
  * Specific instructions for downloading content, these could be:

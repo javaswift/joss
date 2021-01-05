@@ -1,8 +1,26 @@
 package org.javaswift.joss.command.impl.core;
 
-import mockit.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import mockit.Expectations;
+import mockit.Injectable;
+import mockit.NonStrictExpectations;
+import mockit.Verifications;
+
 import org.apache.commons.io.IOUtils;
-import org.apache.http.*;
+import org.apache.http.Header;
+import org.apache.http.HeaderElement;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
+import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
@@ -11,13 +29,6 @@ import org.javaswift.joss.command.shared.identity.access.AccessTenant;
 import org.javaswift.joss.headers.Token;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.util.ClasspathTemplateResource;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.*;
 
 public abstract class BaseCommandTest {
 

@@ -1,15 +1,15 @@
 package org.javaswift.joss.swift;
 
-import org.javaswift.joss.instructions.UploadInstructions;
-import org.javaswift.joss.util.FileAction;
-import org.javaswift.joss.util.FileReference;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.javaswift.joss.instructions.UploadInstructions;
+import org.javaswift.joss.util.FileAction;
+import org.javaswift.joss.util.FileReference;
 
 public class OnFileObjectStoreLoader {
 

@@ -1,13 +1,13 @@
 package org.javaswift.joss.command.impl.object;
 
+import java.io.IOException;
+
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.headers.object.CopyFrom;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 public class CopyObjectCommandImplTest extends BaseCommandTest {
 

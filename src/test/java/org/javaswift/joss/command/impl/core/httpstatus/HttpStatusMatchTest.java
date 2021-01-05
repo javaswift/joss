@@ -1,9 +1,9 @@
 package org.javaswift.joss.command.impl.core.httpstatus;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+
+import org.junit.Test;
 
 public class HttpStatusMatchTest {
 

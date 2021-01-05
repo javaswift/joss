@@ -1,5 +1,15 @@
 package org.javaswift.joss.command.impl.object;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.CONTENT_LENGTH;
+import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.ETAG;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
@@ -9,16 +19,6 @@ import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.CONTENT_LENGTH;
-import static org.javaswift.joss.command.impl.object.DownloadObjectAsByteArrayCommandImpl.ETAG;
 
 public class DownloadObjectAsInputStreamCommandImplTest extends BaseCommandTest {
 

@@ -1,9 +1,9 @@
 package org.javaswift.joss.client.factory;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+
+import org.junit.Test;
 
 public class AccountConfigTest {
 

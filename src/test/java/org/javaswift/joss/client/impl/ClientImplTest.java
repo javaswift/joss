@@ -1,28 +1,29 @@
 package org.javaswift.joss.client.impl;
 
-import mockit.NonStrictExpectations;
-import org.apache.http.Header;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.javaswift.joss.client.factory.AccountConfig;
-import org.javaswift.joss.client.factory.AuthenticationMethod;
-import org.javaswift.joss.command.impl.core.BaseCommandTest;
-import org.javaswift.joss.model.Account;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import javax.net.ssl.X509TrustManager;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static org.javaswift.joss.headers.account.AccountBytesUsed.X_ACCOUNT_BYTES_USED;
 import static org.javaswift.joss.headers.account.AccountContainerCount.X_ACCOUNT_CONTAINER_COUNT;
 import static org.javaswift.joss.headers.account.AccountMetadata.X_ACCOUNT_META_PREFIX;
 import static org.javaswift.joss.headers.account.AccountObjectCount.X_ACCOUNT_OBJECT_COUNT;
 import static org.javaswift.joss.headers.account.ServerDate.DATE;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.net.ssl.X509TrustManager;
+
+import mockit.NonStrictExpectations;
+
+import org.apache.http.Header;
+import org.javaswift.joss.client.factory.AccountConfig;
+import org.javaswift.joss.command.impl.core.BaseCommandTest;
+import org.javaswift.joss.model.Account;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ClientImplTest extends BaseCommandTest {
 

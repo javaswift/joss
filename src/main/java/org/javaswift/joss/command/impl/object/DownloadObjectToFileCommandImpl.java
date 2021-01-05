@@ -1,5 +1,8 @@
 package org.javaswift.joss.command.impl.object;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -9,9 +12,6 @@ import org.javaswift.joss.model.Access;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.util.FileAction;
-
-import java.io.File;
-import java.io.IOException;
 
 public class DownloadObjectToFileCommandImpl extends AbstractDownloadObjectCommand<HttpGet, Object> implements DownloadObjectToFileCommand {
 

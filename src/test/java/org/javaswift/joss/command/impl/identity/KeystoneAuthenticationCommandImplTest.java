@@ -1,7 +1,14 @@
 package org.javaswift.joss.command.impl.identity;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
+import java.io.IOException;
+
 import mockit.Expectations;
 import mockit.Mocked;
+
 import org.apache.http.entity.StringEntity;
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.command.shared.identity.AuthenticationCommand;
@@ -10,10 +17,6 @@ import org.javaswift.joss.exception.UnauthorizedException;
 import org.javaswift.joss.model.Access;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-
-import static junit.framework.Assert.*;
 
 public class KeystoneAuthenticationCommandImplTest extends BaseCommandTest {
 

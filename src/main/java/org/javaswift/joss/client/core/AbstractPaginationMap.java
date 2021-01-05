@@ -1,14 +1,14 @@
 package org.javaswift.joss.client.core;
 
-import org.javaswift.joss.model.ListSubject;
-import org.javaswift.joss.model.PaginationMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.javaswift.joss.model.ListSubject;
+import org.javaswift.joss.model.PaginationMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractPaginationMap<Child extends ListSubject> implements PaginationMap {
 

@@ -1,11 +1,11 @@
 package org.javaswift.joss.instructions;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.FileEntity;
 import org.javaswift.joss.headers.object.Etag;
-
-import java.io.File;
-import java.io.IOException;
 
 public class UploadPayloadFile extends UploadPayload {
 

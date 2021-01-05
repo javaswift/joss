@@ -1,12 +1,12 @@
 package org.javaswift.joss.command.impl.object;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static junit.framework.Assert.assertEquals;
+import org.junit.Test;
 
 public class InputStreamWrapperTest {
 

@@ -1,8 +1,13 @@
 package org.javaswift.joss.command.impl.core;
 
+import static junit.framework.Assert.assertEquals;
+
+import java.io.IOException;
+
 import mockit.Expectations;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
+
 import org.apache.http.Header;
 import org.javaswift.joss.client.factory.TempUrlHashPrefixSource;
 import org.javaswift.joss.client.impl.AccountImpl;
@@ -15,10 +20,6 @@ import org.javaswift.joss.headers.ConnectionKeepAlive;
 import org.javaswift.joss.headers.Token;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-
-import static junit.framework.Assert.assertEquals;
 
 public class AbstractSecureCommandTest extends BaseCommandTest {
 

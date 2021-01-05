@@ -1,11 +1,15 @@
 package org.javaswift.joss.command.impl.core.httpstatus;
 
-import org.javaswift.joss.exception.*;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.exception.ForbiddenException;
+import org.javaswift.joss.exception.NotFoundException;
+import org.javaswift.joss.exception.NotModifiedException;
+import org.javaswift.joss.exception.UnauthorizedException;
+import org.junit.Before;
+import org.junit.Test;
 
 public class HttpStatusCheckerTest {
 

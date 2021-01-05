@@ -1,9 +1,9 @@
 package org.javaswift.joss.swift;
 
-import org.javaswift.joss.command.impl.object.InputStreamWrapper;
-
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.javaswift.joss.command.impl.object.InputStreamWrapper;
 
 public class MockInputStreamWrapper extends InputStreamWrapper {
 

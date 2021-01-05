@@ -1,15 +1,15 @@
 package org.javaswift.joss.client.impl;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+
+import java.io.IOException;
+
 import org.javaswift.joss.command.impl.core.BaseCommandTest;
 import org.javaswift.joss.model.StoredObject;
 import org.javaswift.joss.model.Website;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 public class WebsiteImplTest extends BaseCommandTest {
 

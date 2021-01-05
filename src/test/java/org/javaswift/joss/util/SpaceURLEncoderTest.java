@@ -1,10 +1,10 @@
 package org.javaswift.joss.util;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.UnsupportedEncodingException;
 
-import static junit.framework.Assert.assertEquals;
+import org.junit.Test;
 
 public class SpaceURLEncoderTest {
 

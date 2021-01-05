@@ -1,17 +1,10 @@
 package org.javaswift.joss.command.impl.object;
 
-import mockit.Expectations;
-import mockit.Mocked;
-import mockit.NonStrictExpectations;
-import mockit.Verifications;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.Header;
-import org.javaswift.joss.command.impl.core.BaseCommandTest;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.instructions.DownloadInstructions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertTrue;
+import static org.javaswift.joss.headers.object.Etag.ETAG;
+import static org.javaswift.joss.headers.object.ObjectContentLength.CONTENT_LENGTH;
+import static org.javaswift.joss.headers.object.ObjectContentType.CONTENT_TYPE;
+import static org.javaswift.joss.headers.object.ObjectLastModified.LAST_MODIFIED;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,11 +13,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertTrue;
-import static org.javaswift.joss.headers.object.Etag.ETAG;
-import static org.javaswift.joss.headers.object.ObjectContentLength.CONTENT_LENGTH;
-import static org.javaswift.joss.headers.object.ObjectContentType.CONTENT_TYPE;
-import static org.javaswift.joss.headers.object.ObjectLastModified.LAST_MODIFIED;
+import mockit.Expectations;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
+import mockit.Verifications;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.http.Header;
+import org.javaswift.joss.command.impl.core.BaseCommandTest;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.instructions.DownloadInstructions;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class DownloadObjectToFileCommandImplTest extends BaseCommandTest {
 

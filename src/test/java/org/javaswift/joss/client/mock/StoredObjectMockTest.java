@@ -1,7 +1,26 @@
 package org.javaswift.joss.client.mock;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.activation.MimetypesFileTypeMap;
+
 import mockit.Expectations;
 import mockit.Mocked;
+
 import org.apache.commons.io.IOUtils;
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.exception.CommandException;
@@ -10,7 +29,11 @@ import org.javaswift.joss.exception.NotFoundException;
 import org.javaswift.joss.headers.object.ObjectManifest;
 import org.javaswift.joss.headers.object.conditional.IfModifiedSince;
 import org.javaswift.joss.headers.object.conditional.IfNoneMatch;
-import org.javaswift.joss.headers.object.range.*;
+import org.javaswift.joss.headers.object.range.AbstractRange;
+import org.javaswift.joss.headers.object.range.ExcludeStartRange;
+import org.javaswift.joss.headers.object.range.FirstPartRange;
+import org.javaswift.joss.headers.object.range.LastPartRange;
+import org.javaswift.joss.headers.object.range.MidPartRange;
 import org.javaswift.joss.instructions.DownloadInstructions;
 import org.javaswift.joss.instructions.SegmentationPlan;
 import org.javaswift.joss.instructions.UploadInstructions;
@@ -21,18 +44,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.activation.MimetypesFileTypeMap;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
-import java.util.TreeMap;
-
-import static junit.framework.Assert.*;
 
 public class StoredObjectMockTest {
 

@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.mock.container;
 
+import java.util.Collection;
+
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusChecker;
 import org.javaswift.joss.command.impl.core.httpstatus.HttpStatusFailCondition;
@@ -12,8 +14,6 @@ import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.swift.Swift;
 import org.javaswift.joss.swift.SwiftResult;
-
-import java.util.Collection;
 
 public class ContainerMetadataCommandMock extends CommandMock implements ContainerMetadataCommand {
 

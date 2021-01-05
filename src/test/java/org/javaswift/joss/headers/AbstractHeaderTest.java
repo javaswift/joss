@@ -2,6 +2,7 @@ package org.javaswift.joss.headers;
 
 import mockit.Mocked;
 import mockit.Verifications;
+
 import org.apache.http.client.methods.HttpRequestBase;
 
 public abstract class AbstractHeaderTest {

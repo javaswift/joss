@@ -1,5 +1,7 @@
 package org.javaswift.joss.command.impl.identity;
 
+import java.io.IOException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -15,8 +17,6 @@ import org.javaswift.joss.command.shared.identity.authentication.Authentication;
 import org.javaswift.joss.exception.CommandException;
 import org.javaswift.joss.headers.Accept;
 import org.javaswift.joss.model.Access;
-
-import java.io.IOException;
 
 public class KeystoneAuthenticationCommandImpl extends AbstractCommand<HttpPost, Access> implements AuthenticationCommand {
 

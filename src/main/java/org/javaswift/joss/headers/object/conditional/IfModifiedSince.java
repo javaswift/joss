@@ -1,10 +1,10 @@
 package org.javaswift.joss.headers.object.conditional;
 
+import java.util.Date;
+
 import org.apache.http.HttpStatus;
 import org.apache.http.impl.cookie.DateParseException;
 import org.javaswift.joss.exception.HttpStatusExceptionUtil;
-
-import java.util.Date;
 
 public class IfModifiedSince extends AbstractIfSince {
 

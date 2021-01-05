@@ -1,13 +1,14 @@
 package org.javaswift.joss.instructions;
 
-import mockit.Expectations;
-import mockit.Mocked;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import static junit.framework.Assert.assertEquals;
+import mockit.Expectations;
+import mockit.Mocked;
+
+import org.junit.Test;
 
 public class QueryParameterTest {
 

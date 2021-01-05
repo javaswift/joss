@@ -1,15 +1,19 @@
 package org.javaswift.joss.instructions;
 
-import java.util.Map;
-import java.util.TreeMap;
-import org.apache.http.HttpEntity;
-import org.javaswift.joss.exception.CommandException;
-import org.javaswift.joss.headers.object.*;
-import org.javaswift.joss.headers.Header;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.apache.http.HttpEntity;
+import org.javaswift.joss.exception.CommandException;
+import org.javaswift.joss.headers.Header;
+import org.javaswift.joss.headers.object.DeleteAfter;
+import org.javaswift.joss.headers.object.DeleteAt;
+import org.javaswift.joss.headers.object.Etag;
+import org.javaswift.joss.headers.object.ObjectContentType;
+import org.javaswift.joss.headers.object.ObjectManifest;
 
 /**
 * Specific instructions for uploading files. You can control the following aspects:

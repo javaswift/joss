@@ -1,8 +1,8 @@
 package org.javaswift.joss.command.mock.identity;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertNull;
+
+import org.junit.Test;
 
 public class AuthenticationCommandMockTest {
 

@@ -1,7 +1,14 @@
 package org.javaswift.joss.swift;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import mockit.Expectations;
 import mockit.Mocked;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.javaswift.joss.headers.object.DeleteAfter;
@@ -9,11 +16,6 @@ import org.javaswift.joss.headers.object.DeleteAt;
 import org.javaswift.joss.instructions.UploadInstructions;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 
 public class SwiftStoredObjectTest {
 

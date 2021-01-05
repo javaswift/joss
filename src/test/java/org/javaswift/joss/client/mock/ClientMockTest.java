@@ -1,13 +1,15 @@
 package org.javaswift.joss.client.mock;
 
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertSame;
+
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.command.mock.factory.AccountCommandFactoryMock;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.swift.MockUserStore;
 import org.javaswift.joss.swift.Swift;
 import org.junit.Test;
-
-import static junit.framework.Assert.*;
 
 public class ClientMockTest {
 

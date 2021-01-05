@@ -1,10 +1,10 @@
 package org.javaswift.joss.instructions;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertFalse;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertFalse;
+import org.junit.Test;
 
 public class UploadPayloadInputStreamTest {
 

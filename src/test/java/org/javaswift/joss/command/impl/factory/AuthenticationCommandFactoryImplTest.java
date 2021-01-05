@@ -1,5 +1,12 @@
 package org.javaswift.joss.command.impl.factory;
 
+import static org.javaswift.joss.client.factory.AuthenticationMethod.BASIC;
+import static org.javaswift.joss.client.factory.AuthenticationMethod.EXTERNAL;
+import static org.javaswift.joss.client.factory.AuthenticationMethod.KEYSTONE;
+import static org.javaswift.joss.client.factory.AuthenticationMethod.KEYSTONE_V3;
+import static org.javaswift.joss.client.factory.AuthenticationMethod.TEMPAUTH;
+import static org.junit.Assert.assertEquals;
+
 import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.client.factory.AuthenticationMethod;
 import org.javaswift.joss.command.impl.identity.BasicAuthenticationCommandImpl;
@@ -9,13 +16,6 @@ import org.javaswift.joss.command.impl.identity.KeystoneAuthenticationV3CommandI
 import org.javaswift.joss.command.impl.identity.TempAuthAuthenticationCommandImpl;
 import org.javaswift.joss.model.Access;
 import org.junit.Test;
-
-import static org.javaswift.joss.client.factory.AuthenticationMethod.BASIC;
-import static org.javaswift.joss.client.factory.AuthenticationMethod.EXTERNAL;
-import static org.javaswift.joss.client.factory.AuthenticationMethod.KEYSTONE;
-import static org.javaswift.joss.client.factory.AuthenticationMethod.KEYSTONE_V3;
-import static org.javaswift.joss.client.factory.AuthenticationMethod.TEMPAUTH;
-import static org.junit.Assert.assertEquals;
 
 public class AuthenticationCommandFactoryImplTest {
 

@@ -1,11 +1,11 @@
 package org.javaswift.joss.model;
 
-import org.javaswift.joss.instructions.DownloadInstructions;
-import org.javaswift.joss.instructions.UploadInstructions;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
+
+import org.javaswift.joss.instructions.DownloadInstructions;
+import org.javaswift.joss.instructions.UploadInstructions;
 
 /**
  * StoredObject is a handler for the actual content in the Object Store. The method used most on this handler are

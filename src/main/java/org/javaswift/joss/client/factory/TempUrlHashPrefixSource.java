@@ -1,9 +1,9 @@
 package org.javaswift.joss.client.factory;
 
-import org.javaswift.joss.exception.CommandException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.javaswift.joss.exception.CommandException;
 
 public enum TempUrlHashPrefixSource {
     PUBLIC_URL_PATH,
