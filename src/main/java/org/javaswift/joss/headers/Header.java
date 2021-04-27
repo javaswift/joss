@@ -35,8 +35,10 @@ public abstract class Header {
 
     public static List<org.apache.http.Header> getResponseHeadersStartingWith(HttpResponse response, String prefix) {
         List<org.apache.http.Header> headers = new ArrayList<org.apache.http.Header>();
+        String lowerPrefix = prefix.toLowerCase();
         for (org.apache.http.Header header : response.getAllHeaders()) {
-            if (header.getName().startsWith(prefix)) {
+            String hdr = header.getName().toLowerCase();
+            if (hdr.startsWith(lowerPrefix)) {
                 headers.add(header);
             }
         }
