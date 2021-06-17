@@ -13,4 +13,8 @@ public class BasicAuthenticationCommandImpl extends AbstractSimpleAuthentication
         setHeader(new XAuthKey(password));
     }
 
+    @Override
+    protected String determineCompoundUsername(String username, String tenantName) {
+        return tenantName == null ? username : tenantName + ":" + username;
+    }
 }
